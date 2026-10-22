@@ -1,7 +1,7 @@
 {
-  "version": "3.0.0",
-  "build": 300,
+  "version": "3.1.0",
+  "build": 310,
   "releaseDate": "2026-10-22",
-  "changelog": "v3.0.0: Clasificare Xbox Achievements pe 3 Rarități (Standard, Rară, Mitică) cu Animații, Halo-uri, Flare-uri și Sunete Melodice Unice + Fix Bară Rebirth & Materie Întunecată!",
+  "changelog": "v3.1.0: Recompense Zilnice & Streak (Calendar 7 Zile cu Marele Premiu Ziua 7: +5 🔮 Materie Întunecată) + 3 Misiuni Zilnice Regenerate la 24h & Pachetul Suprem de Misiuni!",
   "autoApply": true
 }

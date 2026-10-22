@@ -2717,6 +2717,485 @@
       box-shadow: 0 20px 50px rgba(0, 0, 0, 0.65);
     }
 
+    /* Buton Header Recompense Zilnice & Misiuni */
+    .btn-header.daily-btn {
+      position: relative;
+      background: linear-gradient(135deg, rgba(234, 179, 8, 0.18) 0%, rgba(16, 185, 129, 0.22) 100%);
+      border: 1px solid rgba(234, 179, 8, 0.55);
+      color: #fef08a;
+      box-shadow: 0 0 14px rgba(234, 179, 8, 0.2);
+    }
+
+    .btn-header.daily-btn:hover {
+      border-color: #fde047;
+      background: linear-gradient(135deg, rgba(234, 179, 8, 0.28) 0%, rgba(16, 185, 129, 0.32) 100%);
+      box-shadow: 0 0 20px rgba(234, 179, 8, 0.4);
+      transform: translateY(-1px);
+    }
+
+    .daily-gift-icon {
+      font-size: 15px;
+      filter: drop-shadow(0 0 6px rgba(234, 179, 8, 0.8));
+      animation: dailyGiftWiggle 3s ease-in-out infinite;
+    }
+
+    @keyframes dailyGiftWiggle {
+      0%, 85%, 100% { transform: scale(1) rotate(0deg); }
+      88% { transform: scale(1.15) rotate(-10deg); }
+      92% { transform: scale(1.2) rotate(12deg); }
+      96% { transform: scale(1.15) rotate(-8deg); }
+    }
+
+    .daily-badge-dot {
+      position: absolute;
+      top: -4px;
+      right: -4px;
+      min-width: 17px;
+      height: 17px;
+      padding: 0 4px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, #ef4444, #f59e0b);
+      color: #ffffff;
+      font-size: 10px;
+      font-weight: 900;
+      font-family: var(--font-mono);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid #0b0f19;
+      box-shadow: 0 0 10px #ef4444;
+      animation: dailyBadgePulse 1.6s infinite;
+    }
+
+    @keyframes dailyBadgePulse {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.18); opacity: 0.85; }
+    }
+
+    /* Modal Recompense Zilnice & Misiuni */
+    .modal-card.daily-card {
+      max-width: 680px;
+      padding: 22px;
+      max-height: 90vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      text-align: left;
+    }
+
+    .daily-header-title-wrap {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .daily-header-title {
+      font-size: 18px;
+      font-weight: 800;
+      color: #ffffff;
+      letter-spacing: 0.02em;
+    }
+
+    .daily-countdown-pill {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 700;
+      color: #38bdf8;
+      background: rgba(56, 189, 248, 0.12);
+      border: 1px solid rgba(56, 189, 248, 0.35);
+      border-radius: 999px;
+      padding: 3px 10px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .daily-subnav-bar {
+      display: flex;
+      gap: 8px;
+      background: rgba(15, 23, 42, 0.7);
+      padding: 4px;
+      border-radius: 12px;
+      border: 1px solid var(--border-subtle);
+      margin-top: 12px;
+      margin-bottom: 12px;
+    }
+
+    .daily-subnav-btn {
+      flex: 1;
+      padding: 9px 14px;
+      border-radius: 9px;
+      background: transparent;
+      border: 1px solid transparent;
+      color: var(--text-muted);
+      font-size: 12.5px;
+      font-weight: 750;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      transition: all 0.2s ease;
+    }
+
+    .daily-subnav-btn.active {
+      background: linear-gradient(135deg, rgba(56, 189, 248, 0.22), rgba(168, 85, 247, 0.22));
+      border-color: rgba(56, 189, 248, 0.5);
+      color: #ffffff;
+      box-shadow: 0 0 14px rgba(56, 189, 248, 0.25);
+    }
+
+    .daily-subnav-badge {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 800;
+      padding: 1px 6px;
+      border-radius: 999px;
+      background: rgba(253, 224, 71, 0.2);
+      color: #fef08a;
+      border: 1px solid rgba(253, 224, 71, 0.4);
+    }
+
+    .daily-modal-body {
+      overflow-y: auto;
+      padding-right: 4px;
+      flex: 1;
+    }
+
+    .daily-streak-banner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: linear-gradient(135deg, rgba(234, 179, 8, 0.12) 0%, rgba(168, 85, 247, 0.15) 100%);
+      border: 1px solid rgba(234, 179, 8, 0.4);
+      border-radius: 12px;
+      padding: 10px 16px;
+      margin-bottom: 12px;
+    }
+
+    .daily-streak-text {
+      font-size: 13px;
+      color: #fef08a;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .daily-streak-mult {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: #a7f3d0;
+      background: rgba(16, 185, 129, 0.2);
+      border: 1px solid rgba(16, 185, 129, 0.4);
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-weight: 750;
+    }
+
+    /* Grilă Calendar 7 Zile */
+    .daily-calendar-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    .daily-day-card {
+      background: rgba(15, 23, 42, 0.85);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      position: relative;
+      transition: all 0.2s ease;
+      overflow: hidden;
+    }
+
+    .daily-day-card.grand-jackpot {
+      grid-column: 1 / -1;
+      background: linear-gradient(135deg, rgba(28, 22, 10, 0.95) 0%, rgba(56, 14, 92, 0.92) 100%);
+      border: 1.5px solid rgba(253, 224, 71, 0.65);
+      flex-direction: row;
+      justify-content: space-between;
+      padding: 14px 20px;
+      box-shadow: 0 0 20px rgba(253, 224, 71, 0.15);
+    }
+
+    .daily-day-card.claimed {
+      opacity: 0.6;
+      border-color: rgba(16, 185, 129, 0.4);
+      background: rgba(16, 185, 129, 0.06);
+    }
+
+    .daily-day-card.ready {
+      border-color: #fde047;
+      background: linear-gradient(135deg, rgba(234, 179, 8, 0.2) 0%, rgba(30, 41, 59, 0.95) 100%);
+      box-shadow: 0 0 22px rgba(234, 179, 8, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+      transform: translateY(-2px);
+    }
+
+    .daily-day-card.locked {
+      opacity: 0.45;
+    }
+
+    .daily-day-num {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 800;
+      color: #94a3b8;
+      letter-spacing: 0.05em;
+      margin-bottom: 6px;
+      text-transform: uppercase;
+    }
+
+    .daily-day-card.ready .daily-day-num {
+      color: #fde047;
+      text-shadow: 0 0 8px rgba(253, 224, 71, 0.6);
+    }
+
+    .daily-day-icon {
+      font-size: 26px;
+      margin-bottom: 6px;
+      filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.3));
+    }
+
+    .daily-day-card.grand-jackpot .daily-day-icon {
+      font-size: 34px;
+      filter: drop-shadow(0 0 12px rgba(253, 224, 71, 0.8));
+    }
+
+    .daily-day-title {
+      font-size: 12px;
+      font-weight: 750;
+      color: #ffffff;
+      margin-bottom: 4px;
+      line-height: 1.3;
+    }
+
+    .daily-day-desc {
+      font-size: 10.5px;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+
+    .daily-claim-btn {
+      width: 100%;
+      padding: 7px 12px;
+      border-radius: 8px;
+      font-size: 11.5px;
+      font-weight: 800;
+      cursor: pointer;
+      border: none;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+    }
+
+    .daily-claim-btn.btn-ready {
+      background: linear-gradient(135deg, #f59e0b, #eab308);
+      color: #000000;
+      box-shadow: 0 0 14px rgba(245, 158, 11, 0.6);
+      animation: pulseClaimBtn 1.8s infinite;
+    }
+
+    .daily-claim-btn.btn-ready:hover {
+      transform: scale(1.03);
+      box-shadow: 0 0 20px rgba(245, 158, 11, 0.85);
+    }
+
+    .daily-claim-btn.btn-claimed {
+      background: rgba(16, 185, 129, 0.18);
+      color: #6ee7b7;
+      border: 1px solid rgba(16, 185, 129, 0.4);
+      cursor: default;
+    }
+
+    .daily-claim-btn.btn-locked {
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--text-dim);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      cursor: not-allowed;
+    }
+
+    @keyframes pulseClaimBtn {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.03); box-shadow: 0 0 22px rgba(245, 158, 11, 0.9); }
+    }
+
+    /* Misiuni Zilnice */
+    .daily-quests-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    .daily-quest-card {
+      background: rgba(15, 23, 42, 0.85);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      padding: 12px 14px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      transition: all 0.2s ease;
+    }
+
+    .daily-quest-card.ready {
+      border-color: rgba(56, 189, 248, 0.7);
+      background: linear-gradient(135deg, rgba(56, 189, 248, 0.12) 0%, rgba(15, 23, 42, 0.95) 100%);
+      box-shadow: 0 0 16px rgba(56, 189, 248, 0.25);
+    }
+
+    .daily-quest-card.claimed {
+      opacity: 0.6;
+      border-color: rgba(16, 185, 129, 0.4);
+      background: rgba(16, 185, 129, 0.05);
+    }
+
+    .daily-quest-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      background: rgba(56, 189, 248, 0.12);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      flex-shrink: 0;
+    }
+
+    .daily-quest-body {
+      flex: 1;
+      min-width: 0;
+      text-align: left;
+    }
+
+    .daily-quest-header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 3px;
+    }
+
+    .daily-quest-title {
+      font-size: 13px;
+      font-weight: 750;
+      color: #ffffff;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .daily-quest-tier-tag {
+      font-family: var(--font-mono);
+      font-size: 9.5px;
+      font-weight: 800;
+      padding: 1px 7px;
+      border-radius: 999px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      white-space: nowrap;
+    }
+
+    .daily-quest-tier-tag.tier-easy {
+      color: #6ee7b7;
+      background: rgba(16, 185, 129, 0.15);
+      border: 1px solid rgba(16, 185, 129, 0.4);
+    }
+
+    .daily-quest-tier-tag.tier-medium {
+      color: #fde047;
+      background: rgba(253, 224, 71, 0.15);
+      border: 1px solid rgba(253, 224, 71, 0.45);
+    }
+
+    .daily-quest-tier-tag.tier-hard {
+      color: #f472b6;
+      background: rgba(236, 72, 153, 0.18);
+      border: 1px solid rgba(236, 72, 153, 0.5);
+      text-shadow: 0 0 6px rgba(236, 72, 153, 0.5);
+    }
+
+    .daily-quest-desc {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+
+    .daily-quest-track {
+      position: relative;
+      height: 7px;
+      background: rgba(0, 0, 0, 0.45);
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      overflow: hidden;
+      margin-bottom: 4px;
+    }
+
+    .daily-quest-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #38bdf8, #a855f7);
+      border-radius: 999px;
+      transition: width 0.3s ease;
+    }
+
+    .daily-quest-meta-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 10.5px;
+      font-family: var(--font-mono);
+      color: var(--text-muted);
+    }
+
+    .daily-quest-reward {
+      color: #fde047;
+      font-weight: 700;
+    }
+
+    .daily-all-clear-card {
+      background: linear-gradient(135deg, rgba(88, 28, 135, 0.25) 0%, rgba(234, 179, 8, 0.18) 100%);
+      border: 1px solid rgba(234, 179, 8, 0.55);
+      border-radius: 14px;
+      padding: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      text-align: left;
+    }
+
+    @media (max-width: 640px) {
+      .daily-calendar-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .daily-day-card.grand-jackpot {
+        grid-column: 1 / -1;
+        flex-direction: column;
+        text-align: center;
+        gap: 8px;
+      }
+      .daily-quest-card {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .daily-quest-body {
+        text-align: center;
+      }
+      .daily-all-clear-card {
+        flex-direction: column;
+        text-align: center;
+      }
+    }
+
     /* Settings Modal Components */
     .settings-group {
       background: rgba(14, 19, 31, 0.75);
@@ -3711,7 +4190,7 @@
       <!-- Subtitlu & Versiune Sistem -->
       <div class="loading-footer-tip">
         <span class="loading-pulse-dot"></span>
-        <span>Simulare Multiversală v3.0.0 // Auto-Stabilizare Activă</span>
+        <span>Simulare Multiversală v3.1.0 // Auto-Stabilizare Activă</span>
       </div>
 
       <!-- Hint discret dacă browserul a reținut temporar autoplay înainte de primul gest -->
@@ -3728,13 +4207,18 @@
         <div class="brand-icon">⚛️</div>
         <div>
           <div class="brand-title">QUANTUM NEXUS</div>
-          <div class="brand-sub" id="versionHeaderSub">v3.0.0</div>
+          <div class="brand-sub" id="versionHeaderSub">v3.1.0</div>
         </div>
       </div>
 
       <div class="top-buffs" id="activeBuffsContainer"></div>
 
       <div class="top-actions">
+        <button class="btn-header daily-btn" id="btnDailyHeader" onclick="openDailyModal()" title="Recompense Zilnice & Misiuni (Daily Login & Quests)">
+          <span class="daily-gift-icon">🎁</span>
+          <span>Zilnic</span>
+          <span class="daily-badge-dot" id="dailyBadgeDot" style="display:none">!</span>
+        </button>
         <button class="btn-header settings-btn" id="btnSettingsHeader" onclick="openSettingsModal()" title="Setări & Opțiuni (Sunet, Muzică, Salvare, Cloud, Reset)">
           <span class="gear-spin">⚙️</span>
           <span>Setări</span>
@@ -4215,7 +4699,7 @@
           <button class="btn-header install-btn" id="btnInstallApp" onclick="triggerInstallApp()">📲 Instalează</button>
         </div>
         <div style="font-size: 11px; color: var(--text-dim); margin-top: 8px;">
-          Versiune instalată: <strong id="settingsVersionText">v3.0.0</strong> // Auto-Update activ
+          Versiune instalată: <strong id="settingsVersionText">v3.1.0</strong> // Auto-Update activ
         </div>
       </div>
 
@@ -4228,6 +4712,88 @@
             <div class="settings-desc">Resetează jocul complet la zero (cere confirmare)</div>
           </div>
           <button class="btn-header danger" onclick="closeSettingsModal(); confirmReset();">🗑️ Reset Save</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Daily Rewards & Quests Modal -->
+  <div class="modal-backdrop" id="dailyModal" onclick="if(event.target===this) closeDailyModal()">
+    <div class="modal-card daily-card">
+      <div class="modal-header-row" style="margin-bottom:0">
+        <div class="daily-header-title-wrap">
+          <span style="font-size:24px">🎁</span>
+          <div>
+            <div class="daily-header-title">Centrul de Recompense Zilnice</div>
+            <div style="font-size:11px; color:var(--text-muted); margin-top:1px">Revendică cadoul zilnic și rezolvă misiunile pentru bonusuri majore!</div>
+          </div>
+        </div>
+        <div style="display:flex; align-items:center; gap:8px;">
+          <div class="daily-countdown-pill" id="dailyResetCountdownPill" title="Timp rămas până la următoarea resetare zilnică">
+            <span>⏰</span>
+            <span id="dailyResetCountdown">00h 00m 00s</span>
+          </div>
+          <button class="btn-close-modal" onclick="closeDailyModal()">✕</button>
+        </div>
+      </div>
+
+      <!-- Bara de comutare Tab-uri Sub-Modal -->
+      <div class="daily-subnav-bar">
+        <button class="daily-subnav-btn active" id="btnDailySubnavLogin" onclick="switchDailySubnav('login')">
+          <span>📅 Recompense Zilnice (Streak)</span>
+          <span class="daily-subnav-badge" id="dailyLoginReadyBadge" style="display:none">DISPONIBIL</span>
+        </button>
+        <button class="daily-subnav-btn" id="btnDailySubnavQuests" onclick="switchDailySubnav('quests')">
+          <span>🎯 Misiuni Zilnice</span>
+          <span class="daily-subnav-badge" id="dailyQuestsClaimableBadge" style="display:none">0/3</span>
+        </button>
+      </div>
+
+      <div class="daily-modal-body">
+        <!-- PANE 1: Daily Login & Streak Calendar -->
+        <div id="paneDailyLogin">
+          <div class="daily-streak-banner">
+            <div class="daily-streak-text">
+              <span>🔥 Serie Activă:</span>
+              <strong id="dailyStreakDaysText" style="color:#ffffff">1 Zi Consecutivă</strong>
+              <span style="font-size:11px; opacity:0.8; font-weight:normal" id="dailyStreakTotalText">(Total conectări: 1)</span>
+            </div>
+            <div class="daily-streak-mult" id="dailyStreakMultBadge">⭐ Ciclu #1 (+0% Bonus Streak)</div>
+          </div>
+
+          <div class="daily-calendar-grid" id="dailyCalendarGrid">
+            <!-- Randat dinamic de renderDailyLogin() -->
+          </div>
+
+          <div style="font-size:11px; color:var(--text-muted); text-align:center; padding:4px 8px; line-height:1.4;">
+            💡 <em>Conectează-te în fiecare zi pentru a menține seria activă! La Ziua 7 primești garantat <strong>+5 🔮 Materie Întunecată</strong>, iar seria se resetează cu un multiplicator permanent mai mare!</em>
+          </div>
+        </div>
+
+        <!-- PANE 2: Daily Quests -->
+        <div id="paneDailyQuests" style="display:none;">
+          <div class="daily-quests-list" id="dailyQuestsList">
+            <!-- Randat dinamic de renderDailyQuests() -->
+          </div>
+
+          <!-- Pachetul Suprem de Misiuni (All-Clear Chest) -->
+          <div class="daily-all-clear-card" id="dailyAllClearCard">
+            <div style="font-size:32px; flex-shrink:0;">👑</div>
+            <div style="flex:1; min-width:0;">
+              <div style="font-size:13px; font-weight:800; color:#ffffff; margin-bottom:2px;">
+                PACHETUL SUPREM DE MISIUNI (<span id="dailyAllClearProgressText">0/3</span>)
+              </div>
+              <div style="font-size:11px; color:var(--text-muted); margin-bottom:4px;">
+                Finalizează toate cele 3 obiective ale zilei pentru cel mai mare pachet cuantic!
+              </div>
+              <div style="font-size:11.5px; color:#fde047; font-weight:750;">
+                Recompensă: +3 🔮 Materie Întunecată &amp; +8h Producție Instantanee!
+              </div>
+            </div>
+            <button class="daily-claim-btn btn-locked" id="btnClaimDailyAllClear" onclick="claimDailyAllClearReward()" style="width:auto; padding:8px 16px;">
+              🔒 Blocat (0/3)
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -5222,6 +5788,17 @@
           overdriveOrbEnd: 0,
           cryoCooldownEnd: 0
         },
+        dailyLogin: {
+          lastClaimDate: '',
+          currentDay: 1,
+          totalStreak: 0,
+          cycle: 1
+        },
+        dailyQuests: {
+          date: '',
+          allClaimed: false,
+          quests: []
+        },
         soundEnabled: true,
         musicEnabled: true,
         cosmicBgEnabled: true,
@@ -5240,6 +5817,694 @@
     let lastSupernovaBurstTime = 0;
     let activeBuffs = state.activeBuffs;
     let skillCooldowns = state.skillCooldowns;
+
+    /********************************************************************
+     * 2.5. SISTEM RECOMPENSE ZILNICE & MISIUNI ZILNICE (DAILY LOGIN & QUESTS)
+     *      - Calendar 7 Zile cu Streak Consecutiv & Marele Premiu Ziua 7 (+5 🔮)
+     *      - 3 Misiuni Zilnice Regenerate la 24h (Ușoară, Medie, Avansată)
+     *      - Pachetul Suprem de Misiuni (All-Clear Chest)
+     ********************************************************************/
+    const DAILY_LOGIN_REWARDS_DATA = [
+      {
+        day: 1,
+        title: "+1h Producție Instant",
+        desc: "Producția generată în 1 oră cuantică",
+        icon: "⚡",
+        type: "prod_time",
+        hours: 1
+      },
+      {
+        day: 2,
+        title: "Frenezie x2.5 (5 min)",
+        desc: "Toată producția multiplicată x2.5 timp de 5 minute",
+        icon: "🌟",
+        type: "buff",
+        buff: "frenzyEnd",
+        sec: 300
+      },
+      {
+        day: 3,
+        title: "+3h Producție & +1 🔮",
+        desc: "+3 ore de energie și +1 Materie Întunecată",
+        icon: "🔮",
+        type: "prod_and_dm",
+        hours: 3,
+        dm: 1
+      },
+      {
+        day: 4,
+        title: "Click Storm x4 (5 min)",
+        desc: "Puterea fiecărui click cvadruplată (x4) timp de 5 minute",
+        icon: "🖱️",
+        type: "buff",
+        buff: "clickStormEnd",
+        sec: 300
+      },
+      {
+        day: 5,
+        title: "+5h Producție & -35% Costuri",
+        desc: "+5 ore de producție și -35% costuri timp de 5 minute",
+        icon: "🍀",
+        type: "prod_and_buff",
+        hours: 5,
+        buff: "discountOrbEnd",
+        sec: 300
+      },
+      {
+        day: 6,
+        title: "+8h Producție & +2 🔮",
+        desc: "+8 ore de energie și +2 Materie Întunecată",
+        icon: "🌌",
+        type: "prod_and_dm",
+        hours: 8,
+        dm: 2
+      },
+      {
+        day: 7,
+        title: "👑 MARELE PREMIU: +5 🔮 & +24h PRODUCȚIE!",
+        desc: "+5 🔮 Materie Întunecată garantată, +24h producție și 100% Hiper-Critică (5m)!",
+        icon: "👑",
+        type: "grand_jackpot",
+        hours: 24,
+        dm: 5,
+        buff: "hyperCritEnd",
+        sec: 300
+      }
+    ];
+
+    const DAILY_QUESTS_POOL = {
+      easy: [
+        {
+          id: 'q_click_250',
+          type: 'clicks',
+          target: 250,
+          title: 'Realizează 250 de click-uri manuale',
+          desc: 'Apasă pe Nucleul Cuantic de cel puțin 250 de ori.',
+          icon: '👆',
+          tier: 'easy',
+          tierName: 'Ușoară',
+          rewardText: '+45m Producție Instant',
+          rewardHours: 0.75,
+          dm: 0
+        },
+        {
+          id: 'q_crit_50',
+          type: 'crits',
+          target: 50,
+          title: 'Reușește 50 de Lovituri Critice',
+          desc: 'Loviți critic nucleul cuantic de 50 de ori.',
+          icon: '🎯',
+          tier: 'easy',
+          tierName: 'Ușoară',
+          rewardText: '+1h Producție Instant',
+          rewardHours: 1,
+          dm: 0
+        },
+        {
+          id: 'q_upgrades_10',
+          type: 'buy_upgrades',
+          target: 10,
+          title: 'Cumpără 10 Tehnologii de Click',
+          desc: 'Achiziționează 10 niveluri de Amplificatoare de Click.',
+          icon: '🔬',
+          tier: 'easy',
+          tierName: 'Ușoară',
+          rewardText: '+45m Producție Instant',
+          rewardHours: 0.75,
+          dm: 0
+        }
+      ],
+      medium: [
+        {
+          id: 'q_overclock_100',
+          type: 'overclock_100',
+          target: 1,
+          title: 'Activează Supraîncărcarea la 100%',
+          desc: 'Atinge 100% în bara de Combo pentru a intra în Supernova Fever.',
+          icon: '🔥',
+          tier: 'medium',
+          tierName: 'Medie',
+          rewardText: '+2h Producție & Turbo 3m',
+          rewardHours: 2,
+          buff: 'overdriveOrbEnd',
+          buffSec: 180,
+          dm: 0
+        },
+        {
+          id: 'q_skills_6',
+          type: 'skills',
+          target: 6,
+          title: 'Activează 6 Abilități Tactice',
+          desc: 'Folosește Impuls EM, Hiper-Critică sau Distorsiune de 6 ori.',
+          icon: '⚡',
+          tier: 'medium',
+          tierName: 'Medie',
+          rewardText: '+2h Producție & +1 🔮 Materie',
+          rewardHours: 2,
+          dm: 1
+        },
+        {
+          id: 'q_generators_30',
+          type: 'buy_generators',
+          target: 30,
+          title: 'Cumpără 30 de Generatoare Pasive',
+          desc: 'Construiește sau extinde 30 de generatoare automatizate.',
+          icon: '🤖',
+          tier: 'medium',
+          tierName: 'Medie',
+          rewardText: '+2h Producție & Frenezie 3m',
+          rewardHours: 2,
+          buff: 'frenzyEnd',
+          buffSec: 180,
+          dm: 0
+        }
+      ],
+      hard: [
+        {
+          id: 'q_spheres_4',
+          type: 'spheres',
+          target: 4,
+          title: 'Prinde 4 Sfere Cuantice Zburătoare',
+          desc: 'Capturează 4 anomalii zburătoare care traversează ecranul.',
+          icon: '☄️',
+          tier: 'hard',
+          tierName: 'Avansată',
+          rewardText: '+2 🔮 Materie & +4h Producție',
+          rewardHours: 4,
+          dm: 2
+        },
+        {
+          id: 'q_prestige_1',
+          type: 'prestige',
+          target: 1,
+          title: 'Declanșează 1 Rebirth (Singularitate)',
+          desc: 'Stabilizează un nou nivel de Rebirth pentru salt cosmic.',
+          icon: '🌌',
+          tier: 'hard',
+          tierName: 'Avansată',
+          rewardText: '+3 🔮 Materie & +6h Producție',
+          rewardHours: 6,
+          dm: 3
+        },
+        {
+          id: 'q_fever_skills_3',
+          type: 'fever_skills',
+          target: 3,
+          title: 'Activează 3 Abilități în mod Fever',
+          desc: 'Folosește 3 abilități speciale în timp ce ești la 100% Combo.',
+          icon: '👑',
+          tier: 'hard',
+          tierName: 'Avansată',
+          rewardText: '+2 🔮 Materie & +5h Producție',
+          rewardHours: 5,
+          dm: 2
+        }
+      ]
+    };
+
+    function getTodayDateString() {
+      const d = new Date();
+      const y = d.getFullYear();
+      const m = String(d.getMonth() + 1).padStart(2, '0');
+      const day = String(d.getDate()).padStart(2, '0');
+      return `${y}-${m}-${day}`;
+    }
+
+    function getDaysDifference(dStr1, dStr2) {
+      if (!dStr1 || !dStr2) return 999;
+      const dt1 = new Date(dStr1 + 'T00:00:00');
+      const dt2 = new Date(dStr2 + 'T00:00:00');
+      const diffTime = dt2.getTime() - dt1.getTime();
+      return Math.round(diffTime / (1000 * 60 * 60 * 24));
+    }
+
+    function getSecondsUntilMidnight() {
+      const now = new Date();
+      const midnight = new Date(now);
+      midnight.setHours(24, 0, 0, 0);
+      return Math.max(0, Math.floor((midnight.getTime() - now.getTime()) / 1000));
+    }
+
+    function isDailyLoginReady() {
+      if (!state.dailyLogin) return true;
+      const today = getTodayDateString();
+      return state.dailyLogin.lastClaimDate !== today;
+    }
+
+    function addInstantProduction(hours) {
+      const currentCps = getCPS();
+      const baseCps = Math.max(10, currentCps);
+      const cycle = (state.dailyLogin && state.dailyLogin.cycle) || 1;
+      const streakBonus = 1 + (cycle - 1) * 0.10;
+      const gain = Math.round(baseCps * hours * 3600 * streakBonus);
+      addEnergy(gain);
+      return gain;
+    }
+
+    function generateDailyQuestsForDate(dateStr) {
+      // Dacă este prima inițializare din zi, garantăm cele 3 misiuni cerute de utilizator
+      const easyChoice = { ...DAILY_QUESTS_POOL.easy[0], progress: 0, claimed: false };
+      const mediumChoice = { ...DAILY_QUESTS_POOL.medium[0], progress: 0, claimed: false };
+      const hardChoice = { ...DAILY_QUESTS_POOL.hard[0], progress: 0, claimed: false };
+
+      // Variație pseudorandom pentru zilele următoare bazată pe valoarea numerică a datei
+      if (dateStr) {
+        const hash = dateStr.split('').reduce((acc, c) => acc + c.charCodeAt(0), 0);
+        const eIdx = hash % DAILY_QUESTS_POOL.easy.length;
+        const mIdx = (hash + 1) % DAILY_QUESTS_POOL.medium.length;
+        const hIdx = (hash + 2) % DAILY_QUESTS_POOL.hard.length;
+        return [
+          { ...DAILY_QUESTS_POOL.easy[eIdx], progress: 0, claimed: false },
+          { ...DAILY_QUESTS_POOL.medium[mIdx], progress: 0, claimed: false },
+          { ...DAILY_QUESTS_POOL.hard[hIdx], progress: 0, claimed: false }
+        ];
+      }
+
+      return [easyChoice, mediumChoice, hardChoice];
+    }
+
+    let dailyPopupShownThisSession = false;
+
+    function initDailySystem() {
+      const today = getTodayDateString();
+
+      if (!state.dailyLogin) {
+        state.dailyLogin = { lastClaimDate: '', currentDay: 1, totalStreak: 0, cycle: 1 };
+      }
+
+      // Verificare dacă seria (Streak) s-a rupt (dacă s-a sărit mai mult de 1 zi)
+      if (state.dailyLogin.lastClaimDate) {
+        const diff = getDaysDifference(state.dailyLogin.lastClaimDate, today);
+        if (diff > 1) {
+          // A sărit o zi sau mai multe -> seria revine la Ziua 1
+          state.dailyLogin.currentDay = 1;
+        }
+      }
+
+      // Verificare dacă misiunile zilnice trebuie regenerate pentru noua zi
+      if (!state.dailyQuests || state.dailyQuests.date !== today || !Array.isArray(state.dailyQuests.quests) || state.dailyQuests.quests.length === 0) {
+        state.dailyQuests = {
+          date: today,
+          allClaimed: false,
+          quests: generateDailyQuestsForDate(today)
+        };
+      }
+
+      updateDailyBadge();
+    }
+
+    function checkDailyAutoPopup() {
+      if (dailyPopupShownThisSession) return;
+      if (isDailyLoginReady()) {
+        dailyPopupShownThisSession = true;
+        setTimeout(() => {
+          openDailyModal();
+        }, 1200);
+      }
+    }
+
+    function openDailyModal() {
+      initDailySystem();
+      renderDailyModal();
+      const modal = document.getElementById('dailyModal');
+      if (modal) modal.classList.add('open');
+      playTone(660, 'sine', 0.1, 0.08);
+    }
+
+    function closeDailyModal() {
+      const modal = document.getElementById('dailyModal');
+      if (modal) modal.classList.remove('open');
+    }
+
+    let currentDailySubnav = 'login';
+
+    function switchDailySubnav(tab) {
+      currentDailySubnav = tab;
+      const btnLogin = document.getElementById('btnDailySubnavLogin');
+      const btnQuests = document.getElementById('btnDailySubnavQuests');
+      const paneLogin = document.getElementById('paneDailyLogin');
+      const paneQuests = document.getElementById('paneDailyQuests');
+
+      if (tab === 'login') {
+        if (btnLogin) btnLogin.classList.add('active');
+        if (btnQuests) btnQuests.classList.remove('active');
+        if (paneLogin) paneLogin.style.display = 'block';
+        if (paneQuests) paneQuests.style.display = 'none';
+        renderDailyLogin();
+      } else {
+        if (btnLogin) btnLogin.classList.remove('active');
+        if (btnQuests) btnQuests.classList.add('active');
+        if (paneLogin) paneLogin.style.display = 'none';
+        if (paneQuests) paneQuests.style.display = 'block';
+        renderDailyQuests();
+      }
+    }
+
+    function updateDailyBadge() {
+      const badgeEl = document.getElementById('dailyBadgeDot');
+      const subnavLoginBadge = document.getElementById('dailyLoginReadyBadge');
+      const subnavQuestsBadge = document.getElementById('dailyQuestsClaimableBadge');
+
+      const loginReady = isDailyLoginReady();
+      let claimableQuests = 0;
+      if (state.dailyQuests && Array.isArray(state.dailyQuests.quests)) {
+        claimableQuests = state.dailyQuests.quests.filter(q => !q.claimed && (q.progress || 0) >= q.target).length;
+        if (!state.dailyQuests.allClaimed && state.dailyQuests.quests.every(q => q.claimed)) {
+          claimableQuests++;
+        }
+      }
+
+      const totalNotifs = (loginReady ? 1 : 0) + claimableQuests;
+      if (badgeEl) {
+        if (totalNotifs > 0) {
+          badgeEl.style.display = 'flex';
+          badgeEl.innerText = totalNotifs > 9 ? '!' : String(totalNotifs);
+        } else {
+          badgeEl.style.display = 'none';
+        }
+      }
+
+      if (subnavLoginBadge) {
+        subnavLoginBadge.style.display = loginReady ? 'inline-block' : 'none';
+      }
+      if (subnavQuestsBadge) {
+        if (claimableQuests > 0) {
+          subnavQuestsBadge.style.display = 'inline-block';
+          subnavQuestsBadge.innerText = `${claimableQuests} GATA`;
+        } else {
+          subnavQuestsBadge.style.display = 'none';
+        }
+      }
+    }
+
+    function renderDailyModal() {
+      initDailySystem();
+
+      const dl = state.dailyLogin || { currentDay: 1, totalStreak: 0, cycle: 1 };
+      const streakDaysEl = document.getElementById('dailyStreakDaysText');
+      const streakTotalEl = document.getElementById('dailyStreakTotalText');
+      const streakMultEl = document.getElementById('dailyStreakMultBadge');
+
+      if (streakDaysEl) streakDaysEl.innerText = `${dl.totalStreak || 0} ${dl.totalStreak === 1 ? 'Zi' : 'Zile'} Consecutiv`;
+      if (streakTotalEl) streakTotalEl.innerText = `(Ziua ${dl.currentDay || 1}/7)`;
+      if (streakMultEl) {
+        const bonusPct = ((dl.cycle || 1) - 1) * 10;
+        streakMultEl.innerText = `⭐ Ciclu #${dl.cycle || 1} (+${bonusPct}% Bonus Streak)`;
+      }
+
+      renderDailyLogin();
+      renderDailyQuests();
+      updateDailyBadge();
+    }
+
+    function renderDailyLogin() {
+      const grid = document.getElementById('dailyCalendarGrid');
+      if (!grid) return;
+      grid.innerHTML = '';
+
+      const dl = state.dailyLogin || { currentDay: 1, totalStreak: 0, cycle: 1 };
+      const loginReady = isDailyLoginReady();
+      const curDay = dl.currentDay || 1;
+
+      DAILY_LOGIN_REWARDS_DATA.forEach(item => {
+        const card = document.createElement('div');
+        const isGrand = item.day === 7;
+
+        let statusClass = 'locked';
+        let btnText = '🔒 Blocat';
+        let btnClass = 'btn-locked';
+        let btnDisabled = true;
+
+        if (item.day < curDay) {
+          // Zile deja revendicate în ciclul curent
+          statusClass = 'claimed';
+          btnText = '✅ Revendicat';
+          btnClass = 'btn-claimed';
+        } else if (item.day === curDay) {
+          if (loginReady) {
+            statusClass = 'ready';
+            btnText = isGrand ? '👑 REVENDICĂ MARELE PREMIU!' : '✨ Revendică Cadoul';
+            btnClass = 'btn-ready';
+            btnDisabled = false;
+          } else {
+            statusClass = 'claimed';
+            btnText = '✅ Revendicat Azi';
+            btnClass = 'btn-claimed';
+          }
+        } else {
+          statusClass = 'locked';
+          btnText = `🔒 Ziua ${item.day}`;
+          btnClass = 'btn-locked';
+        }
+
+        card.className = `daily-day-card ${statusClass} ${isGrand ? 'grand-jackpot' : ''}`;
+
+        if (isGrand) {
+          card.innerHTML = `
+            <div style="display:flex; align-items:center; gap:14px; text-align:left;">
+              <div class="daily-day-icon">${item.icon}</div>
+              <div>
+                <div class="daily-day-num" style="color:#fde047; font-weight:850">ZIUA 7 • MARELE PREMIU CUANTIC</div>
+                <div class="daily-day-title" style="color:#fef08a">${item.title}</div>
+                <div class="daily-day-desc" style="max-width:380px;">${item.desc}</div>
+              </div>
+            </div>
+            <button class="daily-claim-btn ${btnClass}" ${btnDisabled ? 'disabled' : ''} onclick="claimDailyLoginReward()" style="max-width:210px; flex-shrink:0;">
+              ${btnText}
+            </button>
+          `;
+        } else {
+          card.innerHTML = `
+            <div class="daily-day-num">ZIUA ${item.day}</div>
+            <div class="daily-day-icon">${item.icon}</div>
+            <div class="daily-day-title">${item.title}</div>
+            <div class="daily-day-desc">${item.desc}</div>
+            <button class="daily-claim-btn ${btnClass}" ${btnDisabled ? 'disabled' : ''} onclick="claimDailyLoginReward()">
+              ${btnText}
+            </button>
+          `;
+        }
+
+        grid.appendChild(card);
+      });
+    }
+
+    function claimDailyLoginReward() {
+      if (!isDailyLoginReady()) {
+        showToast('⏳ Ai revendicat deja cadoul de azi! Următorul se deblochează la miezul nopții.');
+        return;
+      }
+
+      const dl = state.dailyLogin || { currentDay: 1, totalStreak: 0, cycle: 1 };
+      const curDay = dl.currentDay || 1;
+      const reward = DAILY_LOGIN_REWARDS_DATA[curDay - 1];
+      if (!reward) return;
+
+      const now = Date.now();
+      let rewardSummary = reward.title;
+
+      if (reward.hours) {
+        const gain = addInstantProduction(reward.hours);
+        rewardSummary += ` (+${formatNumber(gain)} ⚡)`;
+      }
+      if (reward.dm) {
+        state.darkMatter = (state.darkMatter || 0) + reward.dm;
+      }
+      if (reward.buff && reward.sec) {
+        activeBuffs[reward.buff] = Math.max(now, activeBuffs[reward.buff] || 0) + (reward.sec * 1000);
+      }
+
+      // Actualizare Streak & Zile
+      const today = getTodayDateString();
+      dl.lastClaimDate = today;
+      dl.totalStreak = (dl.totalStreak || 0) + 1;
+
+      if (curDay >= 7) {
+        dl.currentDay = 1;
+        dl.cycle = (dl.cycle || 1) + 1;
+        playXboxAchievementChime('mythic');
+        spawnFloatingText(window.innerWidth / 2, window.innerHeight / 2 - 40, '👑 MARELE PREMIU ZIUA 7 REVENDICAT!', true);
+        showToast(`👑 Felicitări! Ai revendicat Marele Premiu Ziua 7: +5 🔮 Materie Întunecată, producție masivă și ai început Ciclul #${dl.cycle}!`);
+      } else {
+        dl.currentDay = curDay + 1;
+        playXboxAchievementChime('rare');
+        spawnFloatingText(window.innerWidth / 2, window.innerHeight / 2 - 40, `🎁 ZIUA ${curDay} REVENDICATĂ!`, true);
+        showToast(`🎁 Recompensa Zilei ${curDay} a fost revendicată: ${rewardSummary}!`);
+      }
+
+      spawnParticles(window.innerWidth / 2, window.innerHeight / 2, 35, '#fde047');
+
+      renderDailyModal();
+      updateUI();
+      saveGame();
+      checkAchievements();
+      if (cloudSession && (cloudSession.access_token || cloudSession.refresh_token)) {
+        cloudPushSave(false);
+      }
+    }
+
+    function renderDailyQuests() {
+      const container = document.getElementById('dailyQuestsList');
+      if (!container) return;
+      container.innerHTML = '';
+
+      if (!state.dailyQuests || !Array.isArray(state.dailyQuests.quests)) {
+        initDailySystem();
+      }
+
+      const quests = state.dailyQuests.quests || [];
+      let allClaimedCount = 0;
+
+      quests.forEach((q, idx) => {
+        const isDone = (q.progress || 0) >= q.target;
+        if (q.claimed) allClaimedCount++;
+
+        const pct = Math.min(100, Math.floor(((q.progress || 0) / q.target) * 100));
+        const card = document.createElement('div');
+
+        let cardStatusClass = '';
+        let btnText = `${q.progress || 0}/${q.target}`;
+        let btnClass = 'btn-locked';
+        let btnDisabled = true;
+
+        if (q.claimed) {
+          cardStatusClass = 'claimed';
+          btnText = '✅ Revendicat';
+          btnClass = 'btn-claimed';
+        } else if (isDone) {
+          cardStatusClass = 'ready';
+          btnText = '✨ Revendică';
+          btnClass = 'btn-ready';
+          btnDisabled = false;
+        } else {
+          btnText = `🔒 ${q.progress || 0}/${q.target}`;
+          btnClass = 'btn-locked';
+        }
+
+        const tierClass = q.tier === 'easy' ? 'tier-easy' : (q.tier === 'medium' ? 'tier-medium' : 'tier-hard');
+        card.className = `daily-quest-card ${cardStatusClass}`;
+
+        card.innerHTML = `
+          <div class="daily-quest-icon">${q.icon}</div>
+          <div class="daily-quest-body">
+            <div class="daily-quest-header-row">
+              <span class="daily-quest-title">${q.title}</span>
+              <span class="daily-quest-tier-tag ${tierClass}">${q.tierName || q.tier}</span>
+            </div>
+            <div class="daily-quest-desc">${q.desc}</div>
+            <div class="daily-quest-track">
+              <div class="daily-quest-fill" style="width: ${pct}%"></div>
+            </div>
+            <div class="daily-quest-meta-row">
+              <span>Progres: <strong>${Math.min(q.target, q.progress || 0)}</strong> / ${q.target} (${pct}%)</span>
+              <span class="daily-quest-reward">Recompensă: ${q.rewardText}</span>
+            </div>
+          </div>
+          <button class="daily-claim-btn ${btnClass}" ${btnDisabled ? 'disabled' : ''} onclick="claimDailyQuestReward(${idx})" style="width:auto; min-width:115px; flex-shrink:0;">
+            ${btnText}
+          </button>
+        `;
+
+        container.appendChild(card);
+      });
+
+      // Actualizare Card Pachet Suprem de Misiuni (All-Clear)
+      const progTextEl = document.getElementById('dailyAllClearProgressText');
+      const allClearBtn = document.getElementById('btnClaimDailyAllClear');
+
+      if (progTextEl) progTextEl.innerText = `${allClaimedCount}/3`;
+
+      if (allClearBtn) {
+        if (state.dailyQuests.allClaimed) {
+          allClearBtn.className = 'daily-claim-btn btn-claimed';
+          allClearBtn.innerText = '✅ Pachet Revendicat';
+          allClearBtn.disabled = true;
+        } else if (allClaimedCount >= 3) {
+          allClearBtn.className = 'daily-claim-btn btn-ready';
+          allClearBtn.innerText = '👑 REVENDICĂ SUPREM!';
+          allClearBtn.disabled = false;
+        } else {
+          allClearBtn.className = 'daily-claim-btn btn-locked';
+          allClearBtn.innerText = `🔒 Blocat (${allClaimedCount}/3)`;
+          allClearBtn.disabled = true;
+        }
+      }
+    }
+
+    function claimDailyQuestReward(questIdx) {
+      if (!state.dailyQuests || !Array.isArray(state.dailyQuests.quests)) return;
+      const q = state.dailyQuests.quests[questIdx];
+      if (!q || q.claimed || (q.progress || 0) < q.target) return;
+
+      q.claimed = true;
+      const now = Date.now();
+      let summary = q.rewardText;
+
+      if (q.rewardHours) {
+        const gain = addInstantProduction(q.rewardHours);
+        summary += ` (+${formatNumber(gain)} ⚡)`;
+      }
+      if (q.dm) {
+        state.darkMatter = (state.darkMatter || 0) + q.dm;
+      }
+      if (q.buff && q.buffSec) {
+        activeBuffs[q.buff] = Math.max(now, activeBuffs[q.buff] || 0) + (q.buffSec * 1000);
+      }
+
+      playXboxAchievementChime(q.tier === 'hard' ? 'mythic' : 'rare');
+      spawnParticles(window.innerWidth / 2, window.innerHeight / 2, 26, '#38bdf8');
+      showToast(`🎯 Misiune Revendicată: „${q.title}”! Ai primit ${summary}.`);
+
+      renderDailyModal();
+      updateUI();
+      saveGame();
+      checkAchievements();
+    }
+
+    function claimDailyAllClearReward() {
+      if (!state.dailyQuests || !Array.isArray(state.dailyQuests.quests)) return;
+      const allClaimed = state.dailyQuests.quests.every(q => q.claimed);
+      if (!allClaimed || state.dailyQuests.allClaimed) return;
+
+      state.dailyQuests.allClaimed = true;
+      state.darkMatter = (state.darkMatter || 0) + 3;
+      const gain = addInstantProduction(8);
+
+      playXboxAchievementChime('mythic');
+      spawnParticles(window.innerWidth / 2, window.innerHeight / 2, 45, '#ec4899');
+      spawnFloatingText(window.innerWidth / 2, window.innerHeight / 2 - 50, '👑 PACHETUL SUPREM REVENDICAT!', true);
+      showToast(`👑 Felicitări! Ai revendicat Pachetul Suprem de Misiuni: +3 🔮 Materie Întunecată și +${formatNumber(gain)} ⚡ Energie (8h)!`);
+
+      renderDailyModal();
+      updateUI();
+      saveGame();
+      checkAchievements();
+    }
+
+    function updateDailyQuestProgress(type, amount = 1) {
+      if (!state.dailyQuests || !Array.isArray(state.dailyQuests.quests)) return;
+      let changed = false;
+
+      state.dailyQuests.quests.forEach(q => {
+        if (q.type === type && !q.claimed) {
+          const old = q.progress || 0;
+          q.progress = Math.min(q.target, old + amount);
+          if (q.progress !== old) changed = true;
+          if (old < q.target && q.progress >= q.target) {
+            showToast(`🎯 Misiune Finalizată: „${q.title}”! Deschide meniul Zilnic pentru recompensă!`);
+            playTone(940, 'triangle', 0.25, 0.12);
+          }
+        }
+      });
+
+      if (changed) {
+        updateDailyBadge();
+        const modal = document.getElementById('dailyModal');
+        if (modal && modal.classList.contains('open')) {
+          renderDailyQuests();
+        }
+      }
+    }
 
     /********************************************************************
      * 3. MOTOR AUDIO SINTETIC (WEB AUDIO API - FĂRĂ FIȘIERE EXTERNE)
@@ -6007,12 +7272,14 @@
         amount *= getCritMultiplier();
         state.totalCrits++;
         if (!isAutoCursor) playTone(680, 'triangle', 0.11, 0.1);
+        updateDailyQuestProgress('crits', 1);
       } else if (!isAutoCursor) {
         playTone(320 + comboMeter * 2, 'sine', 0.06, 0.06);
       }
 
       if (!isAutoCursor) {
         state.totalClicks++;
+        updateDailyQuestProgress('clicks', 1);
       }
 
       // Efect Special Amplificator Fotonic (c_flat1): La fiecare al 10-lea click manual trage o Rază Mega-Fotonică (x3 Energie)!
@@ -6028,6 +7295,7 @@
       // Efect Supernova când bara de Supraîncărcare ajunge la 100%
       if (comboMeter >= 100 && Date.now() - lastSupernovaBurstTime > 3800) {
         lastSupernovaBurstTime = Date.now();
+        updateDailyQuestProgress('overclock_100', 1);
         const novaBonus = amount * 3.5 + getCPS() * 1.5;
         amount += novaBonus;
         spawnCoreShockwave('em-wave');
@@ -6604,6 +7872,7 @@
         spawnActivationOrbToCore(cardEl, '#a855f7');
         state.energy -= info.cost;
         state.clickUpgrades[id] = lvl + info.count;
+        updateDailyQuestProgress('buy_upgrades', info.count);
         playTone(540, 'triangle', 0.1, 0.09);
         if (id === 'c_flat1') spawnPhotonMegaBeam();
         syncCoreVisualEcosystem(true);
@@ -6623,6 +7892,7 @@
         spawnActivationOrbToCore(cardEl, '#38bdf8');
         state.energy -= info.cost;
         state.generators[id] = (state.generators[id] || 0) + info.count;
+        updateDailyQuestProgress('buy_generators', info.count);
         playTone(460, 'sine', 0.09, 0.08);
         spawnCoreShockwave('normal');
         syncCoreVisualEcosystem(true);
@@ -6683,6 +7953,8 @@
       const now = Date.now();
       if (now < (skillCooldowns[skillNum] || 0)) return;
       state.skillsUsed = (state.skillsUsed || 0) + 1;
+      updateDailyQuestProgress('skills', 1);
+      if (comboMeter >= 85) updateDailyQuestProgress('fever_skills', 1);
 
       const cdFactor = getSkillCooldownFactor();
       const skillBonusMult = getAnomalyAndSkillBonusMult();
@@ -6900,6 +8172,7 @@
       el.addEventListener('pointerdown', (e) => {
         e.stopPropagation();
         state.anomaliesCaught++;
+        updateDailyQuestProgress('spheres', 1);
         spawnParticles(e.clientX, e.clientY, 26, orbType.color);
         spawnActivationOrbToCore(el, orbType.color);
         playTone(1040, 'triangle', 0.22, 0.14);
@@ -7068,6 +8341,7 @@
 
         showToast(`🌌 Singularitatea #${nextRebirthNum} Stabilizată! Ai primit +${dmReward} 🔮 Materie Întunecată!`);
 
+        updateDailyQuestProgress('prestige', 1);
         checkAchievements();
         renderAll();
         saveGame();
@@ -7466,6 +8740,17 @@
       document.getElementById('cpsAmount').innerText = formatNumber(getCPS());
       document.getElementById('vpcAmount').innerText = formatNumber(getClickValue());
 
+      // Actualizare Countdown Resetare Zilnică & Badge Recompense
+      const remSec = getSecondsUntilMidnight();
+      const remH = Math.floor(remSec / 3600);
+      const remM = Math.floor((remSec % 3600) / 60);
+      const remS = remSec % 60;
+      const cdEl = document.getElementById('dailyResetCountdown');
+      if (cdEl) {
+        cdEl.innerText = `${String(remH).padStart(2, '0')}h ${String(remM).padStart(2, '0')}m ${String(remS).padStart(2, '0')}s`;
+      }
+      updateDailyBadge();
+
       // Bara mini Prestigiu
       const totalPresBonusPct = Math.round(((state.darkMatter || 0) * 10) + ((state.prestigeCount || 0) * 15));
       const dmEl = document.getElementById('darkMatterMini');
@@ -7674,6 +8959,7 @@
       renderPrestigeUpgrades();
       renderAchievements();
       syncCoreVisualEcosystem(true);
+      updateDailyBadge();
       updateUI();
     }
 
@@ -7719,6 +9005,8 @@
           clickUpgrades: { ...def.clickUpgrades, ...(parsed.clickUpgrades || {}) },
           generators: { ...def.generators, ...(parsed.generators || {}) },
           prestigeUpgrades: { ...def.prestigeUpgrades, ...(parsed.prestigeUpgrades || {}) },
+          dailyLogin: { ...def.dailyLogin, ...(parsed.dailyLogin || {}) },
+          dailyQuests: { ...def.dailyQuests, ...(parsed.dailyQuests || {}) },
           skillCooldowns: { ...def.skillCooldowns, ...(parsed.skillCooldowns || {}) },
           activeBuffs: { ...def.activeBuffs, ...(parsed.activeBuffs || {}) }
         };
@@ -7791,6 +9079,7 @@
             document.getElementById('offlineModal').classList.add('open');
           }
         }
+        initDailySystem();
       } catch (e) {
         console.error('Eroare la încărcarea salvării:', e);
       }
@@ -7830,6 +9119,7 @@
         }
       }
 
+      initDailySystem();
       renderAll();
       renderStats();
       if (typeof renderLeaderboardTab === 'function') {
@@ -7843,8 +9133,8 @@
      *       + AUTO-SYNC SILENȚIOS OFFLINE -> ONLINE + AUTO-UPDATE LIVE
      *       + NAVIGARE MOBIL & INSTALARE PWA (MACBOOK / PC / ANDROID / iOS)
      ********************************************************************/
-    const APP_VERSION = '3.0.0';
-    const APP_BUILD = 300;
+    const APP_VERSION = '3.1.0';
+    const APP_BUILD = 310;
     // URL-ul oficial de pe GitHub Pages pentru verificarea automată de Update (și în aplicațiile .exe / .dmg):
     const REMOTE_UPDATE_BASE_URL = 'https://mariusinfo.github.io/quantum-nexus';
 
@@ -9046,6 +10336,7 @@
           window.removeEventListener('resize', onResize);
           loadingScreen.style.display = 'none';
           showToast('🌌 Bine ai venit în Quantum Nexus! Toate sistemele sunt online.');
+          checkDailyAutoPopup();
         }, 850);
       }
     }
@@ -9053,6 +10344,7 @@
     // Inițializare la pornire
     window.addEventListener('DOMContentLoaded', () => {
       loadGame();
+      initDailySystem();
       renderAll();
       initCloudSystem();
       hideInstallButtonsIfInstalled();
