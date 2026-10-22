@@ -1,0 +1,29 @@
+{
+  "id": "quantum-nexus-idle",
+  "name": "QUANTUM NEXUS // Idle Clicker Simulator",
+  "short_name": "Quantum Nexus",
+  "description": "Simulator sci-fi de tip Idle Clicker cu generatoare cuantice, singularitate (prestigiu), evenimente astronomice și salvare în Cloud.",
+  "lang": "ro",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "display_override": ["window-controls-overlay", "standalone", "minimal-ui"],
+  "orientation": "any",
+  "background_color": "#07090e",
+  "theme_color": "#0e131f",
+  "categories": ["games", "entertainment", "simulation"],
+  "icons": [
+    {
+      "src": "./icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "./icon.svg",
+      "sizes": "192x192 512x512",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
+    }
+  ]
+}
