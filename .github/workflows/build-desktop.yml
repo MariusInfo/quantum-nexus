@@ -1,0 +1,58 @@
+name: Build Executables (MacBook DMG + Windows EXE)
+
+on:
+  push:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+jobs:
+  build-windows:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout cod
+        uses: actions/checkout@v4
+
+      - name: Configurare Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Instalare dependințe
+        run: npm install
+
+      - name: Compilare Windows (.EXE Portable & Setup)
+        run: npm run dist:win
+
+      - name: Încărcare Executabil Windows (.EXE)
+        uses: actions/upload-artifact@v4
+        with:
+          name: Quantum-Nexus-Windows-EXE
+          path: |
+            dist/*.exe
+
+  build-macbook:
+    runs-on: macos-latest
+    steps:
+      - name: Checkout cod
+        uses: actions/checkout@v4
+
+      - name: Configurare Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Instalare dependințe
+        run: npm install
+
+      - name: Compilare MacBook (.DMG & .APP pentru Apple Silicon M1/M2/M3/M4 și Intel)
+        run: npm run dist:mac
+        env:
+          CSC_IDENTITY_AUTO_DISCOVERY: false
+
+      - name: Încărcare Aplicație MacBook (.DMG & .ZIP)
+        uses: actions/upload-artifact@v4
+        with:
+          name: Quantum-Nexus-MacBook-DMG
+          path: |
+            dist/*.dmg
+            dist/*-mac.zip
