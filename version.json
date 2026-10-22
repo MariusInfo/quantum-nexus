@@ -1,0 +1,7 @@
+{
+  "version": "2.5.0",
+  "build": 250,
+  "releaseDate": "2026-10-22",
+  "changelog": "v2.5.0: Sistem Auto-Update Live pentru toți jucătorii conectați + Sincronizare automată Offline -> Online în Cloud!",
+  "autoApply": true
+}
