@@ -223,56 +223,6 @@
       }
     }
 
-    @media (max-width: 980px) {
-      .top-bar {
-        padding: 8px 12px;
-        flex-wrap: wrap;
-        gap: 6px;
-        height: auto;
-      }
-      .brand-sub, .save-status {
-        display: none;
-      }
-      .top-actions {
-        gap: 6px;
-        flex-wrap: wrap;
-      }
-      .btn-header {
-        padding: 6px 9px;
-        font-size: 11px;
-      }
-      .app-shell {
-        grid-template-rows: auto 1fr;
-        height: 100dvh;
-      }
-      .main-grid {
-        grid-template-columns: 1fr;
-        height: 100%;
-        padding-bottom: 66px;
-        overflow-y: auto;
-      }
-      .left-zone, .center-zone, .right-zone {
-        display: none;
-        height: 100%;
-        border: none;
-        overflow-y: auto;
-      }
-      .left-zone.mobile-active,
-      .center-zone.mobile-active,
-      .right-zone.mobile-active {
-        display: flex;
-      }
-      .nav-tabs {
-        padding: 10px 12px;
-        overflow-x: auto;
-      }
-      .tab-btn {
-        font-size: 11.5px;
-        padding: 8px 10px;
-        white-space: nowrap;
-      }
-    }
-
     button, .core-button, .upgrade-card, .gen-card {
       touch-action: manipulation;
     }
@@ -1580,6 +1530,235 @@
     .lb-row.top-1 .lb-score {
       color: #fde047;
     }
+
+    /* ==========================================================================
+       RESPONSIVE MOBILE & TABLET LAYOUT (PLASAT LA FINAL PENTRU PRIORITATE MAXIMĂ)
+       ========================================================================== */
+    @media (max-width: 980px) {
+      html, body {
+        height: 100dvh;
+        overflow: hidden;
+      }
+      .app-shell {
+        display: flex;
+        flex-direction: column;
+        height: 100dvh;
+        width: 100vw;
+        overflow: hidden;
+      }
+      .top-bar {
+        flex-shrink: 0;
+        padding: 8px 12px;
+        flex-wrap: wrap;
+        gap: 6px;
+        height: auto;
+        min-height: 50px;
+      }
+      .brand {
+        gap: 8px;
+      }
+      .brand-icon {
+        width: 28px;
+        height: 28px;
+        font-size: 15px;
+        border-radius: 8px;
+      }
+      .brand-title {
+        font-size: 13.5px;
+      }
+      .brand-sub, .save-status {
+        display: none !important;
+      }
+      .top-buffs {
+        order: 3;
+        width: 100%;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 4px;
+      }
+      .top-buffs:empty {
+        display: none;
+      }
+      .buff-pill {
+        font-size: 10.5px;
+        padding: 3px 8px;
+      }
+      .top-actions {
+        gap: 5px;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+      }
+      .btn-header {
+        padding: 6px 9px;
+        font-size: 11px;
+        border-radius: 7px;
+        gap: 4px;
+      }
+      .main-grid {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        height: auto;
+        min-height: 0;
+        padding-bottom: calc(64px + env(safe-area-inset-bottom, 0px));
+        overflow: hidden;
+      }
+      .left-zone, .center-zone, .right-zone {
+        display: none !important;
+        width: 100%;
+        height: 100%;
+        flex: 1;
+        min-height: 0;
+        border: none;
+      }
+      .left-zone.mobile-active {
+        display: flex !important;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: 12px 14px 16px 14px;
+        gap: 10px;
+        overflow-y: auto;
+        overflow-x: hidden;
+        -webkit-overflow-scrolling: touch;
+      }
+      .center-zone.mobile-active,
+      .right-zone.mobile-active {
+        display: flex !important;
+        flex-direction: column;
+        overflow: hidden;
+      }
+      .resource-display {
+        padding: 12px 10px;
+        border-radius: 14px;
+        flex-shrink: 0;
+      }
+      .resource-value {
+        font-size: 26px;
+        margin-bottom: 4px;
+      }
+      .resource-rates {
+        font-size: 11.5px;
+        gap: 12px;
+      }
+      .prestige-badge-mini {
+        font-size: 11px;
+        margin-top: 6px;
+        padding-top: 6px;
+      }
+      .core-stage {
+        min-height: 170px;
+        padding: 6px 0;
+        flex-shrink: 0;
+      }
+      .core-button {
+        width: 160px;
+        height: 160px;
+      }
+      .combo-box {
+        padding: 8px 12px;
+        margin-bottom: 8px;
+      }
+      .skill-btn {
+        padding: 7px 4px;
+      }
+      .skill-name {
+        font-size: 10.5px;
+      }
+      .skill-desc {
+        font-size: 9.5px;
+      }
+      .nav-tabs {
+        padding: 8px 10px;
+        gap: 6px;
+        overflow-x: auto;
+        flex-wrap: nowrap;
+        flex-shrink: 0;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+      }
+      .nav-tabs::-webkit-scrollbar {
+        display: none;
+      }
+      .tab-btn {
+        flex: 0 0 auto;
+        font-size: 12px;
+        padding: 8px 12px;
+        white-space: nowrap;
+      }
+      .center-content {
+        flex: 1;
+        min-height: 0;
+        padding: 12px 12px 24px 12px;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+      }
+      .right-header {
+        padding: 10px 14px;
+        flex-wrap: wrap;
+        gap: 8px;
+        flex-shrink: 0;
+      }
+      .generators-list {
+        flex: 1;
+        min-height: 0;
+        padding: 10px 12px 24px 12px;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+      }
+      .upgrades-grid, .ach-grid, .stats-grid {
+        grid-template-columns: 1fr;
+        gap: 10px;
+      }
+      .prestige-hero {
+        padding: 16px 12px;
+      }
+      .prestige-stats-row {
+        gap: 8px;
+      }
+      .prestige-stat-card {
+        min-width: calc(50% - 8px);
+        flex: 1;
+        padding: 10px 8px;
+      }
+      .prestige-stat-val {
+        font-size: 18px;
+      }
+      .lb-profile-bar {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .lb-cat-bar {
+        overflow-x: auto;
+        flex-wrap: nowrap;
+        padding-bottom: 4px;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+      }
+      .lb-cat-bar::-webkit-scrollbar {
+        display: none;
+      }
+      .lb-cat-btn {
+        flex: 0 0 auto;
+        white-space: nowrap;
+      }
+      .toast-container {
+        bottom: calc(74px + env(safe-area-inset-bottom, 0px));
+        width: 92%;
+        max-width: 380px;
+      }
+      .toast {
+        font-size: 12px;
+        padding: 9px 14px;
+        border-radius: 14px;
+        text-align: center;
+        justify-content: center;
+      }
+      .modal-card, .modal-card.wide {
+        width: 94%;
+        padding: 18px 14px;
+        max-height: 85dvh;
+      }
+    }
   </style>
 </head>
 <body>
@@ -1590,7 +1769,7 @@
         <div class="brand-icon">⚛️</div>
         <div>
           <div class="brand-title">QUANTUM NEXUS</div>
-          <div class="brand-sub" id="versionHeaderSub">v2.5.0 // AUTO-UPDATE & CLOUD SYNC</div>
+          <div class="brand-sub" id="versionHeaderSub">v2.6.0 // AUTO-UPDATE & CLOUD SYNC</div>
         </div>
       </div>
 
@@ -1604,7 +1783,6 @@
         <button class="btn-header install-btn" id="btnInstallApp" onclick="triggerInstallApp()" title="Instalează ca aplicație pe MacBook, PC, Android sau iPhone">📲 Instalează</button>
         <button class="btn-header cloud-btn" id="btnCloudHeader" onclick="openCloudModal()" title="Sincronizare Cloud Save (PC, MacBook, Android, iOS)">☁️ <span id="cloudBtnText">Cloud Save</span></button>
         <button class="btn-header" id="btnSound" onclick="toggleSound()">🔊 Sunet: ON</button>
-        <button class="btn-header" onclick="spawnQuantumAnomaly(true)" title="Cheamă o Anomalie Aurie pentru testare!">☄️ Anomalie</button>
         <button class="btn-header" onclick="manualSave()">💾 Salvează</button>
         <button class="btn-header danger" onclick="confirmReset()">🗑️ Reset</button>
       </div>
@@ -1828,30 +2006,20 @@
             </div>
           </div>
 
-          <!-- TAB 4: Statistics & Save Export/Import -->
+          <!-- TAB 4: Statistics & Cloud Sync -->
           <div class="tab-pane" id="tab-stats">
             <div class="section-header">
               <div class="section-title">📊 Telemetrie & Statistici Nucleu</div>
             </div>
             <div class="stats-grid" id="statsGrid"></div>
 
-            <div class="save-panel" style="margin-bottom: 16px;">
+            <div class="save-panel">
               <div class="section-title" style="margin-bottom:6px">☁️ Sincronizare Cloud (MacBook, PC, Android, iOS)</div>
               <div class="section-subtitle">Conectează-te gratuit pentru a-ți păstra progresul sincronizat automat între toate dispozitivele tale.</div>
               <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:12px;">
                 <button class="btn-header cloud-btn" onclick="openCloudModal()">☁️ Deschide Panoul Cloud Save</button>
                 <button class="btn-header" onclick="checkForGameUpdate(true)">🔄 Verifică Update Joc</button>
-                <button class="btn-header install-btn" onclick="triggerInstallApp()">📲 Cum instalez pe MacBook / PC / Mobil</button>
-              </div>
-            </div>
-
-            <div class="save-panel">
-              <div class="section-title" style="margin-bottom:6px">💾 Backup Salvare (Export / Import Text)</div>
-              <div class="section-subtitle">Copiază codul de mai jos pentru a păstra o copie de siguranță sau lipește un cod existent.</div>
-              <textarea class="save-textarea" id="saveCodeBox" placeholder="Codul tău de salvare va apărea aici..."></textarea>
-              <div style="display:flex; gap:10px; flex-wrap:wrap;">
-                <button class="btn-header" onclick="exportSaveCode()">📤 Generează & Copiază Export</button>
-                <button class="btn-header" onclick="importSaveCode()">📥 Importă Codul din Caseta Text</button>
+                <button class="btn-header install-btn" id="btnInstallAppStats" onclick="triggerInstallApp()">📲 Cum instalez pe MacBook / PC / Mobil</button>
               </div>
             </div>
           </div>
@@ -3069,41 +3237,6 @@
       updateUI();
     }
 
-    function exportSaveCode() {
-      saveGame();
-      const code = btoa(unescape(encodeURIComponent(JSON.stringify(state))));
-      const box = document.getElementById('saveCodeBox');
-      box.value = code;
-      box.select();
-      try {
-        navigator.clipboard.writeText(code);
-        showToast('📤 Codul de salvare a fost copiat în Clipboard!');
-      } catch (e) {
-        showToast('📤 Cod generat! Copiază-l din caseta text.');
-      }
-    }
-
-    function importSaveCode() {
-      const box = document.getElementById('saveCodeBox');
-      const code = box.value.trim();
-      if (!code) {
-        showToast('⚠️ Lipește mai întâi un cod de salvare în casetă!');
-        return;
-      }
-      try {
-        const json = decodeURIComponent(escape(atob(code)));
-        const parsed = JSON.parse(json);
-        if (typeof parsed.energy !== 'number') throw new Error('Format invalid');
-        localStorage.setItem(SAVE_KEY, JSON.stringify(parsed));
-        loadGame();
-        renderAll();
-        renderStats();
-        showToast('📥 Salvarea a fost importată cu succes!');
-      } catch (e) {
-        showToast('❌ Codul introdus nu este valid!');
-      }
-    }
-
     function confirmReset() {
       if (confirm('⚠️ Ești sigur că vrei să ștergi definitiv tot progresul (inclusiv Materia Întunecată și Realizările)?')) {
         localStorage.removeItem(SAVE_KEY);
@@ -3117,11 +3250,11 @@
 
     /********************************************************************
      * 11.5. MOTOR CLOUD SAVE (GOOGLE FIREBASE - 100% GRATUIT)
-     *       + AUTO-SYNC OFFLINE -> ONLINE + AUTO-UPDATE LIVE
+     *       + AUTO-SYNC SILENȚIOS OFFLINE -> ONLINE + AUTO-UPDATE LIVE
      *       + NAVIGARE MOBIL & INSTALARE PWA (MACBOOK / PC / ANDROID / iOS)
      ********************************************************************/
-    const APP_VERSION = '2.5.0';
-    const APP_BUILD = 250;
+    const APP_VERSION = '2.6.0';
+    const APP_BUILD = 260;
     // URL-ul oficial de pe GitHub Pages pentru verificarea automată de Update (și în aplicațiile .exe / .dmg):
     const REMOTE_UPDATE_BASE_URL = 'https://mariusinfo.github.io/quantum-nexus';
 
@@ -3141,6 +3274,7 @@
     const CLOUD_CFG_KEY = 'QUANTUM_NEXUS_FIREBASE_CFG';
     const CLOUD_SESSION_KEY = 'QUANTUM_NEXUS_FIREBASE_SESSION';
     const PENDING_SYNC_KEY = 'QUANTUM_NEXUS_PENDING_SYNC';
+    const INSTALLED_FLAG_KEY = 'QUANTUM_NEXUS_INSTALLED';
 
     let firebaseConfig = {
       apiKey: DEFAULT_FIREBASE_API_KEY,
@@ -3153,6 +3287,64 @@
     let swRegistration = null;
     let updateCountdownTimer = null;
 
+    function persistCloudSession(sess) {
+      cloudSession = sess;
+      try {
+        if (sess) {
+          const raw = JSON.stringify(sess);
+          localStorage.setItem(CLOUD_SESSION_KEY, raw);
+          document.cookie = `${CLOUD_SESSION_KEY}=${encodeURIComponent(raw)}; max-age=31536000; path=/; SameSite=Lax`;
+        } else {
+          localStorage.removeItem(CLOUD_SESSION_KEY);
+          document.cookie = `${CLOUD_SESSION_KEY}=; max-age=0; path=/`;
+        }
+      } catch (e) {}
+    }
+
+    function readPersistedCloudSession() {
+      try {
+        // 1. Verifică bridge-ul din window.name (pentru tranziția .exe file:// -> https:// la auto-update)
+        if (window.name && window.name.startsWith('{')) {
+          try {
+            const bridge = JSON.parse(window.name);
+            if (bridge && bridge.qn_bridge) {
+              if (bridge.installed) {
+                localStorage.setItem(INSTALLED_FLAG_KEY, 'true');
+              }
+              if (bridge.session && !localStorage.getItem(CLOUD_SESSION_KEY)) {
+                localStorage.setItem(CLOUD_SESSION_KEY, JSON.stringify(bridge.session));
+              }
+              if (bridge.save) {
+                const curRaw = localStorage.getItem(SAVE_KEY);
+                const curObj = curRaw ? JSON.parse(curRaw) : null;
+                if (!curObj || (bridge.save.lifetimeEnergy || 0) > (curObj.lifetimeEnergy || 0)) {
+                  localStorage.setItem(SAVE_KEY, JSON.stringify(bridge.save));
+                  loadGame();
+                  renderAll();
+                }
+              }
+              window.name = bridge.installed ? 'qn_desktop_installed' : '';
+            }
+          } catch (e) {}
+        }
+
+        // 2. Verifică localStorage
+        const savedSess = localStorage.getItem(CLOUD_SESSION_KEY);
+        if (savedSess) {
+          return JSON.parse(savedSess);
+        }
+
+        // 3. Fallback cookie
+        const match = document.cookie.match(new RegExp('(?:^|; )' + CLOUD_SESSION_KEY + '=([^;]*)'));
+        if (match && match[1]) {
+          const parsed = JSON.parse(decodeURIComponent(match[1]));
+          localStorage.setItem(CLOUD_SESSION_KEY, JSON.stringify(parsed));
+          return parsed;
+        }
+      } catch (e) {}
+      return null;
+    }
+
     function setPendingCloudSync(val) {
       pendingCloudSync = Boolean(val);
       if (pendingCloudSync) {
@@ -3163,18 +3355,20 @@
       updateCloudUI();
     }
 
-    function initCloudSystem() {
+    async function initCloudSystem() {
       try {
-        const savedSess = localStorage.getItem(CLOUD_SESSION_KEY);
-        if (savedSess) {
-          cloudSession = JSON.parse(savedSess);
+        const savedSess = readPersistedCloudSession();
+        if (savedSess && (savedSess.access_token || savedSess.refresh_token)) {
+          cloudSession = savedSess;
           updateCloudUI();
           if (navigator.onLine) {
+            // Reînnoim automat și silențios token-ul Firebase la pornire ca să nu expire niciodată sesiunea
+            await refreshCloudTokenIfNeeded();
+            updateCloudUI();
             if (pendingCloudSync) {
-              // Aveam progres jucat offline -> îl trimitem imediat către serverul Google Firebase!
-              syncOfflineProgressToServer();
+              await syncOfflineProgressToServer();
             } else {
-              cloudPullSave(false);
+              await cloudPullSave(false);
             }
           }
         } else {
@@ -3203,7 +3397,7 @@
     }
 
     function updateCloudUI() {
-      const loggedIn = Boolean(cloudSession && cloudSession.access_token && cloudSession.user);
+      const loggedIn = Boolean(cloudSession && (cloudSession.access_token || cloudSession.refresh_token) && cloudSession.user);
       document.getElementById('cloudLoggedInView').style.display = loggedIn ? 'block' : 'none';
       document.getElementById('cloudAuthView').style.display = loggedIn ? 'none' : 'block';
 
@@ -3225,10 +3419,10 @@
         document.getElementById('cloudUserEmailText').innerText = cloudSession.user.email || 'Comandant Autentificat';
         if (!online) {
           if (btnText) btnText.innerText = 'Cloud (Offline)';
-          if (saveText) saveText.innerText = 'Offline (Așteaptă net)';
+          if (saveText) saveText.innerText = 'Offline (Auto-Sync)';
         } else if (pendingCloudSync) {
-          if (btnText) btnText.innerText = 'Sincronizare...';
-          if (saveText) saveText.innerText = 'Trimitere în Cloud...';
+          if (btnText) btnText.innerText = 'Cloud ON';
+          if (saveText) saveText.innerText = 'Sincronizare...';
         } else {
           if (btnText) btnText.innerText = 'Cloud ON';
           if (saveText) saveText.innerText = 'Firebase & Local';
@@ -3239,7 +3433,7 @@
       }
     }
 
-    // Reînnoire automată token Google Firebase după sesiuni lungi de joc Offline
+    // Reînnoire automată token Google Firebase după sesiuni lungi sau repornirea aplicației
     async function refreshCloudTokenIfNeeded() {
       if (!isFirebaseConfigured() || !cloudSession || !cloudSession.refresh_token) return false;
       try {
@@ -3253,7 +3447,7 @@
         if (data && data.id_token) {
           cloudSession.access_token = data.id_token;
           if (data.refresh_token) cloudSession.refresh_token = data.refresh_token;
-          localStorage.setItem(CLOUD_SESSION_KEY, JSON.stringify(cloudSession));
+          persistCloudSession(cloudSession);
           return true;
         }
       } catch (e) {}
@@ -3274,10 +3468,7 @@
     }
 
     async function cloudRegister() {
-      if (!isFirebaseConfigured()) {
-        showToast('⚠️ Configurează mai întâi cheile Google Firebase mai jos!');
-        return;
-      }
+      if (!isFirebaseConfigured()) return;
       const email = document.getElementById('cloudEmailInput').value.trim();
       const password = document.getElementById('cloudPassInput').value;
       if (!email || password.length < 6) {
@@ -3296,14 +3487,13 @@
           throw new Error(msg);
         }
 
-        cloudSession = {
+        persistCloudSession({
           access_token: data.idToken,
           refresh_token: data.refreshToken,
           user: { id: data.localId, email: data.email }
-        };
-        localStorage.setItem(CLOUD_SESSION_KEY, JSON.stringify(cloudSession));
+        });
         updateCloudUI();
-        showToast('🎉 Cont Google Firebase creat și conectat! Salvăm progresul...');
+        showToast('🎉 Cont Google Firebase creat și conectat!');
         await cloudPushSave(false);
         if (document.getElementById('tab-leaderboard').classList.contains('active')) {
           renderLeaderboardTab();
@@ -3314,10 +3504,7 @@
     }
 
     async function cloudLogin() {
-      if (!isFirebaseConfigured()) {
-        showToast('⚠️ Configurează mai întâi cheile Google Firebase mai jos!');
-        return;
-      }
+      if (!isFirebaseConfigured()) return;
       const email = document.getElementById('cloudEmailInput').value.trim();
       const password = document.getElementById('cloudPassInput').value;
       if (!email || !password) {
@@ -3336,15 +3523,15 @@
           throw new Error(msg);
         }
 
-        cloudSession = {
+        persistCloudSession({
           access_token: data.idToken,
           refresh_token: data.refreshToken,
           user: { id: data.localId, email: data.email }
-        };
-        localStorage.setItem(CLOUD_SESSION_KEY, JSON.stringify(cloudSession));
+        });
         updateCloudUI();
-        showToast('🔥 Autentificat cu succes în Google Firebase Cloud!');
-        await cloudPullSave(true);
+        showToast('🔥 Autentificat în Cloud! Sincronizare automată activă.');
+        // Sincronizare silențioasă inteligentă (dacă local e mai avansat urcă automat, dacă Cloud e mai avansat descarcă automat)
+        await cloudPullSave(false);
         if (document.getElementById('tab-leaderboard').classList.contains('active')) {
           renderLeaderboardTab();
         }
@@ -3354,8 +3541,7 @@
     }
 
     function cloudLogout() {
-      cloudSession = null;
-      localStorage.removeItem(CLOUD_SESSION_KEY);
+      persistCloudSession(null);
       setPendingCloudSync(false);
       updateCloudUI();
       if (document.getElementById('tab-leaderboard').classList.contains('active')) {
@@ -3378,12 +3564,9 @@
       if (!isFirebaseConfigured() || !cloudSession || !cloudSession.access_token) return false;
       saveGame();
 
-      // Dacă jucătorul este Offline, punem salvarea în coada de așteptare (Pending Sync)
+      // Dacă jucătorul este Offline, punem salvarea în coada de așteptare (Pending Sync) fără să-l deranjăm
       if (!navigator.onLine) {
         setPendingCloudSync(true);
-        if (manualToast) {
-          showToast('📴 Ești Offline! Progresul a fost salvat local și va fi trimis automat la server imediat ce pornești internetul.');
-        }
         return false;
       }
 
@@ -3457,11 +3640,8 @@
         return true;
       } catch (err) {
         isSyncingNow = false;
-        // Orice eroare de rețea păstrează flag-ul activ pentru retrimitere automată
+        // Orice eroare de rețea păstrează flag-ul activ pentru retrimitere automată silențioasă
         setPendingCloudSync(true);
-        if (manualToast) {
-          showToast(`⚠️ Salvat local (Server indisponibil momentan, se va sincroniza automat): ${err.message}`);
-        }
         return false;
       }
     }
@@ -3517,7 +3697,7 @@
     let currentLbCategory = 'lifetime_energy';
 
     function renderLeaderboardTab() {
-      const loggedIn = Boolean(isFirebaseConfigured() && cloudSession && cloudSession.access_token && cloudSession.user);
+      const loggedIn = Boolean(isFirebaseConfigured() && cloudSession && (cloudSession.access_token || cloudSession.refresh_token) && cloudSession.user);
       const lockedBox = document.getElementById('lbLockedState');
       const unlockedBox = document.getElementById('lbUnlockedState');
 
@@ -3560,12 +3740,12 @@
         showToast(`👨‍🚀 Numele "${cleanName}" și scorurile tale au fost actualizate în Clasament!`);
         refreshLeaderboard(false);
       } else {
-        showToast(`💾 Numele "${cleanName}" a fost salvat și va apărea în Clasament când ești online!`);
+        showToast(`💾 Numele "${cleanName}" a fost salvat!`);
       }
     }
 
     async function refreshLeaderboard(manualToast = false) {
-      const loggedIn = Boolean(isFirebaseConfigured() && cloudSession && cloudSession.access_token && cloudSession.user);
+      const loggedIn = Boolean(isFirebaseConfigured() && cloudSession && (cloudSession.access_token || cloudSession.refresh_token) && cloudSession.user);
       if (!loggedIn) {
         renderLeaderboardTab();
         return;
@@ -3594,7 +3774,7 @@
         }
 
         if (!res.ok) {
-          throw new Error(`Acces refuzat la Realtime Database (Verifică Rules în Firebase Console!)`);
+          throw new Error(`Serviciul de clasament se sincronizează...`);
         }
 
         const rawObj = await res.json();
@@ -3650,28 +3830,30 @@
           showToast(`🏅 Clasamentul (${cat.label}) a fost actualizat!`);
         }
       } catch (err) {
-        listEl.innerHTML = `<div style="text-align:center; padding:20px; color:#fcd34d; font-size:12.5px;">⚠️ ${err.message}<br/><br/>Deschide <strong>☁️ Cloud Save ➔ ⚙️ Configurare Google Firebase ➔ 📋 Copiază Regulile (Rules JSON)</strong> și publică-le în Firebase Realtime Database.</div>`;
+        listEl.innerHTML = `<div style="text-align:center; padding:20px; color:#fcd34d; font-size:12.5px;">⚠️ ${err.message}</div>`;
       }
     }
 
-    // Funcție apelată automat când omul trece din Offline -> Online
+    // Funcție apelată automat și 100% silențios când omul trece din Offline -> Online
     async function syncOfflineProgressToServer() {
-      if (!navigator.onLine || !isFirebaseConfigured() || !cloudSession || !cloudSession.access_token) return;
-      saveGame();
-      const ok = await cloudPushSave(false);
-      if (ok) {
-        showToast('🌐 Conexiune restabilită! Progresul tău jucat Offline a fost salvat automat în Google Firebase!');
-        playTone(660, 'triangle', 0.14, 0.08);
+      if (!navigator.onLine || !isFirebaseConfigured() || !cloudSession) return;
+      if (!cloudSession.access_token && cloudSession.refresh_token) {
+        await refreshCloudTokenIfNeeded();
       }
+      if (!cloudSession.access_token) return;
+      saveGame();
+      await cloudPushSave(false);
     }
 
     async function cloudPullSave(manual = false) {
-      if (!isFirebaseConfigured() || !cloudSession || !cloudSession.access_token) return;
+      if (!isFirebaseConfigured() || !cloudSession) return;
       if (!navigator.onLine) {
-        if (manual) showToast('📴 Ești Offline! Conectează-te la internet pentru a descărca din Cloud.');
         return;
       }
       try {
+        if (!cloudSession.access_token && cloudSession.refresh_token) {
+          await refreshCloudTokenIfNeeded();
+        }
         const uid = encodeURIComponent(cloudSession.user.id);
         let res = await fetch(`${firebaseConfig.databaseURL}/users/${uid}/save.json?auth=${encodeURIComponent(cloudSession.access_token)}`);
 
@@ -3686,8 +3868,8 @@
         const row = await res.json();
 
         if (!row || !row.save_data) {
-          // Nu există încă salvare în Cloud pe acest cont -> urcăm salvarea locală
-          await cloudPushSave(manual);
+          // Nu există încă salvare în Cloud pe acest cont -> urcăm salvarea locală automat și silențios
+          await cloudPushSave(false);
           return;
         }
 
@@ -3699,45 +3881,42 @@
 
         const cloudIsAhead = (cloudPres > localPres) || (cloudPres === localPres && cloudLifetime > localLifetime * 1.01);
 
-        if (cloudIsAhead || manual) {
-          if (manual && !cloudIsAhead && localLifetime > cloudLifetime) {
-            if (!confirm(`Salvarea din Cloud are mai puțină energie (${formatNumber(cloudLifetime)}) decât cea de pe acest dispozitiv (${formatNumber(localLifetime)}).\n\nVrei totuși să suprascrii jocul local cu cel din Cloud?`)) {
-              return;
-            }
-          }
+        if (cloudIsAhead) {
           localStorage.setItem(SAVE_KEY, JSON.stringify(cloudState));
           loadGame();
           renderAll();
           renderStats();
           setPendingCloudSync(false);
-          showToast('☁️⬇️ Progresul din Google Firebase a fost încărcat și sincronizat!');
+          if (manual) {
+            showToast('☁️⬇️ Progresul din Cloud a fost încărcat!');
+          }
         } else {
-          // Progresul local (ex: jucat offline) e mai avansat -> îl trimitem automat către server!
+          // Progresul local (ex: jucat offline) e mai avansat -> îl urcăm automat în Cloud fără să întrebăm nimic!
           await cloudPushSave(false);
+          if (manual) {
+            showToast('☁️⬆️ Progresul tău actual este deja la zi și a fost sincronizat în Cloud!');
+          }
         }
       } catch (err) {
         if (manual) {
-          showToast(`⚠️ Nu s-a putut descărca din Cloud: ${err.message}`);
+          showToast(`⚠️ Eroare sincronizare Cloud: ${err.message}`);
         }
       }
     }
 
-    // Detectare instantanee Offline / Online
+    // Detectare instantanee și silențioasă Offline / Online (fără ferestre sau mesaje deranjante)
     window.addEventListener('offline', () => {
-      if (cloudSession && cloudSession.access_token) {
+      if (cloudSession && (cloudSession.access_token || cloudSession.refresh_token)) {
         setPendingCloudSync(true);
       } else {
         updateCloudUI();
       }
-      showToast('📴 Conexiune pierdută (Mod Offline). Jocul salvează local și va trimite automat datele la server când revine netul!');
     });
 
     window.addEventListener('online', () => {
       updateCloudUI();
-      if (cloudSession && cloudSession.access_token) {
+      if (cloudSession && (cloudSession.access_token || cloudSession.refresh_token)) {
         syncOfflineProgressToServer();
-      } else {
-        showToast('🌐 Conexiunea la internet a revenit!');
       }
       // Verificăm imediat și dacă a apărut un Update de joc cât timp a fost offline
       checkForGameUpdate(false);
@@ -3825,6 +4004,16 @@
       }
 
       try {
+        // Păstrăm sesiunea Cloud și salvarea în window.name pentru a nu pierde niciodată login-ul la update
+        window.name = JSON.stringify({
+          qn_bridge: true,
+          installed: isAppAlreadyInstalled(),
+          session: cloudSession,
+          save: state
+        });
+      } catch (e) {}
+
+      try {
         // Șterge cache-ul vechi din Service Worker ca noul cod să fie încărcat 100% proaspăt
         if ('caches' in window) {
           const keys = await caches.keys();
@@ -3835,9 +4024,8 @@
         }
       } catch (e) {}
 
-      // Dacă avem un URL extern configurat și rulăm din fișier local (.exe / .dmg), putem redirecționa sau reîncărca
       if (REMOTE_UPDATE_BASE_URL && location.protocol === 'file:') {
-        window.location.href = `${REMOTE_UPDATE_BASE_URL.replace(/\/+$/, '')}/index.html?updated=${Date.now()}`;
+        window.location.href = `${REMOTE_UPDATE_BASE_URL.replace(/\/+$/, '')}/index.html?mode=desktop&updated=${Date.now()}`;
       } else {
         window.location.reload();
       }
@@ -3855,17 +4043,54 @@
       document.getElementById(`zone-${zone}`).classList.add('mobile-active');
     }
 
+    function isAppAlreadyInstalled() {
+      try {
+        if (location.protocol === 'file:') return true;
+        if (/electron/i.test(navigator.userAgent || '')) return true;
+        if (window.matchMedia('(display-mode: standalone)').matches) return true;
+        if (window.matchMedia('(display-mode: window-controls-overlay)').matches) return true;
+        if (window.matchMedia('(display-mode: fullscreen)').matches) return true;
+        if (window.matchMedia('(display-mode: minimal-ui)').matches) return true;
+        if (window.navigator.standalone === true) return true;
+        if (localStorage.getItem(INSTALLED_FLAG_KEY) === 'true') return true;
+        if (location.search.includes('mode=desktop')) return true;
+        if (window.name === 'qn_desktop_installed') return true;
+      } catch (e) {}
+      return false;
+    }
+
+    function hideInstallButtonsIfInstalled() {
+      if (isAppAlreadyInstalled()) {
+        try { localStorage.setItem(INSTALLED_FLAG_KEY, 'true'); } catch (e) {}
+        const b1 = document.getElementById('btnInstallApp');
+        if (b1) b1.style.display = 'none';
+        const b2 = document.getElementById('btnInstallAppStats');
+        if (b2) b2.style.display = 'none';
+      }
+    }
+
     // Instalare PWA (MacBook, Windows, Android, iOS)
     window.addEventListener('beforeinstallprompt', (e) => {
       e.preventDefault();
       deferredInstallPrompt = e;
     });
 
+    window.addEventListener('appinstalled', () => {
+      try { localStorage.setItem(INSTALLED_FLAG_KEY, 'true'); } catch (e) {}
+      hideInstallButtonsIfInstalled();
+    });
+
     function triggerInstallApp() {
+      if (isAppAlreadyInstalled()) {
+        hideInstallButtonsIfInstalled();
+        return;
+      }
       if (deferredInstallPrompt) {
         deferredInstallPrompt.prompt();
         deferredInstallPrompt.userChoice.then((choice) => {
           if (choice.outcome === 'accepted') {
+            try { localStorage.setItem(INSTALLED_FLAG_KEY, 'true'); } catch (e) {}
+            hideInstallButtonsIfInstalled();
             showToast('🎉 Quantum Nexus a fost instalat ca aplicație!');
           }
           deferredInstallPrompt = null;
@@ -3922,16 +4147,11 @@
       loadGame();
       renderAll();
       initCloudSystem();
+      hideInstallButtonsIfInstalled();
       requestAnimationFrame(gameLoop);
 
       const verSub = document.getElementById('versionHeaderSub');
       if (verSub) verSub.innerText = `v${APP_VERSION} // AUTO-UPDATE & CLOUD SYNC`;
-
-      // Ascunde butonul de instalare dacă rulează deja ca aplicație nativă / standalone
-      if (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone) {
-        const installBtn = document.getElementById('btnInstallApp');
-        if (installBtn) installBtn.style.display = 'none';
-      }
 
       // Înregistrare Service Worker pentru rulare 100% Offline + Auto-Update
       if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost' || location.hostname === '127.0.0.1')) {
@@ -3956,9 +4176,9 @@
       // Auto-Save local la fiecare 5 secunde
       setInterval(saveGame, 5000);
 
-      // Auto-Sync în Cloud la fiecare 25 secunde (sau retrimitere dacă era în așteptare)
+      // Auto-Sync silențios în Cloud la fiecare 25 secunde (sau retrimitere dacă era în așteptare)
       setInterval(() => {
-        if (navigator.onLine && cloudSession && cloudSession.access_token) {
+        if (navigator.onLine && cloudSession && (cloudSession.access_token || cloudSession.refresh_token)) {
           if (pendingCloudSync) {
             syncOfflineProgressToServer();
           } else {
@@ -3983,7 +4203,7 @@
         saveGame();
         if (cloudSession && cloudSession.access_token) cloudPushSave(false);
       } else if (document.visibilityState === 'visible' && navigator.onLine) {
-        if (pendingCloudSync && cloudSession && cloudSession.access_token) {
+        if (pendingCloudSync && cloudSession && (cloudSession.access_token || cloudSession.refresh_token)) {
           syncOfflineProgressToServer();
         }
         checkForGameUpdate(false);

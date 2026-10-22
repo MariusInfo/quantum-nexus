@@ -1,7 +1,7 @@
 {
-  "version": "2.5.0",
-  "build": 250,
+  "version": "2.6.0",
+  "build": 260,
   "releaseDate": "2026-10-22",
-  "changelog": "v2.5.0: Sistem Auto-Update Live pentru toți jucătorii conectați + Sincronizare automată Offline -> Online în Cloud!",
+  "changelog": "v2.6.0: UI complet optimizat pentru telefon, sesiune Cloud Save permanentă, sincronizare 100% automată și silențioasă Offline -> Online, protecție anti-cheat salvare.",
   "autoApply": true
 }
