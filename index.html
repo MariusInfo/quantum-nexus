@@ -2931,6 +2931,13 @@
       background: rgba(16, 185, 129, 0.06);
     }
 
+    .daily-day-card.claimed.claimed-today {
+      opacity: 0.95;
+      border-color: rgba(16, 185, 129, 0.7);
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.16) 0%, rgba(15, 23, 42, 0.92) 100%);
+      box-shadow: 0 0 16px rgba(16, 185, 129, 0.2);
+    }
+
     .daily-day-card.ready {
       border-color: #fde047;
       background: linear-gradient(135deg, rgba(234, 179, 8, 0.2) 0%, rgba(30, 41, 59, 0.95) 100%);
@@ -4190,7 +4197,7 @@
       <!-- Subtitlu & Versiune Sistem -->
       <div class="loading-footer-tip">
         <span class="loading-pulse-dot"></span>
-        <span>Simulare Multiversală v3.1.0 // Auto-Stabilizare Activă</span>
+        <span>Simulare Multiversală v3.1.1 // Auto-Stabilizare Activă</span>
       </div>
 
       <!-- Hint discret dacă browserul a reținut temporar autoplay înainte de primul gest -->
@@ -4207,7 +4214,7 @@
         <div class="brand-icon">⚛️</div>
         <div>
           <div class="brand-title">QUANTUM NEXUS</div>
-          <div class="brand-sub" id="versionHeaderSub">v3.1.0</div>
+          <div class="brand-sub" id="versionHeaderSub">v3.1.1</div>
         </div>
       </div>
 
@@ -4699,7 +4706,7 @@
           <button class="btn-header install-btn" id="btnInstallApp" onclick="triggerInstallApp()">📲 Instalează</button>
         </div>
         <div style="font-size: 11px; color: var(--text-dim); margin-top: 8px;">
-          Versiune instalată: <strong id="settingsVersionText">v3.1.0</strong> // Auto-Update activ
+          Versiune instalată: <strong id="settingsVersionText">v3.1.1</strong> // Auto-Update activ
         </div>
       </div>
 
@@ -5790,6 +5797,7 @@
         },
         dailyLogin: {
           lastClaimDate: '',
+          claimedDay: 0,
           currentDay: 1,
           totalStreak: 0,
           cycle: 1
@@ -6089,15 +6097,40 @@
       const today = getTodayDateString();
 
       if (!state.dailyLogin) {
-        state.dailyLogin = { lastClaimDate: '', currentDay: 1, totalStreak: 0, cycle: 1 };
+        state.dailyLogin = { lastClaimDate: '', claimedDay: 0, currentDay: 1, totalStreak: 0, cycle: 1 };
       }
+
+      // Migrare automată pentru salvările anterioare
+      if (state.dailyLogin.claimedDay === undefined) {
+        if (state.dailyLogin.lastClaimDate === today) {
+          // Utilizatorul a revendicat cadoul de astăzi (în versiunea anterioară currentDay era incrementat imediat)
+          const oldDay = state.dailyLogin.currentDay || 2;
+          state.dailyLogin.claimedDay = Math.max(1, Math.min(7, oldDay - 1));
+        } else {
+          // Utilizatorul nu a revendicat astăzi
+          const oldDay = state.dailyLogin.currentDay || 1;
+          state.dailyLogin.claimedDay = Math.max(0, Math.min(6, oldDay - 1));
+        }
+      }
+
+      // Sincronizare currentDay (ziua următoare / țintă în ciclu)
+      state.dailyLogin.currentDay = ((state.dailyLogin.claimedDay || 0) % 7) + 1;
 
       // Verificare dacă seria (Streak) s-a rupt (dacă s-a sărit mai mult de 1 zi)
       if (state.dailyLogin.lastClaimDate) {
         const diff = getDaysDifference(state.dailyLogin.lastClaimDate, today);
         if (diff > 1) {
-          // A sărit o zi sau mai multe -> seria revine la Ziua 1
+          // A sărit o zi sau mai multe -> seria revine la 0 și Ziua 1
+          state.dailyLogin.totalStreak = 0;
+          state.dailyLogin.claimedDay = 0;
           state.dailyLogin.currentDay = 1;
+        } else if (diff === 1) {
+          // O nouă zi consecutivă! Dacă ieri a finalizat Ziua 7 (Marele Premiu), începe noul ciclu
+          if (state.dailyLogin.claimedDay >= 7) {
+            state.dailyLogin.claimedDay = 0;
+            state.dailyLogin.currentDay = 1;
+            state.dailyLogin.cycle = (state.dailyLogin.cycle || 1) + 1;
+          }
         }
       }
 
@@ -6200,13 +6233,26 @@
     function renderDailyModal() {
       initDailySystem();
 
-      const dl = state.dailyLogin || { currentDay: 1, totalStreak: 0, cycle: 1 };
+      const dl = state.dailyLogin || { lastClaimDate: '', claimedDay: 0, currentDay: 1, totalStreak: 0, cycle: 1 };
+      const loginReady = isDailyLoginReady();
+      const claimedDay = dl.claimedDay || 0;
+      const targetDay = (claimedDay % 7) + 1;
+
       const streakDaysEl = document.getElementById('dailyStreakDaysText');
       const streakTotalEl = document.getElementById('dailyStreakTotalText');
       const streakMultEl = document.getElementById('dailyStreakMultBadge');
 
-      if (streakDaysEl) streakDaysEl.innerText = `${dl.totalStreak || 0} ${dl.totalStreak === 1 ? 'Zi' : 'Zile'} Consecutiv`;
-      if (streakTotalEl) streakTotalEl.innerText = `(Ziua ${dl.currentDay || 1}/7)`;
+      if (streakDaysEl) {
+        const s = dl.totalStreak || 0;
+        streakDaysEl.innerText = `${s} ${s === 1 ? 'Zi' : 'Zile'} Consecutiv`;
+      }
+      if (streakTotalEl) {
+        if (loginReady) {
+          streakTotalEl.innerText = `(Disponibil: Ziua ${targetDay}/7)`;
+        } else {
+          streakTotalEl.innerText = `(Ziua ${claimedDay || 1}/7 Revendicată)`;
+        }
+      }
       if (streakMultEl) {
         const bonusPct = ((dl.cycle || 1) - 1) * 10;
         streakMultEl.innerText = `⭐ Ciclu #${dl.cycle || 1} (+${bonusPct}% Bonus Streak)`;
@@ -6222,39 +6268,50 @@
       if (!grid) return;
       grid.innerHTML = '';
 
-      const dl = state.dailyLogin || { currentDay: 1, totalStreak: 0, cycle: 1 };
+      const dl = state.dailyLogin || { lastClaimDate: '', claimedDay: 0, currentDay: 1, totalStreak: 0, cycle: 1 };
       const loginReady = isDailyLoginReady();
-      const curDay = dl.currentDay || 1;
+      const claimedDay = dl.claimedDay || 0;
+      const targetDay = (claimedDay % 7) + 1;
 
       DAILY_LOGIN_REWARDS_DATA.forEach(item => {
         const card = document.createElement('div');
         const isGrand = item.day === 7;
 
         let statusClass = 'locked';
-        let btnText = '🔒 Blocat';
+        let btnText = `🔒 Ziua ${item.day}`;
         let btnClass = 'btn-locked';
         let btnDisabled = true;
 
-        if (item.day < curDay) {
-          // Zile deja revendicate în ciclul curent
-          statusClass = 'claimed';
-          btnText = '✅ Revendicat';
+        if (item.day <= claimedDay) {
+          // Această zi a fost deja revendicată în ciclul curent
+          if (item.day === claimedDay && !loginReady) {
+            statusClass = 'claimed claimed-today';
+            btnText = '✅ Revendicat Azi';
+          } else {
+            statusClass = 'claimed';
+            btnText = '✅ Revendicat';
+          }
           btnClass = 'btn-claimed';
-        } else if (item.day === curDay) {
+          btnDisabled = true;
+        } else if (item.day === targetDay) {
+          // Aceasta este următoarea zi în succesiune
           if (loginReady) {
             statusClass = 'ready';
             btnText = isGrand ? '👑 REVENDICĂ MARELE PREMIU!' : '✨ Revendică Cadoul';
             btnClass = 'btn-ready';
             btnDisabled = false;
           } else {
-            statusClass = 'claimed';
-            btnText = '✅ Revendicat Azi';
-            btnClass = 'btn-claimed';
+            statusClass = 'locked';
+            btnText = '⏰ Deblocare Mâine';
+            btnClass = 'btn-locked';
+            btnDisabled = true;
           }
         } else {
+          // Zile viitoare din ciclu
           statusClass = 'locked';
           btnText = `🔒 Ziua ${item.day}`;
           btnClass = 'btn-locked';
+          btnDisabled = true;
         }
 
         card.className = `daily-day-card ${statusClass} ${isGrand ? 'grand-jackpot' : ''}`;
@@ -6295,9 +6352,10 @@
         return;
       }
 
-      const dl = state.dailyLogin || { currentDay: 1, totalStreak: 0, cycle: 1 };
-      const curDay = dl.currentDay || 1;
-      const reward = DAILY_LOGIN_REWARDS_DATA[curDay - 1];
+      const dl = state.dailyLogin || { lastClaimDate: '', claimedDay: 0, currentDay: 1, totalStreak: 0, cycle: 1 };
+      const claimedDay = dl.claimedDay || 0;
+      const targetDay = (claimedDay % 7) + 1;
+      const reward = DAILY_LOGIN_REWARDS_DATA[targetDay - 1];
       if (!reward) return;
 
       const now = Date.now();
@@ -6317,19 +6375,18 @@
       // Actualizare Streak & Zile
       const today = getTodayDateString();
       dl.lastClaimDate = today;
+      dl.claimedDay = targetDay;
+      dl.currentDay = Math.min(7, targetDay + 1);
       dl.totalStreak = (dl.totalStreak || 0) + 1;
 
-      if (curDay >= 7) {
-        dl.currentDay = 1;
-        dl.cycle = (dl.cycle || 1) + 1;
+      if (targetDay >= 7) {
         playXboxAchievementChime('mythic');
         spawnFloatingText(window.innerWidth / 2, window.innerHeight / 2 - 40, '👑 MARELE PREMIU ZIUA 7 REVENDICAT!', true);
-        showToast(`👑 Felicitări! Ai revendicat Marele Premiu Ziua 7: +5 🔮 Materie Întunecată, producție masivă și ai început Ciclul #${dl.cycle}!`);
+        showToast(`👑 Felicitări! Ai revendicat Marele Premiu Ziua 7: +5 🔮 Materie Întunecată, producție masivă și ai completat Ciclul #${dl.cycle || 1}!`);
       } else {
-        dl.currentDay = curDay + 1;
         playXboxAchievementChime('rare');
-        spawnFloatingText(window.innerWidth / 2, window.innerHeight / 2 - 40, `🎁 ZIUA ${curDay} REVENDICATĂ!`, true);
-        showToast(`🎁 Recompensa Zilei ${curDay} a fost revendicată: ${rewardSummary}!`);
+        spawnFloatingText(window.innerWidth / 2, window.innerHeight / 2 - 40, `🎁 ZIUA ${targetDay} REVENDICATĂ!`, true);
+        showToast(`🎁 Recompensa Zilei ${targetDay} a fost revendicată: ${rewardSummary}!`);
       }
 
       spawnParticles(window.innerWidth / 2, window.innerHeight / 2, 35, '#fde047');
@@ -9133,8 +9190,8 @@
      *       + AUTO-SYNC SILENȚIOS OFFLINE -> ONLINE + AUTO-UPDATE LIVE
      *       + NAVIGARE MOBIL & INSTALARE PWA (MACBOOK / PC / ANDROID / iOS)
      ********************************************************************/
-    const APP_VERSION = '3.1.0';
-    const APP_BUILD = 310;
+    const APP_VERSION = '3.1.1';
+    const APP_BUILD = 311;
     // URL-ul oficial de pe GitHub Pages pentru verificarea automată de Update (și în aplicațiile .exe / .dmg):
     const REMOTE_UPDATE_BASE_URL = 'https://mariusinfo.github.io/quantum-nexus';
 

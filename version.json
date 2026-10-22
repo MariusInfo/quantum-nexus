@@ -1,7 +1,7 @@
 {
-  "version": "3.1.0",
-  "build": 310,
+  "version": "3.1.1",
+  "build": 311,
   "releaseDate": "2026-10-22",
-  "changelog": "v3.1.0: Recompense Zilnice & Streak (Calendar 7 Zile cu Marele Premiu Ziua 7: +5 🔮 Materie Întunecată) + 3 Misiuni Zilnice Regenerate la 24h & Pachetul Suprem de Misiuni!",
+  "changelog": "v3.1.1: Corecție afișare Recompense Zilnice (Daily Login) - când revendici cadoul Zilei 1, Ziua 1 este marcată 'Revendicat Azi', iar Ziua 2 rămâne corect blocată cu 'Deblocare Mâine' fără a mai fi marcată prematur ca revendicată.",
   "autoApply": true
 }
