@@ -75,8 +75,21 @@
       background: rgba(56, 189, 248, 0.5);
     }
 
+    /* Fundal Dinamic Interactiv (Cosmic Interactive Canvas) */
+    .cosmic-bg-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 0;
+    }
+
     /* App Layout */
     .app-shell {
+      position: relative;
+      z-index: 1;
       display: grid;
       grid-template-rows: 60px 1fr;
       height: 100vh;
@@ -209,6 +222,36 @@
       color: #fca5a5;
     }
 
+    /* Buton Principal Setări (Dreapta Sus) */
+    .settings-btn {
+      background: linear-gradient(135deg, rgba(30, 41, 59, 0.85), rgba(15, 23, 42, 0.95)) !important;
+      border: 1px solid rgba(56, 189, 248, 0.4) !important;
+      color: #ffffff !important;
+      padding: 7px 15px !important;
+      border-radius: 10px !important;
+      font-size: 13px !important;
+      font-weight: 700 !important;
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.35);
+      gap: 7px !important;
+    }
+
+    .settings-btn:hover {
+      background: linear-gradient(135deg, rgba(56, 189, 248, 0.22), rgba(168, 85, 247, 0.22)) !important;
+      border-color: #38bdf8 !important;
+      box-shadow: 0 0 16px rgba(56, 189, 248, 0.45);
+      transform: translateY(-1px);
+    }
+
+    .settings-btn .gear-spin {
+      display: inline-block;
+      font-size: 15px;
+      transition: transform 0.35s ease;
+    }
+
+    .settings-btn:hover .gear-spin {
+      transform: rotate(90deg);
+    }
+
     /* Main 3-Column Grid */
     .main-grid {
       display: grid;
@@ -229,7 +272,8 @@
 
     /* Left Column: Reactor & Click Zone */
     .left-zone {
-      background: linear-gradient(180deg, rgba(14, 19, 31, 0.7) 0%, rgba(7, 9, 14, 0.9) 100%);
+      background: linear-gradient(180deg, rgba(14, 19, 31, 0.62) 0%, rgba(7, 9, 14, 0.82) 100%);
+      backdrop-filter: blur(8px);
       border-right: 1px solid var(--border-subtle);
       padding: 20px;
       display: flex;
@@ -239,62 +283,291 @@
       overflow: hidden;
     }
 
+    /* ====================================================================
+       CYBER-HUD COMMAND CONSOLE (RESOURCE DISPLAY)
+       ==================================================================== */
     .resource-display {
-      text-align: center;
-      background: rgba(21, 28, 46, 0.65);
-      border: 1px solid var(--border-subtle);
-      border-radius: 16px;
-      padding: 16px 14px;
-      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06), 0 8px 24px rgba(0, 0, 0, 0.3);
       position: relative;
+      text-align: center;
+      background: linear-gradient(145deg, rgba(14, 21, 38, 0.90) 0%, rgba(9, 14, 28, 0.96) 100%);
+      border: 1px solid rgba(56, 189, 248, 0.42);
+      border-radius: 18px;
+      padding: 16px 16px 14px 16px;
+      box-shadow:
+        0 14px 34px rgba(0, 0, 0, 0.6),
+        0 0 24px rgba(56, 189, 248, 0.12),
+        inset 0 1px 0 rgba(255, 255, 255, 0.16),
+        inset 0 0 16px rgba(56, 189, 248, 0.05);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      overflow: hidden;
       z-index: 2;
     }
 
-    .resource-label {
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 0.14em;
-      color: var(--accent-cyan);
-      font-weight: 700;
+    /* Colțare decorative Cyber-HUD */
+    .hud-bracket {
+      position: absolute;
+      width: 9px;
+      height: 9px;
+      pointer-events: none;
+      opacity: 0.9;
+    }
+    .hud-bracket-tl { top: 6px; left: 6px; border-top: 2px solid #38bdf8; border-left: 2px solid #38bdf8; }
+    .hud-bracket-tr { top: 6px; right: 6px; border-top: 2px solid #38bdf8; border-right: 2px solid #38bdf8; }
+    .hud-bracket-bl { bottom: 6px; left: 6px; border-bottom: 2px solid #38bdf8; border-left: 2px solid #38bdf8; }
+    .hud-bracket-br { bottom: 6px; right: 6px; border-bottom: 2px solid #38bdf8; border-right: 2px solid #38bdf8; }
+
+    .hud-glass-glare {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 45%;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.06) 0%, transparent 100%);
+      pointer-events: none;
+      border-radius: 18px 18px 0 0;
+    }
+
+    .resource-header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
       margin-bottom: 4px;
+    }
+
+    .resource-status-wrap {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+
+    .hud-pulse-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #38bdf8;
+      box-shadow: 0 0 8px #38bdf8;
+      animation: hudLivePulse 1.8s ease-in-out infinite;
+    }
+
+    @keyframes hudLivePulse {
+      0%, 100% { opacity: 0.6; transform: scale(0.9); }
+      50% { opacity: 1; transform: scale(1.2); box-shadow: 0 0 12px #38bdf8; }
+    }
+
+    .resource-label {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      color: #38bdf8;
+      text-transform: uppercase;
+      text-shadow: 0 0 10px rgba(56, 189, 248, 0.6);
+      margin: 0;
+    }
+
+    .hud-reactor-pill {
+      font-family: var(--font-mono);
+      font-size: 9.5px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      color: #bae6fd;
+      background: rgba(56, 189, 248, 0.12);
+      border: 1px solid rgba(56, 189, 248, 0.35);
+      border-radius: 999px;
+      padding: 2px 7px;
+      box-shadow: 0 0 8px rgba(56, 189, 248, 0.2);
+    }
+
+    .resource-value-row {
+      margin: 4px 0 10px 0;
     }
 
     .resource-value {
       font-family: var(--font-mono);
-      font-size: 34px;
-      font-weight: 800;
-      color: #ffffff;
-      text-shadow: 0 0 22px rgba(56, 189, 248, 0.45);
-      line-height: 1.15;
-      margin-bottom: 8px;
-      letter-spacing: -0.02em;
+      font-size: 38px;
+      font-weight: 850;
+      letter-spacing: -0.025em;
+      line-height: 1.1;
+      margin: 0;
+      background: linear-gradient(180deg, #ffffff 30%, #e0f2fe 70%, #7dd3fc 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      filter: drop-shadow(0 0 18px rgba(56, 189, 248, 0.55));
     }
 
-    .resource-rates {
-      display: flex;
-      justify-content: center;
-      gap: 14px;
-      font-family: var(--font-mono);
-      font-size: 12px;
-      color: var(--text-muted);
-    }
-
-    .rate-item span {
-      color: var(--text-main);
-      font-weight: 700;
-    }
-
-    .prestige-badge-mini {
-      margin-top: 8px;
-      padding-top: 8px;
-      border-top: 1px solid rgba(255, 255, 255, 0.06);
-      font-size: 12px;
-      color: #d8b4fe;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+    .resource-rates-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
       gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    .rate-hud-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 7px 10px;
+      border-radius: 11px;
+      backdrop-filter: blur(8px);
+      transition: border-color 0.2s ease, transform 0.2s ease;
+    }
+
+    .rate-hud-card.rate-passive {
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.08), rgba(6, 78, 59, 0.18));
+      border: 1px solid rgba(16, 185, 129, 0.32);
+    }
+
+    .rate-hud-card.rate-passive:hover {
+      border-color: #10b981;
+      transform: translateY(-1px);
+    }
+
+    .rate-hud-card.rate-click {
+      background: linear-gradient(135deg, rgba(56, 189, 248, 0.08), rgba(30, 58, 138, 0.18));
+      border: 1px solid rgba(56, 189, 248, 0.32);
+    }
+
+    .rate-hud-card.rate-click:hover {
+      border-color: #38bdf8;
+      transform: translateY(-1px);
+    }
+
+    .rate-hud-label {
+      display: flex;
+      align-items: center;
+      gap: 5px;
       font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      color: #94a3b8;
+      margin-bottom: 3px;
+      text-transform: uppercase;
+    }
+
+    .rate-hud-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+    }
+
+    .dot-passive {
+      background: #10b981;
+      box-shadow: 0 0 6px #10b981;
+    }
+
+    .dot-click {
+      background: #38bdf8;
+      box-shadow: 0 0 6px #38bdf8;
+    }
+
+    .rate-hud-num {
+      font-family: var(--font-mono);
+      font-size: 14.5px;
+      font-weight: 800;
+    }
+
+    .rate-passive .rate-hud-num {
+      color: #34d399;
+      text-shadow: 0 0 10px rgba(16, 185, 129, 0.45);
+    }
+
+    .rate-click .rate-hud-num {
+      color: #38bdf8;
+      text-shadow: 0 0 10px rgba(56, 189, 248, 0.45);
+    }
+
+    .rate-hud-unit {
+      font-size: 10.5px;
+      font-weight: 600;
+      opacity: 0.8;
+      margin-left: 2px;
+    }
+
+    .prestige-hud-bar {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      padding: 8px 12px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, rgba(168, 85, 247, 0.12) 0%, rgba(88, 28, 135, 0.22) 100%);
+      border: 1px solid rgba(168, 85, 247, 0.38);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 0 14px rgba(168, 85, 247, 0.15);
+      transition: border-color 0.2s ease;
+    }
+
+    .prestige-hud-bar:hover {
+      border-color: rgba(168, 85, 247, 0.65);
+    }
+
+    .prestige-hud-row-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+    }
+
+    .prestige-hud-dm {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .prestige-hud-icon {
+      font-size: 14px;
+      filter: drop-shadow(0 0 6px rgba(192, 132, 252, 0.8));
+    }
+
+    .prestige-hud-title {
+      color: #e9d5ff;
+      font-weight: 700;
+      font-size: 11.5px;
+      font-family: var(--font-mono);
+      letter-spacing: 0.02em;
+    }
+
+    .prestige-hud-count {
+      color: #f5d0fe;
+      font-size: 13.5px;
+      font-weight: 850;
+      font-family: var(--font-mono);
+      text-shadow: 0 0 10px rgba(192, 132, 252, 0.8);
+    }
+
+    .prestige-hud-row-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 6px;
+      padding-top: 5px;
+      border-top: 1px solid rgba(168, 85, 247, 0.2);
+    }
+
+    .prestige-rebirth-badge {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 700;
+      color: #e2e8f0;
+      background: rgba(30, 41, 59, 0.8);
+      border: 1px solid rgba(148, 163, 184, 0.35);
+      border-radius: 6px;
+      padding: 2px 7px;
+      white-space: nowrap;
+    }
+
+    .prestige-bonus-badge {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 800;
+      color: #fde047;
+      background: rgba(253, 224, 71, 0.15);
+      border: 1px solid rgba(253, 224, 71, 0.45);
+      border-radius: 6px;
+      padding: 2px 8px;
+      text-shadow: 0 0 6px rgba(253, 224, 71, 0.4);
+      white-space: nowrap;
     }
 
     /* Interactive Core Container */
@@ -427,8 +700,9 @@
       height: 28px;
       overflow: visible;
       transform: translateY(-108px);
-      animation: cursorPokeCore 1.15s cubic-bezier(0.34, 1.56, 0.64, 1) infinite;
+      animation: cursorPokeCore 1.2s cubic-bezier(0.34, 1.56, 0.64, 1) infinite;
       filter: drop-shadow(0 0 8px rgba(56, 189, 248, 0.95));
+      pointer-events: none;
     }
 
     .orbit-cursor-bob svg {
@@ -441,40 +715,72 @@
 
     .cursor-tip-spark {
       position: absolute;
-      bottom: -5px;
-      left: 50%;
-      width: 10px;
-      height: 10px;
+      top: 25.5px;
+      left: 14px;
+      width: 8px;
+      height: 8px;
       border-radius: 50%;
-      background: #fde047;
-      box-shadow: 0 0 12px #fde047, 0 0 20px #38bdf8;
-      transform: translate(-50%, 0) scale(0);
-      animation: cursorTipFlash 1.15s ease-out infinite;
+      background: #ffffff;
+      box-shadow: 0 0 10px #fde047, 0 0 18px #f59e0b, 0 0 24px rgba(56, 189, 248, 0.85);
+      transform: translate(-50%, -50%) scale(0);
+      pointer-events: none;
+      animation: cursorTipFlash 1.2s cubic-bezier(0.25, 1, 0.5, 1) infinite;
+    }
+
+    .cursor-tip-spark.active-strike-flash {
+      animation: strikeFlashBurst 0.24s ease-out forwards !important;
     }
 
     @keyframes cursorPokeCore {
       0%, 100% {
-        transform: translateY(-110px) scale(1);
+        transform: translateY(-108px) scale(1);
       }
-      45% {
-        transform: translateY(-86px) scale(0.88);
+      38% {
+        transform: translateY(-108px) scale(1);
       }
-      60% {
-        transform: translateY(-113px) scale(1.06);
+      50% {
+        transform: translateY(-84px) scale(0.92); /* Apex impact: vârful acului atinge suprafața nucleului */
+      }
+      62% {
+        transform: translateY(-112px) scale(1.05); /* Recul elastic rapid */
+      }
+      75% {
+        transform: translateY(-108px) scale(1);
       }
     }
 
     @keyframes cursorTipFlash {
-      0%, 38%, 65%, 100% {
-        transform: translate(-50%, 0) scale(0);
+      0%, 45% {
+        transform: translate(-50%, -50%) scale(0);
         opacity: 0;
       }
-      46% {
-        transform: translate(-50%, 4px) scale(1.5);
+      50% {
+        transform: translate(-50%, -50%) scale(2);
         opacity: 1;
+        filter: brightness(1.8);
       }
-      58% {
-        transform: translate(-50%, 6px) scale(2.2);
+      54% {
+        transform: translate(-50%, -50%) scale(0.6);
+        opacity: 0.35;
+      }
+      57%, 100% {
+        transform: translate(-50%, -50%) scale(0);
+        opacity: 0;
+      }
+    }
+
+    @keyframes strikeFlashBurst {
+      0% {
+        transform: translate(-50%, -50%) scale(2.4);
+        opacity: 1;
+        filter: brightness(2);
+      }
+      45% {
+        transform: translate(-50%, -50%) scale(1.2);
+        opacity: 0.8;
+      }
+      100% {
+        transform: translate(-50%, -50%) scale(0);
         opacity: 0;
       }
     }
@@ -1654,19 +1960,54 @@
       gap: 12px;
       opacity: 0.45;
       transition: all 0.2s ease;
+      position: relative;
     }
 
     .ach-card.unlocked {
       opacity: 1;
-      border-color: rgba(245, 158, 11, 0.5);
-      background: linear-gradient(135deg, rgba(245, 158, 11, 0.1), rgba(21, 28, 46, 0.9));
+    }
+
+    .ach-card.rarity-standard.unlocked {
+      border-color: rgba(56, 189, 248, 0.45);
+      background: linear-gradient(135deg, rgba(56, 189, 248, 0.08) 0%, rgba(15, 23, 42, 0.92) 100%);
+    }
+
+    .ach-card.rarity-standard.unlocked .ach-icon {
+      background: rgba(56, 189, 248, 0.18);
+      box-shadow: 0 0 12px rgba(56, 189, 248, 0.3);
+      border: 1px solid rgba(56, 189, 248, 0.35);
+    }
+
+    .ach-card.rarity-rare.unlocked {
+      border-color: rgba(253, 224, 71, 0.65);
+      background: linear-gradient(135deg, rgba(253, 224, 71, 0.12) 0%, rgba(28, 22, 10, 0.94) 100%);
+      box-shadow: 0 0 14px rgba(253, 224, 71, 0.16);
+    }
+
+    .ach-card.rarity-rare.unlocked .ach-icon {
+      background: rgba(253, 224, 71, 0.22);
+      box-shadow: 0 0 14px rgba(253, 224, 71, 0.45);
+      border: 1px solid rgba(253, 224, 71, 0.55);
+    }
+
+    .ach-card.rarity-mythic.unlocked {
+      border-color: rgba(236, 72, 153, 0.75);
+      background: linear-gradient(135deg, rgba(236, 72, 153, 0.16) 0%, rgba(42, 14, 68, 0.95) 100%);
+      box-shadow: 0 0 20px rgba(236, 72, 153, 0.25), 0 0 12px rgba(168, 85, 247, 0.2);
+    }
+
+    .ach-card.rarity-mythic.unlocked .ach-icon {
+      background: linear-gradient(135deg, rgba(236, 72, 153, 0.3), rgba(168, 85, 247, 0.3));
+      box-shadow: 0 0 18px rgba(236, 72, 153, 0.55);
+      border: 1.5px solid rgba(236, 72, 153, 0.7);
     }
 
     .ach-icon {
-      width: 40px;
-      height: 40px;
+      width: 42px;
+      height: 42px;
       border-radius: 10px;
       background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.08);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -1674,21 +2015,64 @@
       flex-shrink: 0;
     }
 
-    .ach-card.unlocked .ach-icon {
-      background: rgba(245, 158, 11, 0.2);
-      box-shadow: 0 0 12px rgba(245, 158, 11, 0.3);
+    .ach-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .ach-top-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 6px;
+      margin-bottom: 3px;
     }
 
     .ach-title {
       font-size: 13px;
-      font-weight: 700;
+      font-weight: 750;
       color: var(--text-main);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .ach-rarity-pill {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      font-weight: 750;
+      padding: 1px 6px;
+      border-radius: 999px;
+      white-space: nowrap;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      flex-shrink: 0;
+    }
+
+    .ach-rarity-pill.pill-standard {
+      color: #7dd3fc;
+      background: rgba(56, 189, 248, 0.12);
+      border: 1px solid rgba(56, 189, 248, 0.35);
+    }
+
+    .ach-rarity-pill.pill-rare {
+      color: #fef08a;
+      background: rgba(253, 224, 71, 0.16);
+      border: 1px solid rgba(253, 224, 71, 0.55);
+      text-shadow: 0 0 6px rgba(253, 224, 71, 0.4);
+    }
+
+    .ach-rarity-pill.pill-mythic {
+      color: #fdf2f8;
+      background: linear-gradient(135deg, rgba(236, 72, 153, 0.25), rgba(168, 85, 247, 0.25));
+      border: 1px solid rgba(236, 72, 153, 0.65);
+      text-shadow: 0 0 8px rgba(236, 72, 153, 0.6);
     }
 
     .ach-desc {
       font-size: 11px;
       color: var(--text-muted);
-      margin-top: 2px;
+      line-height: 1.35;
     }
 
     /* Stats & Save Management */
@@ -1909,6 +2293,403 @@
       to { opacity: 1; transform: translateY(0) scale(1); }
     }
 
+    /* ====================================================================
+       NOTIFICĂRI REALIZĂRI TIP XBOX (XBOX ACHIEVEMENTS NOTIFICATIONS)
+       ==================================================================== */
+    .xbox-achievement-container {
+      position: fixed;
+      top: 76px;
+      right: 24px;
+      z-index: 99999;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      pointer-events: none;
+      max-width: 380px;
+      width: calc(100vw - 48px);
+    }
+
+    @media (max-width: 768px) {
+      .xbox-achievement-container {
+        top: 68px;
+        right: auto;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 92%;
+        max-width: 360px;
+        gap: 8px;
+      }
+    }
+
+    .xbox-ach-card {
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 12px 16px;
+      background: linear-gradient(135deg, rgba(12, 18, 34, 0.96) 0%, rgba(22, 33, 56, 0.94) 100%);
+      border: 1px solid rgba(56, 189, 248, 0.55);
+      border-radius: 14px;
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      box-shadow:
+        0 12px 30px rgba(0, 0, 0, 0.75),
+        0 0 20px rgba(56, 189, 248, 0.25),
+        inset 0 1px 0 rgba(255, 255, 255, 0.18);
+      pointer-events: auto;
+      cursor: pointer;
+      overflow: hidden;
+      transform-origin: top right;
+      animation: xboxAchSlideIn 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .xbox-ach-card:hover {
+      transform: translateY(-2px) scale(1.01);
+    }
+
+    /* Raritati Card Xbox */
+    .xbox-ach-card.rarity-standard {
+      border-color: rgba(56, 189, 248, 0.6);
+      background: linear-gradient(135deg, rgba(12, 18, 34, 0.96) 0%, rgba(18, 28, 48, 0.94) 100%);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.75), 0 0 20px rgba(56, 189, 248, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.18);
+    }
+
+    .xbox-ach-card.rarity-standard:hover {
+      border-color: #38bdf8;
+      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.8), 0 0 26px rgba(56, 189, 248, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    }
+
+    .xbox-ach-card.rarity-rare {
+      border: 1.5px solid rgba(253, 224, 71, 0.85);
+      background: linear-gradient(135deg, rgba(28, 22, 10, 0.97) 0%, rgba(42, 32, 12, 0.95) 100%);
+      animation: xboxAchSlideIn 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards, xboxRareHaloPulse 3s ease-in-out infinite alternate;
+    }
+
+    .xbox-ach-card.rarity-rare:hover {
+      border-color: #fde047;
+      box-shadow: 0 18px 42px rgba(0, 0, 0, 0.88), 0 0 34px rgba(253, 224, 71, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+    }
+
+    .xbox-ach-card.rarity-mythic {
+      border: 1.5px solid rgba(236, 72, 153, 0.85);
+      background: linear-gradient(135deg, rgba(38, 12, 58, 0.98) 0%, rgba(18, 24, 52, 0.96) 50%, rgba(56, 14, 92, 0.98) 100%);
+      animation: xboxAchSlideIn 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards, xboxMythicPrismaticGlow 3.5s ease-in-out infinite alternate;
+    }
+
+    .xbox-ach-card.rarity-mythic:hover {
+      border-color: #f472b6;
+      box-shadow: 0 20px 48px rgba(0, 0, 0, 0.92), 0 0 40px rgba(236, 72, 153, 0.65), 0 0 26px rgba(168, 85, 247, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.4);
+    }
+
+    .xbox-ach-card.dismissing {
+      animation: xboxAchSlideOut 0.38s cubic-bezier(0.7, 0, 0.84, 0) forwards;
+    }
+
+    @keyframes xboxRareHaloPulse {
+      0% {
+        box-shadow: 0 14px 35px rgba(0, 0, 0, 0.82), 0 0 22px rgba(253, 224, 71, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+        border-color: rgba(253, 224, 71, 0.75);
+      }
+      100% {
+        box-shadow: 0 16px 40px rgba(0, 0, 0, 0.88), 0 0 34px rgba(253, 224, 71, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+        border-color: #fde047;
+      }
+    }
+
+    @keyframes xboxMythicPrismaticGlow {
+      0% {
+        box-shadow: 0 16px 42px rgba(0, 0, 0, 0.88), 0 0 30px rgba(236, 72, 153, 0.45), 0 0 18px rgba(168, 85, 247, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+        border-color: rgba(236, 72, 153, 0.85);
+      }
+      50% {
+        box-shadow: 0 16px 42px rgba(0, 0, 0, 0.88), 0 0 36px rgba(168, 85, 247, 0.55), 0 0 22px rgba(56, 189, 248, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+        border-color: rgba(168, 85, 247, 0.9);
+      }
+      100% {
+        box-shadow: 0 16px 42px rgba(0, 0, 0, 0.88), 0 0 34px rgba(253, 224, 71, 0.5), 0 0 24px rgba(236, 72, 153, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+        border-color: rgba(253, 224, 71, 0.85);
+      }
+    }
+
+    @keyframes spinCCW {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(-360deg); }
+    }
+
+    @keyframes xboxAchSlideIn {
+      0% {
+        opacity: 0;
+        transform: translateX(85px) scale(0.9);
+      }
+      70% {
+        transform: translateX(-6px) scale(1.02);
+      }
+      100% {
+        opacity: 1;
+        transform: translateX(0) scale(1);
+      }
+    }
+
+    @keyframes xboxAchSlideOut {
+      0% {
+        opacity: 1;
+        transform: translateX(0) scale(1);
+        max-height: 100px;
+        margin-bottom: 0;
+      }
+      100% {
+        opacity: 0;
+        transform: translateX(95px) scale(0.85);
+        max-height: 0;
+        padding-top: 0;
+        padding-bottom: 0;
+        margin-bottom: -10px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      @keyframes xboxAchSlideIn {
+        0% {
+          opacity: 0;
+          transform: translateY(-30px) scale(0.92);
+        }
+        70% {
+          transform: translateY(4px) scale(1.02);
+        }
+        100% {
+          opacity: 1;
+          transform: translateY(0) scale(1);
+        }
+      }
+      @keyframes xboxAchSlideOut {
+        0% {
+          opacity: 1;
+          transform: translateY(0) scale(1);
+          max-height: 100px;
+        }
+        100% {
+          opacity: 0;
+          transform: translateY(-35px) scale(0.9);
+          max-height: 0;
+          padding-top: 0;
+          padding-bottom: 0;
+        }
+      }
+    }
+
+    /* Emblema Trofeu Xbox Holografică */
+    .xbox-ach-badge {
+      position: relative;
+      flex-shrink: 0;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(56, 189, 248, 0.28) 0%, rgba(15, 23, 42, 0.95) 75%);
+      border: 2px solid rgba(56, 189, 248, 0.85);
+      box-shadow: 0 0 16px rgba(56, 189, 248, 0.5), inset 0 0 10px rgba(56, 189, 248, 0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .xbox-ach-card.rarity-rare .xbox-ach-badge {
+      border: 2px solid #fde047;
+      background: radial-gradient(circle, rgba(253, 224, 71, 0.32) 0%, rgba(20, 16, 6, 0.96) 75%);
+      box-shadow: 0 0 20px rgba(253, 224, 71, 0.65), inset 0 0 10px rgba(253, 224, 71, 0.4);
+    }
+
+    .xbox-ach-card.rarity-mythic .xbox-ach-badge {
+      border: 2.5px solid #ec4899;
+      background: radial-gradient(circle, rgba(236, 72, 153, 0.35) 0%, rgba(30, 10, 50, 0.98) 75%);
+      box-shadow: 0 0 24px rgba(236, 72, 153, 0.75), 0 0 14px rgba(168, 85, 247, 0.65);
+    }
+
+    .xbox-ach-badge-ring {
+      position: absolute;
+      inset: -5px;
+      border-radius: 50%;
+      border: 2px dashed rgba(56, 189, 248, 0.7);
+      animation: spinCW 7s linear infinite;
+      pointer-events: none;
+    }
+
+    .xbox-ach-card.rarity-rare .xbox-ach-badge-ring.ring-outer {
+      border: 2px dashed rgba(253, 224, 71, 0.85);
+      animation: spinCW 4.5s linear infinite;
+    }
+
+    .xbox-ach-badge-ring.ring-inner {
+      inset: -1px;
+      border: 1.5px dashed rgba(253, 224, 71, 0.8);
+      animation: spinCCW 3.2s linear infinite;
+    }
+
+    .xbox-ach-card.rarity-mythic .xbox-ach-badge-ring.ring-outer {
+      border: 2px dashed rgba(236, 72, 153, 0.85);
+      animation: spinCW 3.5s linear infinite;
+    }
+
+    .xbox-ach-card.rarity-mythic .xbox-ach-badge-ring.ring-inner {
+      inset: -1px;
+      border: 1.5px dotted rgba(56, 189, 248, 0.9);
+      animation: spinCCW 2.4s linear infinite;
+    }
+
+    .xbox-ach-badge-ring.ring-core {
+      inset: 3px;
+      border: 1px solid rgba(253, 224, 71, 0.9);
+      animation: spinCW 2s linear infinite;
+      box-shadow: 0 0 8px rgba(253, 224, 71, 0.6);
+    }
+
+    .xbox-ach-badge-icon {
+      font-size: 24px;
+      filter: drop-shadow(0 0 6px rgba(56, 189, 248, 0.8));
+      transform: scale(1);
+      animation: xboxTrophyPulse 2.4s ease-in-out infinite alternate;
+    }
+
+    .xbox-ach-card.rarity-rare .xbox-ach-badge-icon {
+      filter: drop-shadow(0 0 8px rgba(253, 224, 71, 0.95));
+    }
+
+    .xbox-ach-card.rarity-mythic .xbox-ach-badge-icon {
+      filter: drop-shadow(0 0 10px rgba(236, 72, 153, 0.95)) drop-shadow(0 0 6px #fde047);
+    }
+
+    @keyframes xboxTrophyPulse {
+      0% { transform: scale(0.95); }
+      100% { transform: scale(1.1); filter: drop-shadow(0 0 10px #fde047); }
+    }
+
+    /* Corpul Notificării */
+    .xbox-ach-content {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .xbox-ach-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 6px;
+      margin-bottom: 3px;
+    }
+
+    .xbox-ach-tag {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      color: #38bdf8;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      text-shadow: 0 0 8px rgba(56, 189, 248, 0.6);
+    }
+
+    .xbox-ach-card.rarity-rare .xbox-ach-tag {
+      color: #fde047;
+      text-shadow: 0 0 10px rgba(253, 224, 71, 0.7);
+    }
+
+    .xbox-ach-card.rarity-mythic .xbox-ach-tag {
+      background: linear-gradient(90deg, #ec4899, #c084fc, #fde047);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 0 12px rgba(236, 72, 153, 0.6);
+      font-weight: 900;
+    }
+
+    .xbox-ach-score {
+      font-family: var(--font-mono);
+      font-size: 9.5px;
+      font-weight: 700;
+      color: #7dd3fc;
+      background: rgba(56, 189, 248, 0.15);
+      border: 1px solid rgba(56, 189, 248, 0.45);
+      border-radius: 999px;
+      padding: 1px 7px;
+      white-space: nowrap;
+      text-shadow: 0 0 6px rgba(56, 189, 248, 0.5);
+    }
+
+    .xbox-ach-card.rarity-rare .xbox-ach-score {
+      color: #fef08a;
+      background: rgba(253, 224, 71, 0.22);
+      border: 1px solid rgba(253, 224, 71, 0.65);
+      text-shadow: 0 0 8px rgba(253, 224, 71, 0.6);
+    }
+
+    .xbox-ach-card.rarity-mythic .xbox-ach-score {
+      background: linear-gradient(135deg, rgba(236, 72, 153, 0.28), rgba(168, 85, 247, 0.28));
+      border: 1px solid rgba(236, 72, 153, 0.75);
+      color: #fdf2f8;
+      text-shadow: 0 0 8px rgba(236, 72, 153, 0.8);
+    }
+
+    .xbox-ach-title {
+      font-size: 13.5px;
+      font-weight: 800;
+      color: #ffffff;
+      letter-spacing: 0.01em;
+      margin-bottom: 2px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
+    }
+
+    .xbox-ach-desc {
+      font-size: 11px;
+      color: #94a3b8;
+      line-height: 1.35;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    /* Fascicul de lumină Xbox Sweep */
+    .xbox-ach-flare {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+      border-radius: 14px;
+    }
+
+    .xbox-ach-flare::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: -120px;
+      width: 70px;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.35), rgba(56, 189, 248, 0.5), transparent);
+      transform: skewX(-25deg);
+      animation: xboxFlareSweep 0.9s cubic-bezier(0.2, 0.8, 0.2, 1) 0.15s 1 forwards;
+    }
+
+    .xbox-ach-card.rarity-rare .xbox-ach-flare::after {
+      width: 85px;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), rgba(253, 224, 71, 0.65), rgba(245, 158, 11, 0.5), transparent);
+    }
+
+    .xbox-ach-card.rarity-mythic .xbox-ach-flare::after {
+      width: 105px;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.45), rgba(236, 72, 153, 0.65), rgba(168, 85, 247, 0.65), rgba(253, 224, 71, 0.65), transparent);
+    }
+
+    @keyframes xboxFlareSweep {
+      0% { left: -120px; }
+      100% { left: 450px; }
+    }
+
     /* Modal (Offline Progress & Reset Confirmation) */
     .modal-backdrop {
       position: fixed;
@@ -1934,6 +2715,53 @@
       width: 92%;
       text-align: center;
       box-shadow: 0 20px 50px rgba(0, 0, 0, 0.65);
+    }
+
+    /* Settings Modal Components */
+    .settings-group {
+      background: rgba(14, 19, 31, 0.75);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      padding: 12px 14px;
+      margin-bottom: 12px;
+      text-align: left;
+    }
+
+    .settings-group-title {
+      font-size: 11px;
+      font-family: var(--font-mono);
+      font-weight: 800;
+      color: var(--accent-cyan);
+      letter-spacing: 0.6px;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .settings-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 8px;
+    }
+    .settings-row:last-child {
+      margin-bottom: 0;
+    }
+
+    .settings-label {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .settings-desc {
+      font-size: 11.5px;
+      color: var(--text-muted);
+      margin-top: 2px;
+      line-height: 1.35;
     }
 
     .modal-title {
@@ -2388,22 +3216,27 @@
         overflow: hidden;
       }
       .resource-display {
-        padding: 12px 10px;
+        padding: 12px 10px 10px 10px;
         border-radius: 14px;
         flex-shrink: 0;
       }
       .resource-value {
-        font-size: 26px;
-        margin-bottom: 4px;
+        font-size: 28px;
+        margin: 2px 0 6px 0;
       }
-      .resource-rates {
-        font-size: 11.5px;
-        gap: 12px;
+      .rate-hud-card {
+        padding: 5px 6px;
       }
-      .prestige-badge-mini {
-        font-size: 11px;
-        margin-top: 6px;
-        padding-top: 6px;
+      .rate-hud-num {
+        font-size: 13px;
+      }
+      .prestige-hud-bar {
+        padding: 5px 8px;
+      }
+      @media (max-width: 380px) {
+        .prestige-hud-title {
+          display: none;
+        }
       }
       .core-stage {
         min-height: 195px;
@@ -2522,9 +3355,372 @@
         max-height: 85dvh;
       }
     }
+
+    /* ====================================================================
+     * LOADING SCREEN CU BUN VENIT & ANIMAȚIE CUANTICĂ ELEGANTĂ (5 SECUNDE)
+     * ==================================================================== */
+    .loading-screen-wrap {
+      position: fixed;
+      inset: 0;
+      z-index: 999999;
+      background: radial-gradient(circle at 50% 40%, #0d1527 0%, #060913 75%, #020409 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      overflow: hidden;
+      pointer-events: all;
+      user-select: none;
+      -webkit-user-select: none;
+      padding: calc(24px + env(safe-area-inset-top, 0px)) 16px calc(24px + env(safe-area-inset-bottom, 0px));
+      transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1),
+                  transform 0.85s cubic-bezier(0.16, 1, 0.3, 1),
+                  filter 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+      will-change: opacity, transform, filter;
+    }
+
+    .loading-screen-wrap.loading-exit {
+      opacity: 0;
+      transform: scale(1.06);
+      filter: blur(10px);
+      pointer-events: none;
+    }
+
+    .loading-stars-canvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .loading-content {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      max-width: 520px;
+      width: 90%;
+      padding: 24px 16px;
+    }
+
+    /* Nucleu Cuantic Holografic */
+    .loading-core-container {
+      position: relative;
+      width: 160px;
+      height: 160px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 24px;
+    }
+
+    .loading-core-ring {
+      position: absolute;
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .loading-core-ring.ring-outer {
+      width: 156px;
+      height: 156px;
+      border: 2px dashed rgba(56, 189, 248, 0.45);
+      border-top-color: #38bdf8;
+      border-bottom-color: #818cf8;
+      animation: loadingSpinClockwise 10s linear infinite;
+      box-shadow: 0 0 20px rgba(56, 189, 248, 0.2);
+    }
+
+    .loading-core-ring.ring-mid {
+      width: 118px;
+      height: 118px;
+      border: 2px solid transparent;
+      border-left-color: #c084fc;
+      border-right-color: #38bdf8;
+      animation: loadingSpinCounter 6s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+      box-shadow: 0 0 16px rgba(192, 132, 252, 0.25);
+    }
+
+    .loading-core-ring.ring-inner {
+      width: 82px;
+      height: 82px;
+      border: 1.5px dotted rgba(56, 189, 248, 0.7);
+      animation: loadingSpinClockwise 4s linear infinite;
+    }
+
+    .loading-core-orb {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 35%, #38bdf8 0%, #6366f1 60%, #0f172a 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 30px rgba(56, 189, 248, 0.65), 0 0 60px rgba(99, 102, 241, 0.4);
+      animation: loadingOrbPulse 2.2s ease-in-out infinite;
+      z-index: 3;
+    }
+
+    .loading-core-symbol {
+      font-size: 26px;
+      filter: drop-shadow(0 0 8px #ffffff);
+      animation: loadingSymbolFloat 3s ease-in-out infinite;
+    }
+
+    .loading-core-pulse {
+      position: absolute;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      border: 2px solid rgba(56, 189, 248, 0.8);
+      animation: loadingShockwave 2s cubic-bezier(0.2, 0.8, 0.2, 1) infinite;
+      pointer-events: none;
+    }
+
+    @keyframes loadingSpinClockwise {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    @keyframes loadingSpinCounter {
+      from { transform: rotate(360deg); }
+      to { transform: rotate(0deg); }
+    }
+
+    @keyframes loadingOrbPulse {
+      0%, 100% { transform: scale(1); box-shadow: 0 0 25px rgba(56, 189, 248, 0.55), 0 0 50px rgba(99, 102, 241, 0.3); }
+      50% { transform: scale(1.08); box-shadow: 0 0 40px rgba(56, 189, 248, 0.85), 0 0 75px rgba(192, 132, 252, 0.5); }
+    }
+
+    @keyframes loadingShockwave {
+      0% { transform: scale(0.9); opacity: 0.9; }
+      100% { transform: scale(2.6); opacity: 0; }
+    }
+
+    @keyframes loadingSymbolFloat {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-2px) rotate(8deg); }
+    }
+
+    /* Tipografie & Prezentare */
+    .loading-welcome-box {
+      margin-bottom: 22px;
+    }
+
+    .loading-welcome-tag {
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 4px;
+      color: #38bdf8;
+      text-transform: uppercase;
+      text-shadow: 0 0 12px rgba(56, 189, 248, 0.6);
+      margin-bottom: 6px;
+      animation: loadingFadePulse 2s ease-in-out infinite;
+    }
+
+    .loading-title {
+      font-size: clamp(26px, 6vw, 40px);
+      font-weight: 900;
+      letter-spacing: 4px;
+      background: linear-gradient(135deg, #ffffff 15%, #38bdf8 55%, #c084fc 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      filter: drop-shadow(0 0 24px rgba(56, 189, 248, 0.45));
+      margin-bottom: 6px;
+      line-height: 1.15;
+    }
+
+    .loading-greet {
+      font-size: 15px;
+      font-weight: 600;
+      color: #cbd5e1;
+      letter-spacing: 1px;
+    }
+
+    @keyframes loadingFadePulse {
+      0%, 100% { opacity: 0.85; }
+      50% { opacity: 1; }
+    }
+
+    /* High-Tech Progress Bar */
+    .loading-bar-wrapper {
+      width: 100%;
+      max-width: 360px;
+      margin-bottom: 20px;
+    }
+
+    .loading-bar-track {
+      position: relative;
+      width: 100%;
+      height: 7px;
+      background: rgba(15, 23, 42, 0.85);
+      border: 1px solid rgba(56, 189, 248, 0.35);
+      border-radius: 999px;
+      overflow: hidden;
+      box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.7);
+    }
+
+    .loading-bar-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #06b6d4 0%, #3b82f6 50%, #a855f7 100%);
+      border-radius: 999px;
+      transition: width 0.08s linear;
+      box-shadow: 0 0 14px rgba(56, 189, 248, 0.8);
+      position: relative;
+    }
+
+    .loading-bar-fill::after {
+      content: '';
+      position: absolute;
+      right: 0;
+      top: -2px;
+      bottom: -2px;
+      width: 8px;
+      background: #ffffff;
+      border-radius: 50%;
+      box-shadow: 0 0 10px #ffffff, 0 0 18px #38bdf8;
+    }
+
+    .loading-metrics-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 9px;
+      font-size: 12px;
+      font-family: var(--font-mono);
+    }
+
+    .loading-status-text {
+      color: #94a3b8;
+      font-size: 11.5px;
+      text-align: left;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      max-width: 280px;
+      transition: opacity 0.2s ease;
+    }
+
+    .loading-pct-text {
+      color: #38bdf8;
+      font-weight: 800;
+      font-size: 13px;
+      text-shadow: 0 0 8px rgba(56, 189, 248, 0.6);
+      min-width: 44px;
+      text-align: right;
+    }
+
+    /* Footer Subtitle */
+    .loading-footer-tip {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 11px;
+      color: #64748b;
+      font-family: var(--font-mono);
+      letter-spacing: 0.5px;
+    }
+
+    .loading-pulse-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #10b981;
+      box-shadow: 0 0 8px #10b981;
+      animation: loadingDotBlink 1.4s infinite;
+    }
+
+    @keyframes loadingDotBlink {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.3; transform: scale(0.7); }
+    }
+
+    .loading-audio-hint {
+      margin-top: 14px;
+      padding: 6px 14px;
+      border-radius: 999px;
+      background: rgba(168, 85, 247, 0.15);
+      border: 1px solid rgba(168, 85, 247, 0.4);
+      color: #e9d5ff;
+      font-size: 11px;
+      font-family: var(--font-mono);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      animation: loadingAudioPulse 2s infinite ease-in-out;
+      transition: all 0.2s ease;
+    }
+    .loading-audio-hint:hover {
+      background: rgba(168, 85, 247, 0.28);
+      border-color: #c084fc;
+      transform: scale(1.03);
+    }
+    @keyframes loadingAudioPulse {
+      0%, 100% { box-shadow: 0 0 6px rgba(168, 85, 247, 0.2); opacity: 0.85; }
+      50% { box-shadow: 0 0 16px rgba(168, 85, 247, 0.55); opacity: 1; }
+    }
   </style>
 </head>
 <body>
+  <!-- ====================================================================
+       FUNDAL DINAMIC INTERACTIV (COSMIC INTERACTIVE CANVAS)
+       ==================================================================== -->
+  <canvas id="cosmicBgCanvas" class="cosmic-bg-canvas"></canvas>
+
+  <!-- ====================================================================
+       LOADING SCREEN CU BUN VENIT & ANIMAȚIE CUANTICĂ (5 SECUNDE)
+       ==================================================================== -->
+  <div id="loadingScreen" class="loading-screen-wrap">
+    <canvas id="loadingStarsCanvas" class="loading-stars-canvas"></canvas>
+
+    <div class="loading-content">
+      <!-- Nucleu Cuantic Holografic -->
+      <div class="loading-core-container">
+        <div class="loading-core-ring ring-outer"></div>
+        <div class="loading-core-ring ring-mid"></div>
+        <div class="loading-core-ring ring-inner"></div>
+        <div class="loading-core-orb">
+          <span class="loading-core-symbol">⚛️</span>
+        </div>
+        <div class="loading-core-pulse"></div>
+      </div>
+
+      <!-- Mesaj Bun Venit & Prezentare Brand -->
+      <div class="loading-welcome-box">
+        <div class="loading-welcome-tag">✨ INIȚIALIZARE SINGULARITATE ✨</div>
+        <h1 class="loading-title">QUANTUM NEXUS</h1>
+        <div class="loading-greet" id="loadingCommanderGreet">Bun venit în Singularitate, Comandant!</div>
+      </div>
+
+      <!-- Bară de Progres High-Tech -->
+      <div class="loading-bar-wrapper">
+        <div class="loading-bar-track">
+          <div class="loading-bar-fill" id="loadingBarFill"></div>
+        </div>
+        <div class="loading-metrics-row">
+          <span class="loading-status-text" id="loadingStatusText">Calibrare reactor cuantic & matrici fotonice...</span>
+          <span class="loading-pct-text" id="loadingPctText">0%</span>
+        </div>
+      </div>
+
+      <!-- Subtitlu & Versiune Sistem -->
+      <div class="loading-footer-tip">
+        <span class="loading-pulse-dot"></span>
+        <span>Simulare Multiversală v3.0.0 // Auto-Stabilizare Activă</span>
+      </div>
+
+      <!-- Hint discret dacă browserul a reținut temporar autoplay înainte de primul gest -->
+      <div class="loading-audio-hint" id="loadingAudioHint" style="display:none;" onclick="startCosmicMusic()">
+        <span>🎵 Atinge oriunde pentru a activa sunetul & muzica</span>
+      </div>
+    </div>
+  </div>
+
   <div class="app-shell">
     <!-- Top Header -->
     <header class="top-bar">
@@ -2532,22 +3728,17 @@
         <div class="brand-icon">⚛️</div>
         <div>
           <div class="brand-title">QUANTUM NEXUS</div>
-          <div class="brand-sub" id="versionHeaderSub">v2.8.0</div>
+          <div class="brand-sub" id="versionHeaderSub">v3.0.0</div>
         </div>
       </div>
 
       <div class="top-buffs" id="activeBuffsContainer"></div>
 
       <div class="top-actions">
-        <div class="save-status">
-          <div class="save-dot" id="saveDot"></div>
-          <span id="saveText">Salvat local</span>
-        </div>
-        <button class="btn-header install-btn" id="btnInstallApp" onclick="triggerInstallApp()" title="Instalează ca aplicație pe MacBook, PC, Android sau iPhone">📲 Instalează</button>
-        <button class="btn-header cloud-btn" id="btnCloudHeader" onclick="openCloudModal()" title="Sincronizare Cloud Save (PC, MacBook, Android, iOS)">☁️ <span id="cloudBtnText">Cloud Save</span></button>
-        <button class="btn-header" id="btnSound" onclick="toggleSound()">🔊 Sunet: ON</button>
-        <button class="btn-header" onclick="manualSave()">💾 Salvează</button>
-        <button class="btn-header danger" onclick="confirmReset()">🗑️ Reset</button>
+        <button class="btn-header settings-btn" id="btnSettingsHeader" onclick="openSettingsModal()" title="Setări & Opțiuni (Sunet, Muzică, Salvare, Cloud, Reset)">
+          <span class="gear-spin">⚙️</span>
+          <span>Setări</span>
+        </button>
       </div>
     </header>
 
@@ -2556,14 +3747,59 @@
       <!-- LEFT PANEL: Core Reactor, Live Numbers, Combo, Active Skills -->
       <section class="left-zone mobile-active" id="zone-left">
         <div class="resource-display">
-          <div class="resource-label">⚡ Energie Cuantică (Quanta)</div>
-          <div class="resource-value" id="energyAmount">0</div>
-          <div class="resource-rates">
-            <div class="rate-item">Pasiv: <span id="cpsAmount">0</span>/sec</div>
-            <div class="rate-item">Click: <span id="vpcAmount">1</span>/click</div>
+          <!-- Colțare decorative Cyber-HUD -->
+          <div class="hud-bracket hud-bracket-tl"></div>
+          <div class="hud-bracket hud-bracket-tr"></div>
+          <div class="hud-bracket hud-bracket-bl"></div>
+          <div class="hud-bracket hud-bracket-br"></div>
+          <div class="hud-glass-glare"></div>
+
+          <!-- Antet HUD cu Puls Live -->
+          <div class="resource-header-row">
+            <div class="resource-status-wrap">
+              <span class="hud-pulse-dot"></span>
+              <span class="resource-label">ENERGIE CUANTICĂ (QUANTA)</span>
+            </div>
+            <span class="hud-reactor-pill">⚡ LIVE CORE</span>
           </div>
-          <div class="prestige-badge-mini" id="prestigeMiniBar">
-            🔮 Materie Întunecată: <strong id="darkMatterMini">0</strong> (<span id="prestigeMultMini">+0%</span> bonus)
+
+          <!-- Contor Principal de Energie -->
+          <div class="resource-value-row">
+            <div class="resource-value" id="energyAmount">0</div>
+          </div>
+
+          <!-- Rate Pasiv & Click în Carduri HUD Simetrice -->
+          <div class="resource-rates-grid">
+            <div class="rate-hud-card rate-passive">
+              <div class="rate-hud-label">
+                <span class="rate-hud-dot dot-passive"></span>
+                <span>PROD. PASIVĂ</span>
+              </div>
+              <div class="rate-hud-num"><span id="cpsAmount">0</span><span class="rate-hud-unit">/s</span></div>
+            </div>
+
+            <div class="rate-hud-card rate-click">
+              <div class="rate-hud-label">
+                <span class="rate-hud-dot dot-click"></span>
+                <span>PUTERE CLICK</span>
+              </div>
+              <div class="rate-hud-num"><span id="vpcAmount">1</span><span class="rate-hud-unit">/clk</span></div>
+            </div>
+          </div>
+
+          <!-- Bară de Stare Materie Întunecată & Prestigiu (Structură pe 2 rânduri, anti-suprapunere) -->
+          <div class="prestige-hud-bar" id="prestigeMiniBar" title="Materia Întunecată și multiplicatorul total permanent din Rebirth">
+            <div class="prestige-hud-row-top">
+              <div class="prestige-hud-dm">
+                <span class="prestige-hud-icon">🔮</span>
+                <span class="prestige-hud-title">Materie Întunecată:</span>
+              </div>
+              <strong class="prestige-hud-count" id="darkMatterMini">0 🔮</strong>
+            </div>
+            <div class="prestige-hud-row-bottom">
+              <span class="prestige-rebirth-badge" id="rebirthCountMini">🌀 Rebirth #0</span>
+              <span class="prestige-bonus-badge" id="prestigeMultMini">⭐ +0% Bonus Producție</span>
+            </div>
           </div>
         </div>
 
@@ -2700,9 +3936,16 @@
         <div class="center-content">
           <!-- TAB 1: Click & Tech Upgrades -->
           <div class="tab-pane active" id="tab-upgrades">
-            <div class="section-header">
-              <div class="section-title">⚡ Amplificatoare de Click & Sinergie</div>
-              <div class="section-subtitle">Crește puterea fiecărui click și șansa de lovitură critică</div>
+            <div class="section-header" style="align-items: center; flex-wrap: wrap; gap: 8px;">
+              <div>
+                <div class="section-title">⚡ Amplificatoare de Click & Sinergie</div>
+                <div class="section-subtitle">Crește puterea fiecărui click și șansa de lovitură critică</div>
+              </div>
+              <div class="buy-mult-group">
+                <button class="mult-btn active" onclick="setClickUpgradeBuyMultiplier(1, this)">1x</button>
+                <button class="mult-btn" onclick="setClickUpgradeBuyMultiplier(10, this)">10x</button>
+                <button class="mult-btn" onclick="setClickUpgradeBuyMultiplier('MAX', this)">MAX</button>
+              </div>
             </div>
             <div class="upgrades-grid" id="clickUpgradesGrid"></div>
           </div>
@@ -2768,6 +4011,9 @@
                 <button class="lb-cat-btn active" onclick="setAchievementFilter('all', this)">📋 Toate</button>
                 <button class="lb-cat-btn" onclick="setAchievementFilter('unlocked', this)">✅ Deblocate</button>
                 <button class="lb-cat-btn" onclick="setAchievementFilter('locked', this)">🔒 Blocate</button>
+                <button class="lb-cat-btn" onclick="setAchievementFilter('rarity_standard', this)">🥉 Standard</button>
+                <button class="lb-cat-btn" onclick="setAchievementFilter('rarity_rare', this)">💎 Rare</button>
+                <button class="lb-cat-btn" onclick="setAchievementFilter('rarity_mythic', this)">👑 Mitice</button>
                 <button class="lb-cat-btn" onclick="setAchievementFilter('click', this)">👆 Click & Crit</button>
                 <button class="lb-cat-btn" onclick="setAchievementFilter('energy', this)">⚡ Energie & CPS</button>
                 <button class="lb-cat-btn" onclick="setAchievementFilter('fleet', this)">🤖 Flotă & Roboți</button>
@@ -2894,6 +4140,98 @@
 
   <!-- Toast Container -->
   <div class="toast-container" id="toastContainer"></div>
+
+  <!-- Xbox-Style Achievement Notification Container (Max 3 pe ecran, Queue pe rând) -->
+  <div class="xbox-achievement-container" id="xboxAchievementContainer"></div>
+
+  <!-- Settings Modal (Setări & Opțiuni Generale) -->
+  <div class="modal-backdrop" id="settingsModal" onclick="if(event.target===this) closeSettingsModal()">
+    <div class="modal-card wide" style="max-width: 480px; text-align: left;">
+      <div class="modal-header-row">
+        <div class="modal-title" style="margin:0; display:flex; align-items:center; gap:8px;">
+          <span>⚙️ Setări & Opțiuni</span>
+        </div>
+        <button class="btn-close-modal" onclick="closeSettingsModal()">✕</button>
+      </div>
+
+      <!-- 1. Audio & Muzică -->
+      <div class="settings-group">
+        <div class="settings-group-title">🔊 Audio & Atmosferă</div>
+        <div class="settings-row">
+          <div>
+            <div class="settings-label">Efecte Sonore (SFX)</div>
+            <div class="settings-desc">Sunete la click, lasere, fulgere și abilități</div>
+          </div>
+          <button class="btn-header" id="btnSound" onclick="toggleSound()">🔊 Sunet: ON</button>
+        </div>
+        <div class="settings-row" style="margin-top: 10px;">
+          <div>
+            <div class="settings-label">Muzică de Fundal (BGM)</div>
+            <div class="settings-desc">Coloana sonoră cosmică Quantum Nexus</div>
+          </div>
+          <button class="btn-header" id="btnMusic" onclick="toggleMusic()">🎵 Muzică: OFF</button>
+        </div>
+        <div class="settings-row" style="margin-top: 10px;">
+          <div>
+            <div class="settings-label">Fundal Cosmic Interactiv</div>
+            <div class="settings-desc">Praf stelar atras de cursor & pulsații la click pe nucleu</div>
+          </div>
+          <button class="btn-header" id="btnCosmicBg" onclick="toggleCosmicBg()">🌌 Fundal: ON</button>
+        </div>
+      </div>
+
+      <!-- 2. Salvare & Sincronizare Cloud -->
+      <div class="settings-group">
+        <div class="settings-group-title">☁️ Salvare & Cloud Sync</div>
+        <div class="settings-row">
+          <div>
+            <div class="settings-label">Stare Salvare</div>
+            <div class="save-status" style="margin-top: 5px;">
+              <div class="save-dot" id="saveDot"></div>
+              <span id="saveText">Salvat local</span>
+            </div>
+          </div>
+          <button class="btn-header" onclick="manualSave()">💾 Salvează Acum</button>
+        </div>
+        <div class="settings-row" style="margin-top: 10px;">
+          <div>
+            <div class="settings-label">Google Firebase Cloud</div>
+            <div class="settings-desc">Sincronizare multi-dispozitiv & Clasament Global</div>
+          </div>
+          <button class="btn-header cloud-btn" id="btnCloudHeader" onclick="closeSettingsModal(); openCloudModal();">
+            ☁️ <span id="cloudBtnText">Cloud Save</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- 3. Instalare & Aplicație -->
+      <div class="settings-group">
+        <div class="settings-group-title">📲 Aplicație & Dispozitiv</div>
+        <div class="settings-row">
+          <div>
+            <div class="settings-label">Instalează ca Aplicație</div>
+            <div class="settings-desc">Ghid & instalare PWA (PC, MacBook, Android, iOS)</div>
+          </div>
+          <button class="btn-header install-btn" id="btnInstallApp" onclick="triggerInstallApp()">📲 Instalează</button>
+        </div>
+        <div style="font-size: 11px; color: var(--text-dim); margin-top: 8px;">
+          Versiune instalată: <strong id="settingsVersionText">v3.0.0</strong> // Auto-Update activ
+        </div>
+      </div>
+
+      <!-- 4. Zonă de Pericol -->
+      <div class="settings-group" style="border-color: rgba(239, 68, 68, 0.35); background: rgba(239, 68, 68, 0.05); margin-bottom: 0;">
+        <div class="settings-group-title" style="color: #f87171;">⚠️ Resetare Progres</div>
+        <div class="settings-row">
+          <div>
+            <div class="settings-label" style="color: #fca5a5;">Șterge tot progresul</div>
+            <div class="settings-desc">Resetează jocul complet la zero (cere confirmare)</div>
+          </div>
+          <button class="btn-header danger" onclick="closeSettingsModal(); confirmReset();">🗑️ Reset Save</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- Offline Progress Modal -->
   <div class="modal-backdrop" id="offlineModal">
@@ -3137,7 +4475,11 @@
         baseCps: 0.25,
         roleBadge: '👆 AUTO-CLICK RAPID & OVERCLOCK 100%',
         badgeColor: 'gold',
-        specialSummary: (cnt) => `Apasă pe nucleu la ${(Math.max(0.28, 1.35 / (1 + cnt * 0.08))).toFixed(2)}s și urcă Overclock-ul până la 100%!`
+        specialSummary: (cnt) => {
+          const vis = cnt <= 0 ? 0 : Math.min(16, cnt <= 8 ? cnt : 8 + Math.floor(Math.log2(cnt - 6) * 2.5));
+          const rate = (1.20 / Math.max(1, vis)).toFixed(2);
+          return `Apasă pe nucleu la fiecare ${rate}s (${vis} cursoare pe orbită) și urcă Overclock-ul până la 100%!`;
+        }
       },
       {
         id: 'g1',
@@ -3238,7 +4580,7 @@
         icon: '🔮',
         desc: '+25% la toată producția de Energie per nivel.',
         baseCost: 1,
-        costMult: 2.2,
+        costStep: 1,
         maxLevel: 25
       },
       {
@@ -3247,7 +4589,7 @@
         icon: '📐',
         desc: 'Reduce costul tuturor generatoarelor cu 4% per nivel.',
         baseCost: 2,
-        costMult: 2.4,
+        costStep: 2,
         maxLevel: 10
       },
       {
@@ -3256,7 +4598,7 @@
         icon: '⌚',
         desc: '+8% eficiență la câștigul Offline per nivel (Bază: 40%).',
         baseCost: 2,
-        costMult: 2.8,
+        costStep: 3,
         maxLevel: 5
       },
       {
@@ -3265,7 +4607,7 @@
         icon: '🚀',
         desc: 'Începi fiecare Rebirth cu +500 Energie de start per nivel.',
         baseCost: 2,
-        costMult: 3.0,
+        costStep: 2,
         maxLevel: 10
       },
       {
@@ -3274,7 +4616,7 @@
         icon: '⚡',
         desc: '+20% putere de click manuală per nivel.',
         baseCost: 2,
-        costMult: 2.3,
+        costStep: 1,
         maxLevel: 20
       },
       {
@@ -3283,7 +4625,7 @@
         icon: '☄️',
         desc: '+20% recompensă din Anomaliile Cuantice Aurii per nivel.',
         baseCost: 3,
-        costMult: 2.6,
+        costStep: 2,
         maxLevel: 10
       }
     ];
@@ -3777,6 +5119,60 @@
         });
       });
 
+      // Clasificare automată în 3 Trepte de Raritate inspirate de sistemul Xbox Gamerscore (Standard, Rară, Mitică)
+      const groups = {};
+      list.forEach(ach => {
+        const groupKey = ach.id.replace(/_\d+$/, '');
+        if (!groups[groupKey]) groups[groupKey] = [];
+        groups[groupKey].push(ach);
+      });
+
+      Object.values(groups).forEach(groupList => {
+        const total = groupList.length;
+        groupList.forEach((ach, idx) => {
+          let ratio;
+          if (total === 1) {
+            ratio = 0.5;
+          } else if (total === 3) {
+            // Pentru triplete (ex: Inițiat, Specialist, Maxim)
+            ratio = idx === 0 ? 0.2 : (idx === 1 ? 0.65 : 0.95);
+          } else {
+            ratio = idx / (total - 1);
+          }
+
+          if (ratio < 0.52) {
+            // 1. STANDARD (~55% din realizări - etape timpurii și de mijloc)
+            ach.rarity = 'standard';
+            ach.rarityLabel = 'REALIZARE STANDARD';
+            ach.rarityTag = '🥉 STANDARD';
+            ach.rarityScore = '⭐ +1% PROD';
+            const pctVal = Math.round(86 - ratio * 48); // 86% coborând spre 61%
+            ach.rarityPct = `${pctVal}%`;
+            ach.rarityDisplay = `🥉 Realizare Standard • ${ach.rarityPct}`;
+          } else if (ratio < 0.84) {
+            // 2. RARĂ (~30% din realizări - etape grele, late-game / Diamond Rare ca la Xbox)
+            ach.rarity = 'rare';
+            ach.rarityLabel = 'REALIZARE RARĂ';
+            ach.rarityTag = '💎 RARĂ';
+            ach.rarityScore = '💎 +1% PROD';
+            const progressInRare = (ratio - 0.52) / (0.84 - 0.52);
+            const pctVal = Math.max(3.5, +(16.5 - progressInRare * 12.0).toFixed(1)); // 16.5% -> 4.5%
+            ach.rarityPct = `${pctVal}%`;
+            ach.rarityDisplay = `💎 Realizare Rară • Doar ${ach.rarityPct}`;
+          } else {
+            // 3. MITICĂ (~15% din realizări - etape supreme, endgame extrem de rar / Cosmic God Tier)
+            ach.rarity = 'mythic';
+            ach.rarityLabel = 'REALIZARE MITICĂ';
+            ach.rarityTag = '👑 MITICĂ';
+            ach.rarityScore = '👑 +1% PROD';
+            const progressInMythic = (ratio - 0.84) / (1.0 - 0.84);
+            const pctVal = Math.max(0.1, +(1.2 - progressInMythic * 1.05).toFixed(1)); // 1.2% -> 0.15%
+            ach.rarityPct = `${pctVal}%`;
+            ach.rarityDisplay = `👑 Realizare Mitică • Top ${ach.rarityPct}`;
+          }
+        });
+      });
+
       return list;
     }
 
@@ -3827,6 +5223,8 @@
           cryoCooldownEnd: 0
         },
         soundEnabled: true,
+        musicEnabled: true,
+        cosmicBgEnabled: true,
         playTimeSeconds: 0,
         lastSaved: Date.now()
       };
@@ -3834,6 +5232,7 @@
 
     let state = getDefaultState();
     let buyMultiplier = 1; // 1, 10, 100, or 'MAX'
+    let clickBuyMultiplier = 1; // 1, 10, or 'MAX'
 
     // Variabile runtime (combo, buff-uri active și cooldown-uri sincronizate cu state)
     let comboMeter = 0; // 0 -> 100
@@ -3876,6 +5275,453 @@
       state.soundEnabled = !state.soundEnabled;
       document.getElementById('btnSound').innerText = state.soundEnabled ? '🔊 Sunet: ON' : '🔇 Sunet: OFF';
       if (state.soundEnabled) playTone(520, 'triangle', 0.1, 0.1);
+      saveGame();
+    }
+
+    // ==========================================
+    // MELODIA OFICIALĂ QUANTUM NEXUS (background.mp3)
+    // ==========================================
+    let bgMusicAudio = null;
+    let audioUnlockListenersBound = false;
+
+    function initBackgroundMusic() {
+      if (!bgMusicAudio) {
+        bgMusicAudio = new Audio('./background.mp3');
+        bgMusicAudio.loop = true;
+        bgMusicAudio.volume = 0.45;
+        bgMusicAudio.preload = 'auto';
+      }
+    }
+
+    // Pre-inițializăm resursa Audio pentru decodare rapidă din cache
+    try {
+      initBackgroundMusic();
+    } catch (e) {}
+
+    function setupAudioUnlockListeners() {
+      if (audioUnlockListenersBound) return;
+      audioUnlockListenersBound = true;
+
+      const unlockHandler = () => {
+        if (state && state.musicEnabled && bgMusicAudio && bgMusicAudio.paused) {
+          bgMusicAudio.play().then(() => {
+            removeAudioUnlockListeners();
+            const hint = document.getElementById('loadingAudioHint');
+            if (hint) hint.style.display = 'none';
+          }).catch(() => {});
+        }
+        if (typeof audioCtx !== 'undefined' && audioCtx && audioCtx.state === 'suspended') {
+          audioCtx.resume().catch(() => {});
+        }
+      };
+
+      const events = ['pointerdown', 'mousedown', 'touchstart', 'touchend', 'keydown', 'pointermove', 'mousemove', 'wheel', 'scroll'];
+      events.forEach(evt => {
+        window.addEventListener(evt, unlockHandler, { passive: true, capture: true });
+        document.addEventListener(evt, unlockHandler, { passive: true, capture: true });
+      });
+
+      window._removeAudioUnlockListeners = () => {
+        events.forEach(evt => {
+          window.removeEventListener(evt, unlockHandler, { capture: true });
+          document.removeEventListener(evt, unlockHandler, { capture: true });
+        });
+        audioUnlockListenersBound = false;
+      };
+    }
+
+    function removeAudioUnlockListeners() {
+      if (typeof window._removeAudioUnlockListeners === 'function') {
+        window._removeAudioUnlockListeners();
+      }
+    }
+
+    function startCosmicMusic() {
+      if (!state.musicEnabled) return;
+      try {
+        initBackgroundMusic();
+        const playPromise = bgMusicAudio.play();
+        if (playPromise !== undefined) {
+          playPromise.then(() => {
+            // Autoplay a pornit fără nicio blocare!
+            removeAudioUnlockListeners();
+            const hint = document.getElementById('loadingAudioHint');
+            if (hint) hint.style.display = 'none';
+          }).catch((err) => {
+            // Autoplay amânat de politica browserului: ascultăm orice interacțiune
+            setupAudioUnlockListeners();
+            const hint = document.getElementById('loadingAudioHint');
+            if (hint) hint.style.display = 'inline-flex';
+          });
+        }
+      } catch (e) {
+        console.warn('Eroare pornire muzică:', e);
+      }
+    }
+
+    function stopCosmicMusic() {
+      removeAudioUnlockListeners();
+      const hint = document.getElementById('loadingAudioHint');
+      if (hint) hint.style.display = 'none';
+      if (bgMusicAudio) {
+        try {
+          bgMusicAudio.pause();
+        } catch (e) {}
+      }
+    }
+
+    function toggleMusic() {
+      state.musicEnabled = !state.musicEnabled;
+      localStorage.setItem('qn_music_user_choice', 'true');
+      syncMusicUI();
+      if (state.musicEnabled) {
+        startCosmicMusic();
+        showToast('🎵 Muzica de fundal a pornit!');
+      } else {
+        stopCosmicMusic();
+        showToast('🔇 Muzica a fost oprită.');
+      }
+      saveGame();
+    }
+
+    function syncMusicUI() {
+      const btn = document.getElementById('btnMusic');
+      if (btn) {
+        btn.innerText = state.musicEnabled ? '🎵 Muzică: ON' : '🎵 Muzică: OFF';
+        btn.style.borderColor = state.musicEnabled ? 'var(--accent-purple)' : '';
+        btn.style.color = state.musicEnabled ? '#e9d5ff' : '';
+      }
+    }
+
+    /********************************************************************
+     * 3.5. MOTOR FUNDAL DINAMIC INTERACTIV (COSMIC INTERACTIVE CANVAS)
+     *      - Particule de praf cosmic atrase fluid de cursorul mouse-ului / touch
+     *      - Unde de șoc luminoase & pulsații radiale la click pe nucleu
+     *      - Linii cuantice efemere și stele strălucitoare cu adâncime 3D
+     ********************************************************************/
+    let cosmicCanvas = null;
+    let cosmicCtx = null;
+    let cosmicParticles = [];
+    let cosmicShockwaves = [];
+    let cosmicPointer = { x: -9999, y: -9999, active: 0, lastMoved: 0 };
+    let cosmicCanvasW = window.innerWidth;
+    let cosmicCanvasH = window.innerHeight;
+    let cosmicDpr = 1;
+    let cosmicAnimFrameId = null;
+    let cosmicBgInitialized = false;
+
+    const COSMIC_PALETTE = [
+      { r: 56, g: 189, b: 248 },  // Quantum Cyan (#38bdf8)
+      { r: 168, g: 85, b: 247 }, // Nebula Purple (#a855f7)
+      { r: 253, g: 224, b: 71 },  // Tachyon Gold (#fde047)
+      { r: 255, g: 255, b: 255 }, // Diamond White (#ffffff)
+      { r: 244, g: 63, b: 94 },   // Crimson Pink (#f43f5e)
+      { r: 34, g: 211, b: 238 }   // Electric Teal (#22d3ee)
+    ];
+
+    function initCosmicInteractiveCanvas() {
+      if (cosmicBgInitialized) return;
+      cosmicCanvas = document.getElementById('cosmicBgCanvas');
+      if (!cosmicCanvas) return;
+      cosmicCtx = cosmicCanvas.getContext('2d');
+      if (!cosmicCtx) return;
+
+      cosmicBgInitialized = true;
+
+      function resizeCosmic() {
+        cosmicDpr = Math.min(window.devicePixelRatio || 1, 2);
+        cosmicCanvasW = window.innerWidth;
+        cosmicCanvasH = window.innerHeight;
+        cosmicCanvas.width = Math.floor(cosmicCanvasW * cosmicDpr);
+        cosmicCanvas.height = Math.floor(cosmicCanvasH * cosmicDpr);
+        if (cosmicCtx) {
+          cosmicCtx.setTransform(1, 0, 0, 1, 0, 0);
+          cosmicCtx.scale(cosmicDpr, cosmicDpr);
+        }
+      }
+
+      window.addEventListener('resize', resizeCosmic, { passive: true });
+      resizeCosmic();
+
+      // Generare nor cosmic de particule inteligente cu adâncime 3D
+      const count = Math.min(150, Math.max(65, Math.floor((cosmicCanvasW * cosmicCanvasH) / 12500)));
+      cosmicParticles = [];
+      for (let i = 0; i < count; i++) {
+        const depth = 0.45 + Math.random() * 0.75;
+        cosmicParticles.push({
+          x: Math.random() * cosmicCanvasW,
+          y: Math.random() * cosmicCanvasH,
+          vx: (Math.random() - 0.5) * 0.35 * depth,
+          vy: (Math.random() - 0.5) * 0.35 * depth,
+          baseRadius: (0.85 + Math.random() * 2.2) * (depth > 0.9 ? 1.15 : 0.9),
+          pulseScale: 1.0,
+          baseAlpha: 0.22 + Math.random() * 0.65,
+          pulseAlphaBonus: 0,
+          twinklePhase: Math.random() * Math.PI * 2,
+          twinkleSpeed: 0.012 + Math.random() * 0.035,
+          rgb: COSMIC_PALETTE[Math.floor(Math.random() * COSMIC_PALETTE.length)],
+          depth: depth,
+          driftAngle: Math.random() * Math.PI * 2,
+          driftSpeed: (0.12 + Math.random() * 0.28) * depth
+        });
+      }
+
+      // Evenimente Mouse & Touch pentru atragerea fluidă a particulelor
+      const updatePointer = (clientX, clientY) => {
+        cosmicPointer.x = clientX;
+        cosmicPointer.y = clientY;
+        cosmicPointer.active = 1;
+        cosmicPointer.lastMoved = performance.now();
+      };
+
+      window.addEventListener('mousemove', (e) => {
+        updatePointer(e.clientX, e.clientY);
+      }, { passive: true });
+
+      window.addEventListener('touchmove', (e) => {
+        if (e.touches && e.touches[0]) {
+          updatePointer(e.touches[0].clientX, e.touches[0].clientY);
+        }
+      }, { passive: true });
+
+      window.addEventListener('touchstart', (e) => {
+        if (e.touches && e.touches[0]) {
+          updatePointer(e.touches[0].clientX, e.touches[0].clientY);
+        }
+      }, { passive: true });
+
+      let lastFrameTime = performance.now();
+
+      function animateCosmicBg(now) {
+        cosmicAnimFrameId = requestAnimationFrame(animateCosmicBg);
+
+        if (document.hidden) return;
+
+        if (state && state.cosmicBgEnabled === false) {
+          if (cosmicCtx) cosmicCtx.clearRect(0, 0, cosmicCanvasW, cosmicCanvasH);
+          return;
+        }
+
+        const dt = Math.min(0.06, (now - lastFrameTime) / 1000);
+        lastFrameTime = now;
+
+        cosmicCtx.clearRect(0, 0, cosmicCanvasW, cosmicCanvasH);
+
+        // Estompare treptată a atracției cursorului când mouse-ul stă pe loc > 1.8s
+        if (cosmicPointer.active > 0) {
+          if (now - cosmicPointer.lastMoved > 1800) {
+            cosmicPointer.active = Math.max(0, cosmicPointer.active - dt * 1.6);
+          }
+        }
+
+        // 1. Randare și propagare Unde de Șoc din nucleu
+        for (let i = cosmicShockwaves.length - 1; i >= 0; i--) {
+          const wave = cosmicShockwaves[i];
+          wave.radius += wave.speed * (60 * dt);
+          wave.alpha *= Math.pow(0.972, 60 * dt);
+
+          if (wave.alpha < 0.015 || wave.radius >= wave.maxRadius) {
+            cosmicShockwaves.splice(i, 1);
+            continue;
+          }
+
+          cosmicCtx.beginPath();
+          cosmicCtx.arc(wave.x, wave.y, wave.radius, 0, Math.PI * 2);
+          cosmicCtx.strokeStyle = `rgba(${wave.color}, ${wave.alpha})`;
+          cosmicCtx.lineWidth = wave.width;
+          if (wave.isCrit) {
+            cosmicCtx.shadowColor = `rgba(${wave.color}, 0.8)`;
+            cosmicCtx.shadowBlur = 14;
+            cosmicCtx.stroke();
+            cosmicCtx.shadowBlur = 0;
+          } else {
+            cosmicCtx.stroke();
+          }
+        }
+
+        const pLen = cosmicParticles.length;
+        const attractRadius = 220;
+        const attractRadSq = attractRadius * attractRadius;
+
+        // 2. Fizică Particule (Atracție Cursor + Pulsație la Șocul Nucleului)
+        for (let i = 0; i < pLen; i++) {
+          const p = cosmicParticles[i];
+
+          // A. Atracție lină spre cursorul mouse-ului / deget
+          if (cosmicPointer.active > 0.01) {
+            const dx = cosmicPointer.x - p.x;
+            const dy = cosmicPointer.y - p.y;
+            const dSq = dx * dx + dy * dy;
+
+            if (dSq < attractRadSq && dSq > 100) {
+              const d = Math.sqrt(dSq);
+              const nx = dx / d;
+              const ny = dy / d;
+              const factor = (1 - d / attractRadius) * cosmicPointer.active * 0.45 * p.depth;
+
+              // Forță gravitațională de atragere:
+              p.vx += nx * factor;
+              p.vy += ny * factor;
+              // Vârtej subtil orbital în jurul cursorului:
+              p.vx += -ny * (factor * 0.22);
+              p.vy += nx * (factor * 0.22);
+            }
+          }
+
+          // B. Excitație și împingere din Undele de Șoc ale Nucleului
+          for (let w = 0; w < cosmicShockwaves.length; w++) {
+            const wave = cosmicShockwaves[w];
+            const dx = p.x - wave.x;
+            const dy = p.y - wave.y;
+            const dist = Math.hypot(dx, dy) || 1;
+            const diff = Math.abs(dist - wave.radius);
+
+            if (diff < 60) {
+              const norm = (1 - diff / 60);
+              const push = (wave.isCrit ? 3.6 : (wave.isManual ? 2.2 : 1.1)) * norm * (wave.alpha / 0.8) * p.depth;
+              p.vx += (dx / dist) * push;
+              p.vy += (dy / dist) * push;
+
+              const targetScale = wave.isCrit ? 2.6 : (wave.isManual ? 1.85 : 1.35);
+              const targetBonus = wave.isCrit ? 0.95 : (wave.isManual ? 0.65 : 0.35);
+              p.pulseScale = Math.max(p.pulseScale, targetScale * norm);
+              p.pulseAlphaBonus = Math.max(p.pulseAlphaBonus, targetBonus * norm);
+            }
+          }
+
+          // C. Frecare, inerție și derivă naturală cosmică
+          p.vx *= 0.955;
+          p.vy *= 0.955;
+          p.vx += Math.cos(p.driftAngle) * (p.driftSpeed * 0.06);
+          p.vy += Math.sin(p.driftAngle) * (p.driftSpeed * 0.06);
+
+          p.x += p.vx * (60 * dt);
+          p.y += p.vy * (60 * dt);
+
+          // Înfășurare la marginea ecranului (Seamless Wrap)
+          if (p.x < -25) p.x = cosmicCanvasW + 25;
+          else if (p.x > cosmicCanvasW + 25) p.x = -25;
+          if (p.y < -25) p.y = cosmicCanvasH + 25;
+          else if (p.y > cosmicCanvasH + 25) p.y = -25;
+
+          // Sclipire lentă și revenire după pulsație
+          p.twinklePhase += p.twinkleSpeed;
+          p.pulseScale = (p.pulseScale - 1) * 0.91 + 1;
+          p.pulseAlphaBonus *= 0.93;
+        }
+
+        // 3. Constelații efemere între particule apropiate (< 65px)
+        cosmicCtx.beginPath();
+        cosmicCtx.lineWidth = 0.55;
+        cosmicCtx.strokeStyle = 'rgba(56, 189, 248, 0.12)';
+        let hasConstellations = false;
+
+        for (let i = 0; i < pLen; i++) {
+          const p1 = cosmicParticles[i];
+          for (let j = i + 1; j < pLen; j++) {
+            const p2 = cosmicParticles[j];
+            const dx = p1.x - p2.x;
+            const dy = p1.y - p2.y;
+            if (dx > 65 || dx < -65 || dy > 65 || dy < -65) continue;
+            if (dx * dx + dy * dy < 4225) {
+              cosmicCtx.moveTo(p1.x, p1.y);
+              cosmicCtx.lineTo(p2.x, p2.y);
+              hasConstellations = true;
+            }
+          }
+        }
+        if (hasConstellations) cosmicCtx.stroke();
+
+        // 4. Randare particule de praf cosmic
+        for (let i = 0; i < pLen; i++) {
+          const p = cosmicParticles[i];
+          const r = p.baseRadius * p.pulseScale;
+          const twinkle = 0.82 + 0.18 * Math.sin(p.twinklePhase);
+          const a = Math.min(1, p.baseAlpha * twinkle + p.pulseAlphaBonus);
+
+          cosmicCtx.beginPath();
+          cosmicCtx.arc(p.x, p.y, r, 0, Math.PI * 2);
+          cosmicCtx.fillStyle = `rgba(${p.rgb.r}, ${p.rgb.g}, ${p.rgb.b}, ${a})`;
+
+          if (p.pulseScale > 1.25 || p.pulseAlphaBonus > 0.25) {
+            cosmicCtx.shadowColor = `rgba(${p.rgb.r}, ${p.rgb.g}, ${p.rgb.b}, 0.85)`;
+            cosmicCtx.shadowBlur = 8;
+            cosmicCtx.fill();
+            cosmicCtx.shadowBlur = 0;
+          } else {
+            cosmicCtx.fill();
+          }
+        }
+
+        // 5. Halou stelar subtil în jurul cursorului activ
+        if (cosmicPointer.active > 0.05) {
+          const haloGrad = cosmicCtx.createRadialGradient(cosmicPointer.x, cosmicPointer.y, 0, cosmicPointer.x, cosmicPointer.y, 90);
+          haloGrad.addColorStop(0, `rgba(56, 189, 248, ${0.07 * cosmicPointer.active})`);
+          haloGrad.addColorStop(0.5, `rgba(168, 85, 247, ${0.035 * cosmicPointer.active})`);
+          haloGrad.addColorStop(1, 'transparent');
+          cosmicCtx.fillStyle = haloGrad;
+          cosmicCtx.beginPath();
+          cosmicCtx.arc(cosmicPointer.x, cosmicPointer.y, 90, 0, Math.PI * 2);
+          cosmicCtx.fill();
+        }
+      }
+
+      cosmicAnimFrameId = requestAnimationFrame(animateCosmicBg);
+    }
+
+    function triggerCosmicCorePulse(x, y, isCrit = false, isManual = true) {
+      if (!cosmicBgInitialized || (state && state.cosmicBgEnabled === false)) return;
+      let ox = x;
+      let oy = y;
+      if (!ox || !oy) {
+        if (coreBtn) {
+          const rect = coreBtn.getBoundingClientRect();
+          ox = rect.left + rect.width / 2;
+          oy = rect.top + rect.height / 2;
+        } else {
+          ox = cosmicCanvasW * 0.22;
+          oy = cosmicCanvasH * 0.5;
+        }
+      }
+
+      if (cosmicShockwaves.length > 5) {
+        cosmicShockwaves.shift();
+      }
+
+      const canvasMaxDim = Math.max(cosmicCanvasW, cosmicCanvasH);
+      cosmicShockwaves.push({
+        x: ox,
+        y: oy,
+        radius: 20,
+        maxRadius: canvasMaxDim * (isCrit ? 1.1 : 0.85),
+        speed: isCrit ? 18 : (isManual ? 12 : 7),
+        width: isCrit ? 4.5 : (isManual ? 3.0 : 1.6),
+        color: isCrit ? '253, 224, 71' : (isManual ? '56, 189, 248' : '34, 211, 238'),
+        alpha: isCrit ? 0.95 : (isManual ? 0.75 : 0.40),
+        isCrit: isCrit,
+        isManual: isManual
+      });
+    }
+
+    function toggleCosmicBg() {
+      state.cosmicBgEnabled = !state.cosmicBgEnabled;
+      syncCosmicBgUI();
+      saveGame();
+      if (state.cosmicBgEnabled) {
+        showToast('🌌 Fundalul cosmic interactiv a fost activat!');
+      } else {
+        showToast('🌌 Fundalul cosmic a fost oprit.');
+      }
+    }
+
+    function syncCosmicBgUI() {
+      const btn = document.getElementById('btnCosmicBg');
+      if (btn) {
+        const isEnabled = state.cosmicBgEnabled !== false;
+        btn.innerText = isEnabled ? '🌌 Fundal: ON' : '🌌 Fundal: OFF';
+        btn.style.borderColor = isEnabled ? 'var(--accent-cyan)' : '';
+        btn.style.color = isEnabled ? '#bae6fd' : '';
+      }
     }
 
     /********************************************************************
@@ -3916,9 +5762,15 @@
       return (state.totalEnergyThisRun || 0) >= getRebirthEnergyRequirement();
     }
 
-    // Recompensa fixă de Materie Întunecată pentru Rebirth-ul curent (NU se multiplică dacă stai fără să dai Rebirth!)
+    // Costul fiecărui upgrade de Prestigiu (scalare liniară/aritmetică adaptată la Rebirth secvențial)
+    function getPrestigeUpgradeCost(upg, lvl) {
+      return upg.baseCost + lvl * (upg.costStep || 1);
+    }
+
+    // Recompensa de Materie Întunecată pentru Rebirth-ul curent (scalare progresivă echitabilă cu efortul fiecărui Rebirth)
     function getCurrentRebirthDarkMatterReward() {
-      return 1 + Math.floor((state.prestigeCount || 0) / 2);
+      const nextRebirth = (state.prestigeCount || 0) + 1;
+      return Math.max(1, Math.round(nextRebirth + Math.pow(nextRebirth, 1.35) * 0.4));
     }
 
     function getPendingDarkMatter() {
@@ -4059,6 +5911,43 @@
       return upg.baseCost * Math.pow(upg.costMult, lvl) * orbDisc;
     }
 
+    function getClickUpgradeBuyInfo(upg, mode) {
+      const lvl = state.clickUpgrades[upg.id] || 0;
+      const remLevels = Math.max(0, upg.maxLevel - lvl);
+      if (remLevels <= 0) {
+        return { count: 0, cost: 0, isMax: true };
+      }
+
+      const r = upg.costMult;
+      const baseCostNext = getClickUpgradeCost(upg, lvl);
+
+      if (mode === 'MAX') {
+        if (state.energy < baseCostNext) {
+          return { count: 1, cost: baseCostNext, isMax: false };
+        }
+        if (r === 1) {
+          const count = Math.min(remLevels, Math.max(1, Math.floor(state.energy / baseCostNext)));
+          return { count, cost: count * baseCostNext, isMax: false };
+        }
+        const maxN = Math.floor(Math.log((state.energy * (r - 1)) / baseCostNext + 1) / Math.log(r));
+        let count = Math.min(remLevels, Math.max(1, maxN));
+        let cost = count === 1 ? baseCostNext : baseCostNext * ((Math.pow(r, count) - 1) / (r - 1));
+        while (count > 1 && cost > state.energy) {
+          count--;
+          cost = count === 1 ? baseCostNext : baseCostNext * ((Math.pow(r, count) - 1) / (r - 1));
+        }
+        return { count, cost, isMax: false };
+      } else {
+        const desiredCount = Number(mode) || 1;
+        const count = Math.min(remLevels, desiredCount);
+        if (r === 1) {
+          return { count, cost: count * baseCostNext, isMax: false };
+        }
+        const cost = count === 1 ? baseCostNext : baseCostNext * ((Math.pow(r, count) - 1) / (r - 1));
+        return { count, cost, isMax: false };
+      }
+    }
+
     function getGeneratorBuyInfo(gen, mode) {
       const owned = state.generators[gen.id] || 0;
       const r = 1.18;
@@ -4143,6 +6032,7 @@
         amount += novaBonus;
         spawnCoreShockwave('em-wave');
         spawnCoreShockwave('crit');
+        triggerCosmicCorePulse(rect.left + rect.width / 2, rect.top + rect.height / 2, true, true);
         for (let k = 0; k < 4; k++) spawnCoreLightningArc(true);
         spawnFloatingText(rect.left + rect.width / 2, rect.top + 10, `🔥 OVERCLOCK SUPERNOVA! +${formatNumber(novaBonus)}`, true);
         setTimeout(() => {
@@ -4157,6 +6047,7 @@
       setTimeout(() => coreBtn.classList.remove('clicked'), 80);
 
       spawnCoreShockwave(isCrit ? 'crit' : isPhotonMega ? 'em-wave' : 'normal');
+      triggerCosmicCorePulse(clientX, clientY, isCrit, !isAutoCursor);
 
       if (isCrit) {
         spawnCoreLightningArc(true);
@@ -4343,15 +6234,15 @@
         cursorsLayer.innerHTML = '';
         for (let i = 0; i < visibleCursors; i++) {
           const angleDeg = (360 / visibleCursors) * i;
-          const delaySec = ((1.15 / visibleCursors) * i).toFixed(2);
+          const delaySec = ((1.2 / visibleCursors) * i).toFixed(3);
           const slot = document.createElement('div');
           slot.className = 'orbit-slot';
           slot.style.transform = `rotate(${angleDeg}deg)`;
           slot.innerHTML = `
-            <div class="orbit-cursor-bob" style="animation-delay: -${delaySec}s">
+            <div class="orbit-cursor-bob" data-cursor-idx="${i}" style="animation-delay: -${delaySec}s">
               <svg viewBox="0 0 28 28" fill="none">
                 <path d="M14 2.5 L5.5 19.5 L11.5 17 L11.5 25.5 L16.5 25.5 L16.5 17 L22.5 19.5 L14 2.5 Z" fill="#38bdf8" stroke="#ffffff" stroke-width="1.8" stroke-linejoin="round"/>
-                <circle cx="14" cy="11" r="2.2" fill="#fde047"/>
+                <circle cx="14" cy="11" r="2.2" fill="#e0f2fe" stroke="#38bdf8" stroke-width="0.8"/>
               </svg>
               <div class="cursor-tip-spark" style="animation-delay: -${delaySec}s"></div>
             </div>
@@ -4443,20 +6334,60 @@
       }
     }
 
-    // Mecanică Unică Nano-Cursor (g0): Efectuează un Auto-Click fizic pe Nucleu (frecvența și încărcarea cresc cu numărul de cursoare!)
+    // Mecanică Unică Nano-Cursor (g0): Efectuează un Auto-Click fizic pe Nucleu perfect sincronizat cu cursorul activ
+    let autoCursorStrikeStep = 0;
+
     function triggerAutoCursorStrike() {
       const g0 = (state.generators && state.generators['g0']) || 0;
       if (g0 <= 0) return;
       const rect = coreBtn.getBoundingClientRect();
-      if (rect.width > 0) {
-        const angle = Math.random() * Math.PI * 2;
-        const r = rect.width * 0.34;
-        const cx = rect.left + rect.width / 2 + Math.cos(angle) * r;
-        const cy = rect.top + rect.height / 2 + Math.sin(angle) * r;
-        handleCoreClick(cx, cy, true);
-      } else {
+      if (rect.width <= 0) {
         handleCoreClick(null, null, true);
+        return;
       }
+
+      const cursorsLayer = document.getElementById('orbitCursorsLayer');
+      const bobs = cursorsLayer ? cursorsLayer.querySelectorAll('.orbit-cursor-bob') : null;
+
+      let strikeX, strikeY;
+
+      if (bobs && bobs.length > 0) {
+        // Selectăm următorul cursor din caruselul orbital pentru o sincronizare perfectă
+        const activeBob = bobs[autoCursorStrikeStep % bobs.length];
+        autoCursorStrikeStep = (autoCursorStrikeStep + 1) % bobs.length;
+
+        // Bounding box-ul include transformările CSS în timp real (rotația inelului + poziția acului)
+        const bobRect = activeBob.getBoundingClientRect();
+        const coreCenterX = rect.left + rect.width / 2;
+        const coreCenterY = rect.top + rect.height / 2;
+
+        const bobCenterX = bobRect.left + bobRect.width / 2;
+        const bobCenterY = bobRect.top + bobRect.height / 2;
+
+        // Calculăm poziția exactă a vârfului acului (orientat direct spre centrul nucleului)
+        const dx = coreCenterX - bobCenterX;
+        const dy = coreCenterY - bobCenterY;
+        const dist = Math.hypot(dx, dy) || 1;
+
+        // Vârful cursorului se află la ~13px de centrul bob-ului, direct pe suprafața de contact cu nucleul
+        strikeX = bobCenterX + (dx / dist) * Math.min(15, dist * 0.22);
+        strikeY = bobCenterY + (dy / dist) * Math.min(15, dist * 0.22);
+
+        // Declanșăm flash-ul luminos instantaneu la vârful cursorului activ
+        const sparkEl = activeBob.querySelector('.cursor-tip-spark');
+        if (sparkEl) {
+          sparkEl.classList.remove('active-strike-flash');
+          void sparkEl.offsetWidth;
+          sparkEl.classList.add('active-strike-flash');
+        }
+      } else {
+        const angle = Math.random() * Math.PI * 2;
+        const r = rect.width * 0.36;
+        strikeX = rect.left + rect.width / 2 + Math.cos(angle) * r;
+        strikeY = rect.top + rect.height / 2 + Math.sin(angle) * r;
+      }
+
+      handleCoreClick(strikeX, strikeY, true);
     }
 
     // Mecanică Vizuală Roboți / Drone de Extracție (g1): Salvă Laser Sincronizată asupra Nucleului!
@@ -4469,6 +6400,7 @@
       if (rect.width <= 0) return;
 
       spawnCoreShockwave('normal');
+      triggerCosmicCorePulse(rect.left + rect.width / 2, rect.top + rect.height / 2, false, false);
       spawnCoreLightningArc(false);
       const cx = rect.left + rect.width / 2;
       const cy = rect.top + rect.height / 2;
@@ -4663,14 +6595,15 @@
      ********************************************************************/
     function buyClickUpgrade(id) {
       const upg = CLICK_UPGRADES_DATA.find(u => u.id === id);
+      if (!upg) return;
       const lvl = state.clickUpgrades[id] || 0;
       if (lvl >= upg.maxLevel) return;
-      const cost = getClickUpgradeCost(upg, lvl);
-      if (state.energy >= cost) {
+      const info = getClickUpgradeBuyInfo(upg, clickBuyMultiplier);
+      if (state.energy >= info.cost && info.count > 0) {
         const cardEl = document.getElementById(`u_card_${id}`);
         spawnActivationOrbToCore(cardEl, '#a855f7');
-        state.energy -= cost;
-        state.clickUpgrades[id] = lvl + 1;
+        state.energy -= info.cost;
+        state.clickUpgrades[id] = lvl + info.count;
         playTone(540, 'triangle', 0.1, 0.09);
         if (id === 'c_flat1') spawnPhotonMegaBeam();
         syncCoreVisualEcosystem(true);
@@ -4707,9 +6640,10 @@
 
     function buyPrestigeUpgrade(id) {
       const upg = PRESTIGE_UPGRADES_DATA.find(p => p.id === id);
+      if (!upg) return;
       const lvl = state.prestigeUpgrades[id] || 0;
       if (lvl >= upg.maxLevel) return;
-      const cost = Math.round(upg.baseCost * Math.pow(upg.costMult, lvl));
+      const cost = getPrestigeUpgradeCost(upg, lvl);
       if (state.darkMatter >= cost) {
         spawnActivationOrbToCore(null, '#fde047');
         state.darkMatter -= cost;
@@ -4723,9 +6657,26 @@
 
     function setBuyMultiplier(mode, btn) {
       buyMultiplier = mode;
-      document.querySelectorAll('.mult-btn').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
+      if (btn && btn.parentElement) {
+        btn.parentElement.querySelectorAll('.mult-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+      } else {
+        document.querySelectorAll('#zone-right .mult-btn').forEach(b => b.classList.remove('active'));
+        if (btn) btn.classList.add('active');
+      }
       renderGenerators();
+    }
+
+    function setClickUpgradeBuyMultiplier(mode, btn) {
+      clickBuyMultiplier = mode;
+      if (btn && btn.parentElement) {
+        btn.parentElement.querySelectorAll('.mult-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+      } else {
+        document.querySelectorAll('#tab-upgrades .mult-btn').forEach(b => b.classList.remove('active'));
+        if (btn) btn.classList.add('active');
+      }
+      renderClickUpgrades();
     }
 
     function activateSkill(skillNum) {
@@ -5136,13 +7087,15 @@
       CLICK_UPGRADES_DATA.forEach(upg => {
         const lvl = state.clickUpgrades[upg.id] || 0;
         const isMax = lvl >= upg.maxLevel;
-        const cost = getClickUpgradeCost(upg, lvl);
-        const canAfford = !isMax && state.energy >= cost;
+        const info = getClickUpgradeBuyInfo(upg, clickBuyMultiplier);
+        const canAfford = !isMax && state.energy >= info.cost && info.count > 0;
 
         const card = document.createElement('div');
         card.className = 'upgrade-card' + (canAfford ? '' : ' locked');
         card.id = `u_card_${upg.id}`;
         card.onclick = () => buyClickUpgrade(upg.id);
+
+        const costDisplay = isMax ? 'MAXIM' : (clickBuyMultiplier === 1 ? `${formatNumber(info.cost)} ⚡` : `+${info.count}x: ${formatNumber(info.cost)} ⚡`);
 
         card.innerHTML = `
           <div class="upgrade-top">
@@ -5158,7 +7111,7 @@
           </div>
           <div class="upgrade-footer">
             <span>Cost:</span>
-            <span class="cost-tag" id="u_cost_${upg.id}">${isMax ? 'MAXIM' : formatNumber(cost) + ' ⚡'}</span>
+            <span class="cost-tag" id="u_cost_${upg.id}">${costDisplay}</span>
           </div>
         `;
         container.appendChild(card);
@@ -5209,11 +7162,12 @@
       PRESTIGE_UPGRADES_DATA.forEach(upg => {
         const lvl = state.prestigeUpgrades[upg.id] || 0;
         const isMax = lvl >= upg.maxLevel;
-        const cost = Math.round(upg.baseCost * Math.pow(upg.costMult, lvl));
+        const cost = getPrestigeUpgradeCost(upg, lvl);
         const canAfford = !isMax && state.darkMatter >= cost;
 
         const card = document.createElement('div');
         card.className = 'upgrade-card' + (canAfford ? '' : ' locked');
+        card.id = `p_card_${upg.id}`;
         card.onclick = () => buyPrestigeUpgrade(upg.id);
 
         card.innerHTML = `
@@ -5229,7 +7183,7 @@
           </div>
           <div class="upgrade-footer">
             <span>Cost:</span>
-            <span class="cost-tag" style="color:#d8b4fe">${isMax ? 'MAXIM' : cost + ' 🔮'}</span>
+            <span class="cost-tag" style="color:#d8b4fe" id="p_cost_${upg.id}">${isMax ? 'MAXIM' : cost + ' 🔮'}</span>
           </div>
         `;
         container.appendChild(card);
@@ -5253,6 +7207,9 @@
         const isUnl = state.unlockedAchievements.includes(ach.id);
         if (currentAchFilter === 'unlocked') return isUnl;
         if (currentAchFilter === 'locked') return !isUnl;
+        if (currentAchFilter === 'rarity_standard') return ach.rarity === 'standard';
+        if (currentAchFilter === 'rarity_rare') return ach.rarity === 'rare';
+        if (currentAchFilter === 'rarity_mythic') return ach.rarity === 'mythic';
         if (currentAchFilter !== 'all') return ach.cat === currentAchFilter;
         return true;
       });
@@ -5262,12 +7219,27 @@
       } else {
         filtered.forEach(ach => {
           const unlocked = state.unlockedAchievements.includes(ach.id);
+          const rarity = ach.rarity || 'standard';
           const card = document.createElement('div');
-          card.className = 'ach-card' + (unlocked ? ' unlocked' : '');
+          card.className = `ach-card rarity-${rarity}` + (unlocked ? ' unlocked' : '');
+
+          let pillClass = 'pill-standard';
+          let pillLabel = `🥉 Standard (${ach.rarityPct || '80%'})`;
+          if (rarity === 'rare') {
+            pillClass = 'pill-rare';
+            pillLabel = `💎 Rară (${ach.rarityPct || '12%'})`;
+          } else if (rarity === 'mythic') {
+            pillClass = 'pill-mythic';
+            pillLabel = `👑 Mitică (${ach.rarityPct || '0.5%'})`;
+          }
+
           card.innerHTML = `
             <div class="ach-icon">${unlocked ? ach.icon : '🔒'}</div>
-            <div>
-              <div class="ach-title">${ach.name}</div>
+            <div class="ach-info">
+              <div class="ach-top-row">
+                <span class="ach-title">${ach.name}</span>
+                <span class="ach-rarity-pill ${pillClass}">${pillLabel}</span>
+              </div>
               <div class="ach-desc">${ach.desc}</div>
             </div>
           `;
@@ -5306,14 +7278,181 @@
       `).join('');
     }
 
+    /********************************************************************
+     * 7.5. SISTEM NOTIFICĂRI REALIZĂRI TIP XBOX (XBOX ACHIEVEMENTS QUEUE)
+     *      - Coadă automată: maxim 3 realizări afișate simultan pe ecran
+     *      - Design premium trofeu, inel holografic rotativ, flare sweep
+     *      - Sunet melodic cristalin celebrativ (chime de realizare)
+     ********************************************************************/
+    const achievementUnlockQueue = [];
+    let activeAchievementBannerCount = 0;
+    const MAX_CONCURRENT_ACHIEVEMENTS = 3;
+
+    function playXboxAchievementChime(rarity = 'standard') {
+      if (!state.soundEnabled) return;
+      try {
+        if (!audioCtx) {
+          audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        }
+        if (audioCtx.state === 'suspended') {
+          audioCtx.resume();
+        }
+
+        const now = audioCtx.currentTime;
+
+        if (rarity === 'mythic') {
+          // CHIME MITIC (Cosmic God Tier Fanfare): Sub-bass impact + 8 note arpeggio ascendent triumfal + Shimmer triplu
+          playSyntheticChimeTone(130.81, now, 0.55, 0.16, 'sine'); // C3 Sub-bass
+
+          const mythicNotes = [
+            [523.25, 0.04, 0.35, 0.10], // C5
+            [659.25, 0.09, 0.38, 0.11], // E5
+            [783.99, 0.14, 0.40, 0.12], // G5
+            [987.77, 0.19, 0.42, 0.12], // B5
+            [1046.50, 0.24, 0.46, 0.13], // C6
+            [1318.51, 0.29, 0.52, 0.14], // E6
+            [1567.98, 0.34, 0.60, 0.15], // G6
+            [2093.00, 0.40, 1.45, 0.18]  // C7 (triumf susținut)
+          ];
+          mythicNotes.forEach(([f, delay, dur, vol]) => {
+            playSyntheticChimeTone(f, now + delay, dur, vol, 'triangle');
+          });
+
+          // Acord armonic angelic susținut
+          playSyntheticChimeTone(1318.51, now + 0.42, 1.30, 0.08, 'sine');
+          playSyntheticChimeTone(1567.98, now + 0.42, 1.35, 0.08, 'sine');
+
+        } else if (rarity === 'rare') {
+          // CHIME RAR (Diamond Rare Xbox): Arpegiu Cizelat de Cristal (5 note D5->G5->B5->D6->G6 + Bell Chime G7)
+          const rareNotes = [
+            [587.33, 0.00, 0.42, 0.10], // D5
+            [783.99, 0.07, 0.45, 0.11], // G5
+            [987.77, 0.14, 0.48, 0.12], // B5
+            [1174.66, 0.21, 0.55, 0.14], // D6
+            [1567.98, 0.28, 0.95, 0.16]  // G6 (rezonanță de diamant)
+          ];
+          rareNotes.forEach(([f, delay, dur, vol]) => {
+            playSyntheticChimeTone(f, now + delay, dur, vol, 'triangle');
+          });
+          // Clopoțel de diamant înalt
+          playSyntheticChimeTone(3135.96, now + 0.32, 0.75, 0.07, 'sine'); // G7
+
+        } else {
+          // CHIME STANDARD: Acord Dual Clasic Xbox Crystal Shimmer (F5/A5 -> C6/F6)
+          playSyntheticChimeTone(698.46, now, 0.36, 0.09, 'triangle');
+          playSyntheticChimeTone(880.00, now, 0.38, 0.10, 'triangle');
+
+          playSyntheticChimeTone(1046.50, now + 0.085, 0.55, 0.13, 'triangle');
+          playSyntheticChimeTone(1396.91, now + 0.095, 0.60, 0.11, 'triangle');
+        }
+      } catch (e) {}
+    }
+
+    function playSyntheticChimeTone(freq, startTime, duration, vol, waveType = 'triangle') {
+      try {
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+
+        osc.type = waveType;
+        osc.frequency.setValueAtTime(freq, startTime);
+        osc.frequency.exponentialRampToValueAtTime(freq * 1.015, startTime + duration);
+
+        gain.gain.setValueAtTime(0.001, startTime);
+        gain.gain.linearRampToValueAtTime(vol, startTime + 0.02);
+        gain.gain.exponentialRampToValueAtTime(0.0001, startTime + duration);
+
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+
+        osc.start(startTime);
+        osc.stop(startTime + duration);
+      } catch (e) {}
+    }
+
+    function triggerXboxAchievementUnlock(ach) {
+      achievementUnlockQueue.push(ach);
+      processXboxAchievementQueue();
+    }
+
+    function processXboxAchievementQueue() {
+      while (activeAchievementBannerCount < MAX_CONCURRENT_ACHIEVEMENTS && achievementUnlockQueue.length > 0) {
+        const nextAch = achievementUnlockQueue.shift();
+        spawnXboxAchievementCard(nextAch);
+      }
+    }
+
+    function spawnXboxAchievementCard(ach) {
+      activeAchievementBannerCount++;
+
+      let container = document.getElementById('xboxAchievementContainer');
+      if (!container) {
+        container = document.createElement('div');
+        container.className = 'xbox-achievement-container';
+        container.id = 'xboxAchievementContainer';
+        document.body.appendChild(container);
+      }
+
+      const rarity = ach.rarity || 'standard';
+      const card = document.createElement('div');
+      card.className = `xbox-ach-card rarity-${rarity}`;
+      card.setAttribute('role', 'alert');
+      card.setAttribute('title', 'Apasă pentru a închide notificarea');
+
+      const iconChar = ach.icon || '🏆';
+
+      // Ring-uri orbitale specifice rarității (1 pentru standard, 2 pentru rare, 3 pentru mythic)
+      const ringHtml = `
+        <div class="xbox-ach-badge-ring ring-outer"></div>
+        ${rarity !== 'standard' ? '<div class="xbox-ach-badge-ring ring-inner"></div>' : ''}
+        ${rarity === 'mythic' ? '<div class="xbox-ach-badge-ring ring-core"></div>' : ''}
+      `;
+
+      card.innerHTML = `
+        <div class="xbox-ach-badge">
+          ${ringHtml}
+          <span class="xbox-ach-badge-icon">${iconChar}</span>
+        </div>
+        <div class="xbox-ach-content">
+          <div class="xbox-ach-header">
+            <span class="xbox-ach-tag">${ach.rarityDisplay || '🏆 REALIZARE DEBLOCATĂ'}</span>
+            <span class="xbox-ach-score">${ach.rarityScore || '⭐ +1% PROD'}</span>
+          </div>
+          <div class="xbox-ach-title">${ach.name}</div>
+          <div class="xbox-ach-desc">${ach.desc}</div>
+        </div>
+        <div class="xbox-ach-flare"></div>
+      `;
+
+      container.appendChild(card);
+      playXboxAchievementChime(rarity);
+
+      let dismissed = false;
+      const dismissCard = () => {
+        if (dismissed) return;
+        dismissed = true;
+        card.classList.add('dismissing');
+        setTimeout(() => {
+          card.remove();
+          activeAchievementBannerCount = Math.max(0, activeAchievementBannerCount - 1);
+          processXboxAchievementQueue();
+        }, 380);
+      };
+
+      // Click pe card pentru închidere imediată
+      card.addEventListener('click', dismissCard);
+
+      // Timp de afișare scalat cu raritatea (Mitică rămâne mai mult pe ecran să fie admirată)
+      const displayDuration = rarity === 'mythic' ? 7000 : (rarity === 'rare' ? 5400 : 4200);
+      setTimeout(dismissCard, displayDuration);
+    }
+
     function checkAchievements() {
       let newlyUnlocked = false;
       for (const ach of ACHIEVEMENTS_DATA) {
         if (!state.unlockedAchievements.includes(ach.id) && ach.check(state)) {
           state.unlockedAchievements.push(ach.id);
           newlyUnlocked = true;
-          showToast(`🏆 Realizare Deblocată: ${ach.name} (+1% Bonus!)`);
-          playTone(820, 'triangle', 0.16, 0.11);
+          triggerXboxAchievementUnlock(ach);
         }
       }
       if (newlyUnlocked) {
@@ -5329,8 +7468,12 @@
 
       // Bara mini Prestigiu
       const totalPresBonusPct = Math.round(((state.darkMatter || 0) * 10) + ((state.prestigeCount || 0) * 15));
-      document.getElementById('darkMatterMini').innerText = `${formatNumber(state.darkMatter, 0)} (Rebirth #${state.prestigeCount || 0})`;
-      document.getElementById('prestigeMultMini').innerText = `+${formatNumber(totalPresBonusPct, 0)}%`;
+      const dmEl = document.getElementById('darkMatterMini');
+      if (dmEl) dmEl.innerText = `${formatNumber(state.darkMatter || 0, 0)} 🔮`;
+      const rbEl = document.getElementById('rebirthCountMini');
+      if (rbEl) rbEl.innerText = `🌀 Rebirth #${state.prestigeCount || 0}`;
+      const presEl = document.getElementById('prestigeMultMini');
+      if (presEl) presEl.innerText = `⭐ +${formatNumber(totalPresBonusPct, 0)}% Bonus`;
 
       // Combo Bar (Overclock)
       const comboMult = getComboMultiplier();
@@ -5356,14 +7499,16 @@
         if (!card) return;
         const lvl = state.clickUpgrades[upg.id] || 0;
         const isMax = lvl >= upg.maxLevel;
-        const cost = getClickUpgradeCost(upg, lvl);
-        if (!isMax && state.energy >= cost) {
+        const info = getClickUpgradeBuyInfo(upg, clickBuyMultiplier);
+        if (!isMax && state.energy >= info.cost && info.count > 0) {
           card.classList.remove('locked');
         } else {
           card.classList.add('locked');
         }
         const uCostEl = document.getElementById(`u_cost_${upg.id}`);
-        if (uCostEl) uCostEl.innerText = isMax ? 'MAXIM' : `${formatNumber(cost)} ⚡`;
+        if (uCostEl) {
+          uCostEl.innerText = isMax ? 'MAXIM' : (clickBuyMultiplier === 1 ? `${formatNumber(info.cost)} ⚡` : `+${info.count}x: ${formatNumber(info.cost)} ⚡`);
+        }
       });
 
       // Actualizare dinamică Generatoare (inclusiv modul MAX și descrierea specială)
@@ -5421,6 +7566,25 @@
 
       const presBadge = document.getElementById('prestigeTabBadge');
       presBadge.style.display = ready ? 'inline-block' : 'none';
+
+      // Actualizare dinamică a cardurilor de Prestigiu când tab-ul este deschis
+      const presTab = document.getElementById('tab-prestige');
+      if (presTab && presTab.classList.contains('active')) {
+        PRESTIGE_UPGRADES_DATA.forEach(upg => {
+          const card = document.getElementById(`p_card_${upg.id}`);
+          if (!card) return;
+          const lvl = state.prestigeUpgrades[upg.id] || 0;
+          const isMax = lvl >= upg.maxLevel;
+          const cost = getPrestigeUpgradeCost(upg, lvl);
+          if (!isMax && state.darkMatter >= cost) {
+            card.classList.remove('locked');
+          } else {
+            card.classList.add('locked');
+          }
+          const costEl = document.getElementById(`p_cost_${upg.id}`);
+          if (costEl) costEl.innerText = isMax ? 'MAXIM' : `${cost} 🔮`;
+        });
+      }
 
       // Actualizare Cooldown-uri Abilități Active
       const now = Date.now();
@@ -5484,6 +7648,7 @@
       document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
       document.getElementById(`tab-${tabName}`).classList.add('active');
 
+      if (tabName === 'upgrades') renderClickUpgrades();
       if (tabName === 'stats') renderStats();
       if (tabName === 'prestige') renderPrestigeUpgrades();
       if (tabName === 'achievements') renderAchievements();
@@ -5572,6 +7737,39 @@
         }
 
         document.getElementById('btnSound').innerText = state.soundEnabled ? '🔊 Sunet: ON' : '🔇 Sunet: OFF';
+        // Dacă utilizatorul nu a oprit explicit muzica, o activăm implicit
+        if (parsed.musicEnabled === undefined || localStorage.getItem('qn_music_user_choice') !== 'true') {
+          state.musicEnabled = true;
+        }
+        syncMusicUI();
+        syncCosmicBgUI();
+        if (state.musicEnabled) {
+          startCosmicMusic();
+          setupAudioUnlockListeners();
+        }
+
+        // Rebalansare retroactivă echitabilă a Materiei Întunecate pentru Rebirth-urile deja efectuate
+        if (!localStorage.getItem('qn_dm_rebalance_v294')) {
+          localStorage.setItem('qn_dm_rebalance_v294', 'true');
+          const pCount = state.prestigeCount || 0;
+          if (pCount > 0) {
+            let targetDmTotal = 0;
+            for (let r = 1; r <= pCount; r++) {
+              targetDmTotal += Math.max(1, Math.round(r + Math.pow(r, 1.35) * 0.4));
+            }
+            let oldDmTotal = 0;
+            for (let r = 1; r <= pCount; r++) {
+              oldDmTotal += 1 + Math.floor((r - 1) / 2);
+            }
+            const missingDm = Math.max(0, targetDmTotal - oldDmTotal);
+            if (missingDm > 0) {
+              state.darkMatter = (state.darkMatter || 0) + missingDm;
+              setTimeout(() => {
+                showToast(`🔮 Rebalansare Rebirth: Ai primit +${missingDm} Materie Întunecată retroactiv pentru cele ${pCount} Singularități stabilizate!`);
+              }, 5500);
+            }
+          }
+        }
 
         // Calcul Progres Offline (plafonat la pragul Rebirth-ului curent ca să nu sară peste Rebirth-uri)
         const now = Date.now();
@@ -5604,17 +7802,40 @@
       updateUI();
     }
 
-    function confirmReset() {
-      if (confirm('⚠️ Ești sigur că vrei să ștergi definitiv tot progresul (inclusiv Materia Întunecată și Realizările)?')) {
-        localStorage.removeItem(SAVE_KEY);
-        state = getDefaultState();
-        skillCooldowns = state.skillCooldowns;
-        activeBuffs = state.activeBuffs;
-        comboMeter = 0;
-        renderAll();
-        renderStats();
-        showToast('🗑️ Jocul a fost resetat complet la zero.');
+    async function confirmReset() {
+      if (!confirm('⚠️ Ești sigur că vrei să ștergi definitiv tot progresul (atât Local, cât și din Cloud și Clasament)?\n\nAceastă acțiune va reseta jocul complet la zero și este ireversibilă!')) {
+        return;
       }
+
+      showToast('⏳ Se resetează progresul local și din Cloud...');
+
+      // 1. Curățăm localStorage și setăm flag-ul de resetare
+      localStorage.removeItem(SAVE_KEY);
+      localStorage.removeItem(PENDING_SYNC_KEY);
+      localStorage.setItem('qn_pending_cloud_wipe', 'true');
+
+      // 2. Resetăm starea jocului la valorile implicite de pornire
+      state = getDefaultState();
+      skillCooldowns = state.skillCooldowns;
+      activeBuffs = state.activeBuffs;
+      comboMeter = 0;
+      saveGame();
+
+      // 3. Ștergem datele din Google Firebase dacă există sesiune activă
+      if (typeof cloudWipeRemoteData === 'function' && isFirebaseConfigured() && cloudSession) {
+        if (navigator.onLine) {
+          await cloudWipeRemoteData();
+        } else {
+          showToast('⚠️ Resetat local! Salvarea din Cloud va fi ștearsă automat la reconectare.');
+        }
+      }
+
+      renderAll();
+      renderStats();
+      if (typeof renderLeaderboardTab === 'function') {
+        renderLeaderboardTab();
+      }
+      showToast('🗑️ Tot progresul a fost șters definitiv (Local & Cloud)!');
     }
 
     /********************************************************************
@@ -5622,8 +7843,8 @@
      *       + AUTO-SYNC SILENȚIOS OFFLINE -> ONLINE + AUTO-UPDATE LIVE
      *       + NAVIGARE MOBIL & INSTALARE PWA (MACBOOK / PC / ANDROID / iOS)
      ********************************************************************/
-    const APP_VERSION = '2.8.0';
-    const APP_BUILD = 280;
+    const APP_VERSION = '3.0.0';
+    const APP_BUILD = 300;
     // URL-ul oficial de pe GitHub Pages pentru verificarea automată de Update (și în aplicațiile .exe / .dmg):
     const REMOTE_UPDATE_BASE_URL = 'https://mariusinfo.github.io/quantum-nexus';
 
@@ -5754,6 +7975,22 @@
         firebaseConfig.databaseURL &&
         firebaseConfig.databaseURL.startsWith('http')
       );
+    }
+
+    function openSettingsModal() {
+      syncMusicUI();
+      syncCosmicBgUI();
+      if (document.getElementById('btnSound')) {
+        document.getElementById('btnSound').innerText = state.soundEnabled ? '🔊 Sunet: ON' : '🔇 Sunet: OFF';
+      }
+      updateCloudUI();
+      const modal = document.getElementById('settingsModal');
+      if (modal) modal.classList.add('open');
+    }
+
+    function closeSettingsModal() {
+      const modal = document.getElementById('settingsModal');
+      if (modal) modal.classList.remove('open');
     }
 
     function openCloudModal() {
@@ -6015,6 +8252,53 @@
       }
     }
 
+    async function cloudWipeRemoteData() {
+      if (!isFirebaseConfigured() || !cloudSession) return false;
+      try {
+        if (!cloudSession.access_token && cloudSession.refresh_token) {
+          await refreshCloudTokenIfNeeded();
+        }
+        let token = cloudSession.access_token;
+        if (!token) return false;
+        const uid = encodeURIComponent(cloudSession.user.id);
+
+        // 1. Ștergere completă a salvării din Cloud (/users/{uid}/save.json)
+        let resDel = await fetch(`${firebaseConfig.databaseURL}/users/${uid}/save.json?auth=${encodeURIComponent(token)}`, {
+          method: 'DELETE'
+        });
+
+        if (resDel.status === 401) {
+          const refreshed = await refreshCloudTokenIfNeeded();
+          if (refreshed) {
+            token = cloudSession.access_token;
+            await fetch(`${firebaseConfig.databaseURL}/users/${uid}/save.json?auth=${encodeURIComponent(token)}`, {
+              method: 'DELETE'
+            }).catch(() => {});
+          }
+        }
+
+        // 2. Ștergere completă a intrării din Clasamentul Global (/leaderboard/{uid}.json)
+        await fetch(`${firebaseConfig.databaseURL}/leaderboard/${uid}.json?auth=${encodeURIComponent(token)}`, {
+          method: 'DELETE'
+        }).catch(() => {});
+
+        localStorage.removeItem('qn_pending_cloud_wipe');
+        setPendingCloudSync(false);
+
+        // 3. Suprascriem cu noua stare curată în Cloud (0 energie, 0 Rebirth-uri)
+        await cloudPushSave(false);
+
+        const syncEl = document.getElementById('cloudLastSyncText');
+        if (syncEl) {
+          syncEl.innerText = `Salvare ștearsă complet din Cloud: ${new Date().toLocaleTimeString('ro-RO')}`;
+        }
+        return true;
+      } catch (err) {
+        console.warn('Eroare la ștergerea datelor din Cloud:', err);
+        return false;
+      }
+    }
+
     /********************************************************************
      * 11.7. CLASAMENT GLOBAL MULTI-CATEGORIE (DOAR CONT CONECTAT FIREBASE)
      ********************************************************************/
@@ -6206,6 +8490,10 @@
     // Funcție apelată automat și 100% silențios când omul trece din Offline -> Online
     async function syncOfflineProgressToServer() {
       if (!navigator.onLine || !isFirebaseConfigured() || !cloudSession) return;
+      if (localStorage.getItem('qn_pending_cloud_wipe') === 'true') {
+        await cloudWipeRemoteData();
+        return;
+      }
       if (!cloudSession.access_token && cloudSession.refresh_token) {
         await refreshCloudTokenIfNeeded();
       }
@@ -6216,6 +8504,13 @@
 
     async function cloudPullSave(manual = false) {
       if (!isFirebaseConfigured() || !cloudSession) return;
+      if (localStorage.getItem('qn_pending_cloud_wipe') === 'true') {
+        await cloudWipeRemoteData();
+        if (manual) {
+          showToast('🗑️ Salvarea din Cloud a fost ștearsă conform cererii de resetare.');
+        }
+        return;
+      }
       if (!navigator.onLine) {
         return;
       }
@@ -6239,6 +8534,9 @@
         if (!row || !row.save_data) {
           // Nu există încă salvare în Cloud pe acest cont -> urcăm salvarea locală automat și silențios
           await cloudPushSave(false);
+          if (manual) {
+            showToast('☁️ Nicio salvare anterioară în Cloud. Starea actuală a fost sincronizată!');
+          }
           return;
         }
 
@@ -6473,6 +8771,15 @@
       document.getElementById('installModal').classList.remove('open');
     }
 
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closeSettingsModal();
+        closeCloudModal();
+        closeInstallModal();
+        closeOfflineModal();
+      }
+    });
+
     /********************************************************************
      * 12. GAME LOOP (60 FPS) & TIMERE AUTOMATE
      ********************************************************************/
@@ -6503,12 +8810,14 @@
         }
       }
 
-      // Mecanică Unică Nano-Cursor (g0): Auto-Click pe Nucleu (mai multe cursoare = frecvență mai rapidă + încărcare completă până la 100% Overclock!)
+      // Mecanică Unică Nano-Cursor (g0): Auto-Click pe Nucleu perfect sincronizat cu cursoarele orbitale
       const g0Count = (state.generators && state.generators['g0']) || 0;
       const isOverdriveActive = Date.now() < (activeBuffs.overdriveOrbEnd || 0);
       if (g0Count > 0 || isOverdriveActive) {
-        const baseInterval = Math.max(0.28, 1.35 / (1 + g0Count * 0.08));
-        const autoInterval = isOverdriveActive ? Math.max(0.12, baseInterval / 3.5) : baseInterval;
+        const visibleCursors = g0Count <= 0 ? 0 : Math.min(16, g0Count <= 8 ? g0Count : 8 + Math.floor(Math.log2(g0Count - 6) * 2.5));
+        const activeCursorsCount = Math.max(1, visibleCursors);
+        const cycleDuration = isOverdriveActive ? 0.6 : 1.2;
+        const autoInterval = Math.max(0.075, cycleDuration / activeCursorsCount);
         autoCursorAccumulator += dt;
         if (autoCursorAccumulator >= autoInterval) {
           autoCursorAccumulator %= autoInterval;
@@ -6579,13 +8888,180 @@
       requestAnimationFrame(gameLoop);
     }
 
+    /********************************************************************
+     * 12. ECRAN DE ÎNCĂRCARE & BUN VENIT CU ANIMAȚIE CUANTICĂ (5 SECUNDE)
+     ********************************************************************/
+    function initWelcomeLoadingScreen() {
+      const loadingScreen = document.getElementById('loadingScreen');
+      if (!loadingScreen) return;
+
+      // Pornim muzica de fundal la lansarea ecranului de încărcare
+      if (state && state.musicEnabled) {
+        startCosmicMusic();
+      }
+
+      // Orice atingere/click oriunde pe ecranul de încărcare deblochează instant sunetul
+      loadingScreen.addEventListener('pointerdown', () => {
+        if (state && state.musicEnabled && bgMusicAudio && bgMusicAudio.paused) {
+          startCosmicMusic();
+        }
+      }, { passive: true });
+
+      // Personalizare mesaj de bun venit dacă există nume salvat
+      const greetEl = document.getElementById('loadingCommanderGreet');
+      const cmdName = (typeof getCommanderDisplayName === 'function') ? getCommanderDisplayName() : 'Comandant';
+      if (greetEl) {
+        greetEl.innerText = (cmdName && cmdName !== 'Comandant')
+          ? `Bun venit, ${cmdName}!`
+          : 'Bun venit în Singularitate, Comandant!';
+      }
+
+      // Inițializare particule/stele cosmice pe fundal
+      const canvas = document.getElementById('loadingStarsCanvas');
+      let animFrameId = null;
+      let stars = [];
+
+      const onResize = () => {
+        if (!canvas) return;
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+      };
+
+      if (canvas) {
+        const ctx = canvas.getContext('2d');
+        onResize();
+        window.addEventListener('resize', onResize);
+
+        const starCount = Math.min(80, Math.floor((window.innerWidth * window.innerHeight) / 12000));
+        for (let i = 0; i < starCount; i++) {
+          stars.push({
+            x: Math.random() * canvas.width,
+            y: Math.random() * canvas.height,
+            size: 0.8 + Math.random() * 2.2,
+            speedY: -0.15 - Math.random() * 0.45,
+            speedX: (Math.random() - 0.5) * 0.3,
+            color: Math.random() > 0.4 ? '#38bdf8' : (Math.random() > 0.5 ? '#c084fc' : '#ffffff'),
+            alpha: 0.2 + Math.random() * 0.7,
+            pulseSpeed: 0.02 + Math.random() * 0.03
+          });
+        }
+
+        const renderStars = () => {
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+          stars.forEach(s => {
+            s.y += s.speedY;
+            s.x += s.speedX;
+            if (s.y < 0) s.y = canvas.height;
+            if (s.x < 0) s.x = canvas.width;
+            if (s.x > canvas.width) s.x = 0;
+
+            s.alpha += Math.sin(Date.now() * 0.003 * s.pulseSpeed) * 0.02;
+            const a = Math.max(0.15, Math.min(0.95, s.alpha));
+
+            ctx.save();
+            ctx.globalAlpha = a;
+            ctx.shadowBlur = s.size * 3;
+            ctx.shadowColor = s.color;
+            ctx.fillStyle = s.color;
+            ctx.beginPath();
+            ctx.arc(s.x, s.y, s.size, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.restore();
+          });
+          animFrameId = requestAnimationFrame(renderStars);
+        };
+        animFrameId = requestAnimationFrame(renderStars);
+      }
+
+      // Progresie fină timp de exact 5 secunde (5000 ms)
+      const TOTAL_DURATION = 5000;
+      const startTime = performance.now();
+      const fillEl = document.getElementById('loadingBarFill');
+      const pctEl = document.getElementById('loadingPctText');
+      const statusEl = document.getElementById('loadingStatusText');
+
+      const statusPhases = [
+        { at: 0, text: '⚡ Calibrare reactor cuantic & matrici fotonice...' },
+        { at: 1100, text: '🌌 Stabilizare câmp de distorsiune spațiu-timp...' },
+        { at: 2200, text: '🔮 Sincronizare rețea tachionică & salvare locală...' },
+        { at: 3400, text: '✨ Încărcare generatoare & sinergie dimensională...' },
+        { at: 4400, text: '🚀 Secvență finalizată. Bine ai venit în Quantum Nexus!' }
+      ];
+
+      let lastPhaseIdx = -1;
+
+      const updateProgress = (now) => {
+        const elapsed = now - startTime;
+        const progress = Math.min(1, elapsed / TOTAL_DURATION);
+        const pct = Math.floor(progress * 100);
+
+        if (fillEl) fillEl.style.width = `${progress * 100}%`;
+        if (pctEl) pctEl.innerText = `${pct}%`;
+
+        // Tranziție fină între fazele de status
+        for (let i = statusPhases.length - 1; i >= 0; i--) {
+          if (elapsed >= statusPhases[i].at) {
+            if (lastPhaseIdx !== i) {
+              lastPhaseIdx = i;
+              if (statusEl) {
+                statusEl.style.opacity = '0';
+                setTimeout(() => {
+                  statusEl.innerText = statusPhases[i].text;
+                  statusEl.style.opacity = '1';
+                }, 130);
+              }
+            }
+            break;
+          }
+        }
+
+        if (progress < 1) {
+          requestAnimationFrame(updateProgress);
+        } else {
+          setTimeout(completeLoadingScreen, 120);
+        }
+      };
+
+      requestAnimationFrame(updateProgress);
+
+      function completeLoadingScreen() {
+        if (state && state.musicEnabled && bgMusicAudio && bgMusicAudio.paused) {
+          startCosmicMusic();
+        }
+        // Sunet futurist de bun venit (Acord cosmic ascendent C5 -> E5 -> G5 -> C6)
+        try {
+          if (state && state.soundEnabled) {
+            playTone(523.25, 'sine', 0.22, 0.08); // C5
+            setTimeout(() => playTone(659.25, 'sine', 0.22, 0.09), 80); // E5
+            setTimeout(() => playTone(783.99, 'sine', 0.30, 0.10), 160); // G5
+            setTimeout(() => playTone(1046.50, 'triangle', 0.45, 0.12), 250); // C6
+          }
+        } catch (e) {}
+
+        // Tranziție de ieșire (zoom out lin + estompare de luminozitate)
+        loadingScreen.classList.add('loading-exit');
+
+        setTimeout(() => {
+          if (animFrameId) cancelAnimationFrame(animFrameId);
+          window.removeEventListener('resize', onResize);
+          loadingScreen.style.display = 'none';
+          showToast('🌌 Bine ai venit în Quantum Nexus! Toate sistemele sunt online.');
+        }, 850);
+      }
+    }
+
     // Inițializare la pornire
     window.addEventListener('DOMContentLoaded', () => {
       loadGame();
       renderAll();
       initCloudSystem();
       hideInstallButtonsIfInstalled();
+      initCosmicInteractiveCanvas();
+      initWelcomeLoadingScreen();
       requestAnimationFrame(gameLoop);
+      if (state && state.musicEnabled) {
+        startCosmicMusic();
+      }
 
       const verSub = document.getElementById('versionHeaderSub');
       if (verSub) verSub.innerText = `v${APP_VERSION}`;

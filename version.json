@@ -1,7 +1,7 @@
 {
-  "version": "2.8.0",
-  "build": 280,
+  "version": "3.0.0",
+  "build": 300,
   "releaseDate": "2026-10-22",
-  "changelog": "v2.8.0: 8 Tipuri de Sfere Cuantice Zburătoare cu Buff-uri Unice, Explozia Nucleului în 32 de Bucăți la Rebirth, Gaura Neagră care înghite Nucleul, Portalul Big Bang pentru Universul Sintetic, Overclock 100% cu Nano-Cursoare și Cooldown-uri Persistente!",
+  "changelog": "v3.0.0: Clasificare Xbox Achievements pe 3 Rarități (Standard, Rară, Mitică) cu Animații, Halo-uri, Flare-uri și Sunete Melodice Unice + Fix Bară Rebirth & Materie Întunecată!",
   "autoApply": true
 }

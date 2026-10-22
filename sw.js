@@ -1,9 +1,10 @@
-const CACHE_NAME = 'quantum-nexus-cache-v2.8.0';
+const CACHE_NAME = 'quantum-nexus-cache-v3.0.0';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
   './manifest.json',
-  './icon.svg'
+  './icon.svg',
+  './background.mp3'
 ];
 
 // Instalare Service Worker și pre-cache pentru rulare 100% Offline
