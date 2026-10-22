@@ -1,7 +1,7 @@
 {
-  "version": "3.2.0",
-  "build": 320,
-  "releaseDate": "2026-10-22",
-  "changelog": "v3.2.0: UPDATE MAJOR - Prestigiu/Rebirth recalculat direct pe baza fondurilor curente de energie (banii pe care îi deții în acest moment) + Sistem Social Galactic live cu exclusiv persoane reale pe joc, filtru 'Doar Online', afișare exactă când au fost ultima dată online, profiluri și Salut Cuantic + Arbore de Talente Ramificat (Ascension / Skill Tree) cu mod dublu Constelație Canvas & Coloane Tehnologice și sistem de Respec 100% gratuit.",
+  "version": "3.3.0",
+  "build": 330,
+  "releaseDate": "2026-10-23",
+  "changelog": "v3.3.0: UPDATE MASIV - Skin-uri Deblocabile pentru Nucleul Central (Plasmă Solară, Tesseract 4D, Gaură Albă Superluminoasă, Void Demon) cu garderobă interactivă și efecte exclusive de click + Sistem de Evoluție pe Nivele (Tier 1-4: Standard, Cyber-Gold, Hiper-Void, Transcendental) pentru TOATE Automatizările Pasive (Cursoare, Drone cu 4 tipuri de laser, Rețea Neurală AI, Sateliți Solari, Matrice Dyson 3D, Găuri Negre) + Anomalii Cosmice Interactive realiste + Optimizare Statistici și Realizări.",
   "autoApply": true
 }
