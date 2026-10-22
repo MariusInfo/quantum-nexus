@@ -1,7 +1,7 @@
 {
-  "version": "3.1.1",
-  "build": 311,
+  "version": "3.2.0",
+  "build": 320,
   "releaseDate": "2026-10-22",
-  "changelog": "v3.1.1: Corecție afișare Recompense Zilnice (Daily Login) - când revendici cadoul Zilei 1, Ziua 1 este marcată 'Revendicat Azi', iar Ziua 2 rămâne corect blocată cu 'Deblocare Mâine' fără a mai fi marcată prematur ca revendicată.",
+  "changelog": "v3.2.0: UPDATE MAJOR - Prestigiu/Rebirth recalculat direct pe baza fondurilor curente de energie (banii pe care îi deții în acest moment) + Sistem Social Galactic live cu exclusiv persoane reale pe joc, filtru 'Doar Online', afișare exactă când au fost ultima dată online, profiluri și Salut Cuantic + Arbore de Talente Ramificat (Ascension / Skill Tree) cu mod dublu Constelație Canvas & Coloane Tehnologice și sistem de Respec 100% gratuit.",
   "autoApply": true
 }

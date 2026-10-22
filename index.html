@@ -4150,6 +4150,447 @@
       0%, 100% { box-shadow: 0 0 6px rgba(168, 85, 247, 0.2); opacity: 0.85; }
       50% { box-shadow: 0 0 16px rgba(168, 85, 247, 0.55); opacity: 1; }
     }
+    /* =========================================================================
+     * V3.2.0: ARBORE DE TALENTE RAMIFICAT (CONSTELLAȚIA CUANTICĂ) & SISTEM SOCIAL
+     * ========================================================================= */
+    .btn-header.social-btn {
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.22) 0%, rgba(6, 182, 212, 0.2) 100%);
+      border-color: rgba(16, 185, 129, 0.5);
+      color: #a7f3d0;
+    }
+    .btn-header.social-btn:hover {
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.35) 0%, rgba(6, 182, 212, 0.32) 100%);
+      border-color: #34d399;
+      box-shadow: 0 0 14px rgba(16, 185, 129, 0.45);
+    }
+    .social-online-pill {
+      font-size: 10px;
+      padding: 1px 6px;
+      border-radius: 999px;
+      background: rgba(16, 185, 129, 0.25);
+      border: 1px solid rgba(16, 185, 129, 0.6);
+      color: #6ee7b7;
+      font-family: var(--font-mono);
+      font-weight: 800;
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+    }
+
+    /* Skill Tree Header & Controls */
+    .skill-tree-controls {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+      background: rgba(15, 23, 42, 0.85);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      padding: 10px 14px;
+      margin-bottom: 14px;
+    }
+    .skill-view-tabs {
+      display: flex;
+      background: rgba(2, 6, 23, 0.7);
+      padding: 3px;
+      border-radius: 8px;
+      border: 1px solid var(--border-subtle);
+      gap: 4px;
+    }
+    .skill-view-btn {
+      padding: 5px 12px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 750;
+      color: var(--text-muted);
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-family: var(--font-sans);
+    }
+    .skill-view-btn.active {
+      background: rgba(56, 189, 248, 0.2);
+      color: #38bdf8;
+      border: 1px solid rgba(56, 189, 248, 0.4);
+      box-shadow: 0 0 8px rgba(56, 189, 248, 0.25);
+    }
+    .btn-respec-tree {
+      background: rgba(239, 68, 68, 0.15);
+      border: 1px solid rgba(239, 68, 68, 0.45);
+      color: #fca5a5;
+      font-size: 11px;
+      font-weight: 750;
+      padding: 6px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .btn-respec-tree:hover {
+      background: rgba(239, 68, 68, 0.28);
+      border-color: #ef4444;
+      color: #ffffff;
+      box-shadow: 0 0 12px rgba(239, 68, 68, 0.35);
+    }
+
+    /* Constellation Canvas View */
+    .constellation-wrapper {
+      position: relative;
+      width: 100%;
+      height: 480px;
+      background: radial-gradient(circle at 50% 30%, rgba(30, 27, 75, 0.5) 0%, rgba(3, 7, 18, 0.95) 80%);
+      border: 1px solid rgba(168, 85, 247, 0.3);
+      border-radius: 14px;
+      overflow: hidden;
+      margin-bottom: 14px;
+      box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.8), 0 0 20px rgba(168, 85, 247, 0.12);
+    }
+    #constellationCanvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+      cursor: grab;
+    }
+    #constellationCanvas:active {
+      cursor: grabbing;
+    }
+    .constellation-hint-banner {
+      position: absolute;
+      bottom: 10px;
+      left: 12px;
+      font-size: 11px;
+      color: rgba(255, 255, 255, 0.6);
+      background: rgba(15, 23, 42, 0.85);
+      border: 1px solid var(--border-subtle);
+      padding: 4px 10px;
+      border-radius: 6px;
+      pointer-events: none;
+      font-family: var(--font-mono);
+    }
+    .constellation-docked-inspector {
+      background: rgba(15, 23, 42, 0.92);
+      border: 1px solid rgba(168, 85, 247, 0.5);
+      border-radius: 12px;
+      padding: 14px;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      text-align: left;
+      box-shadow: 0 0 20px rgba(168, 85, 247, 0.15);
+      animation: fadeIn 0.2s ease;
+    }
+    @media (max-width: 640px) {
+      .constellation-docked-inspector {
+        flex-direction: column;
+        align-items: stretch;
+      }
+    }
+
+    /* Branch Columns View */
+    .skill-tree-columns {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+    @media (max-width: 860px) {
+      .skill-tree-columns {
+        grid-template-columns: 1fr;
+      }
+    }
+    .skill-branch-col {
+      background: rgba(15, 23, 42, 0.65);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .skill-branch-col.branch-manual {
+      border-color: rgba(244, 63, 94, 0.4);
+      background: linear-gradient(180deg, rgba(244, 63, 94, 0.08) 0%, rgba(15, 23, 42, 0.8) 100%);
+    }
+    .skill-branch-col.branch-passive {
+      border-color: rgba(6, 182, 212, 0.4);
+      background: linear-gradient(180deg, rgba(6, 182, 212, 0.08) 0%, rgba(15, 23, 42, 0.8) 100%);
+    }
+    .skill-branch-col.branch-anomaly {
+      border-color: rgba(245, 158, 11, 0.4);
+      background: linear-gradient(180deg, rgba(245, 158, 11, 0.08) 0%, rgba(15, 23, 42, 0.8) 100%);
+    }
+    .skill-branch-col.branch-universal {
+      grid-column: 1 / -1;
+      border-color: rgba(168, 85, 247, 0.4);
+      background: linear-gradient(180deg, rgba(168, 85, 247, 0.1) 0%, rgba(15, 23, 42, 0.8) 100%);
+    }
+    .skill-branch-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      text-align: left;
+    }
+    .skill-branch-title {
+      font-size: 13px;
+      font-weight: 850;
+      color: #ffffff;
+      letter-spacing: 0.3px;
+    }
+    .skill-branch-subtitle {
+      font-size: 11px;
+      color: var(--text-dim);
+    }
+
+    /* Individual Node Cards */
+    .skill-node-card {
+      background: rgba(15, 23, 42, 0.85);
+      border: 1px solid var(--border-subtle);
+      border-radius: 10px;
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      text-align: left;
+      position: relative;
+      transition: all 0.2s ease;
+    }
+    .skill-node-card.locked {
+      opacity: 0.48;
+      border-color: rgba(255, 255, 255, 0.08);
+    }
+    .skill-node-card.unlocked {
+      border-color: rgba(56, 189, 248, 0.4);
+      background: rgba(15, 23, 42, 0.95);
+    }
+    .skill-node-card.unlocked:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+    }
+    .skill-node-card.maxed {
+      border-color: rgba(234, 179, 8, 0.65);
+      background: linear-gradient(135deg, rgba(234, 179, 8, 0.1) 0%, rgba(15, 23, 42, 0.95) 100%);
+    }
+    .skill-node-card.keystone {
+      border-width: 1.5px;
+      border-color: #fde047;
+      box-shadow: 0 0 16px rgba(253, 224, 71, 0.2);
+    }
+    .skill-node-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+    .skill-node-title-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      font-weight: 800;
+      color: #ffffff;
+    }
+    .skill-node-lvl {
+      font-family: var(--font-mono);
+      font-size: 10.5px;
+      color: #94a3b8;
+      font-weight: 700;
+    }
+    .skill-node-desc {
+      font-size: 11px;
+      color: var(--text-muted);
+      line-height: 1.35;
+    }
+    .skill-node-req {
+      font-size: 10px;
+      color: #f87171;
+      font-family: var(--font-mono);
+    }
+    .skill-node-btn {
+      width: 100%;
+      padding: 6px 10px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 800;
+      cursor: pointer;
+      border: none;
+      transition: all 0.18s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+    }
+    .skill-node-btn.can-buy {
+      background: linear-gradient(135deg, #a855f7, #6366f1);
+      color: #ffffff;
+      box-shadow: 0 0 10px rgba(168, 85, 247, 0.4);
+    }
+    .skill-node-btn.can-buy:hover {
+      transform: scale(1.02);
+      box-shadow: 0 0 16px rgba(168, 85, 247, 0.65);
+    }
+    .skill-node-btn.cannot-buy {
+      background: rgba(255, 255, 255, 0.06);
+      color: var(--text-dim);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      cursor: not-allowed;
+    }
+    .skill-node-btn.maxed-btn {
+      background: rgba(234, 179, 8, 0.18);
+      color: #fde047;
+      border: 1px solid rgba(234, 179, 8, 0.45);
+      cursor: default;
+    }
+
+    /* Social Modal Components */
+    .social-hero-profile {
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.15) 0%, rgba(6, 182, 212, 0.12) 50%, rgba(15, 23, 42, 0.9) 100%);
+      border: 1px solid rgba(16, 185, 129, 0.4);
+      border-radius: 14px;
+      padding: 14px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      text-align: left;
+      margin-bottom: 12px;
+    }
+    .social-avatar-badge {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      background: rgba(15, 23, 42, 0.85);
+      border: 2px solid #34d399;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 26px;
+      box-shadow: 0 0 16px rgba(52, 211, 153, 0.35);
+      flex-shrink: 0;
+    }
+    .social-commanders-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      max-height: 380px;
+      overflow-y: auto;
+      padding-right: 4px;
+    }
+    .commander-card {
+      background: rgba(15, 23, 42, 0.8);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      padding: 12px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      text-align: left;
+      transition: all 0.2s ease;
+    }
+    .commander-card:hover {
+      border-color: rgba(56, 189, 248, 0.4);
+      background: rgba(15, 23, 42, 0.95);
+    }
+    .status-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      display: inline-block;
+      flex-shrink: 0;
+    }
+    .status-dot.status-online {
+      background: #10b981;
+      box-shadow: 0 0 10px #10b981;
+      animation: pulseGreen 1.6s infinite;
+    }
+    .status-dot.status-away {
+      background: #f59e0b;
+      box-shadow: 0 0 8px #f59e0b;
+    }
+    .status-dot.status-offline {
+      background: #64748b;
+    }
+    @keyframes pulseGreen {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.25); opacity: 0.8; box-shadow: 0 0 14px #10b981; }
+    }
+    .btn-social-action {
+      padding: 6px 10px;
+      border-radius: 8px;
+      font-size: 11px;
+      font-weight: 750;
+      border: 1px solid var(--border-subtle);
+      background: rgba(255, 255, 255, 0.06);
+      color: #ffffff;
+      cursor: pointer;
+      transition: all 0.18s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .btn-social-action:hover {
+      background: rgba(56, 189, 248, 0.2);
+      border-color: #38bdf8;
+      color: #38bdf8;
+    }
+    .btn-social-action.active-friend {
+      background: rgba(234, 179, 8, 0.2);
+      border-color: rgba(234, 179, 8, 0.6);
+      color: #fde047;
+    }
+    .social-filter-btn {
+      padding: 5px 12px;
+      border-radius: 8px;
+      font-size: 11px;
+      font-weight: 700;
+      border: 1px solid var(--border-subtle);
+      background: rgba(15, 23, 42, 0.65);
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.18s ease;
+    }
+    .social-filter-btn:hover {
+      color: #ffffff;
+      border-color: rgba(56, 189, 248, 0.5);
+    }
+    .social-filter-btn.active {
+      background: rgba(56, 189, 248, 0.2);
+      border-color: #38bdf8;
+      color: #38bdf8;
+      box-shadow: 0 0 10px rgba(56, 189, 248, 0.25);
+    }
+    .social-avatar-selector {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 6px;
+    }
+    .social-avatar-opt {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: rgba(15, 23, 42, 0.8);
+      border: 1.5px solid var(--border-subtle);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      cursor: pointer;
+      transition: all 0.18s ease;
+    }
+    .social-avatar-opt.selected {
+      border-color: #fde047;
+      box-shadow: 0 0 12px rgba(253, 224, 71, 0.6);
+      transform: scale(1.1);
+    }
   </style>
 </head>
 <body>
@@ -4197,7 +4638,7 @@
       <!-- Subtitlu & Versiune Sistem -->
       <div class="loading-footer-tip">
         <span class="loading-pulse-dot"></span>
-        <span>Simulare Multiversală v3.1.1 // Auto-Stabilizare Activă</span>
+        <span>Simulare Multiversală v3.2.0 // Auto-Stabilizare Activă</span>
       </div>
 
       <!-- Hint discret dacă browserul a reținut temporar autoplay înainte de primul gest -->
@@ -4207,6 +4648,7 @@
     </div>
   </div>
 
+
   <div class="app-shell">
     <!-- Top Header -->
     <header class="top-bar">
@@ -4214,13 +4656,17 @@
         <div class="brand-icon">⚛️</div>
         <div>
           <div class="brand-title">QUANTUM NEXUS</div>
-          <div class="brand-sub" id="versionHeaderSub">v3.1.1</div>
+          <div class="brand-sub" id="versionHeaderSub">v3.2.0</div>
         </div>
       </div>
 
       <div class="top-buffs" id="activeBuffsContainer"></div>
 
       <div class="top-actions">
+        <button class="btn-header social-btn" id="btnSocialHeader" onclick="openSocialModal()" title="Social Hub Galactic & Comandanți Online">
+          <span>👥 Social</span>
+          <span class="social-online-pill" id="socialHeaderOnlineCount">🟢 1</span>
+        </button>
         <button class="btn-header daily-btn" id="btnDailyHeader" onclick="openDailyModal()" title="Recompense Zilnice & Misiuni (Daily Login & Quests)">
           <span class="daily-gift-icon">🎁</span>
           <span>Zilnic</span>
@@ -4446,7 +4892,7 @@
             <div class="prestige-hero">
               <div class="prestige-title">🌌 Ascensiune Pas-cu-Pas (Rebirth Secvențial)</div>
               <div class="prestige-desc">
-                Progresia în Singularitate se face <strong>strict câte un Rebirth pe rând</strong>! Nu poți acumula mai multe Rebirth-uri într-un singur run: odată atins pragul de energie, Nucleul intră în <strong>Saturație</strong> până declanșezi Rebirth-ul curent.<br/>
+                Progresia în Singularitate se face <strong>strict câte un Rebirth pe rând</strong> pe baza <strong>soldului de energie actuală</strong> (banii pe care îi deții în acest moment)! Odată atins pragul cu energia actuală, declanșează Rebirth-ul pentru a avansa.<br/>
                 Fiecare Rebirth îți oferă <strong>+15% producție permanentă</strong> și <strong>🔮 Materie Întunecată</strong> (+10% producție fiecare).
               </div>
               <div class="prestige-stats-row">
@@ -4467,7 +4913,7 @@
               <!-- Bara de progres către următorul Rebirth -->
               <div style="max-width:460px; margin:0 auto 14px; text-align:left;">
                 <div style="display:flex; justify-content:space-between; font-size:11.5px; font-family:var(--font-mono); color:var(--text-muted); margin-bottom:5px;">
-                  <span id="rebirthProgressLabel">Progres Energie Run Curent:</span>
+                  <span id="rebirthProgressLabel">Sold Energie Actuală / Prag Rebirth:</span>
                   <span id="rebirthProgressPct" style="color:var(--accent-cyan); font-weight:800;">0.0%</span>
                 </div>
                 <div class="combo-track" style="height:10px;">
@@ -4484,11 +4930,111 @@
               </button>
             </div>
 
-            <div class="section-header">
-              <div class="section-title">🔮 Arborele de Singularitate (Permanente)</div>
-              <div class="section-subtitle">Aceste upgrade-uri nu se pierd niciodată la Rebirth</div>
+            <div class="section-header" style="flex-wrap:wrap; gap:8px;">
+              <div>
+                <div class="section-title">🔮 Arbore de Talente & Constelație Cuantică</div>
+                <div class="section-subtitle">Alege-ți calea de ascensiune: <strong>Calea Manuală</strong> (Click/Crit/Burst), <strong>Calea Pasivă</strong> (Flotă/AFK) sau <strong>Calea Anomaliilor</strong> (Vânător Astral).</div>
+              </div>
             </div>
-            <div class="upgrades-grid" id="prestigeUpgradesGrid"></div>
+
+            <!-- Bara de Control a Arborelui de Talente -->
+            <div class="skill-tree-controls">
+              <div class="skill-view-tabs">
+                <button class="skill-view-btn active" id="btnSkillViewConstellation" onclick="switchSkillTreeView('constellation')">🌌 Hartă Constelație</button>
+                <button class="skill-view-btn" id="btnSkillViewColumns" onclick="switchSkillTreeView('columns')">📑 Coloane de Talente</button>
+              </div>
+              <div style="display:flex; align-items:center; gap:10px;">
+                <span style="font-family:var(--font-mono); font-size:12px; font-weight:800; color:#d8b4fe;" id="skillTreeDmBadge">🔮 Materie: 0</span>
+                <button class="btn-respec-tree" onclick="respecSkillTree()" title="Recuperează 100% din Materia Întunecată cheltuită în talente">
+                  <span>🔄 Resetează</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- VEDERE 1: Hartă Constelație Interactivă (Canvas) -->
+            <div id="skillTreeViewConstellation">
+              <div class="constellation-wrapper" id="constellationWrapper">
+                <canvas id="constellationCanvas"></canvas>
+                <div class="constellation-hint-banner">💡 Click pe o stea pentru a inspecta și a debloca talentul</div>
+              </div>
+
+              <!-- Inspector de Nod Selectat -->
+              <div class="constellation-docked-inspector" id="constellationInspector">
+                <div style="display:flex; align-items:center; gap:14px;">
+                  <div id="inspectorIcon" style="font-size:32px; filter:drop-shadow(0 0 10px rgba(168,85,247,0.7));">🔮</div>
+                  <div>
+                    <div style="display:flex; align-items:center; gap:8px;">
+                      <strong id="inspectorTitle" style="color:#ffffff; font-size:13.5px;">Selectează un Talent</strong>
+                      <span class="social-online-pill" id="inspectorBranchBadge" style="background:rgba(168,85,247,0.2); border-color:#a855f7; color:#d8b4fe;">Universal</span>
+                      <span class="upgrade-lvl" id="inspectorLvl">Niv. 0/10</span>
+                    </div>
+                    <div style="font-size:11.5px; color:var(--text-muted); margin-top:2px; max-width:440px;" id="inspectorDesc">Apasă pe oricare nod din constelație pentru a-i vedea bonusurile și cerințele.</div>
+                    <div style="font-size:11px; color:#f87171; margin-top:3px; display:none;" id="inspectorReq">🔒 Necesar: -</div>
+                  </div>
+                </div>
+                <div style="display:flex; flex-direction:column; align-items:flex-end; gap:6px; min-width:160px; flex-shrink:0;">
+                  <button class="skill-node-btn can-buy" id="inspectorBuyBtn" onclick="buySelectedInspectorNode()">
+                    ✨ Cumpără Talent
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- VEDERE 2: Coloane Tehnologice Detaliate -->
+            <div id="skillTreeViewColumns" style="display:none;">
+              <div class="skill-tree-columns">
+                <!-- Rădăcina Universală (Lățime Completă) -->
+                <div class="skill-branch-col branch-universal" id="skillColUniversal">
+                  <div class="skill-branch-header">
+                    <span style="font-size:18px;">🌌</span>
+                    <div>
+                      <div class="skill-branch-title">RĂDĂCINA SINGULARITĂȚII</div>
+                      <div class="skill-branch-subtitle">Fundația cosmică comună a tuturor căilor</div>
+                    </div>
+                  </div>
+                  <div class="upgrades-grid" id="skillGridUniversal"></div>
+                </div>
+
+                <!-- Coloana 1: Calea Manuală -->
+                <div class="skill-branch-col branch-manual" id="skillColManual">
+                  <div class="skill-branch-header">
+                    <span style="font-size:18px;">⚡</span>
+                    <div>
+                      <div class="skill-branch-title" style="color:#fca5a5;">CALEA MANUALĂ (CLICK & CRIT)</div>
+                      <div class="skill-branch-subtitle">Crits devastatori, combo prelungit și Supernovă</div>
+                    </div>
+                  </div>
+                  <div class="upgrades-grid" id="skillGridManual"></div>
+                </div>
+
+                <!-- Coloana 2: Calea Pasivă -->
+                <div class="skill-branch-col branch-passive" id="skillColPassive">
+                  <div class="skill-branch-header">
+                    <span style="font-size:18px;">🚀</span>
+                    <div>
+                      <div class="skill-branch-title" style="color:#67e8f9;">CALEA PASIVĂ (FLOTĂ & AFK)</div>
+                      <div class="skill-branch-subtitle">Producție multiplicată, eficiență offline 24h & sinergii</div>
+                    </div>
+                  </div>
+                  <div class="upgrades-grid" id="skillGridPassive"></div>
+                </div>
+
+                <!-- Coloana 3: Calea Anomaliilor -->
+                <div class="skill-branch-col branch-anomaly" id="skillColAnomaly">
+                  <div class="skill-branch-header">
+                    <span style="font-size:18px;">☄️</span>
+                    <div>
+                      <div class="skill-branch-title" style="color:#fde047;">CALEA ANOMALIILOR (VÂNĂTOR ASTRAL)</div>
+                      <div class="skill-branch-subtitle">Sfere frecvente, durate duble & dubluri cuantice</div>
+                    </div>
+                  </div>
+                  <div class="upgrades-grid" id="skillGridAnomaly"></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Grid ascuns pentru compatibilitate cu cod vechi -->
+            <div id="prestigeUpgradesGrid" style="display:none;"></div>
           </div>
 
           <!-- TAB 3: Achievements (330 Realizări) -->
@@ -4706,7 +5252,7 @@
           <button class="btn-header install-btn" id="btnInstallApp" onclick="triggerInstallApp()">📲 Instalează</button>
         </div>
         <div style="font-size: 11px; color: var(--text-dim); margin-top: 8px;">
-          Versiune instalată: <strong id="settingsVersionText">v3.1.1</strong> // Auto-Update activ
+          Versiune instalată: <strong id="settingsVersionText">v3.2.0</strong> // Auto-Update activ
         </div>
       </div>
 
@@ -4723,6 +5269,7 @@
       </div>
     </div>
   </div>
+
 
   <!-- Daily Rewards & Quests Modal -->
   <div class="modal-backdrop" id="dailyModal" onclick="if(event.target===this) closeDailyModal()">
@@ -4806,6 +5353,115 @@
     </div>
   </div>
 
+
+  <!-- Social Hub Modal (Comandanți Online & Prieteni) -->
+  <div class="modal-backdrop" id="socialModal" onclick="if(event.target===this) closeSocialModal()">
+    <div class="modal-card wide" style="max-width: 680px; text-align: left;">
+      <div class="modal-header-row" style="margin-bottom: 10px;">
+        <div style="display:flex; align-items:center; gap:10px;">
+          <span style="font-size:24px">👥</span>
+          <div>
+            <div class="modal-title" style="margin:0; font-size:16px;">Sistem Social & Comandanți Galactici</div>
+            <div style="font-size:11px; color:var(--text-muted); margin-top:1px;">Vezi cine este online pe joc în timp real, adaugă prieteni și interacționează!</div>
+          </div>
+        </div>
+        <button class="btn-close-modal" onclick="closeSocialModal()">✕</button>
+      </div>
+
+      <!-- Hero Card: Profilul Tău Live -->
+      <div class="social-hero-profile">
+        <div style="display:flex; align-items:center; gap:12px;">
+          <div class="social-avatar-badge" id="socialHeroAvatar">⚛️</div>
+          <div>
+            <div style="display:flex; align-items:center; gap:8px;">
+              <span class="status-dot status-online" title="Online Acum"></span>
+              <strong id="socialHeroName" style="color:#ffffff; font-size:14px;">Comandant</strong>
+              <span class="social-online-pill" id="socialHeroTitle">Novice Cuantic</span>
+            </div>
+            <div style="font-size:11.5px; color:var(--text-muted); margin-top:2px;" id="socialHeroStatusMsg">Cercetez Vidul Cuantic</div>
+            <div style="font-size:10.5px; color:#6ee7b7; margin-top:2px;" id="socialHeroCloudStatus">🟢 Sincronizat Live cu Google Firebase</div>
+          </div>
+        </div>
+        <button class="btn-social-action" onclick="switchSocialSubnav('profile')">✏️ Editează Profil</button>
+      </div>
+
+      <!-- Bara de comutare Tab-uri Sub-Modal Social -->
+      <div class="daily-subnav-bar">
+        <button class="daily-subnav-btn active" id="btnSocialSubnavLive" onclick="switchSocialSubnav('live')">
+          <span>🛰️ Comandanți Online</span>
+          <span class="daily-subnav-badge" id="socialLiveBadge">1 Online</span>
+        </button>
+        <button class="daily-subnav-btn" id="btnSocialSubnavFriends" onclick="switchSocialSubnav('friends')">
+          <span>⭐ Prieteni & Urmăriți</span>
+          <span class="daily-subnav-badge" id="socialFriendsBadge" style="display:none">0</span>
+        </button>
+        <button class="daily-subnav-btn" id="btnSocialSubnavProfile" onclick="switchSocialSubnav('profile')">
+          <span>🎖️ Profil & Titluri</span>
+        </button>
+      </div>
+
+      <div class="daily-modal-body" style="padding-top:10px;">
+        <!-- PANE 1: Comandanți Online (Live Galaxy) -->
+        <div id="paneSocialLive">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; flex-wrap:wrap; gap:8px;">
+            <div style="display:flex; align-items:center; gap:8px;">
+              <span style="font-size:11.5px; color:var(--text-muted);">Comandanți reali:</span>
+              <button class="social-filter-btn active" id="btnFilterOnlineOnly" onclick="setSocialListFilter('online')">🟢 Doar Online</button>
+              <button class="social-filter-btn" id="btnFilterAllReal" onclick="setSocialListFilter('all')">👥 Toți Jucătorii Reali</button>
+            </div>
+            <button class="btn-social-action" onclick="fetchLiveCommanders(true)" style="padding:5px 10px; font-size:11px;">
+              🔄 Reîmprospătează
+            </button>
+          </div>
+          <div class="social-commanders-grid" id="socialLiveCommandersList">
+            <!-- Randat dinamic de renderOnlineCommandersList() -->
+          </div>
+        </div>
+
+        <!-- PANE 2: Prieteni & Urmăriți -->
+        <div id="paneSocialFriends" style="display:none;">
+          <div style="margin-bottom:12px;">
+            <input type="text" id="socialFriendSearchInput" placeholder="🔍 Caută un prieten după nume..." style="width:100%; padding:8px 12px; border-radius:8px; background:rgba(15,23,42,0.85); border:1px solid var(--border-subtle); color:#fff; font-size:12px;" oninput="renderFriendsList()" />
+          </div>
+          <div class="social-commanders-grid" id="socialFriendsList">
+            <!-- Randat dinamic de renderFriendsList() -->
+          </div>
+        </div>
+
+        <!-- PANE 3: Profilul Tău & Titluri Galactice -->
+        <div id="paneSocialProfile" style="display:none;">
+          <div class="settings-group">
+            <div class="settings-group-title">Alege Avatarul Cosmic</div>
+            <div class="social-avatar-selector" id="socialAvatarSelector">
+              <!-- Randat dinamic cu cele 8 avatare cosmice -->
+            </div>
+          </div>
+
+          <div class="settings-group">
+            <div class="settings-group-title">Nume Comandant & Mesaj de Stare</div>
+            <div style="display:flex; flex-direction:column; gap:10px;">
+              <div>
+                <label style="font-size:11px; color:var(--text-dim); display:block; margin-bottom:4px;">Nume Public (afișat în lista socială):</label>
+                <input type="text" id="socialProfileNameInput" maxlength="22" style="width:100%; padding:8px 12px; border-radius:8px; background:rgba(15,23,42,0.85); border:1px solid var(--border-subtle); color:#fff; font-size:12.5px; font-weight:700;" placeholder="ex: Comandant Nova" />
+              </div>
+              <div>
+                <label style="font-size:11px; color:var(--text-dim); display:block; margin-bottom:4px;">Mesaj de Stare / Motto Cuantic:</label>
+                <input type="text" id="socialProfileStatusInput" maxlength="45" style="width:100%; padding:8px 12px; border-radius:8px; background:rgba(15,23,42,0.85); border:1px solid var(--border-subtle); color:#fff; font-size:12px;" placeholder="ex: Călătoresc spre Rebirth 10!" />
+              </div>
+              <div>
+                <label style="font-size:11px; color:var(--text-dim); display:block; margin-bottom:4px;">Titlu Galactic Deblocat:</label>
+                <select id="socialProfileTitleSelect" style="width:100%; padding:8px 12px; border-radius:8px; background:rgba(15,23,42,0.85); border:1px solid var(--border-subtle); color:#fde047; font-size:12px; font-weight:700;">
+                  <!-- Populată dinamic cu titlurile disponibile -->
+                </select>
+              </div>
+              <button class="btn-prestige" onclick="saveSocialProfileFromUI()" style="margin-top:4px;">💾 Salvează Profilul Social</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- Offline Progress Modal -->
   <div class="modal-backdrop" id="offlineModal">
     <div class="modal-card">
@@ -4817,6 +5473,7 @@
       <button class="btn-prestige" onclick="closeOfflineModal()" style="width:100%">Colectează Energia</button>
     </div>
   </div>
+
 
   <!-- Cloud Save Modal (Google Firebase Sync) -->
   <div class="modal-backdrop" id="cloudModal">
@@ -4877,6 +5534,7 @@
     </div>
   </div>
 
+
   <!-- Multi-Platform Install Guide Modal (MacBook, PC, Android, iOS) -->
   <div class="modal-backdrop" id="installModal">
     <div class="modal-card wide">
@@ -4918,6 +5576,7 @@
     </div>
   </div>
 
+
   <!-- Live Auto-Update Modal -->
   <div class="modal-backdrop" id="updateModal">
     <div class="modal-card">
@@ -4936,6 +5595,7 @@
       </button>
     </div>
   </div>
+
 
   <script>
     /********************************************************************
@@ -5146,62 +5806,299 @@
       }
     ];
 
-    const PRESTIGE_UPGRADES_DATA = [
+    const ALL_SKILL_TREE_NODES = [
+      // ==========================================
+      // RAMURA 0: RĂDĂCINA SINGULARITĂȚII (Universal)
+      // ==========================================
+      {
+        id: 'p_starter',
+        branch: 'universal',
+        branchName: 'Universal',
+        tier: 1,
+        name: 'Memorie Ancestrală',
+        icon: '🚀',
+        desc: 'Începi fiecare Rebirth cu +1.000 Energie de start per nivel.',
+        baseCost: 1,
+        costStep: 1,
+        maxLevel: 10,
+        req: null,
+        reqLvl: 0,
+        cx: 0.50, cy: 0.12
+      },
+      {
+        id: 'p_dm_catalyst',
+        branch: 'universal',
+        branchName: 'Universal',
+        tier: 2,
+        name: 'Catalizator de Materie',
+        icon: '🌌',
+        desc: 'Fiecare Rebirth acordă +1 🔮 Materie Întunecată bonus per nivel.',
+        baseCost: 4,
+        costStep: 3,
+        maxLevel: 3,
+        req: 'p_starter',
+        reqLvl: 3,
+        cx: 0.50, cy: 0.24
+      },
+      {
+        id: 'p_transcendence',
+        branch: 'universal',
+        branchName: 'Universal',
+        tier: 3,
+        keystone: true,
+        name: 'Transcendință Cosmică',
+        icon: '👑',
+        desc: 'Fiecare realizare deblocată oferă +1.5% Multiplicator Global (în loc de +1.0%).',
+        baseCost: 15,
+        costStep: 0,
+        maxLevel: 1,
+        req: 'p_dm_catalyst',
+        reqLvl: 2,
+        cx: 0.50, cy: 0.36
+      },
+
+      // ==========================================
+      // RAMURA 1: CALEA MANUALĂ (Clicker & Burst)
+      // ==========================================
+      {
+        id: 'p_click',
+        branch: 'manual',
+        branchName: 'Calea Manuală',
+        tier: 1,
+        name: 'Impuls Gravitațional',
+        icon: '⚡',
+        desc: '+25% putere de click manuală per nivel.',
+        baseCost: 1,
+        costStep: 1,
+        maxLevel: 20,
+        req: null,
+        reqLvl: 0,
+        cx: 0.22, cy: 0.30
+      },
+      {
+        id: 'p_combo_lock',
+        branch: 'manual',
+        branchName: 'Calea Manuală',
+        tier: 2,
+        name: 'Sincronizare Tahionică',
+        icon: '⏱️',
+        desc: 'Combo-ul de click nu mai scade timp de 4s și limita maximă crește la x4.0 (+0.3x/niv).',
+        baseCost: 2,
+        costStep: 2,
+        maxLevel: 5,
+        req: 'p_click',
+        reqLvl: 3,
+        cx: 0.15, cy: 0.46
+      },
+      {
+        id: 'p_crit_devastator',
+        branch: 'manual',
+        branchName: 'Calea Manuală',
+        tier: 3,
+        name: 'Fisură Cuantică',
+        icon: '🎯',
+        desc: '+4% Șansă de Lovitură Critică și +50% Daune Critice per nivel.',
+        baseCost: 3,
+        costStep: 3,
+        maxLevel: 5,
+        req: 'p_combo_lock',
+        reqLvl: 2,
+        cx: 0.23, cy: 0.62
+      },
+      {
+        id: 'p_autoclick_spectral',
+        branch: 'manual',
+        branchName: 'Calea Manuală',
+        tier: 4,
+        name: 'Pulsar Spectral',
+        icon: '🖱️',
+        desc: 'Generează automat 4 click-uri/secundă (+4/niv) pe nucleu cu toate bonusurile de click.',
+        baseCost: 4,
+        costStep: 4,
+        maxLevel: 5,
+        req: 'p_crit_devastator',
+        reqLvl: 2,
+        cx: 0.15, cy: 0.76
+      },
+      {
+        id: 'p_supernova_burst',
+        branch: 'manual',
+        branchName: 'Calea Manuală',
+        tier: 5,
+        keystone: true,
+        name: 'Hiper-Supernovă Instant',
+        icon: '💥',
+        desc: 'Loviturile critice au 12% șansă să declanșeze o Supernovă ce acordă instant 30s (+15s/niv) de CPS!',
+        baseCost: 10,
+        costStep: 5,
+        maxLevel: 3,
+        req: 'p_autoclick_spectral',
+        reqLvl: 1,
+        cx: 0.23, cy: 0.90
+      },
+
+      // ==========================================
+      // RAMURA 2: CALEA PASIVĂ (Flotă & Eficiență AFK)
+      // ==========================================
       {
         id: 'p_prod',
+        branch: 'passive',
+        branchName: 'Calea Pasivă',
+        tier: 1,
         name: 'Rezonanță Întunecată',
         icon: '🔮',
         desc: '+25% la toată producția de Energie per nivel.',
         baseCost: 1,
         costStep: 1,
-        maxLevel: 25
+        maxLevel: 25,
+        req: null,
+        reqLvl: 0,
+        cx: 0.50, cy: 0.50
       },
       {
         id: 'p_discount',
+        branch: 'passive',
+        branchName: 'Calea Pasivă',
+        tier: 2,
         name: 'Arhitectură Sub-Spațială',
         icon: '📐',
-        desc: 'Reduce costul tuturor generatoarelor cu 4% per nivel.',
+        desc: 'Reduce costul tuturor generatoarelor și amplificatoarelor cu 4% per nivel.',
         baseCost: 2,
         costStep: 2,
-        maxLevel: 10
+        maxLevel: 10,
+        req: 'p_prod',
+        reqLvl: 3,
+        cx: 0.42, cy: 0.64
       },
       {
         id: 'p_offline',
+        branch: 'passive',
+        branchName: 'Calea Pasivă',
+        tier: 3,
         name: 'Cronos Cuantic',
         icon: '⌚',
-        desc: '+8% eficiență la câștigul Offline per nivel (Bază: 40%).',
+        desc: '+10% eficiență la câștigul Offline per nivel (Bază: 40%) și mărește limita la 24h.',
         baseCost: 2,
         costStep: 3,
-        maxLevel: 5
+        maxLevel: 5,
+        req: 'p_discount',
+        reqLvl: 2,
+        cx: 0.58, cy: 0.64
       },
       {
-        id: 'p_starter',
-        name: 'Memorie Ancestrală',
-        icon: '🚀',
-        desc: 'Începi fiecare Rebirth cu +500 Energie de start per nivel.',
-        baseCost: 2,
-        costStep: 2,
-        maxLevel: 10
+        id: 'p_fleet_synergy',
+        branch: 'passive',
+        branchName: 'Calea Pasivă',
+        tier: 4,
+        name: 'Rețea Neurală de Flotă',
+        icon: '🤖',
+        desc: 'Fiecare tip unic de generator deținut sporește producția globală cu +2% per nivel.',
+        baseCost: 4,
+        costStep: 3,
+        maxLevel: 5,
+        req: 'p_offline',
+        reqLvl: 2,
+        cx: 0.50, cy: 0.77
       },
       {
-        id: 'p_click',
-        name: 'Impuls Gravitațional',
-        icon: '⚡',
-        desc: '+20% putere de click manuală per nivel.',
-        baseCost: 2,
-        costStep: 1,
-        maxLevel: 20
+        id: 'p_perpetual_void',
+        branch: 'passive',
+        branchName: 'Calea Pasivă',
+        tier: 5,
+        keystone: true,
+        name: 'Motorul Perpetuu al Vidului',
+        icon: '🌀',
+        desc: '+50% producție pasivă multiplicată per nivel!',
+        baseCost: 12,
+        costStep: 6,
+        maxLevel: 3,
+        req: 'p_fleet_synergy',
+        reqLvl: 1,
+        cx: 0.50, cy: 0.90
       },
+
+      // ==========================================
+      // RAMURA 3: CALEA ANOMALIILOR (Vânător Astral)
+      // ==========================================
       {
         id: 'p_anom',
+        branch: 'anomaly',
+        branchName: 'Calea Anomaliilor',
+        tier: 1,
         name: 'Atracție Astrală',
         icon: '☄️',
-        desc: '+20% recompensă din Anomaliile Cuantice Aurii per nivel.',
-        baseCost: 3,
+        desc: '+25% recompensă de energie și durată din Anomaliile Cuantice per nivel.',
+        baseCost: 2,
+        costStep: 1,
+        maxLevel: 10,
+        req: null,
+        reqLvl: 0,
+        cx: 0.78, cy: 0.30
+      },
+      {
+        id: 'p_anom_frequency',
+        branch: 'anomaly',
+        branchName: 'Calea Anomaliilor',
+        tier: 2,
+        name: 'Busolă de Anomalii',
+        icon: '🧭',
+        desc: 'Sferele Cuantice apar pe ecran cu 25% mai frecvent per nivel.',
+        baseCost: 2,
         costStep: 2,
-        maxLevel: 10
+        maxLevel: 5,
+        req: 'p_anom',
+        reqLvl: 3,
+        cx: 0.85, cy: 0.46
+      },
+      {
+        id: 'p_temporal_orbit',
+        branch: 'anomaly',
+        branchName: 'Calea Anomaliilor',
+        tier: 3,
+        name: 'Câmp Gravitațional Liniar',
+        icon: '🧲',
+        desc: 'Sferele plutesc cu 40% mai încet pe ecran și au o arie de prindere cu +35% mai mare per nivel.',
+        baseCost: 3,
+        costStep: 3,
+        maxLevel: 3,
+        req: 'p_anom_frequency',
+        reqLvl: 2,
+        cx: 0.77, cy: 0.62
+      },
+      {
+        id: 'p_twin_anomaly',
+        branch: 'anomaly',
+        branchName: 'Calea Anomaliilor',
+        tier: 4,
+        name: 'Dublură Cuantică',
+        icon: '✨',
+        desc: '18% șansă per nivel ca la prinderea unei sfere să apară imediat încă o sferă rară bonus!',
+        baseCost: 4,
+        costStep: 4,
+        maxLevel: 4,
+        req: 'p_temporal_orbit',
+        reqLvl: 1,
+        cx: 0.85, cy: 0.76
+      },
+      {
+        id: 'p_prismatic_storm',
+        branch: 'anomaly',
+        branchName: 'Calea Anomaliilor',
+        tier: 5,
+        keystone: true,
+        name: 'Furtună Prismatică Astrală',
+        icon: '🌈',
+        desc: 'Toate buff-urile din sfere durează dublu (+100%) și 20% șansă la +1 🔮 Materie Întunecată la prindere!',
+        baseCost: 12,
+        costStep: 6,
+        maxLevel: 3,
+        req: 'p_twin_anomaly',
+        reqLvl: 1,
+        cx: 0.77, cy: 0.90
       }
     ];
+
+    const PRESTIGE_UPGRADES_DATA = ALL_SKILL_TREE_NODES;
 
     // Construim 330 de Realizări Unice în 16 Colecții (6 Categorii de Filtrare)
     function buildAchievementsCatalog() {
@@ -5806,6 +6703,12 @@
           date: '',
           allClaimed: false,
           quests: []
+        },
+        social: {
+          avatar: '⚛️',
+          title: 'Novice Cuantic',
+          statusMsg: 'Cercetez Vidul Cuantic',
+          friends: []
         },
         soundEnabled: true,
         musicEnabled: true,
@@ -7081,7 +7984,7 @@
     }
 
     function isRebirthReady() {
-      return (state.totalEnergyThisRun || 0) >= getRebirthEnergyRequirement();
+      return (state.energy || 0) >= getRebirthEnergyRequirement();
     }
 
     // Costul fiecărui upgrade de Prestigiu (scalare liniară/aritmetică adaptată la Rebirth secvențial)
@@ -7099,11 +8002,11 @@
       return isRebirthReady() ? getCurrentRebirthDarkMatterReward() : 0;
     }
 
-    // Factor de Saturație: când atingi 100% din energia necesară pentru Rebirth-ul curent,
+    // Factor de Saturație: când atingi 100% din energia necesară pentru Rebirth-ul curent cu fondurile actuale,
     // nucleul intră în saturație dacă nu dai Rebirth (previne farmatul infinit într-un singur run!)
     function getSaturationFactor() {
       const req = getRebirthEnergyRequirement();
-      const cur = state.totalEnergyThisRun || 0;
+      const cur = state.energy || 0;
       if (cur <= req) return 1.0;
       const overRatio = cur / req;
       return Math.max(0.08, 1 / Math.pow(overRatio, 0.9));
@@ -7115,15 +8018,31 @@
       const gLvl = state.clickUpgrades['c_global1'] || 0;
       mult *= 1 + gLvl * 0.08;
 
-      // 2. Realizări (+1% fiecare, până la +330%)
-      mult *= 1 + state.unlockedAchievements.length * 0.01;
+      // 2. Realizări (+1% fiecare, sau +1.5% cu Transcendință Cosmică)
+      const transLvl = (state.prestigeUpgrades && state.prestigeUpgrades['p_transcendence']) || 0;
+      const achMult = transLvl > 0 ? 0.015 : 0.010;
+      mult *= 1 + state.unlockedAchievements.length * achMult;
 
       // 3. Materie Întunecată deținută (+10% fiecare) + Rebirth-uri efectuate (+15% fiecare)
       mult *= 1 + (state.darkMatter || 0) * 0.10 + (state.prestigeCount || 0) * 0.15;
 
       // 4. Upgrade Prestigiu Rezonanță Întunecată (+25% per nivel)
-      const pProdLvl = state.prestigeUpgrades['p_prod'] || 0;
+      const pProdLvl = (state.prestigeUpgrades && state.prestigeUpgrades['p_prod']) || 0;
       mult *= 1 + pProdLvl * 0.25;
+
+      // 4.5. Keystone Pasiv: Motorul Perpetuu al Vidului (+50% multiplicat per nivel)
+      const voidLvl = (state.prestigeUpgrades && state.prestigeUpgrades['p_perpetual_void']) || 0;
+      if (voidLvl > 0) mult *= (1 + voidLvl * 0.50);
+
+      // 4.6. Sinergie Flotă: Rețea Neurală de Flotă (+2% per tip unic de generator)
+      const fleetSynLvl = (state.prestigeUpgrades && state.prestigeUpgrades['p_fleet_synergy']) || 0;
+      if (fleetSynLvl > 0) {
+        let uniqueGens = 0;
+        for (const gen of GENERATORS_DATA) {
+          if ((state.generators && state.generators[gen.id]) > 0) uniqueGens++;
+        }
+        mult *= (1 + fleetSynLvl * uniqueGens * 0.02);
+      }
 
       // 5. Sinergii Unice din Generatoare: Matrice Dyson (g7: +4% fiecare) & Motor de Univers (g9: +10% fiecare)
       const dysonCount = (state.generators && state.generators['g7']) || 0;
@@ -7159,9 +8078,10 @@
     }
 
     function getComboMultiplier() {
-      // Bază: de la x1.00 până la x2.00 la combo 100%, amplificat de Scriptul Neural AI (g2: +3% per unitate)
+      // Bază: de la x1.00 până la x2.00 la combo 100%, amplificat de Scriptul Neural AI și Sincronizare Tahionică
       const aiCount = (state.generators && state.generators['g2']) || 0;
-      const maxBonus = 1.0 * (1 + aiCount * 0.03);
+      const comboLockLvl = (state.prestigeUpgrades && state.prestigeUpgrades['p_combo_lock']) || 0;
+      const maxBonus = (1.0 + comboLockLvl * 0.30) * (1 + aiCount * 0.03);
       return 1 + (comboMeter / 100) * maxBonus;
     }
 
@@ -7169,12 +8089,12 @@
       const flatLvl = state.clickUpgrades['c_flat1'] || 0;
       const multLvl = state.clickUpgrades['c_mult1'] || 0;
       const synLvl = state.clickUpgrades['c_synergy'] || 0;
-      const pClickLvl = state.prestigeUpgrades['p_click'] || 0;
+      const pClickLvl = (state.prestigeUpgrades && state.prestigeUpgrades['p_click']) || 0;
       const satCount = (state.generators && state.generators['g4']) || 0; // Satelit Solar: +5% Click per satelit
 
       let base = 1 + flatLvl * 1;
       base *= 1 + multLvl * 0.15;
-      base *= 1 + pClickLvl * 0.20;
+      base *= 1 + pClickLvl * 0.25;
       base *= 1 + satCount * 0.05;
 
       let val = base * getGlobalMultiplier() * getComboMultiplier();
@@ -7195,18 +8115,20 @@
     function getCritChance() {
       if (Date.now() < (activeBuffs.crimsonCritEnd || 0)) return 1.0; // Sfera Crimson: 100% Crit!
       const cLvl = state.clickUpgrades['c_critChance'] || 0;
+      const pCritDev = (state.prestigeUpgrades && state.prestigeUpgrades['p_crit_devastator']) || 0;
       const fusionCount = (state.generators && state.generators['g5']) || 0; // Reactor Fuziune: +0.4% Crit (max +12%)
       const fusionBonus = Math.min(0.12, fusionCount * 0.004);
       const comboBonus = comboMeter >= 85 ? 0.10 : 0;
       const skillBonus = Date.now() < (activeBuffs.hyperCritEnd || 0) ? 0.40 : 0;
-      return Math.min(0.90, 0.05 + cLvl * 0.02 + fusionBonus + comboBonus + skillBonus);
+      return Math.min(0.95, 0.05 + cLvl * 0.02 + fusionBonus + comboBonus + skillBonus + pCritDev * 0.04);
     }
 
     function getCritMultiplier() {
       const mLvl = state.clickUpgrades['c_critMult'] || 0;
+      const pCritDev = (state.prestigeUpgrades && state.prestigeUpgrades['p_crit_devastator']) || 0;
       const droneCount = (state.generators && state.generators['g1']) || 0; // Dronă Extracție: +4% Crit Dmg per dronă
       const crimsonMult = Date.now() < (activeBuffs.crimsonCritEnd || 0) ? 1.8 : 1.0;
-      return (2.0 + mLvl * 0.25 + droneCount * 0.04) * crimsonMult;
+      return (2.0 + mLvl * 0.25 + droneCount * 0.04 + pCritDev * 0.50) * crimsonMult;
     }
 
     function getSkillCooldownFactor() {
@@ -7218,7 +8140,7 @@
     function getAnomalyAndSkillBonusMult() {
       const pAnom = (state.prestigeUpgrades && state.prestigeUpgrades['p_anom']) || 0;
       const bhCount = (state.generators && state.generators['g6']) || 0; // Micro-Gaură Neagră: +6% fiecare
-      return (1 + pAnom * 0.20) * (1 + bhCount * 0.06);
+      return (1 + pAnom * 0.25) * (1 + bhCount * 0.06);
     }
 
     // Costuri Generatoare și Amplificatoare cu reducere din Prestigiu (-4% per nivel) și Sfera Smarald (-35%)
@@ -7330,6 +8252,20 @@
         state.totalCrits++;
         if (!isAutoCursor) playTone(680, 'triangle', 0.11, 0.1);
         updateDailyQuestProgress('crits', 1);
+
+        // Keystone Manual: Hiper-Supernovă Instantanee (Burst CPS)
+        const burstLvl = (state.prestigeUpgrades && state.prestigeUpgrades['p_supernova_burst']) || 0;
+        if (burstLvl > 0 && Math.random() < 0.12) {
+          const burstSec = 30 + burstLvl * 15;
+          const burstGain = Math.round(getCPS() * burstSec);
+          if (burstGain > 0) {
+            amount += burstGain;
+            spawnCoreShockwave('crit');
+            spawnFloatingText(clientX, clientY - 30, `💥 SUPERNOVĂ +${formatNumber(burstGain)} ⚡!`, true);
+            playXboxAchievementChime('mythic');
+            spawnParticles(clientX, clientY, 26, '#fde047');
+          }
+        }
       } else if (!isAutoCursor) {
         playTone(320 + comboMeter * 2, 'sine', 0.06, 0.06);
       }
@@ -8058,6 +8994,11 @@
     /********************************************************************
      * 8. EVENIMENTE ALEATORII: 8 TIPURI DE SFERE / CERCURI ZBURĂTOARE CU BUFF-URI UNICE
      ********************************************************************/
+    function getAnomalyBuffDuration(baseSec) {
+      const stormLvl = (state.prestigeUpgrades && state.prestigeUpgrades['p_prismatic_storm']) || 0;
+      return baseSec * (stormLvl > 0 ? 2.0 : 1.0) * 1000;
+    }
+
     const ANOMALY_ORB_TYPES = [
       {
         id: 'solar',
@@ -8067,9 +9008,9 @@
         color: '#fde047',
         name: 'Sferă Solară Aurie',
         applyBuff: (cx, cy, mult) => {
-          activeBuffs.frenzyEnd = Date.now() + 22000;
-          showToast('🌟 SFERĂ SOLARĂ CAPTURATĂ! Producție x2.5 timp de 22 secunde!');
-          spawnFloatingText(cx, cy, '🌟 x2.5 PRODUCȚIE (22s)', true);
+          activeBuffs.frenzyEnd = Date.now() + getAnomalyBuffDuration(22);
+          showToast('🌟 SFERĂ SOLARĂ CAPTURATĂ! Producție x2.5 activată!');
+          spawnFloatingText(cx, cy, '🌟 x2.5 PRODUCȚIE', true);
         }
       },
       {
@@ -8080,9 +9021,9 @@
         color: '#38bdf8',
         name: 'Sferă Fulgurită Cyan',
         applyBuff: (cx, cy, mult) => {
-          activeBuffs.clickStormEnd = Date.now() + 16000;
-          showToast('⚡ SFERĂ FULGURITĂ! Putere Click x4 timp de 16 secunde!');
-          spawnFloatingText(cx, cy, '⚡ x4 CLICK STORM (16s)', true);
+          activeBuffs.clickStormEnd = Date.now() + getAnomalyBuffDuration(16);
+          showToast('⚡ SFERĂ FULGURITĂ! Putere Click x4 activată!');
+          spawnFloatingText(cx, cy, '⚡ x4 CLICK STORM', true);
         }
       },
       {
@@ -8093,9 +9034,9 @@
         color: '#f43f5e',
         name: 'Sferă Crimson-Laser',
         applyBuff: (cx, cy, mult) => {
-          activeBuffs.crimsonCritEnd = Date.now() + 14000;
-          showToast('🎯 SFERĂ CRIMSON-LASER! 100% Șansă Critică + Daune Critice x1.8 timp de 14s!');
-          spawnFloatingText(cx, cy, '🎯 100% CRIT + DMG (14s)', true);
+          activeBuffs.crimsonCritEnd = Date.now() + getAnomalyBuffDuration(14);
+          showToast('🎯 SFERĂ CRIMSON-LASER! 100% Șansă Critică + Daune Critice x1.8!');
+          spawnFloatingText(cx, cy, '🎯 100% CRIT + DMG', true);
         }
       },
       {
@@ -8106,11 +9047,11 @@
         color: '#10b981',
         name: 'Sferă Smarald de Subvenție',
         applyBuff: (cx, cy, mult) => {
-          activeBuffs.discountOrbEnd = Date.now() + 25000;
+          activeBuffs.discountOrbEnd = Date.now() + getAnomalyBuffDuration(25);
           renderClickUpgrades();
           renderGenerators();
-          showToast('🍀 SFERĂ SMARALD! Toate Generatoarele & Amplificatoarele au -35% Cost timp de 25s!');
-          spawnFloatingText(cx, cy, '🍀 -35% COSTURI (25s)', true);
+          showToast('🍀 SFERĂ SMARALD! Toate Generatoarele & Amplificatoarele au -35% Cost!');
+          spawnFloatingText(cx, cy, '🍀 -35% COSTURI', true);
         }
       },
       {
@@ -8121,10 +9062,10 @@
         color: '#a855f7',
         name: 'Sferă Mecha-Overdrive',
         applyBuff: (cx, cy, mult) => {
-          activeBuffs.overdriveOrbEnd = Date.now() + 18000;
+          activeBuffs.overdriveOrbEnd = Date.now() + getAnomalyBuffDuration(18);
           comboMeter = 100;
           lastComboClickTime = performance.now();
-          showToast('🤖 SFERĂ MECHA-OVERDRIVE! Auto-Cursoare x3.5 viteză, Overclock 100% & +40% Producție (18s)!');
+          showToast('🤖 SFERĂ MECHA-OVERDRIVE! Auto-Cursoare x3.5 viteză, Overclock 100% & +40% Producție!');
           spawnFloatingText(cx, cy, '🤖 TURBO FLOTĂ & 100% OVERCLOCK', true);
         }
       },
@@ -8139,8 +9080,8 @@
           skillCooldowns[1] = 0;
           skillCooldowns[2] = 0;
           skillCooldowns[3] = 0;
-          activeBuffs.cryoCooldownEnd = Date.now() + 20000;
-          showToast('❄️ SFERĂ CRIO-TEMPORALĂ! Toate cele 3 Abilități Active au fost reîncărcate INSTANT + -35% CD (20s)!');
+          activeBuffs.cryoCooldownEnd = Date.now() + getAnomalyBuffDuration(20);
+          showToast('❄️ SFERĂ CRIO-TEMPORALĂ! Toate cele 3 Abilități Active au fost reîncărcate INSTANT!');
           spawnFloatingText(cx, cy, '❄️ ABILITĂȚI REÎNCĂRCATE INSTANT!', true);
         }
       },
@@ -8201,6 +9142,11 @@
       el.innerHTML = `<span>${orbType.icon}</span><span class="anomaly-tag-label">${orbType.tag}</span>`;
       el.title = `${orbType.name} — Click pentru ${orbType.tag}!`;
 
+      const temporalLvl = (state.prestigeUpgrades && state.prestigeUpgrades['p_temporal_orbit']) || 0;
+      const sizeMult = 1 + temporalLvl * 0.35;
+      el.style.width = Math.round(72 * sizeMult) + 'px';
+      el.style.height = Math.round(72 * sizeMult) + 'px';
+
       const fromLeft = Math.random() < 0.5;
       const startX = fromLeft ? -90 : window.innerWidth + 90;
       const endX = fromLeft ? window.innerWidth + 90 : -90;
@@ -8217,12 +9163,14 @@
       }
       playTone(920, 'sine', 0.15, 0.08);
 
+      const animDuration = Math.round(11500 * (1 + temporalLvl * 0.40));
+
       const anim = el.animate([
         { left: `${startX}px`, top: `${startY}px`, transform: 'scale(0.9) rotate(0deg)' },
         { left: `${window.innerWidth / 2}px`, top: `${midY}px`, transform: 'scale(1.08) rotate(180deg)', offset: 0.5 },
         { left: `${endX}px`, top: `${endY}px`, transform: 'scale(0.95) rotate(360deg)' }
       ], {
-        duration: 11500,
+        duration: animDuration,
         easing: 'linear'
       });
 
@@ -8236,6 +9184,21 @@
 
         const anomBonusMult = getAnomalyAndSkillBonusMult();
         orbType.applyBuff(e.clientX, e.clientY, anomBonusMult);
+
+        // Keystone Anomalii: Furtună Prismatică Astrală (Șansă de +1 🔮 Materie Întunecată)
+        const stormLvl = (state.prestigeUpgrades && state.prestigeUpgrades['p_prismatic_storm']) || 0;
+        if (stormLvl > 0 && Math.random() < 0.20) {
+          state.darkMatter = (state.darkMatter || 0) + 1;
+          spawnFloatingText(e.clientX, e.clientY - 42, '🔮 +1 MATERIE ÎNTUNECATĂ RARĂ!', true);
+          playXboxAchievementChime('mythic');
+        }
+
+        // Talent Anomalii: Dublură Cuantică
+        const twinLvl = (state.prestigeUpgrades && state.prestigeUpgrades['p_twin_anomaly']) || 0;
+        if (twinLvl > 0 && Math.random() < twinLvl * 0.18) {
+          setTimeout(() => spawnQuantumAnomaly(true), 650);
+          showToast('✨ Sferă Dublă Cuantică a apărut pe ecran!');
+        }
 
         state.skillCooldowns = skillCooldowns;
         state.activeBuffs = activeBuffs;
@@ -8374,10 +9337,11 @@
 
     function triggerPrestige() {
       if (!isRebirthReady() || isRebirthAnimating) return;
-      const dmReward = getCurrentRebirthDarkMatterReward();
+      const catalystLvl = (state.prestigeUpgrades && state.prestigeUpgrades['p_dm_catalyst']) || 0;
+      const dmReward = getCurrentRebirthDarkMatterReward() + catalystLvl;
       const nextRebirthNum = (state.prestigeCount || 0) + 1;
 
-      if (!confirm(`Ești sigur că vrei să declanșezi Rebirth #${nextRebirthNum}?\n\n• Nucleul actual va colapsa și se va reconstrui în Singularitatea #${nextRebirthNum} (+15% producție permanentă)\n• Vei primi +${dmReward} 🔮 Materie Întunecată (+${dmReward * 10}% producție permanentă)\n• Energia și generatoarele actuale se vor reseta pentru noul ciclu.`)) {
+      if (!confirm(`Ești sigur că vrei să declanșezi Rebirth #${nextRebirthNum}?\n\n• Nucleul actual va colapsa și se va reconstrui în Singularitatea #${nextRebirthNum} (+15% producție permanentă)\n• Vei primi +${dmReward} 🔮 Materie Întunecată (+${dmReward * 10}% producție permanentă)${catalystLvl > 0 ? ` (include +${catalystLvl} 🔮 din Catalizator)` : ''}\n• Soldul actual de ${formatNumber(state.energy || 0)} ⚡ și generatoarele se vor consuma pentru noul ciclu.`)) {
         return;
       }
 
@@ -8385,9 +9349,9 @@
         state.darkMatter += dmReward;
         state.prestigeCount = nextRebirthNum;
 
-        // Energia de start din upgrade-ul Memorie Ancestrală (+500 per nivel)
-        const starterLvl = state.prestigeUpgrades['p_starter'] || 0;
-        const startEnergy = starterLvl * 500;
+        // Energia de start din upgrade-ul Memorie Ancestrală (+1000 per nivel)
+        const starterLvl = (state.prestigeUpgrades && state.prestigeUpgrades['p_starter']) || 0;
+        const startEnergy = starterLvl * 1000;
 
         state.energy = startEnergy;
         state.totalEnergyThisRun = startEnergy;
@@ -8486,39 +9450,439 @@
       });
     }
 
-    function renderPrestigeUpgrades() {
-      const container = document.getElementById('prestigeUpgradesGrid');
-      container.innerHTML = '';
+    // =========================================================================
+    // V3.2.0: ARBORE DE TALENTE RAMIFICAT & CONSTELAȚIE CUANTICĂ (SKILL TREE)
+    // =========================================================================
+    let currentSkillTreeView = 'constellation';
+    let selectedConstellationNodeId = 'p_click';
+    let constellationAnimFrame = null;
+    let constellationCanvasInitialized = false;
 
-      PRESTIGE_UPGRADES_DATA.forEach(upg => {
-        const lvl = state.prestigeUpgrades[upg.id] || 0;
-        const isMax = lvl >= upg.maxLevel;
-        const cost = getPrestigeUpgradeCost(upg, lvl);
-        const canAfford = !isMax && state.darkMatter >= cost;
+    function switchSkillTreeView(view) {
+      currentSkillTreeView = view;
+      const btnConst = document.getElementById('btnSkillViewConstellation');
+      const btnCols = document.getElementById('btnSkillViewColumns');
+      const viewConst = document.getElementById('skillTreeViewConstellation');
+      const viewCols = document.getElementById('skillTreeViewColumns');
+
+      if (view === 'constellation') {
+        if (btnConst) btnConst.classList.add('active');
+        if (btnCols) btnCols.classList.remove('active');
+        if (viewConst) viewConst.style.display = 'block';
+        if (viewCols) viewCols.style.display = 'none';
+        initConstellationCanvas();
+        drawConstellationCanvas();
+      } else {
+        if (btnConst) btnConst.classList.remove('active');
+        if (btnCols) btnCols.classList.add('active');
+        if (viewConst) viewConst.style.display = 'none';
+        if (viewCols) viewCols.style.display = 'block';
+        renderSkillTreeColumns();
+      }
+    }
+
+    function isSkillNodeUnlocked(node) {
+      if (!node.req) return true;
+      const parentLvl = (state.prestigeUpgrades && state.prestigeUpgrades[node.req]) || 0;
+      return parentLvl >= (node.reqLvl || 1);
+    }
+
+    function calculateTotalSpentDarkMatter() {
+      let total = 0;
+      ALL_SKILL_TREE_NODES.forEach(node => {
+        const curLvl = (state.prestigeUpgrades && state.prestigeUpgrades[node.id]) || 0;
+        for (let l = 0; l < curLvl; l++) {
+          total += getPrestigeUpgradeCost(node, l);
+        }
+      });
+      return total;
+    }
+
+    function respecSkillTree() {
+      const spent = calculateTotalSpentDarkMatter();
+      if (spent <= 0) {
+        showToast('ℹ️ Nu ai puncte de Materie Întunecată cheltuite în talente.');
+        return;
+      }
+      state.darkMatter = (state.darkMatter || 0) + spent;
+      ALL_SKILL_TREE_NODES.forEach(node => {
+        state.prestigeUpgrades[node.id] = 0;
+      });
+      playTone(520, 'sine', 0.2, 0.15);
+      showToast(`🔄 Talente resetate complet! Ți-au fost restituite +${spent} 🔮 Materie Întunecată.`);
+      renderSkillTree();
+      updateUI();
+      saveGame();
+      if (cloudSession && (cloudSession.access_token || cloudSession.refresh_token)) {
+        cloudPushSave(false);
+      }
+    }
+
+    function buySkillTreeNode(id) {
+      const node = ALL_SKILL_TREE_NODES.find(n => n.id === id);
+      if (!node) return;
+      if (!isSkillNodeUnlocked(node)) {
+        const parentNode = ALL_SKILL_TREE_NODES.find(n => n.id === node.req);
+        const parentName = parentNode ? parentNode.name : node.req;
+        showToast(`🔒 Necesar mai întâi: ${parentName} (Nivel ${node.reqLvl}+)`);
+        playTone(280, 'sawtooth', 0.1, 0.08);
+        return;
+      }
+      const lvl = (state.prestigeUpgrades && state.prestigeUpgrades[id]) || 0;
+      if (lvl >= node.maxLevel) {
+        showToast('👑 Acest talent a atins deja nivelul MAXIM!');
+        return;
+      }
+      const cost = getPrestigeUpgradeCost(node, lvl);
+      if (state.darkMatter < cost) {
+        showToast(`⚠️ Ai nevoie de ${cost} 🔮 Materie Întunecată!`);
+        playTone(260, 'sine', 0.1, 0.08);
+        return;
+      }
+
+      state.darkMatter -= cost;
+      state.prestigeUpgrades[id] = lvl + 1;
+      const branchColor = node.branch === 'manual' ? '#f43f5e' : node.branch === 'passive' ? '#06b6d4' : node.branch === 'anomaly' ? '#f59e0b' : '#a855f7';
+      spawnActivationOrbToCore(null, branchColor);
+      playTone(node.keystone ? 880 : 720, 'triangle', 0.16, 0.12);
+      spawnParticles(window.innerWidth / 2, window.innerHeight / 2, node.keystone ? 32 : 16, branchColor);
+      showToast(`✨ Talent deblocat: ${node.name} (Nivel ${lvl + 1}/${node.maxLevel})!`);
+
+      selectInspectorNode(id);
+      renderSkillTree();
+      updateUI();
+      saveGame();
+      checkAchievements();
+      if (cloudSession && (cloudSession.access_token || cloudSession.refresh_token)) {
+        cloudPushSave(false);
+      }
+    }
+
+    function buyPrestigeUpgrade(id) {
+      buySkillTreeNode(id);
+    }
+
+    function initConstellationCanvas() {
+      const canvas = document.getElementById('constellationCanvas');
+      if (!canvas) return;
+      const parent = canvas.parentElement;
+      const rect = parent.getBoundingClientRect();
+      const dpr = window.devicePixelRatio || 1;
+      canvas.width = Math.floor((rect.width || 800) * dpr);
+      canvas.height = Math.floor((rect.height || 480) * dpr);
+
+      if (!constellationCanvasInitialized) {
+        constellationCanvasInitialized = true;
+
+        canvas.addEventListener('click', (e) => {
+          const cRect = canvas.getBoundingClientRect();
+          const clickX = (e.clientX - cRect.left) / cRect.width;
+          const clickY = (e.clientY - cRect.top) / cRect.height;
+
+          let closestNode = null;
+          let minDist = 0.07;
+          ALL_SKILL_TREE_NODES.forEach(node => {
+            const d = Math.hypot(clickX - node.cx, clickY - node.cy);
+            if (d < minDist) {
+              minDist = d;
+              closestNode = node;
+            }
+          });
+
+          if (closestNode) {
+            selectInspectorNode(closestNode.id);
+            playTone(600, 'sine', 0.06, 0.06);
+          }
+        });
+
+        canvas.addEventListener('mousemove', (e) => {
+          const cRect = canvas.getBoundingClientRect();
+          const moveX = (e.clientX - cRect.left) / cRect.width;
+          const moveY = (e.clientY - cRect.top) / cRect.height;
+          const isOver = ALL_SKILL_TREE_NODES.some(node => Math.hypot(moveX - node.cx, moveY - node.cy) < 0.055);
+          canvas.style.cursor = isOver ? 'pointer' : 'default';
+        });
+
+        if (!constellationAnimFrame) {
+          const runLoop = () => {
+            if (currentSkillTreeView === 'constellation' && document.getElementById('tab-prestige').classList.contains('active')) {
+              drawConstellationCanvas();
+            }
+            constellationAnimFrame = requestAnimationFrame(runLoop);
+          };
+          constellationAnimFrame = requestAnimationFrame(runLoop);
+        }
+      }
+    }
+
+    function drawConstellationCanvas() {
+      const canvas = document.getElementById('constellationCanvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      const w = canvas.width;
+      const h = canvas.height;
+      ctx.clearRect(0, 0, w, h);
+
+      const dpr = window.devicePixelRatio || 1;
+      const now = Date.now();
+
+      // Desenare conexiuni (linii între părinți și copii)
+      ALL_SKILL_TREE_NODES.forEach(node => {
+        if (!node.req) return;
+        const parent = ALL_SKILL_TREE_NODES.find(n => n.id === node.req);
+        if (!parent) return;
+
+        const x1 = parent.cx * w;
+        const y1 = parent.cy * h;
+        const x2 = node.cx * w;
+        const y2 = node.cy * h;
+
+        const isChildUnlocked = isSkillNodeUnlocked(node);
+        const childLvl = (state.prestigeUpgrades && state.prestigeUpgrades[node.id]) || 0;
+        const branchColor = node.branch === 'manual' ? '#f43f5e' : node.branch === 'passive' ? '#06b6d4' : node.branch === 'anomaly' ? '#f59e0b' : '#a855f7';
+
+        ctx.beginPath();
+        ctx.moveTo(x1, y1);
+        ctx.lineTo(x2, y2);
+
+        if (childLvl > 0) {
+          ctx.strokeStyle = branchColor;
+          ctx.lineWidth = 3.5 * dpr;
+          ctx.shadowColor = branchColor;
+          ctx.shadowBlur = 12 * dpr;
+          ctx.setLineDash([]);
+          ctx.stroke();
+
+          // Puls de lumină
+          const t = ((now / 1800) + (node.tier * 0.2)) % 1;
+          const px = x1 + (x2 - x1) * t;
+          const py = y1 + (y2 - y1) * t;
+          ctx.beginPath();
+          ctx.arc(px, py, 3.5 * dpr, 0, Math.PI * 2);
+          ctx.fillStyle = '#ffffff';
+          ctx.shadowColor = '#ffffff';
+          ctx.shadowBlur = 10 * dpr;
+          ctx.fill();
+        } else if (isChildUnlocked) {
+          ctx.strokeStyle = 'rgba(255, 255, 255, 0.45)';
+          ctx.lineWidth = 2 * dpr;
+          ctx.shadowBlur = 4 * dpr;
+          ctx.shadowColor = 'rgba(255, 255, 255, 0.5)';
+          ctx.setLineDash([4 * dpr, 4 * dpr]);
+          ctx.stroke();
+        } else {
+          ctx.strokeStyle = 'rgba(255, 255, 255, 0.1)';
+          ctx.lineWidth = 1.2 * dpr;
+          ctx.shadowBlur = 0;
+          ctx.setLineDash([3 * dpr, 5 * dpr]);
+          ctx.stroke();
+        }
+        ctx.setLineDash([]);
+        ctx.shadowBlur = 0;
+      });
+
+      // Desenare noduri
+      ALL_SKILL_TREE_NODES.forEach(node => {
+        const x = node.cx * w;
+        const y = node.cy * h;
+        const lvl = (state.prestigeUpgrades && state.prestigeUpgrades[node.id]) || 0;
+        const isMax = lvl >= node.maxLevel;
+        const isUnlocked = isSkillNodeUnlocked(node);
+        const isSelected = selectedConstellationNodeId === node.id;
+        const cost = getPrestigeUpgradeCost(node, lvl);
+        const canAfford = isUnlocked && !isMax && (state.darkMatter || 0) >= cost;
+
+        const baseR = (node.keystone ? 22 : 17) * dpr;
+        const branchColor = node.branch === 'manual' ? '#f43f5e' : node.branch === 'passive' ? '#06b6d4' : node.branch === 'anomaly' ? '#f59e0b' : '#a855f7';
+
+        if (isSelected) {
+          const pulseR = baseR + (3 + Math.sin(now / 200) * 2.5) * dpr;
+          ctx.beginPath();
+          ctx.arc(x, y, pulseR, 0, Math.PI * 2);
+          ctx.strokeStyle = '#ffffff';
+          ctx.lineWidth = 2 * dpr;
+          ctx.shadowColor = '#ffffff';
+          ctx.shadowBlur = 14 * dpr;
+          ctx.stroke();
+          ctx.shadowBlur = 0;
+        }
+
+        if (node.keystone || isMax) {
+          ctx.beginPath();
+          ctx.arc(x, y, baseR + 4 * dpr, 0, Math.PI * 2);
+          ctx.strokeStyle = isMax ? '#fde047' : branchColor;
+          ctx.lineWidth = 1.5 * dpr;
+          ctx.shadowColor = isMax ? '#fde047' : branchColor;
+          ctx.shadowBlur = 10 * dpr;
+          ctx.stroke();
+          ctx.shadowBlur = 0;
+        }
+
+        ctx.beginPath();
+        ctx.arc(x, y, baseR, 0, Math.PI * 2);
+        if (lvl > 0) {
+          const grad = ctx.createRadialGradient(x, y, 2 * dpr, x, y, baseR);
+          grad.addColorStop(0, '#ffffff');
+          grad.addColorStop(0.4, branchColor);
+          grad.addColorStop(1, '#090d16');
+          ctx.fillStyle = grad;
+          ctx.shadowColor = branchColor;
+          ctx.shadowBlur = 14 * dpr;
+        } else if (canAfford) {
+          const grad = ctx.createRadialGradient(x, y, 2 * dpr, x, y, baseR);
+          grad.addColorStop(0, '#fef08a');
+          grad.addColorStop(0.5, '#475569');
+          grad.addColorStop(1, '#0f172a');
+          ctx.fillStyle = grad;
+          ctx.shadowColor = '#fde047';
+          ctx.shadowBlur = 10 * dpr;
+        } else if (isUnlocked) {
+          ctx.fillStyle = '#1e293b';
+          ctx.shadowBlur = 0;
+        } else {
+          ctx.fillStyle = 'rgba(15, 23, 42, 0.6)';
+          ctx.shadowBlur = 0;
+        }
+        ctx.fill();
+
+        ctx.lineWidth = 1.8 * dpr;
+        ctx.strokeStyle = lvl > 0 ? branchColor : isUnlocked ? 'rgba(255, 255, 255, 0.4)' : 'rgba(255, 255, 255, 0.12)';
+        ctx.stroke();
+        ctx.shadowBlur = 0;
+
+        ctx.font = `${Math.round((node.keystone ? 16 : 13) * dpr)}px sans-serif`;
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(node.icon, x, y);
+
+        ctx.font = `bold ${Math.round(9.5 * dpr)}px 'JetBrains Mono', monospace`;
+        ctx.fillStyle = isMax ? '#fde047' : lvl > 0 ? '#ffffff' : isUnlocked ? '#94a3b8' : '#475569';
+        ctx.fillText(isMax ? '👑 MAX' : `${lvl}/${node.maxLevel}`, x, y + baseR + 11 * dpr);
+      });
+    }
+
+    function selectInspectorNode(id) {
+      selectedConstellationNodeId = id;
+      const node = ALL_SKILL_TREE_NODES.find(n => n.id === id);
+      if (!node) return;
+
+      const lvl = (state.prestigeUpgrades && state.prestigeUpgrades[node.id]) || 0;
+      const isMax = lvl >= node.maxLevel;
+      const isUnlocked = isSkillNodeUnlocked(node);
+      const cost = getPrestigeUpgradeCost(node, lvl);
+      const canAfford = isUnlocked && !isMax && (state.darkMatter || 0) >= cost;
+
+      const iconEl = document.getElementById('inspectorIcon');
+      const titleEl = document.getElementById('inspectorTitle');
+      const branchBadgeEl = document.getElementById('inspectorBranchBadge');
+      const lvlEl = document.getElementById('inspectorLvl');
+      const descEl = document.getElementById('inspectorDesc');
+      const reqEl = document.getElementById('inspectorReq');
+      const buyBtn = document.getElementById('inspectorBuyBtn');
+
+      if (iconEl) iconEl.innerText = node.icon;
+      if (titleEl) titleEl.innerText = node.name;
+      if (branchBadgeEl) {
+        branchBadgeEl.innerText = node.branchName;
+        const bColor = node.branch === 'manual' ? '#f43f5e' : node.branch === 'passive' ? '#06b6d4' : node.branch === 'anomaly' ? '#f59e0b' : '#a855f7';
+        branchBadgeEl.style.borderColor = bColor;
+        branchBadgeEl.style.color = bColor;
+      }
+      if (lvlEl) lvlEl.innerText = isMax ? 'NIVEL MAXIM' : `Niv. ${lvl}/${node.maxLevel}`;
+      if (descEl) descEl.innerText = node.desc;
+
+      if (reqEl) {
+        if (!isUnlocked && node.req) {
+          const parentNode = ALL_SKILL_TREE_NODES.find(n => n.id === node.req);
+          reqEl.style.display = 'block';
+          reqEl.innerText = `🔒 Necesar: ${parentNode ? parentNode.name : node.req} (Nivel ${node.reqLvl}+)`;
+        } else {
+          reqEl.style.display = 'none';
+        }
+      }
+
+      if (buyBtn) {
+        buyBtn.className = 'skill-node-btn ' + (isMax ? 'maxed-btn' : canAfford ? 'can-buy' : 'cannot-buy');
+        buyBtn.disabled = isMax || !canAfford;
+        buyBtn.innerText = isMax ? '👑 Talent Complet' : !isUnlocked ? '🔒 Blocat de Cerințe' : canAfford ? `✨ Cumpără (${cost} 🔮)` : `⚠️ Necesită ${cost} 🔮`;
+      }
+    }
+
+    function buySelectedInspectorNode() {
+      if (selectedConstellationNodeId) {
+        buySkillTreeNode(selectedConstellationNodeId);
+      }
+    }
+
+    function renderSkillTreeColumns() {
+      const branches = {
+        universal: document.getElementById('skillGridUniversal'),
+        manual: document.getElementById('skillGridManual'),
+        passive: document.getElementById('skillGridPassive'),
+        anomaly: document.getElementById('skillGridAnomaly')
+      };
+
+      Object.values(branches).forEach(el => { if (el) el.innerHTML = ''; });
+
+      ALL_SKILL_TREE_NODES.forEach(node => {
+        const targetGrid = branches[node.branch];
+        if (!targetGrid) return;
+
+        const lvl = (state.prestigeUpgrades && state.prestigeUpgrades[node.id]) || 0;
+        const isMax = lvl >= node.maxLevel;
+        const isUnlocked = isSkillNodeUnlocked(node);
+        const cost = getPrestigeUpgradeCost(node, lvl);
+        const canAfford = isUnlocked && !isMax && (state.darkMatter || 0) >= cost;
 
         const card = document.createElement('div');
-        card.className = 'upgrade-card' + (canAfford ? '' : ' locked');
-        card.id = `p_card_${upg.id}`;
-        card.onclick = () => buyPrestigeUpgrade(upg.id);
+        card.className = `skill-node-card ${node.keystone ? 'keystone' : ''} ${isMax ? 'maxed' : isUnlocked ? 'unlocked' : 'locked'}`;
+        card.id = `p_card_${node.id}`;
+
+        let reqText = '';
+        if (!isUnlocked && node.req) {
+          const parentNode = ALL_SKILL_TREE_NODES.find(n => n.id === node.req);
+          reqText = `<div class="skill-node-req">🔒 Necesar: ${parentNode ? parentNode.name : node.req} (Niv. ${node.reqLvl}+)</div>`;
+        }
+
+        const btnClass = isMax ? 'maxed-btn' : canAfford ? 'can-buy' : 'cannot-buy';
+        const btnText = isMax ? '👑 MAXIM' : !isUnlocked ? '🔒 Blocat' : canAfford ? `✨ Cumpără (${cost} 🔮)` : `${cost} 🔮`;
 
         card.innerHTML = `
-          <div class="upgrade-top">
-            <div class="upgrade-icon">${upg.icon}</div>
-            <div class="upgrade-info">
-              <div class="upgrade-name-row">
-                <span class="upgrade-name">${upg.name}</span>
-                <span class="upgrade-lvl">Niv. ${lvl}/${upg.maxLevel}</span>
-              </div>
-              <div class="upgrade-desc">${upg.desc}</div>
+          <div class="skill-node-top">
+            <div class="skill-node-title-row">
+              <span style="font-size:18px;">${node.icon}</span>
+              <span>${node.name}</span>
             </div>
+            <span class="skill-node-lvl">${isMax ? '👑 MAX' : `Niv. ${lvl}/${node.maxLevel}`}</span>
           </div>
-          <div class="upgrade-footer">
-            <span>Cost:</span>
-            <span class="cost-tag" style="color:#d8b4fe" id="p_cost_${upg.id}">${isMax ? 'MAXIM' : cost + ' 🔮'}</span>
-          </div>
+          <div class="skill-node-desc">${node.desc}</div>
+          ${reqText}
+          <button class="skill-node-btn ${btnClass}" ${!canAfford || isMax ? 'disabled' : ''} onclick="buySkillTreeNode('${node.id}')">
+            ${btnText}
+          </button>
         `;
-        container.appendChild(card);
+
+        targetGrid.appendChild(card);
       });
+    }
+
+    function renderSkillTree() {
+      const dmBadge = document.getElementById('skillTreeDmBadge');
+      if (dmBadge) {
+        dmBadge.innerText = `🔮 Materie Disponibilă: ${state.darkMatter || 0}`;
+      }
+
+      if (currentSkillTreeView === 'constellation') {
+        initConstellationCanvas();
+        drawConstellationCanvas();
+        selectInspectorNode(selectedConstellationNodeId);
+      } else {
+        renderSkillTreeColumns();
+      }
+    }
+
+    function renderPrestigeUpgrades() {
+      renderSkillTree();
     }
 
     function setAchievementFilter(filterMode, btnEl) {
@@ -8876,12 +10240,13 @@
         }
       });
 
-      // Actualizare secțiune Prestigiu Secvențial (Câte un Rebirth pe rând)
+      // Actualizare secțiune Prestigiu Secvențial (Câte un Rebirth pe rând bazat pe soldul curent)
       const nextRebirthNum = (state.prestigeCount || 0) + 1;
       const reqEnergy = getRebirthEnergyRequirement();
       const ready = isRebirthReady();
       const dmReward = getCurrentRebirthDarkMatterReward();
-      const pct = Math.min(100, ((state.totalEnergyThisRun || 0) / reqEnergy) * 100);
+      const curEnergy = state.energy || 0;
+      const pct = Math.min(100, (curEnergy / reqEnergy) * 100);
 
       document.getElementById('dmCurrentVal').innerText = `${state.prestigeCount || 0} 🌌 | ${formatNumber(state.darkMatter, 0)} 🔮`;
       const pendingLbl = document.getElementById('dmPendingLabel');
@@ -8893,7 +10258,7 @@
       document.getElementById('dmNextReq').innerText = `${formatNumber(reqEnergy)} ⚡`;
 
       const progPctEl = document.getElementById('rebirthProgressPct');
-      if (progPctEl) progPctEl.innerText = `${pct.toFixed(1)}% (${formatNumber(state.totalEnergyThisRun || 0)} / ${formatNumber(reqEnergy)} ⚡)`;
+      if (progPctEl) progPctEl.innerText = `${pct.toFixed(1)}% (${formatNumber(curEnergy)} / ${formatNumber(reqEnergy)} ⚡)`;
       const progFillEl = document.getElementById('rebirthProgressFill');
       if (progFillEl) progFillEl.style.width = `${pct}%`;
 
@@ -9064,9 +10429,15 @@
           prestigeUpgrades: { ...def.prestigeUpgrades, ...(parsed.prestigeUpgrades || {}) },
           dailyLogin: { ...def.dailyLogin, ...(parsed.dailyLogin || {}) },
           dailyQuests: { ...def.dailyQuests, ...(parsed.dailyQuests || {}) },
+          social: { ...def.social, ...(parsed.social || {}) },
           skillCooldowns: { ...def.skillCooldowns, ...(parsed.skillCooldowns || {}) },
           activeBuffs: { ...def.activeBuffs, ...(parsed.activeBuffs || {}) }
         };
+        ALL_SKILL_TREE_NODES.forEach(n => {
+          if (state.prestigeUpgrades[n.id] === undefined) {
+            state.prestigeUpgrades[n.id] = 0;
+          }
+        });
         skillCooldowns = state.skillCooldowns;
         activeBuffs = state.activeBuffs;
 
@@ -9125,7 +10496,7 @@
           const effLvl = state.prestigeUpgrades['p_offline'] || 0;
           const efficiency = Math.min(0.80, 0.40 + effLvl * 0.08);
           const rawOffline = currentCps * cappedSec * efficiency;
-          const maxRunCap = Math.max(0, getRebirthEnergyRequirement() * 1.1 - (state.totalEnergyThisRun || 0));
+          const maxRunCap = Math.max(0, getRebirthEnergyRequirement() * 1.25 - (state.energy || 0));
           const offlineEarned = Math.min(rawOffline, Math.max(currentCps * 60, maxRunCap));
 
           if (offlineEarned >= 1) {
@@ -9190,8 +10561,8 @@
      *       + AUTO-SYNC SILENȚIOS OFFLINE -> ONLINE + AUTO-UPDATE LIVE
      *       + NAVIGARE MOBIL & INSTALARE PWA (MACBOOK / PC / ANDROID / iOS)
      ********************************************************************/
-    const APP_VERSION = '3.1.1';
-    const APP_BUILD = 311;
+    const APP_VERSION = '3.2.0';
+    const APP_BUILD = 320;
     // URL-ul oficial de pe GitHub Pages pentru verificarea automată de Update (și în aplicațiile .exe / .dmg):
     const REMOTE_UPDATE_BASE_URL = 'https://mariusinfo.github.io/quantum-nexus';
 
@@ -9338,6 +10709,571 @@
     function closeSettingsModal() {
       const modal = document.getElementById('settingsModal');
       if (modal) modal.classList.remove('open');
+    }
+
+    // =========================================================================
+    // V3.2.0: SISTEM SOCIAL & PREZENȚĂ GALACTICĂ ÎN TIMP REAL (FIREBASE)
+    // =========================================================================
+    let liveCommandersList = [];
+    let currentSocialSubnav = 'live';
+    const SOCIAL_AVATARS = ['⚛️', '🚀', '🔮', '👑', '🛡️', '🌌', '⚡', '🤖'];
+    let selectedSocialAvatar = '⚛️';
+
+    function initSocialSystem() {
+      if (!state.social) {
+        state.social = {
+          avatar: '⚛️',
+          title: 'Novice Cuantic',
+          statusMsg: 'Cercetez Vidul Cuantic',
+          friends: []
+        };
+      }
+      renderSocialHero();
+      renderSocialAvatarPicker();
+      renderSocialTitleOptions();
+    }
+
+    function renderSocialHero() {
+      const s = state.social || { avatar: '⚛️', title: 'Novice Cuantic', statusMsg: 'Cercetez Vidul Cuantic' };
+      const avEl = document.getElementById('socialHeroAvatar');
+      const nameEl = document.getElementById('socialHeroName');
+      const titleEl = document.getElementById('socialHeroTitle');
+      const msgEl = document.getElementById('socialHeroStatusMsg');
+      const cloudStatusEl = document.getElementById('socialHeroCloudStatus');
+
+      if (avEl) avEl.innerText = s.avatar || '⚛️';
+      if (nameEl) nameEl.innerText = getCommanderDisplayName();
+      if (titleEl) titleEl.innerText = s.title || 'Novice Cuantic';
+      if (msgEl) msgEl.innerText = s.statusMsg || 'Cercetez Vidul Cuantic';
+
+      if (cloudStatusEl) {
+        const loggedIn = Boolean(cloudSession && cloudSession.access_token && cloudSession.user);
+        if (loggedIn) {
+          cloudStatusEl.innerText = '🟢 Sincronizat Live cu Google Firebase';
+          cloudStatusEl.style.color = '#6ee7b7';
+        } else {
+          cloudStatusEl.innerText = '⚠️ Mod Local (Conectează-te la Cloud pentru a fi văzut online)';
+          cloudStatusEl.style.color = '#fde047';
+        }
+      }
+    }
+
+    function openSocialModal() {
+      initSocialSystem();
+      fetchLiveCommanders(false);
+      switchSocialSubnav(currentSocialSubnav || 'live');
+      const modal = document.getElementById('socialModal');
+      if (modal) modal.classList.add('open');
+      playTone(720, 'sine', 0.1, 0.08);
+    }
+
+    function closeSocialModal() {
+      const modal = document.getElementById('socialModal');
+      if (modal) modal.classList.remove('open');
+    }
+
+    function switchSocialSubnav(tab) {
+      currentSocialSubnav = tab;
+      const btnLive = document.getElementById('btnSocialSubnavLive');
+      const btnFriends = document.getElementById('btnSocialSubnavFriends');
+      const btnProfile = document.getElementById('btnSocialSubnavProfile');
+      const paneLive = document.getElementById('paneSocialLive');
+      const paneFriends = document.getElementById('paneSocialFriends');
+      const paneProfile = document.getElementById('paneSocialProfile');
+
+      if (btnLive) btnLive.classList.toggle('active', tab === 'live');
+      if (btnFriends) btnFriends.classList.toggle('active', tab === 'friends');
+      if (btnProfile) btnProfile.classList.toggle('active', tab === 'profile');
+
+      if (paneLive) paneLive.style.display = tab === 'live' ? 'block' : 'none';
+      if (paneFriends) paneFriends.style.display = tab === 'friends' ? 'block' : 'none';
+      if (paneProfile) paneProfile.style.display = tab === 'profile' ? 'block' : 'none';
+
+      if (tab === 'live') {
+        renderOnlineCommandersList();
+      } else if (tab === 'friends') {
+        renderFriendsList();
+      } else if (tab === 'profile') {
+        populateSocialProfileForm();
+      }
+    }
+
+    async function updatePresence(online = true) {
+      if (!isFirebaseConfigured() || !cloudSession || !cloudSession.access_token || !cloudSession.user) return;
+      try {
+        const uid = encodeURIComponent(cloudSession.user.id);
+        const now = Date.now();
+        const payload = {
+          uid: cloudSession.user.id,
+          name: getCommanderDisplayName(),
+          online: Boolean(online),
+          last_seen: now,
+          avatar: (state.social && state.social.avatar) || '⚛️',
+          title: (state.social && state.social.title) || 'Novice Cuantic',
+          status_msg: (state.social && state.social.statusMsg) || 'Cercetez Vidul Cuantic',
+          rebirth: state.prestigeCount || 0,
+          dark_matter: state.darkMatter || 0,
+          cps: Math.round(getCPS()),
+          lifetime_energy: state.lifetimeEnergy || 0,
+          achievements_count: (state.unlockedAchievements || []).length,
+          updated_at: new Date().toISOString()
+        };
+
+        await fetch(`${firebaseConfig.databaseURL}/presence/${uid}.json?auth=${encodeURIComponent(cloudSession.access_token)}`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+          keepalive: true
+        }).catch(() => {});
+      } catch (e) {}
+    }
+
+    let currentSocialFilter = 'online'; // 'online' sau 'all'
+
+    function setSocialListFilter(filter) {
+      currentSocialFilter = filter;
+      const btnOnline = document.getElementById('btnFilterOnlineOnly');
+      const btnAll = document.getElementById('btnFilterAllReal');
+      if (btnOnline) btnOnline.classList.toggle('active', filter === 'online');
+      if (btnAll) btnAll.classList.toggle('active', filter === 'all');
+      renderOnlineCommandersList();
+    }
+
+    function formatLastSeen(timestamp) {
+      if (!timestamp || isNaN(timestamp) || timestamp <= 0) {
+        return 'Nicio conectare înregistrată';
+      }
+      const now = Date.now();
+      const diffSec = Math.max(0, Math.floor((now - timestamp) / 1000));
+      if (diffSec < 45) return 'Chiar acum (Online)';
+      if (diffSec < 90) return `Acum ${diffSec} secunde`;
+      if (diffSec < 3600) {
+        const m = Math.floor(diffSec / 60);
+        return `Acum ${m} ${m === 1 ? 'minut' : 'minute'}`;
+      }
+      if (diffSec < 86400) {
+        const h = Math.floor(diffSec / 3600);
+        return `Acum ${h} ${h === 1 ? 'oră' : 'ore'}`;
+      }
+      if (diffSec < 86400 * 7) {
+        const d = Math.floor(diffSec / 86400);
+        return `Acum ${d} ${d === 1 ? 'zi' : 'zile'}`;
+      }
+      const dt = new Date(timestamp);
+      const dayStr = dt.toLocaleDateString('ro-RO', { day: '2-digit', month: '2-digit', year: 'numeric' });
+      const timeStr = dt.toLocaleTimeString('ro-RO', { hour: '2-digit', minute: '2-digit' });
+      return `${dayStr} la ${timeStr}`;
+    }
+
+    async function fetchLiveCommanders(force = false) {
+      const listEl = document.getElementById('socialLiveCommandersList');
+      if (listEl && force) {
+        listEl.innerHTML = '<div style="text-align:center; padding:24px; color:var(--text-muted); font-size:12px;">🛰️ Se scanează jucătorii reali conectați la Google Firebase...</div>';
+      }
+
+      let fetched = [];
+      const now = Date.now();
+
+      if (isFirebaseConfigured() && cloudSession && cloudSession.access_token) {
+        try {
+          let res = await fetch(`${firebaseConfig.databaseURL}/presence.json?auth=${encodeURIComponent(cloudSession.access_token)}`);
+          if (res.status === 401) {
+            const refreshed = await refreshCloudTokenIfNeeded();
+            if (refreshed) {
+              res = await fetch(`${firebaseConfig.databaseURL}/presence.json?auth=${encodeURIComponent(cloudSession.access_token)}`);
+            }
+          }
+          if (res.ok) {
+            const data = await res.json();
+            if (data && typeof data === 'object') {
+              fetched = Object.values(data);
+            }
+          }
+        } catch (e) {}
+      }
+
+      const localUid = (cloudSession && cloudSession.user && cloudSession.user.id) || 'local_player';
+      const localPlayerObj = {
+        uid: localUid,
+        name: getCommanderDisplayName(),
+        online: true,
+        last_seen: now,
+        avatar: (state.social && state.social.avatar) || '⚛️',
+        title: (state.social && state.social.title) || 'Novice Cuantic',
+        status_msg: (state.social && state.social.statusMsg) || 'Cercetez Vidul Cuantic',
+        rebirth: state.prestigeCount || 0,
+        dark_matter: state.darkMatter || 0,
+        cps: Math.round(getCPS()),
+        lifetime_energy: state.lifetimeEnergy || 0,
+        isSelf: true
+      };
+
+      const map = new Map();
+      map.set(localUid, localPlayerObj);
+
+      // Doar persoane reale: din prezența live (/presence.json)
+      fetched.forEach(item => {
+        if (item && item.uid && !item.uid.startsWith('bot_')) {
+          map.set(item.uid, item);
+        }
+      });
+
+      // Scanare jucători reali din Clasament (/leaderboard.json) pentru a determina ultima conectare
+      if (isFirebaseConfigured() && cloudSession && cloudSession.access_token) {
+        try {
+          const resLb = await fetch(`${firebaseConfig.databaseURL}/leaderboard.json?auth=${encodeURIComponent(cloudSession.access_token)}`);
+          if (resLb.ok) {
+            const lbData = await resLb.json();
+            if (lbData && typeof lbData === 'object') {
+              Object.values(lbData).forEach(lbItem => {
+                if (lbItem && lbItem.user_id && !lbItem.user_id.startsWith('bot_')) {
+                  const uid = lbItem.user_id;
+                  const lbLastSeen = lbItem.updated_at ? new Date(lbItem.updated_at).getTime() : 0;
+                  if (map.has(uid)) {
+                    const existing = map.get(uid);
+                    if (!existing.last_seen && lbLastSeen) {
+                      existing.last_seen = lbLastSeen;
+                    }
+                  } else {
+                    map.set(uid, {
+                      uid: uid,
+                      name: lbItem.commander_name || 'Comandant Reclutat',
+                      online: false,
+                      last_seen: lbLastSeen,
+                      avatar: '⚛️',
+                      title: 'Explorator Cosmic',
+                      status_msg: 'Înregistrat în Rețeaua Galactică',
+                      rebirth: lbItem.prestige_count || 0,
+                      dark_matter: lbItem.dark_matter || 0,
+                      cps: lbItem.max_cps || 0,
+                      lifetime_energy: lbItem.lifetime_energy || 0
+                    });
+                  }
+                }
+              });
+            }
+          }
+        } catch (e) {}
+      }
+
+      // DOAR PERSOANE REALE (fără roboți/exploratori sintetici)
+      liveCommandersList = Array.from(map.values());
+
+      liveCommandersList.sort((a, b) => {
+        if (a.isSelf) return -1;
+        if (b.isSelf) return 1;
+        const aOnline = (now - (a.last_seen || 0)) < 90000;
+        const bOnline = (now - (b.last_seen || 0)) < 90000;
+        if (aOnline && !bOnline) return -1;
+        if (!aOnline && bOnline) return 1;
+        return (b.last_seen || 0) - (a.last_seen || 0);
+      });
+
+      const onlineCount = liveCommandersList.filter(c => (now - (c.last_seen || 0)) < 90000).length;
+      const badgePill = document.getElementById('socialHeaderOnlineCount');
+      const modalBadge = document.getElementById('socialLiveBadge');
+      if (badgePill) badgePill.innerText = `🟢 ${onlineCount}`;
+      if (modalBadge) modalBadge.innerText = `${onlineCount} Online`;
+
+      renderOnlineCommandersList();
+      renderFriendsList();
+    }
+
+    function renderOnlineCommandersList() {
+      const container = document.getElementById('socialLiveCommandersList');
+      if (!container) return;
+      container.innerHTML = '';
+
+      const now = Date.now();
+      const filteredList = liveCommandersList.filter(cmd => {
+        if (!cmd) return false;
+        if (currentSocialFilter === 'online') {
+          if (cmd.isSelf) return true;
+          const diffSec = Math.floor((now - (cmd.last_seen || 0)) / 1000);
+          return Boolean(cmd.online !== false && diffSec < 90);
+        }
+        return true;
+      });
+
+      if (filteredList.length === 0) {
+        if (currentSocialFilter === 'online') {
+          container.innerHTML = `
+            <div style="text-align:center; padding:28px 14px; color:var(--text-muted); font-size:12px; background:rgba(15,23,42,0.4); border-radius:12px; border:1px dashed var(--border-subtle);">
+              🛸 Niciun alt jucător real nu este activ pe joc în acest moment exact.<br/>
+              <button class="social-filter-btn" onclick="setSocialListFilter('all')" style="margin-top:10px; color:#38bdf8;">
+                👥 Afișează Toți Jucătorii Reali & Când au fost conectați
+              </button>
+            </div>
+          `;
+        } else {
+          container.innerHTML = '<div style="text-align:center; padding:20px; color:var(--text-muted); font-size:12px;">Niciun jucător real detectat încă în baza de date. Conectează-te la Cloud pentru a fi primul!</div>';
+        }
+        return;
+      }
+
+      filteredList.forEach(cmd => {
+        const diffSec = Math.max(0, Math.floor((now - (cmd.last_seen || 0)) / 1000));
+        const isOnline = Boolean(cmd.online !== false && diffSec < 90);
+        const isAway = !isOnline && diffSec < 360;
+
+        let statusText = '🟢 Online Acum';
+        let statusDotClass = 'status-online';
+        let lastSeenBadge = '<span style="color:#6ee7b7; font-weight:700;">🟢 Activ pe joc acum</span>';
+
+        if (isAway) {
+          statusText = `🟡 Inactiv (acum ${Math.floor(diffSec / 60)}m)`;
+          statusDotClass = 'status-away';
+          lastSeenBadge = `<span style="color:#fde047;">🟡 Ultima dată online: <strong>acum ${Math.floor(diffSec / 60)} minute</strong></span>`;
+        } else if (!isOnline) {
+          statusText = `⚪ Offline (${formatTimeAgo(diffSec)})`;
+          statusDotClass = 'status-offline';
+          lastSeenBadge = `<span style="color:#94a3b8;">🕒 Ultima dată online: <strong style="color:#38bdf8;">${formatLastSeen(cmd.last_seen)}</strong></span>`;
+        }
+
+        const isFriend = Array.isArray(state.social && state.social.friends) && state.social.friends.includes(cmd.uid);
+        const cleanName = (cmd.name || 'Comandant').replace(/[<>&"']/g, '');
+        const cleanTitle = (cmd.title || 'Explorator').replace(/[<>&"']/g, '');
+        const cleanStatus = (cmd.status_msg || 'Activ în Simulare').replace(/[<>&"']/g, '');
+
+        const card = document.createElement('div');
+        card.className = 'commander-card';
+        card.innerHTML = `
+          <div style="display:flex; align-items:center; gap:12px; min-width:0;">
+            <div class="social-avatar-badge" style="width:44px; height:44px; font-size:22px;">${cmd.avatar || '⚛️'}</div>
+            <div style="min-width:0;">
+              <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
+                <span class="status-dot ${statusDotClass}" title="${statusText}"></span>
+                <strong style="color:#ffffff; font-size:13.5px;">${cleanName}</strong>
+                ${cmd.isSelf ? '<span class="social-online-pill" style="border-color:#38bdf8; color:#38bdf8;">TU</span>' : ''}
+                <span style="font-size:11px; color:var(--text-dim);">• ${cleanTitle}</span>
+              </div>
+              <div style="font-size:11.5px; color:var(--text-muted); margin-top:3px; text-overflow:ellipsis; overflow:hidden; white-space:nowrap; max-width:280px;">${cleanStatus}</div>
+              <div style="font-size:11px; margin-top:2px; display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+                ${lastSeenBadge}
+                <span style="color:var(--text-dim);">• Rebirth #${cmd.rebirth || 0}</span>
+                <span style="color:var(--text-dim);">• ${formatNumber(cmd.cps || 0)} ⚡/s</span>
+              </div>
+            </div>
+          </div>
+          <div style="display:flex; align-items:center; gap:6px; flex-shrink:0;">
+            ${!cmd.isSelf ? `
+              <button class="btn-social-action ${isFriend ? 'active-friend' : ''}" onclick="toggleFriend('${cmd.uid}', '${cleanName}')">
+                ${isFriend ? '★ Prieten' : '⭐ Adaugă'}
+              </button>
+              <button class="btn-social-action" onclick="sendQuantumGreeting('${cleanName}')" title="Trimite un salut și activează rezonanța cosmică (+30s boost)">
+                👋 Salut
+              </button>
+            ` : '<span style="font-size:11px; color:#34d399; font-weight:700;">🟢 Tu ești activ</span>'}
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    function renderFriendsList() {
+      const container = document.getElementById('socialFriendsList');
+      const badge = document.getElementById('socialFriendsBadge');
+      if (!container) return;
+      container.innerHTML = '';
+
+      const friendsList = (state.social && state.social.friends) || [];
+      if (badge) {
+        badge.style.display = friendsList.length > 0 ? 'inline-block' : 'none';
+        badge.innerText = `${friendsList.length}`;
+      }
+
+      const searchInput = document.getElementById('socialFriendSearchInput');
+      const query = (searchInput ? searchInput.value.trim().toLowerCase() : '');
+
+      const matchedCommanders = liveCommandersList.filter(cmd => {
+        const isFriend = friendsList.includes(cmd.uid);
+        if (!isFriend && !query) return false;
+        if (query) {
+          return cmd.name.toLowerCase().includes(query) || (cmd.uid && cmd.uid.toLowerCase().includes(query));
+        }
+        return isFriend;
+      });
+
+      if (matchedCommanders.length === 0) {
+        container.innerHTML = `
+          <div style="text-align:center; padding:28px 14px; color:var(--text-muted); font-size:12px;">
+            ${query ? 'Niciun comandant găsit conform căutării.' : 'Nu ai încă prieteni adăugați! Deschide tab-ul <strong>Comandanți Online</strong> și apasă pe butonul <strong>⭐ Adaugă</strong>.'}
+          </div>
+        `;
+        return;
+      }
+
+      const now = Date.now();
+      matchedCommanders.forEach(cmd => {
+        const diffSec = Math.max(0, Math.floor((now - (cmd.last_seen || 0)) / 1000));
+        const isOnline = Boolean(cmd.online !== false && diffSec < 90);
+        const isAway = !isOnline && diffSec < 360;
+
+        let statusText = '🟢 Online Acum';
+        let statusDotClass = 'status-online';
+        let lastSeenBadge = '<span style="color:#6ee7b7; font-weight:700;">🟢 Activ pe joc acum</span>';
+        if (isAway) {
+          statusText = `🟡 Inactiv (acum ${Math.floor(diffSec / 60)}m)`;
+          statusDotClass = 'status-away';
+          lastSeenBadge = `<span style="color:#fde047;">🟡 Ultima dată online: <strong>acum ${Math.floor(diffSec / 60)} minute</strong></span>`;
+        } else if (!isOnline) {
+          statusText = `⚪ Offline (${formatTimeAgo(diffSec)})`;
+          statusDotClass = 'status-offline';
+          lastSeenBadge = `<span style="color:#94a3b8;">🕒 Ultima dată online: <strong style="color:#38bdf8;">${formatLastSeen(cmd.last_seen)}</strong></span>`;
+        }
+
+        const isFriend = friendsList.includes(cmd.uid);
+        const cleanName = (cmd.name || 'Comandant').replace(/[<>&"']/g, '');
+        const cleanTitle = (cmd.title || 'Comandant').replace(/[<>&"']/g, '');
+        const cleanStatus = (cmd.status_msg || 'Activ în Simulare').replace(/[<>&"']/g, '');
+
+        const card = document.createElement('div');
+        card.className = 'commander-card';
+        card.innerHTML = `
+          <div style="display:flex; align-items:center; gap:12px; min-width:0;">
+            <div class="social-avatar-badge" style="width:44px; height:44px; font-size:22px;">${cmd.avatar || '⚛️'}</div>
+            <div style="min-width:0;">
+              <div style="display:flex; align-items:center; gap:6px;">
+                <span class="status-dot ${statusDotClass}"></span>
+                <strong style="color:#ffffff; font-size:13.5px;">${cleanName}</strong>
+                <span style="font-size:11px; color:var(--text-dim);">• ${cleanTitle}</span>
+              </div>
+              <div style="font-size:11.5px; color:var(--text-muted); margin-top:3px;">${cleanStatus}</div>
+              <div style="font-size:11px; margin-top:2px; display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+                ${lastSeenBadge}
+              </div>
+            </div>
+          </div>
+          <div style="display:flex; align-items:center; gap:6px; flex-shrink:0;">
+            <button class="btn-social-action ${isFriend ? 'active-friend' : ''}" onclick="toggleFriend('${cmd.uid}', '${cleanName}')">
+              ${isFriend ? '★ În Prieteni' : '⭐ Adaugă'}
+            </button>
+            <button class="btn-social-action" onclick="sendQuantumGreeting('${cleanName}')">
+              👋 Salut
+            </button>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    function toggleFriend(uid, name) {
+      if (!state.social) state.social = { avatar: '⚛️', title: 'Novice Cuantic', statusMsg: '', friends: [] };
+      if (!Array.isArray(state.social.friends)) state.social.friends = [];
+
+      const idx = state.social.friends.indexOf(uid);
+      if (idx >= 0) {
+        state.social.friends.splice(idx, 1);
+        showToast(`❌ L-ai eliminat pe ${name} din lista de prieteni.`);
+      } else {
+        state.social.friends.push(uid);
+        showToast(`⭐ L-ai adăugat pe ${name} la prieteni! Vei vedea când e online.`);
+        playXboxAchievementChime('standard');
+      }
+
+      saveGame();
+      renderOnlineCommandersList();
+      renderFriendsList();
+      if (cloudSession && (cloudSession.access_token || cloudSession.refresh_token)) {
+        cloudPushSave(false);
+      }
+    }
+
+    function sendQuantumGreeting(name) {
+      const bonusGain = Math.round(Math.max(100, getCPS() * 30));
+      addEnergy(bonusGain);
+      spawnParticles(window.innerWidth / 2, window.innerHeight / 2, 25, '#34d399');
+      playTone(840, 'triangle', 0.16, 0.12);
+      showToast(`👋 I-ai trimis un Salut Cuantic lui ${name}! Rezonanță energetică: +${formatNumber(bonusGain)} ⚡ (30s CPS)!`);
+    }
+
+    function renderSocialAvatarPicker() {
+      const container = document.getElementById('socialAvatarSelector');
+      if (!container) return;
+      container.innerHTML = '';
+      const current = (state.social && state.social.avatar) || '⚛️';
+      selectedSocialAvatar = current;
+
+      SOCIAL_AVATARS.forEach(av => {
+        const opt = document.createElement('div');
+        opt.className = `social-avatar-opt ${av === selectedSocialAvatar ? 'selected' : ''}`;
+        opt.innerText = av;
+        opt.onclick = () => {
+          selectedSocialAvatar = av;
+          container.querySelectorAll('.social-avatar-opt').forEach(el => el.classList.remove('selected'));
+          opt.classList.add('selected');
+        };
+        container.appendChild(opt);
+      });
+    }
+
+    function renderSocialTitleOptions() {
+      const select = document.getElementById('socialProfileTitleSelect');
+      if (!select) return;
+      select.innerHTML = '';
+
+      const titles = [
+        { title: 'Novice Cuantic', unlocked: true },
+        { title: 'Pionier al Energiei', unlocked: (state.lifetimeEnergy || 0) >= 1000000 },
+        { title: 'Vânător de Anomalii', unlocked: (state.anomaliesCaught || 0) >= 10 },
+        { title: 'Arhitect al Singularității', unlocked: (state.prestigeCount || 0) >= 1 },
+        { title: 'Lord al Vidului', unlocked: (state.prestigeCount || 0) >= 5 },
+        { title: 'Stăpânul Multiversului', unlocked: (state.unlockedAchievements || []).length >= 50 }
+      ];
+
+      const current = (state.social && state.social.title) || 'Novice Cuantic';
+      titles.forEach(t => {
+        const opt = document.createElement('option');
+        opt.value = t.title;
+        opt.innerText = t.unlocked ? t.title : `🔒 ${t.title} (Blocat)`;
+        opt.disabled = !t.unlocked;
+        if (t.title === current) opt.selected = true;
+        select.appendChild(opt);
+      });
+    }
+
+    function populateSocialProfileForm() {
+      const nameInput = document.getElementById('socialProfileNameInput');
+      const statusInput = document.getElementById('socialProfileStatusInput');
+      if (nameInput) nameInput.value = state.commanderName || getCommanderDisplayName();
+      if (statusInput) statusInput.value = (state.social && state.social.statusMsg) || '';
+      renderSocialAvatarPicker();
+      renderSocialTitleOptions();
+    }
+
+    function saveSocialProfileFromUI() {
+      const nameInput = document.getElementById('socialProfileNameInput');
+      const statusInput = document.getElementById('socialProfileStatusInput');
+      const titleSelect = document.getElementById('socialProfileTitleSelect');
+
+      if (!state.social) state.social = { avatar: '⚛️', title: 'Novice Cuantic', statusMsg: '', friends: [] };
+
+      if (nameInput && nameInput.value.trim()) {
+        state.commanderName = nameInput.value.trim().slice(0, 22);
+      }
+      if (statusInput) {
+        state.social.statusMsg = statusInput.value.trim().slice(0, 45);
+      }
+      if (titleSelect && titleSelect.value) {
+        state.social.title = titleSelect.value;
+      }
+      state.social.avatar = selectedSocialAvatar || '⚛️';
+
+      renderSocialHero();
+      saveGame();
+      updatePresence(true);
+      if (cloudSession && (cloudSession.access_token || cloudSession.refresh_token)) {
+        cloudPushSave(false);
+      }
+      showToast('💾 Profilul social a fost salvat cu succes!');
+      switchSocialSubnav('live');
+    }
+
+    function formatTimeAgo(sec) {
+      if (sec < 60) return `${sec}s`;
+      if (sec < 3600) return `${Math.floor(sec / 60)}m`;
+      if (sec < 86400) return `${Math.floor(sec / 3600)}h`;
+      return `${Math.floor(sec / 86400)}z`;
     }
 
     function openCloudModal() {
@@ -10134,6 +12070,7 @@
     let secAccumulator = 0;
     let passivePulseAccumulator = 0;
     let autoCursorAccumulator = 0;
+    let spectralClickAccumulator = 0;
     let robotBarrageAccumulator = 0;
     let tachyonBurstAccumulator = 0;
     let blackHoleEventAccumulator = 0;
@@ -10208,17 +12145,32 @@
         }
       }
 
-      // Contorizare secunde în Overclock Fever (>=85%) & scădere doar dacă nu s-a dat click în ultimele 1.55s
+      // Contorizare secunde în Overclock Fever (>=85%) & scădere adaptată cu Sincronizare Tahionică (p_combo_lock)
       if (isOverdriveActive) {
         comboMeter = 100;
       }
       if (comboMeter >= 85) {
         state.feverSeconds = (state.feverSeconds || 0) + dt;
       }
-      if (!isOverdriveActive && comboMeter > 0 && (now - lastComboClickTime) > 1550) {
+      const comboLockLvl = (state.prestigeUpgrades && state.prestigeUpgrades['p_combo_lock']) || 0;
+      const graceTime = 1550 + comboLockLvl * 650;
+      if (!isOverdriveActive && comboMeter > 0 && (now - lastComboClickTime) > graceTime) {
         const aiCount = (state.generators && state.generators['g2']) || 0;
-        const decayRate = Math.max(3.5, 9.5 - aiCount * 0.25);
+        const decayRate = Math.max(2.0, 9.5 - aiCount * 0.25 - comboLockLvl * 0.6);
         comboMeter = Math.max(0, comboMeter - decayRate * dt);
+      }
+
+      // Autoclicker Spectral (Calea Manuală T4: Pulsar Spectral)
+      const autoClickLvl = (state.prestigeUpgrades && state.prestigeUpgrades['p_autoclick_spectral']) || 0;
+      if (autoClickLvl > 0) {
+        spectralClickAccumulator += dt * (autoClickLvl * 4);
+        while (spectralClickAccumulator >= 1) {
+          spectralClickAccumulator -= 1;
+          const rect = coreBtn ? coreBtn.getBoundingClientRect() : { left: window.innerWidth / 2, top: window.innerHeight / 2, width: 0, height: 0 };
+          const cx = rect.left + rect.width / 2 + (Math.random() - 0.5) * 40;
+          const cy = rect.top + rect.height / 2 + (Math.random() - 0.5) * 40;
+          handleCoreClick(cx, cy, true);
+        }
       }
 
       secAccumulator += dt;
@@ -10404,6 +12356,7 @@
       initDailySystem();
       renderAll();
       initCloudSystem();
+      initSocialSystem();
       hideInstallButtonsIfInstalled();
       initCosmicInteractiveCanvas();
       initWelcomeLoadingScreen();
@@ -10449,26 +12402,60 @@
         }
       }, 25000);
 
-      // Primul cerc aleatoriu apare la 16 secunde de la intrarea în joc, apoi la fiecare 34 secunde!
-      setTimeout(() => spawnQuantumAnomaly(false), 16000);
+      // Heartbeat Social & Prezență Galactică (actualizare prezență la fiecare 35 secunde)
+      setTimeout(() => {
+        if (navigator.onLine) {
+          updatePresence(true);
+          fetchLiveCommanders(false);
+        }
+      }, 3000);
       setInterval(() => {
-        if (Math.random() < 0.85) spawnQuantumAnomaly(false);
-      }, 34000);
+        if (navigator.onLine) {
+          if (cloudSession && cloudSession.access_token) {
+            updatePresence(true);
+          }
+          fetchLiveCommanders(false);
+        }
+      }, 35000);
+
+      // Schedule dinamic pentru Sfere Cuantice Anomaly (influențat direct de talentul p_anom_frequency)
+      function scheduleNextAnomaly() {
+        const freqLvl = (state.prestigeUpgrades && state.prestigeUpgrades.p_anom_frequency) || 0;
+        const baseDelay = 22000 + Math.random() * 14000;
+        const delay = Math.max(8500, baseDelay / (1 + freqLvl * 0.25));
+        setTimeout(() => {
+          if (document.visibilityState === 'visible') {
+            spawnQuantumAnomaly(false);
+          }
+          scheduleNextAnomaly();
+        }, delay);
+      }
+      setTimeout(scheduleNextAnomaly, 14000);
     });
 
     // Salvare garantată la închiderea sau schimbarea aplicației/tab-ului
     window.addEventListener('beforeunload', () => {
       saveGame();
-      if (cloudSession && cloudSession.access_token) cloudPushSave(false);
+      if (cloudSession && cloudSession.access_token) {
+        cloudPushSave(false);
+        updatePresence(false);
+      }
     });
     document.addEventListener('visibilitychange', () => {
       if (document.visibilityState === 'hidden') {
         saveGame();
-        if (cloudSession && cloudSession.access_token) cloudPushSave(false);
+        if (cloudSession && cloudSession.access_token) {
+          cloudPushSave(false);
+          updatePresence(false);
+        }
       } else if (document.visibilityState === 'visible' && navigator.onLine) {
         if (pendingCloudSync && cloudSession && (cloudSession.access_token || cloudSession.refresh_token)) {
           syncOfflineProgressToServer();
         }
+        if (cloudSession && cloudSession.access_token) {
+          updatePresence(true);
+        }
+        fetchLiveCommanders(false);
         checkForGameUpdate(false);
       }
     });
