@@ -1,0 +1,3994 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <meta name="theme-color" content="#0e131f" />
+  <meta name="description" content="QUANTUM NEXUS // Simulator sci-fi de tip Idle Clicker cu salvare în Cloud, generatoare cuantice și singularitate." />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Quantum Nexus" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <link rel="manifest" href="./manifest.json" />
+  <link rel="icon" type="image/svg+xml" href="./icon.svg" />
+  <link rel="apple-touch-icon" href="./icon.svg" />
+  <title>QUANTUM NEXUS // Idle Clicker Simulator</title>
+  <style>
+    :root {
+      --bg-base: #07090e;
+      --bg-panel: #0e131f;
+      --bg-card: #151c2e;
+      --bg-card-hover: #1c263d;
+      --border-subtle: rgba(99, 179, 237, 0.14);
+      --border-glow: rgba(56, 189, 248, 0.45);
+      --accent-cyan: #38bdf8;
+      --accent-blue: #3b82f6;
+      --accent-purple: #a855f7;
+      --accent-pink: #ec4899;
+      --accent-gold: #f59e0b;
+      --accent-emerald: #10b981;
+      --accent-red: #ef4444;
+      --text-main: #f1f5f9;
+      --text-muted: #94a3b8;
+      --text-dim: #64748b;
+      --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      --font-mono: "SF Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background-color: var(--bg-base);
+      background-image:
+        radial-gradient(circle at 20% 35%, rgba(56, 189, 248, 0.08) 0%, transparent 45%),
+        radial-gradient(circle at 80% 70%, rgba(168, 85, 247, 0.08) 0%, transparent 45%),
+        linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+      background-size: 100% 100%, 100% 100%, 32px 32px, 32px 32px;
+      color: var(--text-main);
+      font-family: var(--font-sans);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Scrollbar styling */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: rgba(15, 23, 42, 0.4);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: rgba(148, 163, 184, 0.25);
+      border-radius: 999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgba(56, 189, 248, 0.5);
+    }
+
+    /* App Layout */
+    .app-shell {
+      display: grid;
+      grid-template-rows: 60px 1fr;
+      height: 100vh;
+      width: 100vw;
+    }
+
+    /* Header */
+    .top-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px;
+      background: rgba(14, 19, 31, 0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border-subtle);
+      z-index: 20;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-icon {
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      box-shadow: 0 0 16px rgba(56, 189, 248, 0.4);
+    }
+
+    .brand-title {
+      font-weight: 800;
+      font-size: 16px;
+      letter-spacing: 0.06em;
+      background: linear-gradient(90deg, #fff, #93c5fd, #c084fc);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .brand-sub {
+      font-size: 11px;
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+    }
+
+    .top-buffs {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .buff-pill {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 12px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+      font-family: var(--font-mono);
+      background: rgba(245, 158, 11, 0.15);
+      border: 1px solid rgba(245, 158, 11, 0.5);
+      color: #fcd34d;
+      box-shadow: 0 0 12px rgba(245, 158, 11, 0.25);
+      animation: pulseGlow 1.5s infinite alternate;
+    }
+
+    @keyframes pulseGlow {
+      from { transform: scale(1); }
+      to { transform: scale(1.04); }
+    }
+
+    .top-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .save-status {
+      font-size: 12px;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-right: 6px;
+    }
+
+    .save-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent-emerald);
+      box-shadow: 0 0 8px var(--accent-emerald);
+      transition: transform 0.3s ease;
+    }
+
+    .btn-header {
+      background: var(--bg-card);
+      color: var(--text-main);
+      border: 1px solid var(--border-subtle);
+      padding: 7px 12px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.15s ease;
+    }
+
+    .btn-header:hover {
+      background: var(--bg-card-hover);
+      border-color: var(--accent-cyan);
+      transform: translateY(-1px);
+    }
+
+    .btn-header:active {
+      transform: scale(0.96);
+    }
+
+    .btn-header.danger:hover {
+      border-color: var(--accent-red);
+      color: #fca5a5;
+    }
+
+    /* Main 3-Column Grid */
+    .main-grid {
+      display: grid;
+      grid-template-columns: 380px 1fr 410px;
+      height: calc(100vh - 60px);
+      overflow: hidden;
+    }
+
+    @media (max-width: 1200px) {
+      .main-grid {
+        grid-template-columns: 330px 1fr 350px;
+      }
+    }
+
+    @media (max-width: 980px) {
+      .top-bar {
+        padding: 8px 12px;
+        flex-wrap: wrap;
+        gap: 6px;
+        height: auto;
+      }
+      .brand-sub, .save-status {
+        display: none;
+      }
+      .top-actions {
+        gap: 6px;
+        flex-wrap: wrap;
+      }
+      .btn-header {
+        padding: 6px 9px;
+        font-size: 11px;
+      }
+      .app-shell {
+        grid-template-rows: auto 1fr;
+        height: 100dvh;
+      }
+      .main-grid {
+        grid-template-columns: 1fr;
+        height: 100%;
+        padding-bottom: 66px;
+        overflow-y: auto;
+      }
+      .left-zone, .center-zone, .right-zone {
+        display: none;
+        height: 100%;
+        border: none;
+        overflow-y: auto;
+      }
+      .left-zone.mobile-active,
+      .center-zone.mobile-active,
+      .right-zone.mobile-active {
+        display: flex;
+      }
+      .nav-tabs {
+        padding: 10px 12px;
+        overflow-x: auto;
+      }
+      .tab-btn {
+        font-size: 11.5px;
+        padding: 8px 10px;
+        white-space: nowrap;
+      }
+    }
+
+    button, .core-button, .upgrade-card, .gen-card {
+      touch-action: manipulation;
+    }
+
+    /* Left Column: Reactor & Click Zone */
+    .left-zone {
+      background: linear-gradient(180deg, rgba(14, 19, 31, 0.7) 0%, rgba(7, 9, 14, 0.9) 100%);
+      border-right: 1px solid var(--border-subtle);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .resource-display {
+      text-align: center;
+      background: rgba(21, 28, 46, 0.65);
+      border: 1px solid var(--border-subtle);
+      border-radius: 16px;
+      padding: 16px 14px;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06), 0 8px 24px rgba(0, 0, 0, 0.3);
+      position: relative;
+      z-index: 2;
+    }
+
+    .resource-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--accent-cyan);
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .resource-value {
+      font-family: var(--font-mono);
+      font-size: 34px;
+      font-weight: 800;
+      color: #ffffff;
+      text-shadow: 0 0 22px rgba(56, 189, 248, 0.45);
+      line-height: 1.15;
+      margin-bottom: 8px;
+      letter-spacing: -0.02em;
+    }
+
+    .resource-rates {
+      display: flex;
+      justify-content: center;
+      gap: 14px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .rate-item span {
+      color: var(--text-main);
+      font-weight: 700;
+    }
+
+    .prestige-badge-mini {
+      margin-top: 8px;
+      padding-top: 8px;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      font-size: 12px;
+      color: #d8b4fe;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-mono);
+    }
+
+    /* Interactive Core Container */
+    .core-stage {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      min-height: 260px;
+    }
+
+    .core-button {
+      width: 210px;
+      height: 210px;
+      border-radius: 50%;
+      position: relative;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.08s cubic-bezier(0.34, 1.56, 0.64, 1);
+      outline: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .core-button:hover {
+      transform: scale(1.03);
+    }
+
+    .core-button:active, .core-button.clicked {
+      transform: scale(0.91);
+    }
+
+    .core-glow {
+      position: absolute;
+      inset: -25px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(56, 189, 248, 0.38) 0%, rgba(168, 85, 247, 0.18) 45%, transparent 72%);
+      pointer-events: none;
+      transition: all 0.3s ease;
+    }
+
+    .core-button.fever .core-glow {
+      background: radial-gradient(circle, rgba(245, 158, 11, 0.55) 0%, rgba(236, 72, 153, 0.35) 50%, transparent 75%);
+      transform: scale(1.18);
+    }
+
+    .core-svg {
+      width: 100%;
+      height: 100%;
+      overflow: visible;
+      filter: drop-shadow(0 0 18px rgba(56, 189, 248, 0.5));
+    }
+
+    .ring-spin-slow {
+      transform-origin: 100px 100px;
+      animation: spinCW 18s linear infinite;
+    }
+
+    .ring-spin-rev {
+      transform-origin: 100px 100px;
+      animation: spinCCW 11s linear infinite;
+    }
+
+    .ring-spin-fast {
+      transform-origin: 100px 100px;
+      animation: spinCW 5s linear infinite;
+    }
+
+    @keyframes spinCW {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    @keyframes spinCCW {
+      from { transform: rotate(360deg); }
+      to { transform: rotate(0deg); }
+    }
+
+    /* Overclock Combo Bar */
+    .combo-box {
+      width: 100%;
+      background: rgba(21, 28, 46, 0.7);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      padding: 10px 14px;
+      margin-bottom: 12px;
+    }
+
+    .combo-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+      margin-bottom: 6px;
+    }
+
+    .combo-title {
+      font-weight: 700;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .combo-mult {
+      font-family: var(--font-mono);
+      font-weight: 800;
+      color: var(--accent-cyan);
+    }
+
+    .combo-mult.fever-text {
+      color: var(--accent-gold);
+      text-shadow: 0 0 10px rgba(245, 158, 11, 0.6);
+    }
+
+    .combo-track {
+      width: 100%;
+      height: 8px;
+      background: rgba(7, 9, 14, 0.8);
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .combo-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--accent-cyan), var(--accent-purple), var(--accent-pink), var(--accent-gold));
+      border-radius: 999px;
+      transition: width 0.1s linear;
+    }
+
+    /* Active Skills */
+    .skills-bar {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+    }
+
+    .skill-btn {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 10px;
+      padding: 8px 6px;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.15s ease;
+      color: var(--text-main);
+    }
+
+    .skill-btn:hover:not(:disabled) {
+      border-color: var(--accent-cyan);
+      background: var(--bg-card-hover);
+      transform: translateY(-2px);
+    }
+
+    .skill-btn:active:not(:disabled) {
+      transform: scale(0.95);
+    }
+
+    .skill-btn:disabled {
+      opacity: 0.55;
+      cursor: not-allowed;
+    }
+
+    .skill-icon {
+      font-size: 18px;
+    }
+
+    .skill-name {
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .skill-desc {
+      font-size: 10px;
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+    }
+
+    .skill-cooldown-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(7, 9, 14, 0.82);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-mono);
+      font-size: 14px;
+      font-weight: 800;
+      color: var(--accent-cyan);
+    }
+
+    /* Center Column: Navigation & Upgrades / Prestige / Achievements */
+    .center-zone {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      overflow: hidden;
+      background: rgba(10, 14, 23, 0.55);
+    }
+
+    .nav-tabs {
+      display: flex;
+      gap: 8px;
+      padding: 14px 20px;
+      background: rgba(14, 19, 31, 0.65);
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .tab-btn {
+      flex: 1;
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-muted);
+      padding: 10px 12px;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      transition: all 0.15s ease;
+      position: relative;
+    }
+
+    .tab-btn:hover {
+      color: var(--text-main);
+      background: var(--bg-card-hover);
+    }
+
+    .tab-btn.active {
+      background: linear-gradient(135deg, rgba(56, 189, 248, 0.18), rgba(168, 85, 247, 0.18));
+      border-color: var(--accent-cyan);
+      color: #ffffff;
+      box-shadow: 0 0 15px rgba(56, 189, 248, 0.2);
+    }
+
+    .tab-badge {
+      background: var(--accent-pink);
+      color: #fff;
+      font-size: 10px;
+      font-family: var(--font-mono);
+      padding: 2px 6px;
+      border-radius: 999px;
+      font-weight: 800;
+    }
+
+    .center-content {
+      flex: 1;
+      overflow-y: auto;
+      padding: 20px;
+    }
+
+    .tab-pane {
+      display: none;
+    }
+
+    .tab-pane.active {
+      display: block;
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 12px;
+    }
+
+    .section-title {
+      font-size: 15px;
+      font-weight: 800;
+      letter-spacing: 0.03em;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .section-subtitle {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    /* Upgrade Cards Grid */
+    .upgrades-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+
+    .upgrade-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 10px;
+      transition: all 0.15s ease;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .upgrade-card:hover:not(.locked) {
+      background: var(--bg-card-hover);
+      border-color: var(--border-glow);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
+    }
+
+    .upgrade-card:active:not(.locked) {
+      transform: scale(0.97);
+    }
+
+    .upgrade-card.locked {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .upgrade-top {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+
+    .upgrade-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background: rgba(56, 189, 248, 0.12);
+      border: 1px solid rgba(56, 189, 248, 0.25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      flex-shrink: 0;
+    }
+
+    .upgrade-info {
+      flex: 1;
+    }
+
+    .upgrade-name-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .upgrade-name {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .upgrade-lvl {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--accent-cyan);
+      background: rgba(56, 189, 248, 0.12);
+      padding: 2px 6px;
+      border-radius: 6px;
+      font-weight: 700;
+    }
+
+    .upgrade-desc {
+      font-size: 11.5px;
+      color: var(--text-muted);
+      margin-top: 4px;
+      line-height: 1.35;
+    }
+
+    .upgrade-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 8px;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      font-family: var(--font-mono);
+      font-size: 12px;
+    }
+
+    .cost-tag {
+      font-weight: 700;
+      color: var(--accent-emerald);
+    }
+
+    .upgrade-card.locked .cost-tag {
+      color: var(--text-dim);
+    }
+
+    /* Right Column: Passive Generators (Buildings) */
+    .right-zone {
+      background: rgba(14, 19, 31, 0.8);
+      border-left: 1px solid var(--border-subtle);
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    .right-header {
+      padding: 14px 18px;
+      border-bottom: 1px solid var(--border-subtle);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(14, 19, 31, 0.9);
+    }
+
+    .buy-mult-group {
+      display: flex;
+      background: var(--bg-base);
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      padding: 2px;
+      gap: 2px;
+    }
+
+    .mult-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 700;
+      padding: 5px 9px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .mult-btn.active {
+      background: var(--accent-blue);
+      color: #fff;
+    }
+
+    .generators-list {
+      flex: 1;
+      overflow-y: auto;
+      padding: 14px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .gen-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      padding: 12px 14px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+      transition: all 0.14s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .gen-card:hover:not(.locked) {
+      background: var(--bg-card-hover);
+      border-color: var(--accent-cyan);
+      transform: translateX(-2px);
+    }
+
+    .gen-card:active:not(.locked) {
+      transform: scale(0.98);
+    }
+
+    .gen-card.locked {
+      opacity: 0.48;
+      cursor: not-allowed;
+    }
+
+    .gen-icon {
+      width: 46px;
+      height: 46px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.16), rgba(168, 85, 247, 0.16));
+      border: 1px solid rgba(99, 179, 237, 0.25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      flex-shrink: 0;
+    }
+
+    .gen-body {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .gen-title-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+    }
+
+    .gen-name {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .gen-count {
+      font-family: var(--font-mono);
+      font-size: 16px;
+      font-weight: 800;
+      color: var(--accent-cyan);
+    }
+
+    .gen-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 4px;
+      font-family: var(--font-mono);
+      font-size: 11.5px;
+    }
+
+    .gen-prod {
+      color: var(--text-muted);
+    }
+
+    .gen-cost {
+      font-weight: 700;
+      color: var(--accent-emerald);
+    }
+
+    .gen-card.locked .gen-cost {
+      color: var(--text-dim);
+    }
+
+    .gen-milestone-bar {
+      width: 100%;
+      height: 4px;
+      background: rgba(7, 9, 14, 0.7);
+      border-radius: 999px;
+      margin-top: 7px;
+      overflow: hidden;
+    }
+
+    .gen-milestone-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent-cyan), var(--accent-purple));
+      border-radius: 999px;
+      transition: width 0.2s ease;
+    }
+
+    /* Prestige Panel */
+    .prestige-hero {
+      background: linear-gradient(135deg, rgba(88, 28, 135, 0.35), rgba(30, 58, 138, 0.35));
+      border: 1px solid rgba(168, 85, 247, 0.45);
+      border-radius: 16px;
+      padding: 22px;
+      text-align: center;
+      margin-bottom: 22px;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+    }
+
+    .prestige-title {
+      font-size: 20px;
+      font-weight: 800;
+      color: #f3e8ff;
+      margin-bottom: 8px;
+    }
+
+    .prestige-desc {
+      font-size: 13px;
+      color: #cbd5e1;
+      max-width: 540px;
+      margin: 0 auto 18px;
+      line-height: 1.5;
+    }
+
+    .prestige-stats-row {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      margin-bottom: 18px;
+      flex-wrap: wrap;
+    }
+
+    .prestige-stat-card {
+      background: rgba(14, 19, 31, 0.75);
+      border: 1px solid rgba(168, 85, 247, 0.3);
+      border-radius: 12px;
+      padding: 12px 18px;
+      min-width: 160px;
+    }
+
+    .prestige-stat-label {
+      font-size: 11px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .prestige-stat-val {
+      font-family: var(--font-mono);
+      font-size: 22px;
+      font-weight: 800;
+      color: #d8b4fe;
+      margin-top: 4px;
+    }
+
+    .btn-prestige {
+      background: linear-gradient(135deg, var(--accent-purple), var(--accent-pink));
+      color: #ffffff;
+      border: none;
+      padding: 12px 26px;
+      border-radius: 12px;
+      font-size: 14px;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 0 24px rgba(168, 85, 247, 0.5);
+      transition: all 0.2s ease;
+    }
+
+    .btn-prestige:hover:not(:disabled) {
+      transform: translateY(-2px) scale(1.02);
+      box-shadow: 0 0 32px rgba(236, 72, 153, 0.7);
+    }
+
+    .btn-prestige:active:not(:disabled) {
+      transform: scale(0.96);
+    }
+
+    .btn-prestige:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+      box-shadow: none;
+    }
+
+    /* Achievements Grid */
+    .ach-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 10px;
+    }
+
+    .ach-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      padding: 12px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      opacity: 0.45;
+      transition: all 0.2s ease;
+    }
+
+    .ach-card.unlocked {
+      opacity: 1;
+      border-color: rgba(245, 158, 11, 0.5);
+      background: linear-gradient(135deg, rgba(245, 158, 11, 0.1), rgba(21, 28, 46, 0.9));
+    }
+
+    .ach-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.05);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      flex-shrink: 0;
+    }
+
+    .ach-card.unlocked .ach-icon {
+      background: rgba(245, 158, 11, 0.2);
+      box-shadow: 0 0 12px rgba(245, 158, 11, 0.3);
+    }
+
+    .ach-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .ach-desc {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    /* Stats & Save Management */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+
+    .stat-box {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      padding: 14px;
+    }
+
+    .stat-box-label {
+      font-size: 11px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+    }
+
+    .stat-box-val {
+      font-family: var(--font-mono);
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--accent-cyan);
+      margin-top: 6px;
+    }
+
+    .save-panel {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 14px;
+      padding: 18px;
+    }
+
+    .save-textarea {
+      width: 100%;
+      height: 80px;
+      background: var(--bg-base);
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      color: var(--text-main);
+      font-family: var(--font-mono);
+      font-size: 12px;
+      padding: 10px;
+      margin: 10px 0;
+      resize: none;
+      user-select: text;
+      -webkit-user-select: text;
+    }
+
+    /* Floating Combat Text & Particles */
+    .floating-text {
+      position: fixed;
+      pointer-events: none;
+      font-family: var(--font-mono);
+      font-weight: 800;
+      font-size: 18px;
+      color: #ffffff;
+      text-shadow: 0 2px 10px rgba(56, 189, 248, 0.8);
+      z-index: 100;
+      animation: floatUpFade 0.95s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    .floating-text.crit {
+      font-size: 25px;
+      color: #fde047;
+      text-shadow: 0 0 16px rgba(245, 158, 11, 0.95);
+    }
+
+    @keyframes floatUpFade {
+      0% {
+        opacity: 1;
+        transform: translate(-50%, 0) scale(0.8);
+      }
+      25% {
+        transform: translate(-50%, -18px) scale(1.1);
+      }
+      100% {
+        opacity: 0;
+        transform: translate(-50%, -75px) scale(0.95);
+      }
+    }
+
+    .particle-dot {
+      position: fixed;
+      pointer-events: none;
+      border-radius: 50%;
+      z-index: 90;
+    }
+
+    /* Random Event: Golden Quantum Anomaly */
+    .quantum-anomaly {
+      position: fixed;
+      width: 68px;
+      height: 68px;
+      border-radius: 50%;
+      background: radial-gradient(circle, #fef08a 0%, #f59e0b 55%, #ec4899 100%);
+      box-shadow: 0 0 28px #f59e0b, 0 0 55px rgba(236, 72, 153, 0.7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 32px;
+      cursor: pointer;
+      z-index: 120;
+      animation: anomalyBob 1.2s ease-in-out infinite alternate;
+      transition: transform 0.12s ease;
+    }
+
+    .quantum-anomaly:hover {
+      transform: scale(1.18);
+    }
+
+    @keyframes anomalyBob {
+      from { filter: brightness(1) drop-shadow(0 0 12px #f59e0b); }
+      to { filter: brightness(1.3) drop-shadow(0 0 25px #fde047); }
+    }
+
+    /* Toast Notifications */
+    .toast-container {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      z-index: 200;
+      pointer-events: none;
+    }
+
+    .toast {
+      background: rgba(14, 19, 31, 0.95);
+      border: 1px solid var(--accent-cyan);
+      color: var(--text-main);
+      padding: 10px 18px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 700;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      animation: toastIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    @keyframes toastIn {
+      from { opacity: 0; transform: translateY(16px) scale(0.9); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    /* Modal (Offline Progress & Reset Confirmation) */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(4, 6, 12, 0.8);
+      backdrop-filter: blur(8px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 300;
+    }
+
+    .modal-backdrop.open {
+      display: flex;
+    }
+
+    .modal-card {
+      background: var(--bg-panel);
+      border: 1px solid var(--border-glow);
+      border-radius: 18px;
+      padding: 26px;
+      max-width: 440px;
+      width: 92%;
+      text-align: center;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.65);
+    }
+
+    .modal-title {
+      font-size: 20px;
+      font-weight: 800;
+      margin-bottom: 10px;
+      color: #fff;
+    }
+
+    .modal-body {
+      font-size: 13.5px;
+      color: var(--text-muted);
+      line-height: 1.5;
+      margin-bottom: 18px;
+    }
+
+    .modal-reward {
+      font-family: var(--font-mono);
+      font-size: 26px;
+      font-weight: 800;
+      color: var(--accent-emerald);
+      margin: 14px 0;
+      text-shadow: 0 0 16px rgba(16, 185, 129, 0.4);
+    }
+
+    /* Mobile Bottom Navigation Bar */
+    .mobile-bottom-nav {
+      display: none;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 64px;
+      padding-bottom: env(safe-area-inset-bottom, 0px);
+      background: rgba(10, 14, 23, 0.96);
+      backdrop-filter: blur(14px);
+      border-top: 1px solid var(--border-subtle);
+      z-index: 150;
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    @media (max-width: 980px) {
+      .mobile-bottom-nav {
+        display: grid;
+      }
+    }
+
+    .mobile-nav-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 3px;
+      font-size: 11px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .mobile-nav-btn .m-icon {
+      font-size: 18px;
+    }
+
+    .mobile-nav-btn.active {
+      color: var(--accent-cyan);
+      background: rgba(56, 189, 248, 0.08);
+      box-shadow: inset 0 2px 0 var(--accent-cyan);
+    }
+
+    /* Cloud Save & Install Modals */
+    .modal-card.wide {
+      max-width: 540px;
+      text-align: left;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+
+    .modal-header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 14px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .btn-close-modal {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-muted);
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .btn-close-modal:hover {
+      color: #fff;
+      border-color: var(--accent-red);
+    }
+
+    .cloud-input-group {
+      margin-bottom: 12px;
+    }
+
+    .cloud-label {
+      display: block;
+      font-size: 11.5px;
+      font-weight: 700;
+      color: var(--text-muted);
+      margin-bottom: 5px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .cloud-input {
+      width: 100%;
+      background: var(--bg-base);
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      padding: 10px 12px;
+      color: var(--text-main);
+      font-size: 13px;
+      font-family: var(--font-mono);
+      outline: none;
+      user-select: text;
+      -webkit-user-select: text;
+    }
+
+    .cloud-input:focus {
+      border-color: var(--accent-cyan);
+      box-shadow: 0 0 10px rgba(56, 189, 248, 0.2);
+    }
+
+    .cloud-status-banner {
+      background: rgba(16, 185, 129, 0.12);
+      border: 1px solid rgba(16, 185, 129, 0.35);
+      border-radius: 10px;
+      padding: 12px;
+      margin-bottom: 14px;
+      font-size: 12.5px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .cloud-status-banner.offline {
+      background: rgba(148, 163, 184, 0.1);
+      border-color: var(--border-subtle);
+    }
+
+    .platform-guide-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 10px;
+      padding: 12px;
+      margin-bottom: 10px;
+    }
+
+    .platform-guide-title {
+      font-size: 13.5px;
+      font-weight: 800;
+      color: var(--accent-cyan);
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .platform-guide-steps {
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.45;
+    }
+
+    .btn-header.cloud-btn {
+      border-color: rgba(56, 189, 248, 0.4);
+      background: linear-gradient(135deg, rgba(56, 189, 248, 0.14), rgba(168, 85, 247, 0.14));
+    }
+
+    .btn-header.install-btn {
+      border-color: rgba(16, 185, 129, 0.45);
+      background: rgba(16, 185, 129, 0.14);
+      color: #6ee7b7;
+    }
+
+    .save-dot.pending {
+      background: var(--accent-gold);
+      box-shadow: 0 0 10px var(--accent-gold);
+    }
+
+    .save-dot.syncing {
+      background: var(--accent-cyan);
+      box-shadow: 0 0 10px var(--accent-cyan);
+    }
+
+    /* Leaderboard Styles */
+    .lb-locked-box {
+      background: linear-gradient(135deg, rgba(14, 19, 31, 0.9), rgba(30, 27, 75, 0.6));
+      border: 1px solid rgba(56, 189, 248, 0.35);
+      border-radius: 16px;
+      padding: 32px 20px;
+      text-align: center;
+      margin-top: 10px;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+    }
+
+    .lb-profile-bar {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      padding: 12px 14px;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .lb-cat-bar {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      margin-bottom: 14px;
+    }
+
+    .lb-cat-btn {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-muted);
+      padding: 7px 11px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      transition: all 0.15s ease;
+    }
+
+    .lb-cat-btn:hover {
+      color: var(--text-main);
+      background: var(--bg-card-hover);
+    }
+
+    .lb-cat-btn.active {
+      background: linear-gradient(135deg, rgba(245, 158, 11, 0.2), rgba(236, 72, 153, 0.2));
+      border-color: var(--accent-gold);
+      color: #fde047;
+      box-shadow: 0 0 12px rgba(245, 158, 11, 0.25);
+    }
+
+    .lb-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .lb-row {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 11px;
+      padding: 10px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      transition: all 0.15s ease;
+    }
+
+    .lb-row.me {
+      border-color: var(--accent-cyan);
+      background: linear-gradient(90deg, rgba(56, 189, 248, 0.14), rgba(21, 28, 46, 0.9));
+      box-shadow: 0 0 14px rgba(56, 189, 248, 0.2);
+    }
+
+    .lb-row.top-1 {
+      border-color: rgba(245, 158, 11, 0.6);
+      background: linear-gradient(90deg, rgba(245, 158, 11, 0.16), rgba(21, 28, 46, 0.95));
+    }
+
+    .lb-row.top-2 {
+      border-color: rgba(203, 213, 225, 0.5);
+    }
+
+    .lb-row.top-3 {
+      border-color: rgba(217, 119, 6, 0.5);
+    }
+
+    .lb-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
+    }
+
+    .lb-rank {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.05);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-mono);
+      font-weight: 800;
+      font-size: 13px;
+      color: var(--text-muted);
+      flex-shrink: 0;
+    }
+
+    .lb-row.top-1 .lb-rank { background: rgba(245, 158, 11, 0.25); color: #fde047; font-size: 17px; }
+    .lb-row.top-2 .lb-rank { background: rgba(203, 213, 225, 0.2); color: #f1f5f9; font-size: 16px; }
+    .lb-row.top-3 .lb-rank { background: rgba(217, 119, 6, 0.22); color: #fbbf24; font-size: 16px; }
+
+    .lb-name {
+      font-size: 13.5px;
+      font-weight: 700;
+      color: var(--text-main);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .lb-you-tag {
+      background: var(--accent-cyan);
+      color: #07090e;
+      font-size: 10px;
+      font-weight: 800;
+      padding: 1px 6px;
+      border-radius: 999px;
+      margin-left: 6px;
+      font-family: var(--font-mono);
+    }
+
+    .lb-score {
+      font-family: var(--font-mono);
+      font-size: 14px;
+      font-weight: 800;
+      color: var(--accent-cyan);
+      white-space: nowrap;
+    }
+
+    .lb-row.top-1 .lb-score {
+      color: #fde047;
+    }
+  </style>
+</head>
+<body>
+  <div class="app-shell">
+    <!-- Top Header -->
+    <header class="top-bar">
+      <div class="brand">
+        <div class="brand-icon">⚛️</div>
+        <div>
+          <div class="brand-title">QUANTUM NEXUS</div>
+          <div class="brand-sub" id="versionHeaderSub">v2.5.0 // AUTO-UPDATE & CLOUD SYNC</div>
+        </div>
+      </div>
+
+      <div class="top-buffs" id="activeBuffsContainer"></div>
+
+      <div class="top-actions">
+        <div class="save-status">
+          <div class="save-dot" id="saveDot"></div>
+          <span id="saveText">Salvat local</span>
+        </div>
+        <button class="btn-header install-btn" id="btnInstallApp" onclick="triggerInstallApp()" title="Instalează ca aplicație pe MacBook, PC, Android sau iPhone">📲 Instalează</button>
+        <button class="btn-header cloud-btn" id="btnCloudHeader" onclick="openCloudModal()" title="Sincronizare Cloud Save (PC, MacBook, Android, iOS)">☁️ <span id="cloudBtnText">Cloud Save</span></button>
+        <button class="btn-header" id="btnSound" onclick="toggleSound()">🔊 Sunet: ON</button>
+        <button class="btn-header" onclick="spawnQuantumAnomaly(true)" title="Cheamă o Anomalie Aurie pentru testare!">☄️ Anomalie</button>
+        <button class="btn-header" onclick="manualSave()">💾 Salvează</button>
+        <button class="btn-header danger" onclick="confirmReset()">🗑️ Reset</button>
+      </div>
+    </header>
+
+    <!-- Main 3-Column Interface -->
+    <main class="main-grid">
+      <!-- LEFT PANEL: Core Reactor, Live Numbers, Combo, Active Skills -->
+      <section class="left-zone mobile-active" id="zone-left">
+        <div class="resource-display">
+          <div class="resource-label">⚡ Energie Cuantică (Quanta)</div>
+          <div class="resource-value" id="energyAmount">0</div>
+          <div class="resource-rates">
+            <div class="rate-item">Pasiv: <span id="cpsAmount">0</span>/sec</div>
+            <div class="rate-item">Click: <span id="vpcAmount">1</span>/click</div>
+          </div>
+          <div class="prestige-badge-mini" id="prestigeMiniBar">
+            🔮 Materie Întunecată: <strong id="darkMatterMini">0</strong> (<span id="prestigeMultMini">+0%</span> bonus)
+          </div>
+        </div>
+
+        <!-- Giant Clickable Core -->
+        <div class="core-stage">
+          <div class="core-button" id="coreBtn" role="button" tabindex="0" aria-label="Generează Energie Cuantică">
+            <div class="core-glow"></div>
+            <svg class="core-svg" viewBox="0 0 200 200">
+              <defs>
+                <radialGradient id="coreGrad" cx="50%" cy="50%" r="50%">
+                  <stop offset="0%" stop-color="#ffffff" />
+                  <stop offset="35%" stop-color="#38bdf8" />
+                  <stop offset="75%" stop-color="#6366f1" />
+                  <stop offset="100%" stop-color="#a855f7" stop-opacity="0" />
+                </radialGradient>
+              </defs>
+              <!-- Outer Tech Ring -->
+              <g class="ring-spin-slow">
+                <circle cx="100" cy="100" r="88" fill="none" stroke="rgba(56, 189, 248, 0.3)" stroke-width="2" stroke-dasharray="14 8" />
+                <circle cx="100" cy="12" r="4" fill="#38bdf8" />
+                <circle cx="100" cy="188" r="4" fill="#38bdf8" />
+              </g>
+              <!-- Middle Counter-Rotating Hexagon Ring -->
+              <g class="ring-spin-rev">
+                <circle cx="100" cy="100" r="72" fill="none" stroke="rgba(168, 85, 247, 0.45)" stroke-width="3" stroke-dasharray="28 14" />
+                <circle cx="28" cy="100" r="4.5" fill="#c084fc" />
+                <circle cx="172" cy="100" r="4.5" fill="#c084fc" />
+              </g>
+              <!-- Inner High-Speed Ring -->
+              <g class="ring-spin-fast">
+                <circle cx="100" cy="100" r="54" fill="none" stroke="rgba(236, 72, 153, 0.5)" stroke-width="2.5" stroke-dasharray="18 22" />
+              </g>
+              <!-- Central Plasma Sphere -->
+              <circle cx="100" cy="100" r="44" fill="url(#coreGrad)" />
+              <circle cx="100" cy="100" r="24" fill="#ffffff" opacity="0.9" />
+            </svg>
+          </div>
+        </div>
+
+        <!-- Overclock Combo & Active Skills -->
+        <div>
+          <div class="combo-box">
+            <div class="combo-header">
+              <div class="combo-title">🔥 Supraîncărcare Click (Overclock)</div>
+              <div class="combo-mult" id="comboMultText">x1.00</div>
+            </div>
+            <div class="combo-track">
+              <div class="combo-fill" id="comboBarFill"></div>
+            </div>
+          </div>
+
+          <div class="skills-bar">
+            <button class="skill-btn" id="skill1" onclick="activateSkill(1)">
+              <span class="skill-icon">⚡</span>
+              <span class="skill-name">Impuls EM</span>
+              <span class="skill-desc">+30x CPS Instant</span>
+              <div class="skill-cooldown-overlay" id="cdSkill1" style="display:none">0s</div>
+            </button>
+            <button class="skill-btn" id="skill2" onclick="activateSkill(2)">
+              <span class="skill-icon">🎯</span>
+              <span class="skill-name">Hiper-Critică</span>
+              <span class="skill-desc">100% Crit (15s)</span>
+              <div class="skill-cooldown-overlay" id="cdSkill2" style="display:none">0s</div>
+            </button>
+            <button class="skill-btn" id="skill3" onclick="activateSkill(3)">
+              <span class="skill-icon">⏳</span>
+              <span class="skill-name">Distorsiune</span>
+              <span class="skill-desc">2x Producție (30s)</span>
+              <div class="skill-cooldown-overlay" id="cdSkill3" style="display:none">0s</div>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- CENTER PANEL: Upgrades, Prestige, Achievements, Stats/Save -->
+      <section class="center-zone" id="zone-center">
+        <nav class="nav-tabs">
+          <button class="tab-btn active" onclick="switchTab('upgrades', this)">
+            🔬 Tehnologii & Click
+          </button>
+          <button class="tab-btn" onclick="switchTab('prestige', this)">
+            🌌 Prestigiu <span class="tab-badge" id="prestigeTabBadge" style="display:none">NOU</span>
+          </button>
+          <button class="tab-btn" onclick="switchTab('achievements', this)">
+            🏆 Realizări (<span id="achCountBadge">0/18</span>)
+          </button>
+          <button class="tab-btn" onclick="switchTab('leaderboard', this)">
+            🏅 Clasament
+          </button>
+          <button class="tab-btn" onclick="switchTab('stats', this)">
+            📊 Salvare & Date
+          </button>
+        </nav>
+
+        <div class="center-content">
+          <!-- TAB 1: Click & Tech Upgrades -->
+          <div class="tab-pane active" id="tab-upgrades">
+            <div class="section-header">
+              <div class="section-title">⚡ Amplificatoare de Click & Sinergie</div>
+              <div class="section-subtitle">Crește puterea fiecărui click și șansa de lovitură critică</div>
+            </div>
+            <div class="upgrades-grid" id="clickUpgradesGrid"></div>
+          </div>
+
+          <!-- TAB 2: Prestige / Rebirth -->
+          <div class="tab-pane" id="tab-prestige">
+            <div class="prestige-hero">
+              <div class="prestige-title">🌌 Ascensiune în Singularitate (Rebirth)</div>
+              <div class="prestige-desc">
+                Resetează energia și generatoarele actuale pentru a extrage <strong>🔮 Materie Întunecată</strong>.
+                Fiecare unitate de Materie Întunecată oferă un bonus permanent de <strong>+25% la toată producția</strong> și poate fi cheltuită pe upgrade-uri cuantice eterne.
+              </div>
+              <div class="prestige-stats-row">
+                <div class="prestige-stat-card">
+                  <div class="prestige-stat-label">Materie Întunecată Deținută</div>
+                  <div class="prestige-stat-val" id="dmCurrentVal">0</div>
+                </div>
+                <div class="prestige-stat-card">
+                  <div class="prestige-stat-label">Vei Primi la Ascensiune</div>
+                  <div class="prestige-stat-val" id="dmPendingVal">+0</div>
+                </div>
+                <div class="prestige-stat-card">
+                  <div class="prestige-stat-label">Următorul Cristal la</div>
+                  <div class="prestige-stat-val" id="dmNextReq" style="font-size:16px">1.00M ⚡</div>
+                </div>
+              </div>
+              <button class="btn-prestige" id="btnTriggerPrestige" onclick="triggerPrestige()" disabled>
+                🌌 Declanșează Singularitatea (+0 🔮)
+              </button>
+            </div>
+
+            <div class="section-header">
+              <div class="section-title">🔮 Arborele de Singularitate (Permanente)</div>
+              <div class="section-subtitle">Aceste upgrade-uri nu se pierd niciodată la Rebirth</div>
+            </div>
+            <div class="upgrades-grid" id="prestigeUpgradesGrid"></div>
+          </div>
+
+          <!-- TAB 3: Achievements -->
+          <div class="tab-pane" id="tab-achievements">
+            <div class="section-header">
+              <div class="section-title">🏆 Realizări Deblocate</div>
+              <div class="section-subtitle">Fiecare realizare oferă +5% Multiplicator Global Permanent! (Bonus actual: <strong id="achBonusText" style="color:var(--accent-gold)">+0%</strong>)</div>
+            </div>
+            <div class="ach-grid" id="achievementsGrid"></div>
+          </div>
+
+          <!-- TAB 3.5: Global Leaderboard (Doar pentru Cont Conectat) -->
+          <div class="tab-pane" id="tab-leaderboard">
+            <div class="section-header">
+              <div class="section-title">🏅 Clasament Global Interstelar (Top 50)</div>
+              <div class="section-subtitle">Exclusiv pentru Comandanții autentificați în Quantum Cloud</div>
+            </div>
+
+            <!-- Ecran blocat pentru cei fără cont conectat -->
+            <div id="lbLockedState" class="lb-locked-box">
+              <div style="font-size:42px; margin-bottom:10px;">🔒</div>
+              <div style="font-size:18px; font-weight:800; color:#fff; margin-bottom:8px;">
+                Clasamentul Global este rezervat Comandanților cu Cont Conectat!
+              </div>
+              <div style="font-size:13px; color:var(--text-muted); max-width:460px; margin:0 auto 18px; line-height:1.5;">
+                Pentru a preveni scorurile false și a-ți salva automat recordurile în toate cele <strong>7 categorii globale</strong> (Energie, Materie Întunecată, Singularități, CPS, Click-uri, Anomalii și Realizări), conectează-te gratuit la contul tău Cloud.
+              </div>
+              <button class="btn-prestige" onclick="openCloudModal()">
+                ☁️ Conectează-te / Creează Cont Cloud
+              </button>
+            </div>
+
+            <!-- Ecran activ pentru cei cu cont conectat -->
+            <div id="lbUnlockedState" style="display:none;">
+              <div class="lb-profile-bar">
+                <div style="display:flex; align-items:center; gap:8px; flex:1; min-width:220px;">
+                  <span style="font-size:12px; font-weight:700; color:var(--text-muted); white-space:nowrap;">👨‍🚀 Nume în Clasament:</span>
+                  <input type="text" id="lbCommanderNameInput" class="cloud-input" style="padding:6px 10px; max-width:190px;" maxlength="22" placeholder="Comandant..." />
+                  <button class="btn-header cloud-btn" onclick="saveCommanderNameAndSync()">💾 Salvează Nume</button>
+                </div>
+                <div style="display:flex; align-items:center; gap:8px;">
+                  <button class="btn-header" onclick="refreshLeaderboard(true)">🔄 Actualizează Topul</button>
+                </div>
+              </div>
+
+              <!-- Cele 7 Categorii de Clasament -->
+              <div class="lb-cat-bar" id="lbCategoryButtons">
+                <button class="lb-cat-btn active" onclick="selectLeaderboardCategory('lifetime_energy', this)">⚡ Energie Totală</button>
+                <button class="lb-cat-btn" onclick="selectLeaderboardCategory('dark_matter', this)">🔮 Materie Întunecată</button>
+                <button class="lb-cat-btn" onclick="selectLeaderboardCategory('prestige_count', this)">🌌 Singularități (Rebirth)</button>
+                <button class="lb-cat-btn" onclick="selectLeaderboardCategory('max_cps', this)">🚀 Record CPS (/sec)</button>
+                <button class="lb-cat-btn" onclick="selectLeaderboardCategory('total_clicks', this)">👆 Click-uri Manuale</button>
+                <button class="lb-cat-btn" onclick="selectLeaderboardCategory('anomalies_caught', this)">☄️ Anomalii Aurii</button>
+                <button class="lb-cat-btn" onclick="selectLeaderboardCategory('achievements_count', this)">🏆 Realizări</button>
+              </div>
+
+              <div id="lbMyRankBanner" style="background:rgba(56,189,248,0.1); border:1px solid rgba(56,189,248,0.3); border-radius:10px; padding:10px 14px; margin-bottom:12px; font-size:12.5px; display:flex; justify-content:space-between; align-items:center;">
+                <span id="lbMyRankText">Poziția ta în această categorie: <strong>Se încarcă...</strong></span>
+                <span id="lbMyScoreText" style="font-family:var(--font-mono); font-weight:800; color:var(--accent-cyan);"></span>
+              </div>
+
+              <div class="lb-list" id="leaderboardListContainer">
+                <div style="text-align:center; padding:24px; color:var(--text-muted); font-size:13px;">
+                  ⏳ Se încarcă clasamentul din satelit...
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- TAB 4: Statistics & Save Export/Import -->
+          <div class="tab-pane" id="tab-stats">
+            <div class="section-header">
+              <div class="section-title">📊 Telemetrie & Statistici Nucleu</div>
+            </div>
+            <div class="stats-grid" id="statsGrid"></div>
+
+            <div class="save-panel" style="margin-bottom: 16px;">
+              <div class="section-title" style="margin-bottom:6px">☁️ Sincronizare Cloud (MacBook, PC, Android, iOS)</div>
+              <div class="section-subtitle">Conectează-te gratuit pentru a-ți păstra progresul sincronizat automat între toate dispozitivele tale.</div>
+              <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:12px;">
+                <button class="btn-header cloud-btn" onclick="openCloudModal()">☁️ Deschide Panoul Cloud Save</button>
+                <button class="btn-header" onclick="checkForGameUpdate(true)">🔄 Verifică Update Joc</button>
+                <button class="btn-header install-btn" onclick="triggerInstallApp()">📲 Cum instalez pe MacBook / PC / Mobil</button>
+              </div>
+            </div>
+
+            <div class="save-panel">
+              <div class="section-title" style="margin-bottom:6px">💾 Backup Salvare (Export / Import Text)</div>
+              <div class="section-subtitle">Copiază codul de mai jos pentru a păstra o copie de siguranță sau lipește un cod existent.</div>
+              <textarea class="save-textarea" id="saveCodeBox" placeholder="Codul tău de salvare va apărea aici..."></textarea>
+              <div style="display:flex; gap:10px; flex-wrap:wrap;">
+                <button class="btn-header" onclick="exportSaveCode()">📤 Generează & Copiază Export</button>
+                <button class="btn-header" onclick="importSaveCode()">📥 Importă Codul din Caseta Text</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- RIGHT PANEL: Passive Generators -->
+      <section class="right-zone" id="zone-right">
+        <div class="right-header">
+          <div>
+            <div class="section-title">🤖 Automatizare Pasivă</div>
+            <div class="section-subtitle">La 10, 25, 50, 100 bucăți: producție x2!</div>
+          </div>
+          <div class="buy-mult-group">
+            <button class="mult-btn active" onclick="setBuyMultiplier(1, this)">1x</button>
+            <button class="mult-btn" onclick="setBuyMultiplier(10, this)">10x</button>
+            <button class="mult-btn" onclick="setBuyMultiplier(100, this)">100x</button>
+            <button class="mult-btn" onclick="setBuyMultiplier('MAX', this)">MAX</button>
+          </div>
+        </div>
+        <div class="generators-list" id="generatorsList"></div>
+      </section>
+    </main>
+
+    <!-- Mobile Bottom Navigation Bar (vizibilă pe telefoane/tablete) -->
+    <nav class="mobile-bottom-nav">
+      <button class="mobile-nav-btn active" onclick="switchMobileZone('left', this)">
+        <span class="m-icon">⚛️</span>
+        <span>Nucleu</span>
+      </button>
+      <button class="mobile-nav-btn" onclick="switchMobileZone('right', this)">
+        <span class="m-icon">🤖</span>
+        <span>Generatoare</span>
+      </button>
+      <button class="mobile-nav-btn" onclick="switchMobileZone('center', this)">
+        <span class="m-icon">🔬</span>
+        <span>Upgrade & Cloud</span>
+      </button>
+    </nav>
+  </div>
+
+  <!-- Toast Container -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- Offline Progress Modal -->
+  <div class="modal-backdrop" id="offlineModal">
+    <div class="modal-card">
+      <div class="modal-title">🛰️ Bine ai revenit, Comandante!</div>
+      <div class="modal-body">
+        Cât timp ai fost plecat (<strong id="offlineTimeText">0s</strong>), generatoarele tale cuantice au funcționat la <strong id="offlineEffText">50%</strong> capacitate și au produs:
+      </div>
+      <div class="modal-reward" id="offlineRewardText">+0 ⚡</div>
+      <button class="btn-prestige" onclick="closeOfflineModal()" style="width:100%">Colectează Energia</button>
+    </div>
+  </div>
+
+  <!-- Cloud Save Modal (Google Firebase Sync) -->
+  <div class="modal-backdrop" id="cloudModal">
+    <div class="modal-card wide">
+      <div class="modal-header-row">
+        <div class="modal-title" style="margin:0">🔥 Google Firebase Cloud Save</div>
+        <button class="btn-close-modal" onclick="closeCloudModal()">✕</button>
+      </div>
+
+      <!-- Status / Logged In View -->
+      <div id="cloudLoggedInView" style="display:none;">
+        <div class="cloud-status-banner">
+          <div>
+            <div style="font-weight:800; color:#6ee7b7">🟢 Conectat la Google Firebase Cloud</div>
+            <div style="font-size:11.5px; color:var(--text-muted); margin-top:2px" id="cloudUserEmailText">comandant@nexus.ro</div>
+            <div style="font-size:11px; color:var(--text-dim); margin-top:2px" id="cloudLastSyncText">Ultima sincronizare: acum</div>
+          </div>
+          <button class="btn-header danger" onclick="cloudLogout()">Deconectare</button>
+        </div>
+
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:14px;">
+          <button class="btn-header cloud-btn" style="justify-content:center; padding:12px" onclick="cloudPushSave(true)">
+            ☁️⬆️ Salvează în Cloud
+          </button>
+          <button class="btn-header" style="justify-content:center; padding:12px" onclick="cloudPullSave(true)">
+            ☁️⬇️ Încarcă din Cloud
+          </button>
+        </div>
+        <div style="font-size:11.5px; color:var(--text-muted); text-align:center;">
+          Sincronizarea automată și Clasamentul Global (Leaderboard) se actualizează la fiecare 25s, la Rebirth și când revii Online.
+        </div>
+      </div>
+
+      <!-- Auth View (Login / Register) -->
+      <div id="cloudAuthView">
+        <div style="font-size:12.5px; color:var(--text-muted); margin-bottom:14px; line-height:1.45;">
+          Conectează-te sau creează un cont gratuit pentru a-ți salva progresul în Cloud pe toate dispozitivele și pentru a participa în <strong>🏅 Clasamentul Global</strong>!
+        </div>
+
+        <div class="cloud-input-group">
+          <label class="cloud-label">Email Comandant</label>
+          <input type="email" id="cloudEmailInput" class="cloud-input" placeholder="nume@gmail.com" autocomplete="email" />
+        </div>
+        <div class="cloud-input-group">
+          <label class="cloud-label">Parolă Criptată (minim 6 caractere)</label>
+          <input type="password" id="cloudPassInput" class="cloud-input" placeholder="••••••••" autocomplete="current-password" />
+        </div>
+
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:14px;">
+          <button class="btn-prestige" style="padding:10px; font-size:13px;" onclick="cloudLogin()">
+            🔑 Autentificare
+          </button>
+          <button class="btn-header cloud-btn" style="justify-content:center; padding:10px; font-size:13px;" onclick="cloudRegister()">
+            ✨ Creează Cont Nou
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Multi-Platform Install Guide Modal (MacBook, PC, Android, iOS) -->
+  <div class="modal-backdrop" id="installModal">
+    <div class="modal-card wide">
+      <div class="modal-header-row">
+        <div class="modal-title" style="margin:0">📲 Instalează Quantum Nexus (0 RON)</div>
+        <button class="btn-close-modal" onclick="closeInstallModal()">✕</button>
+      </div>
+
+      <div class="platform-guide-card">
+        <div class="platform-guide-title">💻 Apple MacBook (macOS)</div>
+        <div class="platform-guide-steps">
+          • <strong>Varianta 1 (Instant din Safari / Chrome):</strong> În <strong>Safari</strong> pe MacBook, apasă sus în bară pe <strong>File ➔ Add to Dock...</strong> (sau în Chrome/Brave apasă pe iconița <strong>📲 Instalează</strong> din dreapta barei de adrese). Jocul apare direct în Dock și Launchpad ca aplicație nativă!<br/>
+          • <strong>Varianta 2 (Instalator nativ .DMG / .APP):</strong> Folosește pachetul Electron / GitHub Actions inclus în proiect pentru a descărca fișierul <code>Quantum-Nexus.dmg</code> pentru Apple Silicon (M1/M2/M3/M4) și Intel.
+        </div>
+      </div>
+
+      <div class="platform-guide-card">
+        <div class="platform-guide-title">📱 Apple iPhone & iPad (iOS / iPadOS)</div>
+        <div class="platform-guide-steps">
+          Deschide jocul în <strong>Safari</strong>, apasă pe butonul <strong>Share (Partajează ⬆️)</strong> din mijloc-jos și alege <strong>„Add to Home Screen” (Adaugă pe ecranul principal)</strong>. Rulează fullscreen și 100% offline!
+        </div>
+      </div>
+
+      <div class="platform-guide-card">
+        <div class="platform-guide-title">🤖 Android (Telefon / Tabletă - APK sau WebApp)</div>
+        <div class="platform-guide-steps">
+          • <strong>Direct:</strong> Apasă pe meniul <strong>⋮</strong> în Chrome ➔ <strong>Instalează aplicația</strong>.<br/>
+          • <strong>Fișier .APK:</strong> Introdu link-ul site-ului pe <strong>PWABuilder.com</strong> și descarcă gratuit fișierul <code>.apk</code>.
+        </div>
+      </div>
+
+      <div class="platform-guide-card" style="margin-bottom:0">
+        <div class="platform-guide-title">🖥️ Windows PC (.EXE sau Aplicație Desktop)</div>
+        <div class="platform-guide-steps">
+          • <strong>Direct din Browser:</strong> Apasă pe iconița de instalare din bara de adrese Chrome/Edge.<br/>
+          • <strong>Executabil .EXE:</strong> Rulează comanda <code>npm run dist:win</code> (sau descarcă <code>.exe</code> din GitHub Actions).
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Live Auto-Update Modal -->
+  <div class="modal-backdrop" id="updateModal">
+    <div class="modal-card">
+      <div class="modal-title">🚀 Actualizare Nouă Disponibilă!</div>
+      <div class="modal-body">
+        O versiune nouă a jocului (<strong id="updateNewVerText" style="color:var(--accent-cyan)">v2.6.0</strong>) a fost publicată pe server!<br/><br/>
+        <div id="updateChangelogText" style="background:var(--bg-card); border:1px solid var(--border-subtle); border-radius:10px; padding:10px; font-size:12px; color:var(--text-main);">
+          Îmbunătățiri de sistem și conținut nou.
+        </div>
+        <div style="margin-top:10px; font-size:12px; color:var(--accent-emerald);">
+          💾 Progresul tău a fost salvat automat local și în Cloud!
+        </div>
+      </div>
+      <button class="btn-prestige" id="btnApplyUpdateNow" onclick="applyGameUpdateNow()" style="width:100%">
+        ⚡ Actualizează Acum (<span id="updateCountdownText">4s</span>)
+      </button>
+    </div>
+  </div>
+
+  <script>
+    /********************************************************************
+     * 1. CONFIGURARE DATE JOC (UPGRADE-URI, GENERATOARE, REALIZĂRI)
+     ********************************************************************/
+    const CLICK_UPGRADES_DATA = [
+      {
+        id: 'c_flat1',
+        name: 'Amplificator Fotonic',
+        icon: '🔦',
+        desc: '+2 Energie de bază pentru fiecare click manual.',
+        baseCost: 15,
+        costMult: 1.55,
+        maxLevel: 100
+      },
+      {
+        id: 'c_mult1',
+        name: 'Lentilă de Focalizare',
+        icon: '🔍',
+        desc: '+25% multiplicator pentru puterea de click.',
+        baseCost: 100,
+        costMult: 1.85,
+        maxLevel: 50
+      },
+      {
+        id: 'c_synergy',
+        name: 'Conector Neuro-Sinergic',
+        icon: '🧠',
+        desc: 'Fiecare click adaugă +1.5% din producția ta pe secundă (CPS) per nivel!',
+        baseCost: 350,
+        costMult: 2.2,
+        maxLevel: 25
+      },
+      {
+        id: 'c_critChance',
+        name: 'Calibrare Cuantică (Crit %)',
+        icon: '🎯',
+        desc: '+3% șansă de lovitură critică la click (Bază: 5%).',
+        baseCost: 500,
+        costMult: 2.3,
+        maxLevel: 25
+      },
+      {
+        id: 'c_critMult',
+        name: 'Descărcare de Plasmă (Crit Dmg)',
+        icon: '💥',
+        desc: '+100% daune la loviturile critice (Bază: x3).',
+        baseCost: 1200,
+        costMult: 2.4,
+        maxLevel: 30
+      },
+      {
+        id: 'c_global1',
+        name: 'Rețea Superconductoare',
+        icon: '🌐',
+        desc: '+15% producție globală (CPS și Click) per nivel.',
+        baseCost: 2500,
+        costMult: 2.1,
+        maxLevel: 100
+      }
+    ];
+
+    const GENERATORS_DATA = [
+      { id: 'g0', name: 'Nano-Cursor Autonom', icon: '🖱️', baseCost: 15, baseCps: 0.5 },
+      { id: 'g1', name: 'Dronă de Extracție', icon: '🤖', baseCost: 100, baseCps: 4 },
+      { id: 'g2', name: 'Script Neural AI', icon: '💻', baseCost: 1100, baseCps: 32 },
+      { id: 'g3', name: 'Condensator Tahionic', icon: '🔋', baseCost: 12000, baseCps: 260 },
+      { id: 'g4', name: 'Satelit Solar Orbital', icon: '🛰️', baseCost: 130000, baseCps: 1400 },
+      { id: 'g5', name: 'Reactor de Fuziune Rece', icon: '⚛️', baseCost: 1400000, baseCps: 7800 },
+      { id: 'g6', name: 'Micro-Gaură Neagră', icon: '🕳️', baseCost: 20000000, baseCps: 44000 },
+      { id: 'g7', name: 'Matrice Dyson Parțială', icon: '☀️', baseCost: 330000000, baseCps: 260000 },
+      { id: 'g8', name: 'Accelerator Temporal', icon: '⏳', baseCost: 5100000000, baseCps: 1600000 },
+      { id: 'g9', name: 'Motor de Univers Sintetic', icon: '🌌', baseCost: 75000000000, baseCps: 10000000 }
+    ];
+
+    const PRESTIGE_UPGRADES_DATA = [
+      {
+        id: 'p_prod',
+        name: 'Rezonanță Întunecată',
+        icon: '🔮',
+        desc: 'Dublează (+100%) toată producția de Energie per nivel.',
+        baseCost: 1,
+        costMult: 2.5,
+        maxLevel: 20
+      },
+      {
+        id: 'p_discount',
+        name: 'Arhitectură Sub-Spațială',
+        icon: '📐',
+        desc: 'Reduce costul tuturor generatoarelor cu 8% per nivel.',
+        baseCost: 2,
+        costMult: 2.5,
+        maxLevel: 8
+      },
+      {
+        id: 'p_offline',
+        name: 'Cronos Cuantic',
+        icon: '⌚',
+        desc: '+10% eficiență la câștigul Offline per nivel (Bază: 50%).',
+        baseCost: 2,
+        costMult: 3,
+        maxLevel: 5
+      },
+      {
+        id: 'p_starter',
+        name: 'Memorie Ancestrală',
+        icon: '🚀',
+        desc: 'Începi fiecare Rebirth cu 1.000x mai multă energie de start.',
+        baseCost: 3,
+        costMult: 4,
+        maxLevel: 5
+      }
+    ];
+
+    const ACHIEVEMENTS_DATA = [
+      { id: 'a_click1', name: 'Inițiere în Sistem', desc: 'Efectuează primul tău click.', icon: '👆', check: s => s.totalClicks >= 1 },
+      { id: 'a_click2', name: 'Degete de Titan', desc: 'Efectuează 250 de click-uri manuale.', icon: '⚡', check: s => s.totalClicks >= 250 },
+      { id: 'a_click3', name: 'Viteza Luminii', desc: 'Efectuează 2.000 de click-uri manuale.', icon: '🔥', check: s => s.totalClicks >= 2000 },
+      { id: 'a_e1', name: 'Scânteie Cuantică', desc: 'Adună 1.000 Energie totală.', icon: '🔋', check: s => s.lifetimeEnergy >= 1e3 },
+      { id: 'a_e2', name: 'Megawatt Digital', desc: 'Adună 1.00M (1.000.000) Energie totală.', icon: '💡', check: s => s.lifetimeEnergy >= 1e6 },
+      { id: 'a_e3', name: 'Gigawatt Cosmic', desc: 'Adună 1.00B Energie totală.', icon: '🌟', check: s => s.lifetimeEnergy >= 1e9 },
+      { id: 'a_e4', name: 'Terawatt Interstelar', desc: 'Adună 1.00T Energie totală.', icon: '🪐', check: s => s.lifetimeEnergy >= 1e12 },
+      { id: 'a_e5', name: 'Stăpânul Galaxiei', desc: 'Adună 1.00Qa Energie totală.', icon: '🌌', check: s => s.lifetimeEnergy >= 1e15 },
+      { id: 'a_gen1', name: 'Primul Automat', desc: 'Cumpără primul tău generator pasiv.', icon: '🤖', check: s => getTotalGenerators() >= 1 },
+      { id: 'a_gen2', name: 'Fabrică Autonomă', desc: 'Deține 50 de generatoare în total.', icon: '🏭', check: s => getTotalGenerators() >= 50 },
+      { id: 'a_gen3', name: 'Imperiu Cibernetic', desc: 'Deține 200 de generatoare în total.', icon: '🏙️', check: s => getTotalGenerators() >= 200 },
+      { id: 'a_gen4', name: 'Civilizație Tip III', desc: 'Deține 500 de generatoare în total.', icon: '🛸', check: s => getTotalGenerators() >= 500 },
+      { id: 'a_crit1', name: 'Precizie Chirurgicală', desc: 'Obține 25 de lovituri critice.', icon: '🎯', check: s => s.totalCrits >= 25 },
+      { id: 'a_crit2', name: 'Suprasarcină Critică', desc: 'Obține 500 de lovituri critice.', icon: '💥', check: s => s.totalCrits >= 500 },
+      { id: 'a_anom1', name: 'Vânător de Anomalii', desc: 'Capturează o Anomalie Cuantică Aurie.', icon: '☄️', check: s => s.anomaliesCaught >= 1 },
+      { id: 'a_anom2', name: 'Colecționar Astral', desc: 'Capturează 10 Anomalii Cuantice.', icon: '🌠', check: s => s.anomaliesCaught >= 10 },
+      { id: 'a_pres1', name: 'Dincolo de Orizoant', desc: 'Efectuează primul tău Rebirth (Prestigiu).', icon: '🕳️', check: s => s.prestigeCount >= 1 },
+      { id: 'a_pres2', name: 'Arhitectul Timpului', desc: 'Efectuează 5 Rebirth-uri.', icon: '👑', check: s => s.prestigeCount >= 5 }
+    ];
+
+    /********************************************************************
+     * 2. STAREA JOCULUI (GAME STATE)
+     ********************************************************************/
+    const SAVE_KEY = 'QUANTUM_NEXUS_SAVE_V2';
+
+    function getDefaultState() {
+      const clickLvls = {};
+      CLICK_UPGRADES_DATA.forEach(u => clickLvls[u.id] = 0);
+
+      const genCounts = {};
+      GENERATORS_DATA.forEach(g => genCounts[g.id] = 0);
+
+      const presLvls = {};
+      PRESTIGE_UPGRADES_DATA.forEach(p => presLvls[p.id] = 0);
+
+      return {
+        energy: 0,
+        totalEnergyThisRun: 0,
+        lifetimeEnergy: 0,
+        maxCps: 0,
+        commanderName: '',
+        totalClicks: 0,
+        totalCrits: 0,
+        anomaliesCaught: 0,
+        prestigeCount: 0,
+        darkMatter: 0,
+        clickUpgrades: clickLvls,
+        generators: genCounts,
+        prestigeUpgrades: presLvls,
+        unlockedAchievements: [],
+        soundEnabled: true,
+        playTimeSeconds: 0,
+        lastSaved: Date.now()
+      };
+    }
+
+    let state = getDefaultState();
+    let buyMultiplier = 1; // 1, 10, 100, or 'MAX'
+
+    // Variabile runtime (combo, buff-uri active, abilități)
+    let comboMeter = 0; // 0 -> 100
+    let activeBuffs = {
+      frenzyEnd: 0,       // x7 CPS & Click (din anomalii)
+      clickStormEnd: 0,   // x15 Click (din anomalii)
+      hyperCritEnd: 0,    // 100% Crit (Skill 2)
+      timeWarpEnd: 0      // 2x tot (Skill 3)
+    };
+    let skillCooldowns = { 1: 0, 2: 0, 3: 0 };
+
+    /********************************************************************
+     * 3. MOTOR AUDIO SINTETIC (WEB AUDIO API - FĂRĂ FIȘIERE EXTERNE)
+     ********************************************************************/
+    let audioCtx = null;
+
+    function playTone(freq, type = 'sine', duration = 0.08, vol = 0.08) {
+      if (!state.soundEnabled) return;
+      try {
+        if (!audioCtx) {
+          audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        }
+        if (audioCtx.state === 'suspended') {
+          audioCtx.resume();
+        }
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = type;
+        osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(freq * 1.35, audioCtx.currentTime + duration);
+
+        gain.gain.setValueAtTime(vol, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
+
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start();
+        osc.stop(audioCtx.currentTime + duration);
+      } catch (e) {}
+    }
+
+    function toggleSound() {
+      state.soundEnabled = !state.soundEnabled;
+      document.getElementById('btnSound').innerText = state.soundEnabled ? '🔊 Sunet: ON' : '🔇 Sunet: OFF';
+      if (state.soundEnabled) playTone(520, 'triangle', 0.1, 0.1);
+    }
+
+    /********************************************************************
+     * 4. FORMATARE NUMERE MARI (1.25K, 3.40M, 12.8B, T, Qa, Qi...)
+     ********************************************************************/
+    const SUFFIXES = ['', 'K', 'M', 'B', 'T', 'Qa', 'Qi', 'Sx', 'Sp', 'Oc', 'No', 'Dc', 'UDc', 'DDc'];
+
+    function formatNumber(num, decimals = 2) {
+      if (!isFinite(num) || isNaN(num)) return '0';
+      if (num < 1000) {
+        return num < 10 && num % 1 !== 0 ? num.toFixed(1) : Math.floor(num).toString();
+      }
+      const tier = Math.floor(Math.log10(Math.abs(num)) / 3);
+      if (tier === 0) return Math.floor(num).toString();
+      const suffix = SUFFIXES[tier] || `e${tier * 3}`;
+      const scale = Math.pow(10, tier * 3);
+      const scaled = num / scale;
+      return scaled.toFixed(decimals) + suffix;
+    }
+
+    function formatTime(sec) {
+      sec = Math.floor(sec);
+      if (sec < 60) return `${sec}s`;
+      const m = Math.floor(sec / 60);
+      const s = sec % 60;
+      if (m < 60) return `${m}m ${s}s`;
+      const h = Math.floor(m / 60);
+      const rm = m % 60;
+      return `${h}h ${rm}m`;
+    }
+
+    /********************************************************************
+     * 5. CALCULE MATEMATICE PENTRU PRODUCȚIE (CPS, CLICK, PRESTIGIU)
+     ********************************************************************/
+    function getTotalGenerators() {
+      return Object.values(state.generators).reduce((a, b) => a + b, 0);
+    }
+
+    // Multiplicator de praguri pentru generatoare (la 10, 25, 50, 100, 200, 300...)
+    function getGeneratorMilestoneMultiplier(count) {
+      const thresholds = [10, 25, 50, 100, 150, 200, 300, 400, 500];
+      let mult = 1;
+      for (const t of thresholds) {
+        if (count >= t) mult *= 2;
+      }
+      return mult;
+    }
+
+    function getNextMilestoneProgress(count) {
+      const thresholds = [10, 25, 50, 100, 150, 200, 300, 400, 500];
+      let prev = 0;
+      for (const t of thresholds) {
+        if (count < t) {
+          return ((count - prev) / (t - prev)) * 100;
+        }
+        prev = t;
+      }
+      return 100;
+    }
+
+    function getGlobalMultiplier() {
+      let mult = 1;
+      // 1. Upgrade global rețea superconductoare (+15%/lvl)
+      const gLvl = state.clickUpgrades['c_global1'] || 0;
+      mult *= 1 + gLvl * 0.15;
+
+      // 2. Realizări (+5% fiecare)
+      mult *= 1 + state.unlockedAchievements.length * 0.05;
+
+      // 3. Materie Întunecată deținută (+25% fiecare)
+      mult *= 1 + state.darkMatter * 0.25;
+
+      // 4. Upgrade Prestigiu Rezonanță Întunecată (x2 per nivel)
+      const pProdLvl = state.prestigeUpgrades['p_prod'] || 0;
+      mult *= Math.pow(2, pProdLvl);
+
+      // 5. Buff-uri temporare
+      const now = Date.now();
+      if (now < activeBuffs.frenzyEnd) mult *= 7;
+      if (now < activeBuffs.timeWarpEnd) mult *= 2;
+
+      return mult;
+    }
+
+    function getCPS() {
+      let baseTotal = 0;
+      for (const gen of GENERATORS_DATA) {
+        const count = state.generators[gen.id] || 0;
+        if (count > 0) {
+          const milestoneMult = getGeneratorMilestoneMultiplier(count);
+          baseTotal += count * gen.baseCps * milestoneMult;
+        }
+      }
+      return baseTotal * getGlobalMultiplier();
+    }
+
+    function getComboMultiplier() {
+      // De la x1.00 până la x3.00 la combo 100%
+      return 1 + (comboMeter / 100) * 2;
+    }
+
+    function getClickValue() {
+      const flatLvl = state.clickUpgrades['c_flat1'] || 0;
+      const multLvl = state.clickUpgrades['c_mult1'] || 0;
+      const synLvl = state.clickUpgrades['c_synergy'] || 0;
+
+      let base = 1 + flatLvl * 2;
+      base *= Math.pow(1.25, multLvl);
+
+      let val = base * getGlobalMultiplier();
+
+      // Sinergie din CPS (+1.5% din CPS per nivel)
+      if (synLvl > 0) {
+        val += getCPS() * (synLvl * 0.015);
+      }
+
+      // Combo Overclock
+      val *= getComboMultiplier();
+
+      // Buff Furtună de Click-uri
+      if (Date.now() < activeBuffs.clickStormEnd) {
+        val *= 15;
+      }
+
+      return val;
+    }
+
+    function getCritChance() {
+      if (Date.now() < activeBuffs.hyperCritEnd) return 1.0;
+      const cLvl = state.clickUpgrades['c_critChance'] || 0;
+      const comboBonus = comboMeter >= 85 ? 0.15 : 0;
+      return Math.min(0.95, 0.05 + cLvl * 0.03 + comboBonus);
+    }
+
+    function getCritMultiplier() {
+      const mLvl = state.clickUpgrades['c_critMult'] || 0;
+      return 3 + mLvl * 1.0;
+    }
+
+    // Costuri Generatoare cu reducere din Prestigiu
+    function getGeneratorDiscount() {
+      const discLvl = state.prestigeUpgrades['p_discount'] || 0;
+      return Math.pow(0.92, discLvl);
+    }
+
+    function getGeneratorBuyInfo(gen, mode) {
+      const owned = state.generators[gen.id] || 0;
+      const r = 1.15;
+      const base = gen.baseCost * getGeneratorDiscount() * Math.pow(r, owned);
+
+      if (mode === 'MAX') {
+        if (state.energy < base) {
+          return { count: 1, cost: base };
+        }
+        const maxN = Math.floor(Math.log((state.energy * (r - 1)) / base + 1) / Math.log(r));
+        const count = Math.max(1, maxN);
+        const cost = base * ((Math.pow(r, count) - 1) / (r - 1));
+        return { count, cost };
+      } else {
+        const count = Number(mode);
+        const cost = base * ((Math.pow(r, count) - 1) / (r - 1));
+        return { count, cost };
+      }
+    }
+
+    // Calcul Materie Întunecată la Prestigiu (începe de la 1.00M energie în run-ul curent)
+    function getPendingDarkMatter() {
+      if (state.totalEnergyThisRun < 1e6) return 0;
+      return Math.floor(Math.pow(state.totalEnergyThisRun / 1e6, 0.42));
+    }
+
+    function getNextDarkMatterEnergyRequirement() {
+      const nextCount = getPendingDarkMatter() + 1;
+      return Math.pow(nextCount, 1 / 0.42) * 1e6;
+    }
+
+    /********************************************************************
+     * 6. INTERACȚIUNEA LA CLICK PE NUCLEUL CENTRAL & EFECTE VIZUALE
+     ********************************************************************/
+    const coreBtn = document.getElementById('coreBtn');
+
+    coreBtn.addEventListener('pointerdown', (e) => {
+      e.preventDefault();
+      handleCoreClick(e.clientX, e.clientY);
+    });
+
+    coreBtn.addEventListener('keydown', (e) => {
+      if (e.key === ' ' || e.key === 'Enter') {
+        e.preventDefault();
+        handleCoreClick();
+      }
+    });
+
+    function handleCoreClick(clientX, clientY) {
+      // Dacă s-a apăsat din tastatură (Enter/Space), folosim centrul butonului
+      if (!clientX || !clientY) {
+        const rect = coreBtn.getBoundingClientRect();
+        clientX = rect.left + rect.width / 2;
+        clientY = rect.top + rect.height / 2;
+      }
+
+      // Crește bara de Supraîncărcare (Combo)
+      comboMeter = Math.min(100, comboMeter + 7.5);
+
+      let amount = getClickValue();
+      const isCrit = Math.random() < getCritChance();
+      if (isCrit) {
+        amount *= getCritMultiplier();
+        state.totalCrits++;
+        playTone(680, 'triangle', 0.11, 0.1);
+      } else {
+        playTone(320 + comboMeter * 2, 'sine', 0.06, 0.06);
+      }
+
+      addEnergy(amount);
+      state.totalClicks++;
+
+      // Animație buton
+      coreBtn.classList.add('clicked');
+      setTimeout(() => coreBtn.classList.remove('clicked'), 80);
+
+      // Text plutitor + particule
+      spawnFloatingText(clientX, clientY, `+${formatNumber(amount)}`, isCrit);
+      spawnParticles(clientX, clientY, isCrit ? 12 : 6, isCrit ? '#fde047' : '#38bdf8');
+
+      updateUI();
+    }
+
+    function spawnFloatingText(x, y, text, isCrit = false) {
+      const el = document.createElement('div');
+      el.className = 'floating-text' + (isCrit ? ' crit' : '');
+      el.innerText = isCrit ? `💥 ${text}!` : text;
+      const offsetX = (Math.random() - 0.5) * 50;
+      const offsetY = (Math.random() - 0.5) * 24;
+      el.style.left = `${x + offsetX}px`;
+      el.style.top = `${y - 15 + offsetY}px`;
+      document.body.appendChild(el);
+      setTimeout(() => el.remove(), 950);
+    }
+
+    function spawnParticles(x, y, count, color) {
+      for (let i = 0; i < count; i++) {
+        const dot = document.createElement('div');
+        dot.className = 'particle-dot';
+        const size = 4 + Math.random() * 5;
+        dot.style.width = `${size}px`;
+        dot.style.height = `${size}px`;
+        dot.style.background = color;
+        dot.style.boxShadow = `0 0 10px ${color}`;
+        dot.style.left = `${x}px`;
+        dot.style.top = `${y}px`;
+        document.body.appendChild(dot);
+
+        const angle = Math.random() * Math.PI * 2;
+        const dist = 35 + Math.random() * 75;
+        const tx = Math.cos(angle) * dist;
+        const ty = Math.sin(angle) * dist;
+
+        dot.animate([
+          { transform: 'translate(-50%, -50%) scale(1)', opacity: 1 },
+          { transform: `translate(calc(-50% + ${tx}px), calc(-50% + ${ty}px)) scale(0)`, opacity: 0 }
+        ], {
+          duration: 450 + Math.random() * 250,
+          easing: 'cubic-bezier(0.16, 1, 0.3, 1)'
+        }).onfinish = () => dot.remove();
+      }
+    }
+
+    function addEnergy(amount) {
+      state.energy += amount;
+      state.totalEnergyThisRun += amount;
+      state.lifetimeEnergy += amount;
+    }
+
+    /********************************************************************
+     * 7. ACHIZIȚII UPGRADE-URI, GENERATOARE ȘI ABILITĂȚI ACTIVE
+     ********************************************************************/
+    function buyClickUpgrade(id) {
+      const upg = CLICK_UPGRADES_DATA.find(u => u.id === id);
+      const lvl = state.clickUpgrades[id] || 0;
+      if (lvl >= upg.maxLevel) return;
+      const cost = upg.baseCost * Math.pow(upg.costMult, lvl);
+      if (state.energy >= cost) {
+        state.energy -= cost;
+        state.clickUpgrades[id] = lvl + 1;
+        playTone(540, 'triangle', 0.1, 0.09);
+        renderClickUpgrades();
+        updateUI();
+      }
+    }
+
+    function buyGenerator(id) {
+      const gen = GENERATORS_DATA.find(g => g.id === id);
+      const info = getGeneratorBuyInfo(gen, buyMultiplier);
+      if (state.energy >= info.cost) {
+        state.energy -= info.cost;
+        state.generators[id] = (state.generators[id] || 0) + info.count;
+        playTone(460, 'sine', 0.09, 0.08);
+        renderGenerators();
+        updateUI();
+      }
+    }
+
+    function buyPrestigeUpgrade(id) {
+      const upg = PRESTIGE_UPGRADES_DATA.find(p => p.id === id);
+      const lvl = state.prestigeUpgrades[id] || 0;
+      if (lvl >= upg.maxLevel) return;
+      const cost = Math.round(upg.baseCost * Math.pow(upg.costMult, lvl));
+      if (state.darkMatter >= cost) {
+        state.darkMatter -= cost;
+        state.prestigeUpgrades[id] = lvl + 1;
+        playTone(760, 'triangle', 0.14, 0.12);
+        renderPrestigeUpgrades();
+        updateUI();
+      }
+    }
+
+    function setBuyMultiplier(mode, btn) {
+      buyMultiplier = mode;
+      document.querySelectorAll('.mult-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      renderGenerators();
+    }
+
+    function activateSkill(skillNum) {
+      const now = Date.now();
+      if (now < skillCooldowns[skillNum]) return;
+
+      if (skillNum === 1) {
+        // Impuls EM: +30x CPS instant (minim 50 energie)
+        const gain = Math.max(50, getCPS() * 30);
+        addEnergy(gain);
+        skillCooldowns[1] = now + 60000;
+        showToast(`⚡ Impuls EM activat! Ai primit +${formatNumber(gain)} Energie!`);
+        playTone(880, 'sawtooth', 0.18, 0.1);
+      } else if (skillNum === 2) {
+        // Hiper-Critică: 100% Crit timp de 15s
+        activeBuffs.hyperCritEnd = now + 15000;
+        skillCooldowns[2] = now + 120000;
+        showToast('🎯 Fuziune Hiper-Critică: 100% Lovituri Critice pentru 15s!');
+        playTone(740, 'triangle', 0.18, 0.1);
+      } else if (skillNum === 3) {
+        // Distorsiune Temporală: 2x producție timp de 30s
+        activeBuffs.timeWarpEnd = now + 30000;
+        skillCooldowns[3] = now + 180000;
+        showToast('⏳ Distorsiune Temporală: Producție x2 pentru 30s!');
+        playTone(620, 'sine', 0.2, 0.1);
+      }
+      updateUI();
+    }
+
+    /********************************************************************
+     * 8. EVENIMENTE ALEATORII (ANOMALII CUANTICE AURII)
+     ********************************************************************/
+    function spawnQuantumAnomaly(manual = false) {
+      if (document.querySelector('.quantum-anomaly')) return;
+
+      const el = document.createElement('div');
+      el.className = 'quantum-anomaly';
+      el.innerHTML = '☄️';
+      el.title = 'Click pentru Bonus Cuantic Masiv!';
+
+      const startY = 90 + Math.random() * (window.innerHeight - 220);
+      el.style.top = `${startY}px`;
+      el.style.left = '-80px';
+      document.body.appendChild(el);
+
+      if (!manual) {
+        showToast('☄️ O Anomalie Cuantică traversează ecranul! Apasă pe ea!');
+      }
+      playTone(920, 'sine', 0.15, 0.08);
+
+      const anim = el.animate([
+        { left: '-80px', transform: 'rotate(0deg)' },
+        { left: `${window.innerWidth + 80}px`, transform: 'rotate(360deg)' }
+      ], {
+        duration: 11000,
+        easing: 'linear'
+      });
+
+      el.addEventListener('pointerdown', (e) => {
+        e.stopPropagation();
+        state.anomaliesCaught++;
+        spawnParticles(e.clientX, e.clientY, 22, '#fde047');
+        playTone(1040, 'triangle', 0.22, 0.14);
+
+        // Alege o recompensă aleatorie spectaculoasă
+        const roll = Math.random();
+        const now = Date.now();
+        if (roll < 0.38) {
+          activeBuffs.frenzyEnd = now + 30000;
+          showToast('🌟 FRENEZIE CUANTICĂ! Producție x7 timp de 30 secunde!');
+          spawnFloatingText(e.clientX, e.clientY, 'x7 FRENEZIE (30s)', true);
+        } else if (roll < 0.72) {
+          activeBuffs.clickStormEnd = now + 20000;
+          showToast('⚡ FURTUNĂ DE CLICK-URI! Putere Click x15 timp de 20 secunde!');
+          spawnFloatingText(e.clientX, e.clientY, 'x15 CLICK STORM (20s)', true);
+        } else {
+          const jackpot = Math.max(250, getCPS() * 60 + getClickValue() * 25);
+          addEnergy(jackpot);
+          showToast(`💰 JACKPOT ASTRAL! +${formatNumber(jackpot)} Energie Cuantică!`);
+          spawnFloatingText(e.clientX, e.clientY, `+${formatNumber(jackpot)}`, true);
+        }
+
+        anim.cancel();
+        el.remove();
+        updateUI();
+      });
+
+      anim.onfinish = () => {
+        if (el.parentNode) el.remove();
+      };
+    }
+
+    /********************************************************************
+     * 9. SISTEM DE PRESTIGIU (REBIRTH / SINGULARITATE)
+     ********************************************************************/
+    function triggerPrestige() {
+      const pending = getPendingDarkMatter();
+      if (pending <= 0) return;
+
+      if (!confirm(`Ești sigur că vrei să declanșezi Singularitatea?\n\nVei primi +${formatNumber(pending, 0)} 🔮 Materie Întunecată (+${pending * 25}% producție permanentă), iar energia și generatoarele actuale vor fi resetate.`)) {
+        return;
+      }
+
+      state.darkMatter += pending;
+      state.prestigeCount++;
+
+      // Energia de start din upgrade-ul Memorie Ancestrală
+      const starterLvl = state.prestigeUpgrades['p_starter'] || 0;
+      const startEnergy = starterLvl > 0 ? Math.pow(1000, starterLvl) : 0;
+
+      state.energy = startEnergy;
+      state.totalEnergyThisRun = startEnergy;
+
+      CLICK_UPGRADES_DATA.forEach(u => state.clickUpgrades[u.id] = 0);
+      GENERATORS_DATA.forEach(g => state.generators[g.id] = 0);
+
+      playTone(440, 'sawtooth', 0.3, 0.12);
+      showToast(`🌌 Singularitate completă! Ai câștigat +${pending} 🔮 Materie Întunecată!`);
+
+      renderAll();
+      saveGame();
+      if (cloudSession && cloudSession.access_token) {
+        cloudPushSave(false);
+      }
+    }
+
+    /********************************************************************
+     * 10. RANDARE ELEMENTE UI ȘI ACTUALIZARE ÎN TIMP REAL
+     ********************************************************************/
+    function renderClickUpgrades() {
+      const container = document.getElementById('clickUpgradesGrid');
+      container.innerHTML = '';
+
+      CLICK_UPGRADES_DATA.forEach(upg => {
+        const lvl = state.clickUpgrades[upg.id] || 0;
+        const isMax = lvl >= upg.maxLevel;
+        const cost = upg.baseCost * Math.pow(upg.costMult, lvl);
+        const canAfford = !isMax && state.energy >= cost;
+
+        const card = document.createElement('div');
+        card.className = 'upgrade-card' + (canAfford ? '' : ' locked');
+        card.id = `u_card_${upg.id}`;
+        card.onclick = () => buyClickUpgrade(upg.id);
+
+        card.innerHTML = `
+          <div class="upgrade-top">
+            <div class="upgrade-icon">${upg.icon}</div>
+            <div class="upgrade-info">
+              <div class="upgrade-name-row">
+                <span class="upgrade-name">${upg.name}</span>
+                <span class="upgrade-lvl">Niv. ${lvl}/${upg.maxLevel}</span>
+              </div>
+              <div class="upgrade-desc">${upg.desc}</div>
+            </div>
+          </div>
+          <div class="upgrade-footer">
+            <span>Cost:</span>
+            <span class="cost-tag" id="u_cost_${upg.id}">${isMax ? 'MAXIM' : formatNumber(cost) + ' ⚡'}</span>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    function renderGenerators() {
+      const container = document.getElementById('generatorsList');
+      container.innerHTML = '';
+
+      GENERATORS_DATA.forEach(gen => {
+        const count = state.generators[gen.id] || 0;
+        const info = getGeneratorBuyInfo(gen, buyMultiplier);
+        const canAfford = state.energy >= info.cost;
+        const unitProd = gen.baseCps * getGeneratorMilestoneMultiplier(count) * getGlobalMultiplier();
+        const progress = getNextMilestoneProgress(count);
+
+        const card = document.createElement('div');
+        card.className = 'gen-card' + (canAfford ? '' : ' locked');
+        card.id = `g_card_${gen.id}`;
+        card.onclick = () => buyGenerator(gen.id);
+
+        card.innerHTML = `
+          <div class="gen-icon">${gen.icon}</div>
+          <div class="gen-body">
+            <div class="gen-title-row">
+              <span class="gen-name">${gen.name}</span>
+              <span class="gen-count" id="g_cnt_${gen.id}">${count}</span>
+            </div>
+            <div class="gen-meta">
+              <span class="gen-prod" id="g_prod_${gen.id}">+${formatNumber(unitProd)}/s fiecare</span>
+              <span class="gen-cost" id="g_cost_${gen.id}">+${info.count}x: ${formatNumber(info.cost)} ⚡</span>
+            </div>
+            <div class="gen-milestone-bar" title="Progres către următorul multiplicator x2">
+              <div class="gen-milestone-fill" style="width:${progress}%"></div>
+            </div>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    function renderPrestigeUpgrades() {
+      const container = document.getElementById('prestigeUpgradesGrid');
+      container.innerHTML = '';
+
+      PRESTIGE_UPGRADES_DATA.forEach(upg => {
+        const lvl = state.prestigeUpgrades[upg.id] || 0;
+        const isMax = lvl >= upg.maxLevel;
+        const cost = Math.round(upg.baseCost * Math.pow(upg.costMult, lvl));
+        const canAfford = !isMax && state.darkMatter >= cost;
+
+        const card = document.createElement('div');
+        card.className = 'upgrade-card' + (canAfford ? '' : ' locked');
+        card.onclick = () => buyPrestigeUpgrade(upg.id);
+
+        card.innerHTML = `
+          <div class="upgrade-top">
+            <div class="upgrade-icon">${upg.icon}</div>
+            <div class="upgrade-info">
+              <div class="upgrade-name-row">
+                <span class="upgrade-name">${upg.name}</span>
+                <span class="upgrade-lvl">Niv. ${lvl}/${upg.maxLevel}</span>
+              </div>
+              <div class="upgrade-desc">${upg.desc}</div>
+            </div>
+          </div>
+          <div class="upgrade-footer">
+            <span>Cost:</span>
+            <span class="cost-tag" style="color:#d8b4fe">${isMax ? 'MAXIM' : cost + ' 🔮'}</span>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    function renderAchievements() {
+      const container = document.getElementById('achievementsGrid');
+      container.innerHTML = '';
+
+      ACHIEVEMENTS_DATA.forEach(ach => {
+        const unlocked = state.unlockedAchievements.includes(ach.id);
+        const card = document.createElement('div');
+        card.className = 'ach-card' + (unlocked ? ' unlocked' : '');
+        card.innerHTML = `
+          <div class="ach-icon">${unlocked ? ach.icon : '🔒'}</div>
+          <div>
+            <div class="ach-title">${ach.name}</div>
+            <div class="ach-desc">${ach.desc}</div>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+
+      document.getElementById('achCountBadge').innerText = `${state.unlockedAchievements.length}/${ACHIEVEMENTS_DATA.length}`;
+      document.getElementById('achBonusText').innerText = `+${state.unlockedAchievements.length * 5}%`;
+    }
+
+    function renderStats() {
+      const statsGrid = document.getElementById('statsGrid');
+      const items = [
+        { label: 'Energie Totală (Toate Timpurile)', val: formatNumber(state.lifetimeEnergy) + ' ⚡' },
+        { label: 'Multiplicator Global Actual', val: 'x' + formatNumber(getGlobalMultiplier()) },
+        { label: 'Șansă / Multiplicator Critic', val: `${Math.round(getCritChance() * 100)}% (x${getCritMultiplier()})` },
+        { label: 'Click-uri Manuale Efectuate', val: state.totalClicks.toLocaleString('ro-RO') },
+        { label: 'Lovituri Critice Reușite', val: state.totalCrits.toLocaleString('ro-RO') },
+        { label: 'Generatoare Deținute', val: getTotalGenerators().toLocaleString('ro-RO') },
+        { label: 'Anomalii Aurii Capturate', val: state.anomaliesCaught.toString() },
+        { label: 'Singularități (Rebirth-uri)', val: state.prestigeCount.toString() },
+        { label: 'Timp Activ în Simulare', val: formatTime(state.playTimeSeconds) }
+      ];
+
+      statsGrid.innerHTML = items.map(i => `
+        <div class="stat-box">
+          <div class="stat-box-label">${i.label}</div>
+          <div class="stat-box-val">${i.val}</div>
+        </div>
+      `).join('');
+    }
+
+    function checkAchievements() {
+      let newlyUnlocked = false;
+      for (const ach of ACHIEVEMENTS_DATA) {
+        if (!state.unlockedAchievements.includes(ach.id) && ach.check(state)) {
+          state.unlockedAchievements.push(ach.id);
+          newlyUnlocked = true;
+          showToast(`🏆 Realizare Deblocată: ${ach.name} (+5% Bonus!)`);
+          playTone(820, 'triangle', 0.16, 0.11);
+        }
+      }
+      if (newlyUnlocked) {
+        renderAchievements();
+      }
+    }
+
+    function updateUI() {
+      // Contoare principale
+      document.getElementById('energyAmount').innerText = formatNumber(state.energy);
+      document.getElementById('cpsAmount').innerText = formatNumber(getCPS());
+      document.getElementById('vpcAmount').innerText = formatNumber(getClickValue());
+
+      // Bara mini Prestigiu
+      document.getElementById('darkMatterMini').innerText = formatNumber(state.darkMatter, 0);
+      document.getElementById('prestigeMultMini').innerText = `+${formatNumber(state.darkMatter * 25, 0)}%`;
+
+      // Combo Bar
+      const comboMult = getComboMultiplier();
+      const comboMultEl = document.getElementById('comboMultText');
+      comboMultEl.innerText = `x${comboMult.toFixed(2)}`;
+      document.getElementById('comboBarFill').style.width = `${comboMeter}%`;
+      if (comboMeter >= 85) {
+        comboMultEl.classList.add('fever-text');
+        coreBtn.classList.add('fever');
+      } else {
+        comboMultEl.classList.remove('fever-text');
+        coreBtn.classList.remove('fever');
+      }
+
+      // Actualizare accesibilitate carduri Upgrade-uri Click
+      CLICK_UPGRADES_DATA.forEach(upg => {
+        const card = document.getElementById(`u_card_${upg.id}`);
+        if (!card) return;
+        const lvl = state.clickUpgrades[upg.id] || 0;
+        const isMax = lvl >= upg.maxLevel;
+        const cost = upg.baseCost * Math.pow(upg.costMult, lvl);
+        if (!isMax && state.energy >= cost) {
+          card.classList.remove('locked');
+        } else {
+          card.classList.add('locked');
+        }
+      });
+
+      // Actualizare dinamică Generatoare (inclusiv modul MAX)
+      GENERATORS_DATA.forEach(gen => {
+        const card = document.getElementById(`g_card_${gen.id}`);
+        if (!card) return;
+        const count = state.generators[gen.id] || 0;
+        const info = getGeneratorBuyInfo(gen, buyMultiplier);
+        const canAfford = state.energy >= info.cost;
+        if (canAfford) {
+          card.classList.remove('locked');
+        } else {
+          card.classList.add('locked');
+        }
+        const costEl = document.getElementById(`g_cost_${gen.id}`);
+        if (costEl) costEl.innerText = `+${info.count}x: ${formatNumber(info.cost)} ⚡`;
+        const prodEl = document.getElementById(`g_prod_${gen.id}`);
+        const unitProd = gen.baseCps * getGeneratorMilestoneMultiplier(count) * getGlobalMultiplier();
+        if (prodEl) prodEl.innerText = `+${formatNumber(unitProd)}/s fiecare`;
+      });
+
+      // Actualizare secțiune Prestigiu
+      const pendingDM = getPendingDarkMatter();
+      document.getElementById('dmCurrentVal').innerText = formatNumber(state.darkMatter, 0);
+      document.getElementById('dmPendingVal').innerText = `+${formatNumber(pendingDM, 0)}`;
+      document.getElementById('dmNextReq').innerText = `${formatNumber(getNextDarkMatterEnergyRequirement())} ⚡`;
+
+      const btnPres = document.getElementById('btnTriggerPrestige');
+      btnPres.disabled = pendingDM <= 0;
+      btnPres.innerText = `🌌 Declanșează Singularitatea (+${formatNumber(pendingDM, 0)} 🔮)`;
+
+      const presBadge = document.getElementById('prestigeTabBadge');
+      presBadge.style.display = pendingDM > 0 ? 'inline-block' : 'none';
+
+      // Actualizare Cooldown-uri Abilități Active
+      const now = Date.now();
+      for (let i = 1; i <= 3; i++) {
+        const cdOverlay = document.getElementById(`cdSkill${i}`);
+        const skillBtn = document.getElementById(`skill${i}`);
+        const rem = Math.ceil((skillCooldowns[i] - now) / 1000);
+        if (rem > 0) {
+          cdOverlay.style.display = 'flex';
+          cdOverlay.innerText = `${rem}s`;
+          skillBtn.disabled = true;
+        } else {
+          cdOverlay.style.display = 'none';
+          skillBtn.disabled = false;
+        }
+      }
+
+      // Afișare Buff-uri Active în bara de sus
+      const buffsContainer = document.getElementById('activeBuffsContainer');
+      const pills = [];
+      if (now < activeBuffs.frenzyEnd) {
+        pills.push(`<div class="buff-pill">🌟 Frenezie x7 (${Math.ceil((activeBuffs.frenzyEnd - now) / 1000)}s)</div>`);
+      }
+      if (now < activeBuffs.clickStormEnd) {
+        pills.push(`<div class="buff-pill">⚡ Click Storm x15 (${Math.ceil((activeBuffs.clickStormEnd - now) / 1000)}s)</div>`);
+      }
+      if (now < activeBuffs.hyperCritEnd) {
+        pills.push(`<div class="buff-pill">🎯 100% Crit (${Math.ceil((activeBuffs.hyperCritEnd - now) / 1000)}s)</div>`);
+      }
+      if (now < activeBuffs.timeWarpEnd) {
+        pills.push(`<div class="buff-pill">⏳ Distorsiune x2 (${Math.ceil((activeBuffs.timeWarpEnd - now) / 1000)}s)</div>`);
+      }
+      buffsContainer.innerHTML = pills.join('');
+    }
+
+    function switchTab(tabName, btnEl) {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      btnEl.classList.add('active');
+
+      document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+      document.getElementById(`tab-${tabName}`).classList.add('active');
+
+      if (tabName === 'stats') renderStats();
+      if (tabName === 'prestige') renderPrestigeUpgrades();
+      if (tabName === 'achievements') renderAchievements();
+      if (tabName === 'leaderboard') renderLeaderboardTab();
+    }
+
+    function showToast(msg) {
+      const container = document.getElementById('toastContainer');
+      const toast = document.createElement('div');
+      toast.className = 'toast';
+      toast.innerText = msg;
+      container.appendChild(toast);
+      setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transition = 'opacity 0.3s ease';
+        setTimeout(() => toast.remove(), 300);
+      }, 3200);
+    }
+
+    function renderAll() {
+      renderClickUpgrades();
+      renderGenerators();
+      renderPrestigeUpgrades();
+      renderAchievements();
+      updateUI();
+    }
+
+    /********************************************************************
+     * 11. SALVARE AUTOMATĂ (LOCALSTORAGE) ȘI CALCUL PROGRES OFFLINE
+     ********************************************************************/
+    function saveGame() {
+      state.lastSaved = Date.now();
+      try {
+        localStorage.setItem(SAVE_KEY, JSON.stringify(state));
+        if (!navigator.onLine && cloudSession && cloudSession.access_token) {
+          setPendingCloudSync(true);
+        }
+        const dot = document.getElementById('saveDot');
+        if (dot) {
+          dot.style.transform = 'scale(1.5)';
+          setTimeout(() => dot.style.transform = 'scale(1)', 300);
+        }
+      } catch (e) {}
+    }
+
+    function manualSave() {
+      saveGame();
+      if (cloudSession && cloudSession.access_token) {
+        cloudPushSave(true);
+      } else {
+        showToast('💾 Progresul a fost salvat local!');
+      }
+    }
+
+    function loadGame() {
+      try {
+        const raw = localStorage.getItem(SAVE_KEY);
+        if (!raw) return;
+        const parsed = JSON.parse(raw);
+        const def = getDefaultState();
+
+        state = {
+          ...def,
+          ...parsed,
+          clickUpgrades: { ...def.clickUpgrades, ...(parsed.clickUpgrades || {}) },
+          generators: { ...def.generators, ...(parsed.generators || {}) },
+          prestigeUpgrades: { ...def.prestigeUpgrades, ...(parsed.prestigeUpgrades || {}) }
+        };
+
+        document.getElementById('btnSound').innerText = state.soundEnabled ? '🔊 Sunet: ON' : '🔇 Sunet: OFF';
+
+        // Calcul Progres Offline
+        const now = Date.now();
+        const elapsedSec = (now - (state.lastSaved || now)) / 1000;
+        const currentCps = getCPS();
+        if (elapsedSec > 8 && currentCps > 0) {
+          const cappedSec = Math.min(elapsedSec, 86400 * 7); // Până la 7 zile offline
+          const effLvl = state.prestigeUpgrades['p_offline'] || 0;
+          const efficiency = Math.min(1.0, 0.5 + effLvl * 0.1);
+          const offlineEarned = currentCps * cappedSec * efficiency;
+
+          if (offlineEarned >= 1) {
+            addEnergy(offlineEarned);
+            document.getElementById('offlineTimeText').innerText = formatTime(cappedSec);
+            document.getElementById('offlineEffText').innerText = `${Math.round(efficiency * 100)}%`;
+            document.getElementById('offlineRewardText').innerText = `+${formatNumber(offlineEarned)} ⚡`;
+            document.getElementById('offlineModal').classList.add('open');
+          }
+        }
+      } catch (e) {
+        console.error('Eroare la încărcarea salvării:', e);
+      }
+    }
+
+    function closeOfflineModal() {
+      document.getElementById('offlineModal').classList.remove('open');
+      playTone(640, 'triangle', 0.14, 0.1);
+      updateUI();
+    }
+
+    function exportSaveCode() {
+      saveGame();
+      const code = btoa(unescape(encodeURIComponent(JSON.stringify(state))));
+      const box = document.getElementById('saveCodeBox');
+      box.value = code;
+      box.select();
+      try {
+        navigator.clipboard.writeText(code);
+        showToast('📤 Codul de salvare a fost copiat în Clipboard!');
+      } catch (e) {
+        showToast('📤 Cod generat! Copiază-l din caseta text.');
+      }
+    }
+
+    function importSaveCode() {
+      const box = document.getElementById('saveCodeBox');
+      const code = box.value.trim();
+      if (!code) {
+        showToast('⚠️ Lipește mai întâi un cod de salvare în casetă!');
+        return;
+      }
+      try {
+        const json = decodeURIComponent(escape(atob(code)));
+        const parsed = JSON.parse(json);
+        if (typeof parsed.energy !== 'number') throw new Error('Format invalid');
+        localStorage.setItem(SAVE_KEY, JSON.stringify(parsed));
+        loadGame();
+        renderAll();
+        renderStats();
+        showToast('📥 Salvarea a fost importată cu succes!');
+      } catch (e) {
+        showToast('❌ Codul introdus nu este valid!');
+      }
+    }
+
+    function confirmReset() {
+      if (confirm('⚠️ Ești sigur că vrei să ștergi definitiv tot progresul (inclusiv Materia Întunecată și Realizările)?')) {
+        localStorage.removeItem(SAVE_KEY);
+        state = getDefaultState();
+        comboMeter = 0;
+        renderAll();
+        renderStats();
+        showToast('🗑️ Jocul a fost resetat complet la zero.');
+      }
+    }
+
+    /********************************************************************
+     * 11.5. MOTOR CLOUD SAVE (GOOGLE FIREBASE - 100% GRATUIT)
+     *       + AUTO-SYNC OFFLINE -> ONLINE + AUTO-UPDATE LIVE
+     *       + NAVIGARE MOBIL & INSTALARE PWA (MACBOOK / PC / ANDROID / iOS)
+     ********************************************************************/
+    const APP_VERSION = '2.5.0';
+    const APP_BUILD = 250;
+    // URL-ul oficial de pe GitHub Pages pentru verificarea automată de Update (și în aplicațiile .exe / .dmg):
+    const REMOTE_UPDATE_BASE_URL = 'https://mariusinfo.github.io/quantum-nexus';
+
+    // Configurația oficială Google Firebase (Proiect: quantum-nexus-ac596)
+    const DEFAULT_FIREBASE_CONFIG = {
+      apiKey: "AIzaSyB2UK9uP3s2pk3c0BrqX6fnnm5oiRNh47c",
+      authDomain: "quantum-nexus-ac596.firebaseapp.com",
+      databaseURL: "https://quantum-nexus-ac596-default-rtdb.europe-west1.firebasedatabase.app",
+      projectId: "quantum-nexus-ac596",
+      storageBucket: "quantum-nexus-ac596.firebasestorage.app",
+      messagingSenderId: "831458696131",
+      appId: "1:831458696131:web:c4998dfd45cf55662ebb76"
+    };
+    const DEFAULT_FIREBASE_API_KEY = DEFAULT_FIREBASE_CONFIG.apiKey;
+    const DEFAULT_FIREBASE_DB_URL = DEFAULT_FIREBASE_CONFIG.databaseURL;
+
+    const CLOUD_CFG_KEY = 'QUANTUM_NEXUS_FIREBASE_CFG';
+    const CLOUD_SESSION_KEY = 'QUANTUM_NEXUS_FIREBASE_SESSION';
+    const PENDING_SYNC_KEY = 'QUANTUM_NEXUS_PENDING_SYNC';
+
+    let firebaseConfig = {
+      apiKey: DEFAULT_FIREBASE_API_KEY,
+      databaseURL: DEFAULT_FIREBASE_DB_URL
+    };
+    let cloudSession = null;
+    let pendingCloudSync = localStorage.getItem(PENDING_SYNC_KEY) === 'true';
+    let isSyncingNow = false;
+    let deferredInstallPrompt = null;
+    let swRegistration = null;
+    let updateCountdownTimer = null;
+
+    function setPendingCloudSync(val) {
+      pendingCloudSync = Boolean(val);
+      if (pendingCloudSync) {
+        localStorage.setItem(PENDING_SYNC_KEY, 'true');
+      } else {
+        localStorage.removeItem(PENDING_SYNC_KEY);
+      }
+      updateCloudUI();
+    }
+
+    function initCloudSystem() {
+      try {
+        const savedSess = localStorage.getItem(CLOUD_SESSION_KEY);
+        if (savedSess) {
+          cloudSession = JSON.parse(savedSess);
+          updateCloudUI();
+          if (navigator.onLine) {
+            if (pendingCloudSync) {
+              // Aveam progres jucat offline -> îl trimitem imediat către serverul Google Firebase!
+              syncOfflineProgressToServer();
+            } else {
+              cloudPullSave(false);
+            }
+          }
+        } else {
+          updateCloudUI();
+        }
+      } catch (e) {
+        console.warn('Firebase Cloud init warning:', e);
+      }
+    }
+
+    function isFirebaseConfigured() {
+      return Boolean(
+        firebaseConfig.apiKey &&
+        firebaseConfig.databaseURL &&
+        firebaseConfig.databaseURL.startsWith('http')
+      );
+    }
+
+    function openCloudModal() {
+      updateCloudUI();
+      document.getElementById('cloudModal').classList.add('open');
+    }
+
+    function closeCloudModal() {
+      document.getElementById('cloudModal').classList.remove('open');
+    }
+
+    function updateCloudUI() {
+      const loggedIn = Boolean(cloudSession && cloudSession.access_token && cloudSession.user);
+      document.getElementById('cloudLoggedInView').style.display = loggedIn ? 'block' : 'none';
+      document.getElementById('cloudAuthView').style.display = loggedIn ? 'none' : 'block';
+
+      const btnText = document.getElementById('cloudBtnText');
+      const saveText = document.getElementById('saveText');
+      const saveDot = document.getElementById('saveDot');
+      const online = navigator.onLine;
+
+      if (saveDot) {
+        saveDot.classList.remove('pending', 'syncing');
+        if (!online || pendingCloudSync) {
+          saveDot.classList.add('pending');
+        } else if (isSyncingNow) {
+          saveDot.classList.add('syncing');
+        }
+      }
+
+      if (loggedIn) {
+        document.getElementById('cloudUserEmailText').innerText = cloudSession.user.email || 'Comandant Autentificat';
+        if (!online) {
+          if (btnText) btnText.innerText = 'Cloud (Offline)';
+          if (saveText) saveText.innerText = 'Offline (Așteaptă net)';
+        } else if (pendingCloudSync) {
+          if (btnText) btnText.innerText = 'Sincronizare...';
+          if (saveText) saveText.innerText = 'Trimitere în Cloud...';
+        } else {
+          if (btnText) btnText.innerText = 'Cloud ON';
+          if (saveText) saveText.innerText = 'Firebase & Local';
+        }
+      } else {
+        if (btnText) btnText.innerText = 'Cloud Save';
+        if (saveText) saveText.innerText = online ? 'Salvat local' : 'Mod Offline';
+      }
+    }
+
+    // Reînnoire automată token Google Firebase după sesiuni lungi de joc Offline
+    async function refreshCloudTokenIfNeeded() {
+      if (!isFirebaseConfigured() || !cloudSession || !cloudSession.refresh_token) return false;
+      try {
+        const res = await fetch(`https://securetoken.googleapis.com/v1/token?key=${encodeURIComponent(firebaseConfig.apiKey)}`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: `grant_type=refresh_token&refresh_token=${encodeURIComponent(cloudSession.refresh_token)}`
+        });
+        if (!res.ok) return false;
+        const data = await res.json();
+        if (data && data.id_token) {
+          cloudSession.access_token = data.id_token;
+          if (data.refresh_token) cloudSession.refresh_token = data.refresh_token;
+          localStorage.setItem(CLOUD_SESSION_KEY, JSON.stringify(cloudSession));
+          return true;
+        }
+      } catch (e) {}
+      return false;
+    }
+
+    function formatFirebaseAuthError(errCode) {
+      const map = {
+        'EMAIL_EXISTS': 'Acest email este deja înregistrat! Folosește butonul Autentificare.',
+        'INVALID_EMAIL': 'Adresa de email nu este validă.',
+        'WEAK_PASSWORD : Password should be at least 6 characters': 'Parola trebuie să aibă minim 6 caractere.',
+        'EMAIL_NOT_FOUND': 'Nu există niciun cont cu acest email. Apasă pe Creează Cont Nou!',
+        'INVALID_PASSWORD': 'Parola introdusă este incorectă.',
+        'INVALID_LOGIN_CREDENTIALS': 'Email sau parolă incorectă.',
+        'OPERATION_NOT_ALLOWED': 'Activează Email/Password în Firebase Console -> Authentication -> Sign-in method!'
+      };
+      return map[errCode] || errCode || 'Eroare de comunicare cu Google Firebase';
+    }
+
+    async function cloudRegister() {
+      if (!isFirebaseConfigured()) {
+        showToast('⚠️ Configurează mai întâi cheile Google Firebase mai jos!');
+        return;
+      }
+      const email = document.getElementById('cloudEmailInput').value.trim();
+      const password = document.getElementById('cloudPassInput').value;
+      if (!email || password.length < 6) {
+        showToast('⚠️ Introdu o adresă de email și o parolă de minim 6 caractere!');
+        return;
+      }
+      try {
+        const res = await fetch(`https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${encodeURIComponent(firebaseConfig.apiKey)}`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, password, returnSecureToken: true })
+        });
+        const data = await res.json();
+        if (!res.ok) {
+          const msg = data.error && data.error.message ? formatFirebaseAuthError(data.error.message) : 'Eroare la înregistrare';
+          throw new Error(msg);
+        }
+
+        cloudSession = {
+          access_token: data.idToken,
+          refresh_token: data.refreshToken,
+          user: { id: data.localId, email: data.email }
+        };
+        localStorage.setItem(CLOUD_SESSION_KEY, JSON.stringify(cloudSession));
+        updateCloudUI();
+        showToast('🎉 Cont Google Firebase creat și conectat! Salvăm progresul...');
+        await cloudPushSave(false);
+        if (document.getElementById('tab-leaderboard').classList.contains('active')) {
+          renderLeaderboardTab();
+        }
+      } catch (err) {
+        showToast(`❌ Firebase: ${err.message}`);
+      }
+    }
+
+    async function cloudLogin() {
+      if (!isFirebaseConfigured()) {
+        showToast('⚠️ Configurează mai întâi cheile Google Firebase mai jos!');
+        return;
+      }
+      const email = document.getElementById('cloudEmailInput').value.trim();
+      const password = document.getElementById('cloudPassInput').value;
+      if (!email || !password) {
+        showToast('⚠️ Introdu email-ul și parola!');
+        return;
+      }
+      try {
+        const res = await fetch(`https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${encodeURIComponent(firebaseConfig.apiKey)}`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, password, returnSecureToken: true })
+        });
+        const data = await res.json();
+        if (!res.ok) {
+          const msg = data.error && data.error.message ? formatFirebaseAuthError(data.error.message) : 'Date incorecte';
+          throw new Error(msg);
+        }
+
+        cloudSession = {
+          access_token: data.idToken,
+          refresh_token: data.refreshToken,
+          user: { id: data.localId, email: data.email }
+        };
+        localStorage.setItem(CLOUD_SESSION_KEY, JSON.stringify(cloudSession));
+        updateCloudUI();
+        showToast('🔥 Autentificat cu succes în Google Firebase Cloud!');
+        await cloudPullSave(true);
+        if (document.getElementById('tab-leaderboard').classList.contains('active')) {
+          renderLeaderboardTab();
+        }
+      } catch (err) {
+        showToast(`❌ Autentificare eșuată: ${err.message}`);
+      }
+    }
+
+    function cloudLogout() {
+      cloudSession = null;
+      localStorage.removeItem(CLOUD_SESSION_KEY);
+      setPendingCloudSync(false);
+      updateCloudUI();
+      if (document.getElementById('tab-leaderboard').classList.contains('active')) {
+        renderLeaderboardTab();
+      }
+      showToast('👋 Deconectat din Cloud. Jocul continuă să salveze local.');
+    }
+
+    function getCommanderDisplayName() {
+      if (state.commanderName && state.commanderName.trim().length > 0) {
+        return state.commanderName.trim().slice(0, 22);
+      }
+      if (cloudSession && cloudSession.user && cloudSession.user.email) {
+        return cloudSession.user.email.split('@')[0].slice(0, 22);
+      }
+      return 'Comandant';
+    }
+
+    async function cloudPushSave(manualToast = false) {
+      if (!isFirebaseConfigured() || !cloudSession || !cloudSession.access_token) return false;
+      saveGame();
+
+      // Dacă jucătorul este Offline, punem salvarea în coada de așteptare (Pending Sync)
+      if (!navigator.onLine) {
+        setPendingCloudSync(true);
+        if (manualToast) {
+          showToast('📴 Ești Offline! Progresul a fost salvat local și va fi trimis automat la server imediat ce pornești internetul.');
+        }
+        return false;
+      }
+
+      if (isSyncingNow) return false;
+      isSyncingNow = true;
+      updateCloudUI();
+
+      try {
+        const uid = encodeURIComponent(cloudSession.user.id);
+        const nowIso = new Date().toISOString();
+        const payload = {
+          user_id: cloudSession.user.id,
+          save_data: state,
+          lifetime_energy: state.lifetimeEnergy || 0,
+          updated_at: nowIso
+        };
+
+        let res = await fetch(`${firebaseConfig.databaseURL}/users/${uid}/save.json?auth=${encodeURIComponent(cloudSession.access_token)}`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+
+        // Dacă token-ul a expirat cât timp omul a jucat offline, îl reînnoim automat și reîncercăm
+        if (res.status === 401) {
+          const refreshed = await refreshCloudTokenIfNeeded();
+          if (refreshed) {
+            res = await fetch(`${firebaseConfig.databaseURL}/users/${uid}/save.json?auth=${encodeURIComponent(cloudSession.access_token)}`, {
+              method: 'PUT',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(payload)
+            });
+          }
+        }
+
+        if (!res.ok) {
+          const errData = await res.json().catch(() => ({}));
+          throw new Error(errData.error || `HTTP ${res.status}`);
+        }
+
+        // Actualizăm simultan și scorurile din Clasamentul Global (Leaderboard) pentru acest cont conectat!
+        const lbPayload = {
+          user_id: cloudSession.user.id,
+          commander_name: getCommanderDisplayName(),
+          lifetime_energy: state.lifetimeEnergy || 0,
+          dark_matter: state.darkMatter || 0,
+          prestige_count: state.prestigeCount || 0,
+          max_cps: Math.max(state.maxCps || 0, getCPS()),
+          total_clicks: Math.floor(state.totalClicks || 0),
+          anomalies_caught: Math.floor(state.anomaliesCaught || 0),
+          achievements_count: (state.unlockedAchievements || []).length,
+          updated_at: nowIso
+        };
+
+        await fetch(`${firebaseConfig.databaseURL}/leaderboard/${uid}.json?auth=${encodeURIComponent(cloudSession.access_token)}`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(lbPayload)
+        }).catch(() => {});
+
+        isSyncingNow = false;
+        setPendingCloudSync(false);
+
+        const syncEl = document.getElementById('cloudLastSyncText');
+        if (syncEl) {
+          syncEl.innerText = `Ultima sincronizare în Firebase & Top: ${new Date().toLocaleTimeString('ro-RO')}`;
+        }
+        if (manualToast) {
+          showToast('🔥 Progresul și Scorurile din Clasament au fost salvate în Google Firebase!');
+        }
+        return true;
+      } catch (err) {
+        isSyncingNow = false;
+        // Orice eroare de rețea păstrează flag-ul activ pentru retrimitere automată
+        setPendingCloudSync(true);
+        if (manualToast) {
+          showToast(`⚠️ Salvat local (Server indisponibil momentan, se va sincroniza automat): ${err.message}`);
+        }
+        return false;
+      }
+    }
+
+    /********************************************************************
+     * 11.7. CLASAMENT GLOBAL MULTI-CATEGORIE (DOAR CONT CONECTAT FIREBASE)
+     ********************************************************************/
+    const LEADERBOARD_CATEGORIES = {
+      lifetime_energy: {
+        label: '⚡ Energie Totală',
+        unit: ' ⚡',
+        format: (v) => formatNumber(v) + ' ⚡',
+        localVal: () => state.lifetimeEnergy || 0
+      },
+      dark_matter: {
+        label: '🔮 Materie Întunecată',
+        unit: ' 🔮',
+        format: (v) => formatNumber(v, 0) + ' 🔮',
+        localVal: () => state.darkMatter || 0
+      },
+      prestige_count: {
+        label: '🌌 Singularități (Rebirth)',
+        unit: ' 🌌',
+        format: (v) => Math.floor(v).toLocaleString('ro-RO') + ' Rebirth-uri',
+        localVal: () => state.prestigeCount || 0
+      },
+      max_cps: {
+        label: '🚀 Record CPS (/sec)',
+        unit: '/s',
+        format: (v) => formatNumber(v) + '/sec',
+        localVal: () => Math.max(state.maxCps || 0, getCPS())
+      },
+      total_clicks: {
+        label: '👆 Click-uri Manuale',
+        unit: ' 👆',
+        format: (v) => Math.floor(v).toLocaleString('ro-RO') + ' click-uri',
+        localVal: () => state.totalClicks || 0
+      },
+      anomalies_caught: {
+        label: '☄️ Anomalii Aurii',
+        unit: ' ☄️',
+        format: (v) => Math.floor(v).toLocaleString('ro-RO') + ' anomalii',
+        localVal: () => state.anomaliesCaught || 0
+      },
+      achievements_count: {
+        label: '🏆 Realizări Deblocate',
+        unit: ' 🏆',
+        format: (v) => `${Math.floor(v)} / ${ACHIEVEMENTS_DATA.length} 🏆`,
+        localVal: () => (state.unlockedAchievements || []).length
+      }
+    };
+
+    let currentLbCategory = 'lifetime_energy';
+
+    function renderLeaderboardTab() {
+      const loggedIn = Boolean(isFirebaseConfigured() && cloudSession && cloudSession.access_token && cloudSession.user);
+      const lockedBox = document.getElementById('lbLockedState');
+      const unlockedBox = document.getElementById('lbUnlockedState');
+
+      if (!loggedIn) {
+        lockedBox.style.display = 'block';
+        unlockedBox.style.display = 'none';
+        return;
+      }
+
+      lockedBox.style.display = 'none';
+      unlockedBox.style.display = 'block';
+
+      const nameInput = document.getElementById('lbCommanderNameInput');
+      if (nameInput && !nameInput.value) {
+        nameInput.value = getCommanderDisplayName();
+      }
+
+      refreshLeaderboard(false);
+    }
+
+    function selectLeaderboardCategory(catKey, btnEl) {
+      if (!LEADERBOARD_CATEGORIES[catKey]) return;
+      currentLbCategory = catKey;
+      document.querySelectorAll('#lbCategoryButtons .lb-cat-btn').forEach(b => b.classList.remove('active'));
+      if (btnEl) btnEl.classList.add('active');
+      refreshLeaderboard(false);
+    }
+
+    async function saveCommanderNameAndSync() {
+      const input = document.getElementById('lbCommanderNameInput');
+      const cleanName = (input.value || '').trim().slice(0, 22);
+      if (cleanName.length < 2) {
+        showToast('⚠️ Numele de Comandant trebuie să aibă cel puțin 2 caractere!');
+        return;
+      }
+      state.commanderName = cleanName;
+      saveGame();
+      const ok = await cloudPushSave(false);
+      if (ok) {
+        showToast(`👨‍🚀 Numele "${cleanName}" și scorurile tale au fost actualizate în Clasament!`);
+        refreshLeaderboard(false);
+      } else {
+        showToast(`💾 Numele "${cleanName}" a fost salvat și va apărea în Clasament când ești online!`);
+      }
+    }
+
+    async function refreshLeaderboard(manualToast = false) {
+      const loggedIn = Boolean(isFirebaseConfigured() && cloudSession && cloudSession.access_token && cloudSession.user);
+      if (!loggedIn) {
+        renderLeaderboardTab();
+        return;
+      }
+
+      const listEl = document.getElementById('leaderboardListContainer');
+      const myRankEl = document.getElementById('lbMyRankText');
+      const myScoreEl = document.getElementById('lbMyScoreText');
+      const cat = LEADERBOARD_CATEGORIES[currentLbCategory];
+
+      if (!navigator.onLine) {
+        listEl.innerHTML = `<div style="text-align:center; padding:24px; color:var(--accent-gold); font-size:13px;">📴 Ești în Mod Offline. Clasamentul se va încărca automat imediat ce pornești internetul!</div>`;
+        return;
+      }
+
+      try {
+        // Sincronizăm mai întâi scorul actual al jucătorului conectat
+        await cloudPushSave(false);
+
+        let res = await fetch(`${firebaseConfig.databaseURL}/leaderboard.json?auth=${encodeURIComponent(cloudSession.access_token)}`);
+        if (res.status === 401) {
+          const refreshed = await refreshCloudTokenIfNeeded();
+          if (refreshed) {
+            res = await fetch(`${firebaseConfig.databaseURL}/leaderboard.json?auth=${encodeURIComponent(cloudSession.access_token)}`);
+          }
+        }
+
+        if (!res.ok) {
+          throw new Error(`Acces refuzat la Realtime Database (Verifică Rules în Firebase Console!)`);
+        }
+
+        const rawObj = await res.json();
+        const allRows = rawObj ? Object.values(rawObj).filter(r => r && typeof r === 'object') : [];
+
+        if (allRows.length === 0) {
+          listEl.innerHTML = `<div style="text-align:center; padding:24px; color:var(--text-muted); font-size:13px;">Niciun scor înregistrat încă în această categorie. Ești primul Comandant!</div>`;
+          return;
+        }
+
+        // Sortăm descrescător după categoria selectată
+        allRows.sort((a, b) => Number(b[currentLbCategory] || 0) - Number(a[currentLbCategory] || 0));
+
+        const myUid = cloudSession.user.id;
+        const myFullIndex = allRows.findIndex(r => r.user_id === myUid);
+        const myRank = myFullIndex >= 0 ? myFullIndex + 1 : null;
+        const topRows = allRows.slice(0, 50);
+
+        listEl.innerHTML = topRows.map((row, idx) => {
+          const rank = idx + 1;
+          const isMe = row.user_id === myUid;
+
+          const topClass = rank === 1 ? ' top-1' : rank === 2 ? ' top-2' : rank === 3 ? ' top-3' : '';
+          const meClass = isMe ? ' me' : '';
+          const medal = rank === 1 ? '🥇' : rank === 2 ? '🥈' : rank === 3 ? '🥉' : `#${rank}`;
+          const safeName = (row.commander_name || 'Comandant').replace(/[<>&"']/g, '');
+          const scoreVal = Number(row[currentLbCategory] || 0);
+
+          return `
+            <div class="lb-row${topClass}${meClass}">
+              <div class="lb-left">
+                <div class="lb-rank">${medal}</div>
+                <div class="lb-name">
+                  ${safeName}
+                  ${isMe ? '<span class="lb-you-tag">TU</span>' : ''}
+                </div>
+              </div>
+              <div class="lb-score">${cat.format(scoreVal)}</div>
+            </div>
+          `;
+        }).join('');
+
+        if (myRankEl) {
+          myRankEl.innerHTML = myRank
+            ? `Poziția ta în <strong>${cat.label}</strong>: <strong style="color:var(--accent-gold)">Locul #${myRank}</strong> (din ${allRows.length} Comandanți)`
+            : `Scorul tău în <strong>${cat.label}</strong>:`;
+        }
+        if (myScoreEl) {
+          myScoreEl.innerText = cat.format(cat.localVal());
+        }
+
+        if (manualToast) {
+          showToast(`🏅 Clasamentul (${cat.label}) a fost actualizat!`);
+        }
+      } catch (err) {
+        listEl.innerHTML = `<div style="text-align:center; padding:20px; color:#fcd34d; font-size:12.5px;">⚠️ ${err.message}<br/><br/>Deschide <strong>☁️ Cloud Save ➔ ⚙️ Configurare Google Firebase ➔ 📋 Copiază Regulile (Rules JSON)</strong> și publică-le în Firebase Realtime Database.</div>`;
+      }
+    }
+
+    // Funcție apelată automat când omul trece din Offline -> Online
+    async function syncOfflineProgressToServer() {
+      if (!navigator.onLine || !isFirebaseConfigured() || !cloudSession || !cloudSession.access_token) return;
+      saveGame();
+      const ok = await cloudPushSave(false);
+      if (ok) {
+        showToast('🌐 Conexiune restabilită! Progresul tău jucat Offline a fost salvat automat în Google Firebase!');
+        playTone(660, 'triangle', 0.14, 0.08);
+      }
+    }
+
+    async function cloudPullSave(manual = false) {
+      if (!isFirebaseConfigured() || !cloudSession || !cloudSession.access_token) return;
+      if (!navigator.onLine) {
+        if (manual) showToast('📴 Ești Offline! Conectează-te la internet pentru a descărca din Cloud.');
+        return;
+      }
+      try {
+        const uid = encodeURIComponent(cloudSession.user.id);
+        let res = await fetch(`${firebaseConfig.databaseURL}/users/${uid}/save.json?auth=${encodeURIComponent(cloudSession.access_token)}`);
+
+        if (res.status === 401) {
+          const refreshed = await refreshCloudTokenIfNeeded();
+          if (refreshed) {
+            res = await fetch(`${firebaseConfig.databaseURL}/users/${uid}/save.json?auth=${encodeURIComponent(cloudSession.access_token)}`);
+          }
+        }
+
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const row = await res.json();
+
+        if (!row || !row.save_data) {
+          // Nu există încă salvare în Cloud pe acest cont -> urcăm salvarea locală
+          await cloudPushSave(manual);
+          return;
+        }
+
+        const cloudState = row.save_data;
+        const cloudLifetime = Number(cloudState.lifetimeEnergy || 0);
+        const localLifetime = Number(state.lifetimeEnergy || 0);
+        const cloudPres = Number(cloudState.prestigeCount || 0);
+        const localPres = Number(state.prestigeCount || 0);
+
+        const cloudIsAhead = (cloudPres > localPres) || (cloudPres === localPres && cloudLifetime > localLifetime * 1.01);
+
+        if (cloudIsAhead || manual) {
+          if (manual && !cloudIsAhead && localLifetime > cloudLifetime) {
+            if (!confirm(`Salvarea din Cloud are mai puțină energie (${formatNumber(cloudLifetime)}) decât cea de pe acest dispozitiv (${formatNumber(localLifetime)}).\n\nVrei totuși să suprascrii jocul local cu cel din Cloud?`)) {
+              return;
+            }
+          }
+          localStorage.setItem(SAVE_KEY, JSON.stringify(cloudState));
+          loadGame();
+          renderAll();
+          renderStats();
+          setPendingCloudSync(false);
+          showToast('☁️⬇️ Progresul din Google Firebase a fost încărcat și sincronizat!');
+        } else {
+          // Progresul local (ex: jucat offline) e mai avansat -> îl trimitem automat către server!
+          await cloudPushSave(false);
+        }
+      } catch (err) {
+        if (manual) {
+          showToast(`⚠️ Nu s-a putut descărca din Cloud: ${err.message}`);
+        }
+      }
+    }
+
+    // Detectare instantanee Offline / Online
+    window.addEventListener('offline', () => {
+      if (cloudSession && cloudSession.access_token) {
+        setPendingCloudSync(true);
+      } else {
+        updateCloudUI();
+      }
+      showToast('📴 Conexiune pierdută (Mod Offline). Jocul salvează local și va trimite automat datele la server când revine netul!');
+    });
+
+    window.addEventListener('online', () => {
+      updateCloudUI();
+      if (cloudSession && cloudSession.access_token) {
+        syncOfflineProgressToServer();
+      } else {
+        showToast('🌐 Conexiunea la internet a revenit!');
+      }
+      // Verificăm imediat și dacă a apărut un Update de joc cât timp a fost offline
+      checkForGameUpdate(false);
+    });
+
+    /********************************************************************
+     * 11.8. SISTEM AUTO-UPDATE LIVE (PENTRU TOȚI JUCĂTORII ONLINE)
+     ********************************************************************/
+    async function checkForGameUpdate(manual = false) {
+      if (!navigator.onLine) {
+        if (manual) showToast('📴 Ești Offline! Verificarea de update necesită conexiune la internet.');
+        return;
+      }
+
+      try {
+        // Verificăm și Service Worker-ul dacă există
+        if (swRegistration && typeof swRegistration.update === 'function') {
+          swRegistration.update().catch(() => {});
+        }
+
+        const baseUrl = REMOTE_UPDATE_BASE_URL ? REMOTE_UPDATE_BASE_URL.replace(/\/+$/, '') : '.';
+        const res = await fetch(`${baseUrl}/version.json?t=${Date.now()}`, {
+          cache: 'no-store'
+        });
+
+        if (!res.ok) {
+          if (manual) showToast(`✅ Rulezi deja cea mai nouă versiune (v${APP_VERSION})!`);
+          return;
+        }
+
+        const remoteVer = await res.json();
+        if (!remoteVer || remoteVer.offline) {
+          if (manual) showToast(`✅ Versiunea actuală v${APP_VERSION} este la zi.`);
+          return;
+        }
+
+        const isNewerBuild = (remoteVer.build && Number(remoteVer.build) > APP_BUILD);
+        const isDifferentVer = (remoteVer.version && remoteVer.version !== APP_VERSION && !remoteVer.build);
+
+        if (isNewerBuild || isDifferentVer) {
+          await triggerUpdateFlow(remoteVer);
+        } else if (manual) {
+          showToast(`✅ Jocul este la zi! Rulezi ultima versiune (v${APP_VERSION}).`);
+        }
+      } catch (e) {
+        if (manual) showToast(`✅ Rulezi versiunea v${APP_VERSION}.`);
+      }
+    }
+
+    async function triggerUpdateFlow(remoteVer) {
+      const modal = document.getElementById('updateModal');
+      if (modal.classList.contains('open')) return; // Deja afișat
+
+      // 1. Salvăm garantat tot progresul local și în Cloud înainte de update!
+      saveGame();
+      if (cloudSession && cloudSession.access_token && navigator.onLine) {
+        await cloudPushSave(false);
+      }
+
+      document.getElementById('updateNewVerText').innerText = `v${remoteVer.version || 'Nou'}`;
+      document.getElementById('updateChangelogText').innerText = remoteVer.changelog || 'Actualizare de conținut, optimizări și îmbunătățiri.';
+      modal.classList.add('open');
+      playTone(880, 'triangle', 0.2, 0.12);
+
+      let secondsLeft = 4;
+      const cdEl = document.getElementById('updateCountdownText');
+      if (cdEl) cdEl.innerText = `${secondsLeft}s`;
+
+      if (updateCountdownTimer) clearInterval(updateCountdownTimer);
+      updateCountdownTimer = setInterval(() => {
+        secondsLeft--;
+        if (cdEl) cdEl.innerText = `${Math.max(0, secondsLeft)}s`;
+        if (secondsLeft <= 0) {
+          clearInterval(updateCountdownTimer);
+          applyGameUpdateNow();
+        }
+      }, 1000);
+    }
+
+    async function applyGameUpdateNow() {
+      if (updateCountdownTimer) clearInterval(updateCountdownTimer);
+      saveGame();
+      if (cloudSession && cloudSession.access_token && navigator.onLine) {
+        await cloudPushSave(false);
+      }
+
+      try {
+        // Șterge cache-ul vechi din Service Worker ca noul cod să fie încărcat 100% proaspăt
+        if ('caches' in window) {
+          const keys = await caches.keys();
+          await Promise.all(keys.map(k => caches.delete(k)));
+        }
+        if (navigator.serviceWorker && navigator.serviceWorker.controller) {
+          navigator.serviceWorker.controller.postMessage({ type: 'CLEAR_CACHE_AND_UPDATE' });
+        }
+      } catch (e) {}
+
+      // Dacă avem un URL extern configurat și rulăm din fișier local (.exe / .dmg), putem redirecționa sau reîncărca
+      if (REMOTE_UPDATE_BASE_URL && location.protocol === 'file:') {
+        window.location.href = `${REMOTE_UPDATE_BASE_URL.replace(/\/+$/, '')}/index.html?updated=${Date.now()}`;
+      } else {
+        window.location.reload();
+      }
+    }
+
+    // Navigare Mobil (Bottom Bar)
+    function switchMobileZone(zone, btnEl) {
+      document.querySelectorAll('.mobile-nav-btn').forEach(b => b.classList.remove('active'));
+      if (btnEl) btnEl.classList.add('active');
+
+      document.getElementById('zone-left').classList.remove('mobile-active');
+      document.getElementById('zone-center').classList.remove('mobile-active');
+      document.getElementById('zone-right').classList.remove('mobile-active');
+
+      document.getElementById(`zone-${zone}`).classList.add('mobile-active');
+    }
+
+    // Instalare PWA (MacBook, Windows, Android, iOS)
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredInstallPrompt = e;
+    });
+
+    function triggerInstallApp() {
+      if (deferredInstallPrompt) {
+        deferredInstallPrompt.prompt();
+        deferredInstallPrompt.userChoice.then((choice) => {
+          if (choice.outcome === 'accepted') {
+            showToast('🎉 Quantum Nexus a fost instalat ca aplicație!');
+          }
+          deferredInstallPrompt = null;
+        });
+      } else {
+        document.getElementById('installModal').classList.add('open');
+      }
+    }
+
+    function closeInstallModal() {
+      document.getElementById('installModal').classList.remove('open');
+    }
+
+    /********************************************************************
+     * 12. GAME LOOP (60 FPS) & TIMERE AUTOMATE
+     ********************************************************************/
+    let lastTick = performance.now();
+    let secAccumulator = 0;
+
+    function gameLoop(now) {
+      const dt = Math.min(0.25, (now - lastTick) / 1000);
+      lastTick = now;
+
+      // Producția pasivă pe secundă
+      const cps = getCPS();
+      if (cps > 0) {
+        addEnergy(cps * dt);
+        if (cps > (state.maxCps || 0)) {
+          state.maxCps = cps;
+        }
+      }
+
+      // Scăderea naturală a barei de Supraîncărcare (Combo)
+      if (comboMeter > 0) {
+        comboMeter = Math.max(0, comboMeter - 14 * dt);
+      }
+
+      secAccumulator += dt;
+      if (secAccumulator >= 1) {
+        state.playTimeSeconds += Math.floor(secAccumulator);
+        secAccumulator %= 1;
+        checkAchievements();
+        if (document.getElementById('tab-stats').classList.contains('active')) {
+          renderStats();
+        }
+      }
+
+      updateUI();
+      requestAnimationFrame(gameLoop);
+    }
+
+    // Inițializare la pornire
+    window.addEventListener('DOMContentLoaded', () => {
+      loadGame();
+      renderAll();
+      initCloudSystem();
+      requestAnimationFrame(gameLoop);
+
+      const verSub = document.getElementById('versionHeaderSub');
+      if (verSub) verSub.innerText = `v${APP_VERSION} // AUTO-UPDATE & CLOUD SYNC`;
+
+      // Ascunde butonul de instalare dacă rulează deja ca aplicație nativă / standalone
+      if (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone) {
+        const installBtn = document.getElementById('btnInstallApp');
+        if (installBtn) installBtn.style.display = 'none';
+      }
+
+      // Înregistrare Service Worker pentru rulare 100% Offline + Auto-Update
+      if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost' || location.hostname === '127.0.0.1')) {
+        navigator.serviceWorker.register('./sw.js').then((reg) => {
+          swRegistration = reg;
+          reg.addEventListener('updatefound', () => {
+            checkForGameUpdate(false);
+          });
+        }).catch(() => {});
+      }
+
+      // Verificare inițială de Update când pornește jocul (dacă are internet)
+      setTimeout(() => checkForGameUpdate(false), 2500);
+
+      // Verificare automată de Update la fiecare 45 secunde (pentru toți jucătorii online)
+      setInterval(() => {
+        if (navigator.onLine) {
+          checkForGameUpdate(false);
+        }
+      }, 45000);
+
+      // Auto-Save local la fiecare 5 secunde
+      setInterval(saveGame, 5000);
+
+      // Auto-Sync în Cloud la fiecare 25 secunde (sau retrimitere dacă era în așteptare)
+      setInterval(() => {
+        if (navigator.onLine && cloudSession && cloudSession.access_token) {
+          if (pendingCloudSync) {
+            syncOfflineProgressToServer();
+          } else {
+            cloudPushSave(false);
+          }
+        }
+      }, 25000);
+
+      // Eveniment aleatoriu (Anomalie Cuantică Aurie) la fiecare 55 secunde
+      setInterval(() => {
+        if (Math.random() < 0.75) spawnQuantumAnomaly(false);
+      }, 55000);
+    });
+
+    // Salvare garantată la închiderea sau schimbarea aplicației/tab-ului
+    window.addEventListener('beforeunload', () => {
+      saveGame();
+      if (cloudSession && cloudSession.access_token) cloudPushSave(false);
+    });
+    document.addEventListener('visibilitychange', () => {
+      if (document.visibilityState === 'hidden') {
+        saveGame();
+        if (cloudSession && cloudSession.access_token) cloudPushSave(false);
+      } else if (document.visibilityState === 'visible' && navigator.onLine) {
+        if (pendingCloudSync && cloudSession && cloudSession.access_token) {
+          syncOfflineProgressToServer();
+        }
+        checkForGameUpdate(false);
+      }
+    });
+  </script>
+</body>
+</html>
