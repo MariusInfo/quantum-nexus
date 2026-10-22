@@ -1,0 +1,63 @@
+{
+  "name": "quantum-nexus",
+  "productName": "Quantum Nexus",
+  "version": "2.5.0",
+  "description": "QUANTUM NEXUS // Idle Clicker Simulator pentru MacBook, Windows PC, Android și iOS cu Cloud Save",
+  "main": "electron-main.js",
+  "author": "Quantum Nexus Studio",
+  "license": "MIT",
+  "scripts": {
+    "start": "electron .",
+    "dist:win": "electron-builder --win --x64",
+    "dist:mac": "electron-builder --mac --x64 --arm64",
+    "dist:linux": "electron-builder --linux",
+    "dist:all": "electron-builder -mwl"
+  },
+  "build": {
+    "appId": "com.quantumnexus.idle",
+    "productName": "Quantum Nexus",
+    "files": [
+      "index.html",
+      "version.json",
+      "manifest.json",
+      "sw.js",
+      "icon.svg",
+      "electron-main.js",
+      "package.json"
+    ],
+    "mac": {
+      "category": "public.app-category.games",
+      "identity": null,
+      "target": [
+        {
+          "target": "dmg",
+          "arch": ["arm64", "x64"]
+        },
+        {
+          "target": "zip",
+          "arch": ["arm64", "x64"]
+        }
+      ]
+    },
+    "win": {
+      "target": [
+        {
+          "target": "portable",
+          "arch": ["x64"]
+        },
+        {
+          "target": "nsis",
+          "arch": ["x64"]
+        }
+      ]
+    },
+    "linux": {
+      "category": "Game",
+      "target": ["AppImage"]
+    }
+  },
+  "devDependencies": {
+    "electron": "^33.2.0",
+    "electron-builder": "^25.1.8"
+  }
+}
