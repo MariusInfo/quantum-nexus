@@ -376,6 +376,381 @@
       to { transform: rotate(0deg); }
     }
 
+    /* ==========================================================================
+       ECOSISTEM VIZUAL REACTOR: CURSOARE ORBITALE, DRONE LASER, TESLA & DYSON
+       ========================================================================== */
+    .core-ecosystem-wrap {
+      position: relative;
+      width: 280px;
+      height: 280px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      user-select: none;
+    }
+
+    .orbit-ring-layer {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 4;
+    }
+
+    .cursor-ring-spin {
+      animation: spinCW 22s linear infinite;
+    }
+
+    .drone-ring-spin {
+      animation: spinCCW 16s linear infinite;
+      z-index: 3;
+    }
+
+    .sat-ring-spin {
+      animation: spinCW 32s linear infinite;
+      z-index: 2;
+    }
+
+    .orbit-slot {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+    }
+
+    /* 1. Cursoare Orbitale care apasă pe Nucleu */
+    .orbit-cursor-bob {
+      position: absolute;
+      left: -14px;
+      top: -14px;
+      width: 28px;
+      height: 28px;
+      overflow: visible;
+      transform: translateY(-108px);
+      animation: cursorPokeCore 1.15s cubic-bezier(0.34, 1.56, 0.64, 1) infinite;
+      filter: drop-shadow(0 0 8px rgba(56, 189, 248, 0.95));
+    }
+
+    .orbit-cursor-bob svg {
+      width: 28px;
+      height: 28px;
+      overflow: visible;
+      display: block;
+      transform: rotate(180deg); /* Vârful cursorului orientat direct spre centrul nucleului */
+    }
+
+    .cursor-tip-spark {
+      position: absolute;
+      bottom: -5px;
+      left: 50%;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #fde047;
+      box-shadow: 0 0 12px #fde047, 0 0 20px #38bdf8;
+      transform: translate(-50%, 0) scale(0);
+      animation: cursorTipFlash 1.15s ease-out infinite;
+    }
+
+    @keyframes cursorPokeCore {
+      0%, 100% {
+        transform: translateY(-110px) scale(1);
+      }
+      45% {
+        transform: translateY(-86px) scale(0.88);
+      }
+      60% {
+        transform: translateY(-113px) scale(1.06);
+      }
+    }
+
+    @keyframes cursorTipFlash {
+      0%, 38%, 65%, 100% {
+        transform: translate(-50%, 0) scale(0);
+        opacity: 0;
+      }
+      46% {
+        transform: translate(-50%, 4px) scale(1.5);
+        opacity: 1;
+      }
+      58% {
+        transform: translate(-50%, 6px) scale(2.2);
+        opacity: 0;
+      }
+    }
+
+    /* 2. Drone de Extracție cu Raze Laser spre Nucleu */
+    .orbit-drone-bob {
+      position: absolute;
+      left: -13px;
+      top: -13px;
+      width: 26px;
+      height: 26px;
+      transform: translateY(-125px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      animation: droneHover 1.8s ease-in-out infinite alternate;
+    }
+
+    .drone-unit-icon {
+      font-size: 16px;
+      filter: drop-shadow(0 0 8px #a855f7);
+      z-index: 2;
+    }
+
+    .drone-laser-beam {
+      position: absolute;
+      top: 16px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 2.5px;
+      height: 76px;
+      background: linear-gradient(180deg, #ec4899 0%, #38bdf8 65%, transparent 100%);
+      box-shadow: 0 0 10px #ec4899, 0 0 16px #38bdf8;
+      border-radius: 999px;
+      animation: laserPulse 0.9s ease-in-out infinite alternate;
+      pointer-events: none;
+    }
+
+    @keyframes droneHover {
+      from { transform: translateY(-127px) scale(0.96); }
+      to { transform: translateY(-120px) scale(1.06); }
+    }
+
+    @keyframes laserPulse {
+      from { opacity: 0.25; width: 1.5px; }
+      to { opacity: 0.95; width: 3.5px; }
+    }
+
+    /* 3. Sateliți Solari & Scut Orbital */
+    .orbit-sat-bob {
+      position: absolute;
+      left: -12px;
+      top: -12px;
+      width: 24px;
+      height: 24px;
+      transform: translateY(-136px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 15px;
+      filter: drop-shadow(0 0 10px #f59e0b);
+    }
+
+    .orbit-sat-bob::after {
+      content: '';
+      position: absolute;
+      top: 18px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 1.5px;
+      height: 85px;
+      background: linear-gradient(180deg, rgba(245, 158, 11, 0.75), transparent);
+      pointer-events: none;
+    }
+
+    /* 4. Sferă Geodezică Dyson & Vortex Cosmic */
+    .core-cosmic-vortex {
+      position: absolute;
+      inset: -18px;
+      border-radius: 50%;
+      background: conic-gradient(
+        from 0deg,
+        transparent 0deg,
+        rgba(56, 189, 248, 0.16) 60deg,
+        rgba(168, 85, 247, 0.24) 140deg,
+        transparent 180deg,
+        rgba(236, 72, 153, 0.18) 250deg,
+        rgba(245, 158, 11, 0.2) 320deg,
+        transparent 360deg
+      );
+      filter: blur(14px);
+      opacity: 0;
+      transition: opacity 0.5s ease;
+      animation: spinCW 9s linear infinite;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .core-cosmic-vortex.active {
+      opacity: 1;
+    }
+
+    .core-dyson-svg {
+      position: absolute;
+      inset: -10px;
+      width: 300px;
+      height: 300px;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+      z-index: 1;
+      filter: drop-shadow(0 0 10px rgba(245, 158, 11, 0.45));
+    }
+
+    .core-dyson-svg.active {
+      opacity: 1;
+    }
+
+    .dyson-cage-spin {
+      transform-origin: 150px 150px;
+      animation: spinCCW 26s linear infinite;
+    }
+
+    /* 5. Fulgere Tesla & Unde de Șoc (Shockwaves) */
+    .core-tesla-svg {
+      position: absolute;
+      inset: -10px;
+      width: 300px;
+      height: 300px;
+      pointer-events: none;
+      z-index: 6;
+      overflow: visible;
+    }
+
+    .core-fx-layer {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 7;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .core-shockwave-ring {
+      position: absolute;
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      border: 2.5px solid #38bdf8;
+      box-shadow: 0 0 16px #38bdf8, inset 0 0 12px #38bdf8;
+      pointer-events: none;
+      animation: shockwaveExpand 0.55s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    .core-shockwave-ring.crit {
+      border-color: #fde047;
+       border-width: 3.5px;
+      box-shadow: 0 0 24px #f59e0b, inset 0 0 16px #fde047;
+    }
+
+    .core-shockwave-ring.em-wave {
+      border-color: #22d3ee;
+      border-width: 4px;
+      box-shadow: 0 0 35px #38bdf8, inset 0 0 22px #a855f7;
+      animation-duration: 0.85s;
+    }
+
+    @keyframes shockwaveExpand {
+      0% {
+        transform: scale(0.5);
+        opacity: 0.95;
+      }
+      100% {
+        transform: scale(2.85);
+        opacity: 0;
+      }
+    }
+
+    /* 6. Suprapuneri Vizuale pentru Abilități Active (Sniper & Chrono) */
+    .core-skill-reticle {
+      position: absolute;
+      width: 236px;
+      height: 236px;
+      border-radius: 50%;
+      border: 2px dashed rgba(244, 63, 94, 0.8);
+      box-shadow: 0 0 22px rgba(244, 63, 94, 0.45), inset 0 0 18px rgba(245, 158, 11, 0.3);
+      pointer-events: none;
+      z-index: 8;
+      opacity: 0;
+      transition: opacity 0.25s ease;
+      animation: spinCCW 6s linear infinite;
+    }
+
+    .core-skill-reticle::before,
+    .core-skill-reticle::after {
+      content: '';
+      position: absolute;
+      background: rgba(253, 224, 71, 0.75);
+      box-shadow: 0 0 8px #f43f5e;
+    }
+
+    .core-skill-reticle::before {
+      top: -8px;
+      bottom: -8px;
+      left: 50%;
+      width: 2px;
+      transform: translateX(-50%);
+    }
+
+    .core-skill-reticle::after {
+      left: -8px;
+      right: -8px;
+      top: 50%;
+      height: 2px;
+      transform: translateY(-50%);
+    }
+
+    .core-skill-reticle.active {
+      opacity: 1;
+    }
+
+    .core-skill-chrono {
+      position: absolute;
+      width: 256px;
+      height: 256px;
+      border-radius: 50%;
+      border: 2px dotted rgba(168, 85, 247, 0.85);
+      box-shadow: 0 0 30px rgba(168, 85, 247, 0.5), inset 0 0 24px rgba(56, 189, 248, 0.35);
+      pointer-events: none;
+      z-index: 8;
+      opacity: 0;
+      transition: opacity 0.25s ease;
+      animation: spinCW 4s linear infinite;
+    }
+
+    .core-skill-chrono.active {
+      opacity: 1;
+    }
+
+    .core-button.passive-pulse {
+      animation: passiveCoreBump 0.26s ease-out;
+    }
+
+    @keyframes passiveCoreBump {
+      0% { transform: scale(1); }
+      45% { transform: scale(0.965); }
+      100% { transform: scale(1); }
+    }
+
+    /* 7. Bara de Module Vizuale Active sub Reactor */
+    .core-modules-strip {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 5px;
+      margin-top: 6px;
+      min-height: 22px;
+      z-index: 5;
+    }
+
+    .core-module-chip {
+      background: rgba(14, 19, 31, 0.82);
+      border: 1px solid rgba(56, 189, 248, 0.32);
+      color: #bae6fd;
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-size: 10.5px;
+      font-family: var(--font-mono);
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      box-shadow: 0 0 10px rgba(56, 189, 248, 0.15);
+    }
+
     /* Overclock Combo Bar */
     .combo-box {
       width: 100%;
@@ -426,7 +801,326 @@
       width: 0%;
       background: linear-gradient(90deg, var(--accent-cyan), var(--accent-purple), var(--accent-pink), var(--accent-gold));
       border-radius: 999px;
-      transition: width 0.1s linear;
+      box-shadow: 0 0 12px rgba(56, 189, 248, 0.5);
+    }
+
+    .combo-box.fever-box {
+      border-color: rgba(245, 158, 11, 0.75);
+      box-shadow: 0 0 22px rgba(245, 158, 11, 0.25), inset 0 0 14px rgba(245, 158, 11, 0.12);
+    }
+
+    /* ==========================================================================
+       ANIMAȚII SPECIALE AMPLIFICATOARE, PROIECTILE ORB & MECANICI UNICE
+       ========================================================================== */
+    .flying-energy-orb {
+      position: fixed;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 999;
+      transform: translate(-50%, -50%);
+      box-shadow: 0 0 18px currentColor, 0 0 32px currentColor;
+    }
+
+    .flying-energy-orb::after {
+      content: '';
+      position: absolute;
+      inset: 3px;
+      border-radius: 50%;
+      background: #ffffff;
+    }
+
+    .card-activated-flash {
+      animation: cardActivatePulse 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    @keyframes cardActivatePulse {
+      0% {
+        transform: scale(0.95);
+        box-shadow: 0 0 0 0 rgba(56, 189, 248, 0.8), inset 0 0 25px rgba(56, 189, 248, 0.45);
+        border-color: #ffffff;
+      }
+      50% {
+        transform: scale(1.03);
+        box-shadow: 0 0 28px 6px rgba(56, 189, 248, 0.45), inset 0 0 15px rgba(168, 85, 247, 0.35);
+      }
+      100% {
+        transform: scale(1);
+      }
+    }
+
+    /* Prismă Holografică (Lentilă de Focalizare c_mult1) */
+    .core-prism-aura {
+      position: absolute;
+      width: 224px;
+      height: 224px;
+      border-radius: 50%;
+      border: 2px solid transparent;
+      background: linear-gradient(135deg, rgba(56,189,248,0.22), rgba(236,72,153,0.22), rgba(253,224,71,0.22)) border-box;
+      -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.4s ease;
+      animation: spinCW 8s linear infinite;
+      z-index: 5;
+    }
+
+    .core-prism-aura.active {
+      opacity: 1;
+    }
+
+    /* Grilă Superconductoare (Rețea Superconductoare c_global1) */
+    .left-zone.cyber-grid-active::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(56, 189, 248, 0.07) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(168, 85, 247, 0.07) 1px, transparent 1px);
+      background-size: 26px 26px;
+      pointer-events: none;
+      animation: gridScroll 12s linear infinite;
+      z-index: 0;
+    }
+
+    @keyframes gridScroll {
+      from { background-position: 0 0; }
+      to { background-position: 26px 26px; }
+    }
+
+    /* Rază Mega-Fotonică (Amplificator Fotonic c_flat1 la fiecare al 10-lea click) */
+    .photon-mega-beam {
+      position: absolute;
+      width: 6px;
+      height: 150px;
+      background: linear-gradient(180deg, #ffffff, #38bdf8, transparent);
+      box-shadow: 0 0 18px #38bdf8, 0 0 30px #ffffff;
+      border-radius: 999px;
+      pointer-events: none;
+      z-index: 9;
+      transform-origin: center bottom;
+      animation: photonBeamStrike 0.38s ease-out forwards;
+    }
+
+    @keyframes photonBeamStrike {
+      0% { opacity: 1; transform: scaleX(2.4) scaleY(0.2); }
+      40% { opacity: 1; transform: scaleX(1.5) scaleY(1); }
+      100% { opacity: 0; transform: scaleX(0.1) scaleY(1); }
+    }
+
+    /* Țintă Lock-On la Critică (Calibrare Cuantică c_critChance) */
+    .crit-lock-crosshair {
+      position: fixed;
+      width: 54px;
+      height: 54px;
+      border: 2px solid #fde047;
+      border-radius: 50%;
+      box-shadow: 0 0 16px #f59e0b, inset 0 0 10px #fde047;
+      pointer-events: none;
+      z-index: 150;
+      transform: translate(-50%, -50%);
+      animation: crosshairLock 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    @keyframes crosshairLock {
+      0% { transform: translate(-50%, -50%) scale(1.9) rotate(0deg); opacity: 1; }
+      60% { transform: translate(-50%, -50%) scale(0.85) rotate(90deg); opacity: 1; }
+      100% { transform: translate(-50%, -50%) scale(1.2) rotate(135deg); opacity: 0; }
+    }
+
+    /* Scuturare Plasmă la Critică Puternică (Descărcare de Plasmă c_critMult) */
+    .core-plasma-shake {
+      animation: corePlasmaShake 0.24s ease-in-out;
+    }
+
+    @keyframes corePlasmaShake {
+      0%, 100% { transform: translate(0, 0); }
+      25% { transform: translate(-5px, 4px); }
+      50% { transform: translate(5px, -4px); }
+      75% { transform: translate(-4px, -3px); }
+    }
+
+    /* Badge-uri pentru Mecanicile Speciale ale Generatoarelor și Amplificatoarelor */
+    .special-mechanic-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 10px;
+      font-family: var(--font-mono);
+      font-weight: 800;
+      padding: 2px 7px;
+      border-radius: 6px;
+      background: rgba(56, 189, 248, 0.14);
+      border: 1px solid rgba(56, 189, 248, 0.35);
+      color: #7dd3fc;
+      margin-top: 4px;
+    }
+
+    .special-mechanic-badge.gold {
+      background: rgba(245, 158, 11, 0.15);
+      border-color: rgba(245, 158, 11, 0.4);
+      color: #fde047;
+    }
+
+    .special-mechanic-badge.purple {
+      background: rgba(168, 85, 247, 0.16);
+      border-color: rgba(168, 85, 247, 0.4);
+      color: #e9d5ff;
+    }
+
+    .special-mechanic-badge.pink {
+      background: rgba(236, 72, 153, 0.15);
+      border-color: rgba(236, 72, 153, 0.4);
+      color: #fbcfe8;
+    }
+
+    .special-mechanic-badge.emerald {
+      background: rgba(16, 185, 129, 0.15);
+      border-color: rgba(16, 185, 129, 0.4);
+      color: #6ee7b7;
+    }
+
+    /* ==========================================================================
+       ANIMAȚII CINEMATICE SUPREME:
+       1. EXPLOZIA NUCLEULUI ÎN BUCĂȚI LA REBIRTH + RECONSTRUCȚIE
+       2. GAURA NEAGRĂ CARE ÎNGHITE NUCLEUL
+       3. GENEZA UNIVERSULUI SINTETIC (BIG BANG PORTAL)
+       4. DRONE CU LASERE MOBILE CARE BALEIAZĂ NUCLEUL
+       ========================================================================== */
+    .drone-laser-beam {
+      transform-origin: top center;
+      animation: laserPulseSweep 1.1s ease-in-out infinite alternate !important;
+    }
+
+    @keyframes laserPulseSweep {
+      0% { opacity: 0.45; width: 2px; transform: translateX(-50%) rotate(-14deg); }
+      50% { opacity: 1; width: 4px; transform: translateX(-50%) rotate(0deg); }
+      100% { opacity: 0.55; width: 2.5px; transform: translateX(-50%) rotate(14deg); }
+    }
+
+    /* 1. Animația de Implozie, Spargere în Bucăți și Stabilizare la Rebirth */
+    .core-prestige-imploding {
+      animation: coreImplodeShake 0.85s cubic-bezier(0.36, 0.07, 0.19, 0.97) forwards !important;
+    }
+
+    @keyframes coreImplodeShake {
+      0% { transform: scale(1) rotate(0deg); filter: brightness(1); }
+      20% { transform: scale(1.12) translate(-6px, 5px) rotate(-5deg); filter: brightness(1.5) hue-rotate(30deg); }
+      40% { transform: scale(1.18) translate(7px, -6px) rotate(6deg); filter: brightness(2) hue-rotate(70deg); }
+      65% { transform: scale(1.26) translate(-8px, -5px) rotate(-8deg); filter: brightness(2.8) hue-rotate(120deg); }
+      85% { transform: scale(0.35) rotate(45deg); filter: brightness(4); }
+      100% { transform: scale(0) rotate(90deg); opacity: 0; }
+    }
+
+    .core-prestige-reborn {
+      animation: coreRebornStabilize 1.1s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
+    }
+
+    @keyframes coreRebornStabilize {
+      0% { transform: scale(0) rotate(-180deg); opacity: 0; filter: brightness(4) drop-shadow(0 0 50px #ffffff); }
+      55% { transform: scale(1.22) rotate(12deg); opacity: 1; filter: brightness(2.2) drop-shadow(0 0 40px #a855f7); }
+      80% { transform: scale(0.93) rotate(-4deg); filter: brightness(1.4); }
+      100% { transform: scale(1) rotate(0deg); opacity: 1; filter: brightness(1); }
+    }
+
+    .prestige-shard {
+      position: fixed;
+      width: 18px;
+      height: 18px;
+      pointer-events: none;
+      z-index: 9999;
+      clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%);
+      filter: drop-shadow(0 0 12px #38bdf8) drop-shadow(0 0 20px #a855f7);
+    }
+
+    .prestige-screen-flash {
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(circle, rgba(255,255,255,0.92) 0%, rgba(168,85,247,0.65) 45%, rgba(7,9,14,0.9) 100%);
+      pointer-events: none;
+      z-index: 9998;
+      animation: screenFlashFade 1.1s ease-out forwards;
+    }
+
+    @keyframes screenFlashFade {
+      0% { opacity: 0; }
+      15% { opacity: 1; }
+      100% { opacity: 0; }
+    }
+
+    /* 2. Gaura Neagră care înghite temporar Nucleul (Micro-Gaură Neagră g6) */
+    .blackhole-singularity-overlay {
+      position: absolute;
+      width: 240px;
+      height: 240px;
+      border-radius: 50%;
+      background: radial-gradient(
+        circle,
+        #000000 0%,
+        #000000 32%,
+        #4c1d95 40%,
+        #ec4899 48%,
+        #f59e0b 55%,
+        transparent 72%
+      );
+      box-shadow: 0 0 50px rgba(236, 72, 153, 0.8), inset 0 0 40px #000000;
+      pointer-events: none;
+      z-index: 12;
+      opacity: 0;
+      transform: scale(0);
+    }
+
+    .blackhole-singularity-overlay.devouring {
+      animation: blackholeOpenDevour 3.4s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+
+    @keyframes blackholeOpenDevour {
+      0% { transform: scale(0) rotate(0deg); opacity: 0; }
+      18% { transform: scale(1.15) rotate(120deg); opacity: 1; }
+      75% { transform: scale(1.25) rotate(540deg); opacity: 1; }
+      100% { transform: scale(0) rotate(720deg); opacity: 0; }
+    }
+
+    .core-devoured-by-bh {
+      animation: coreSwallowedByBH 3.4s ease-in-out forwards !important;
+    }
+
+    @keyframes coreSwallowedByBH {
+      0% { transform: scale(1) rotate(0deg); filter: brightness(1); }
+      25% { transform: scale(0.75) rotate(140deg); filter: hue-rotate(90deg) contrast(1.5); }
+      55% { transform: scale(0.12) rotate(480deg); opacity: 0.25; filter: invert(0.8) blur(2px); }
+      82% { transform: scale(1.28) rotate(700deg); opacity: 1; filter: brightness(2.5) drop-shadow(0 0 35px #f59e0b); }
+      100% { transform: scale(1) rotate(720deg); filter: brightness(1); }
+    }
+
+    /* 3. Geneza Universului Sintetic (Motor de Univers Sintetic g9) */
+    .universe-genesis-portal {
+      position: absolute;
+      width: 280px;
+      height: 280px;
+      border-radius: 50%;
+      background:
+        radial-gradient(circle, rgba(255,255,255,0.95) 0%, rgba(56,189,248,0.65) 22%, rgba(168,85,247,0.5) 48%, rgba(236,72,153,0.3) 68%, transparent 80%),
+        conic-gradient(from 0deg, #38bdf8, #a855f7, #ec4899, #fde047, #10b981, #38bdf8);
+      mix-blend-mode: screen;
+      pointer-events: none;
+      z-index: 11;
+      opacity: 0;
+      transform: scale(0);
+    }
+
+    .universe-genesis-portal.active-genesis {
+      animation: syntheticBigBangAnim 3.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    @keyframes syntheticBigBangAnim {
+      0% { transform: scale(0) rotate(0deg); opacity: 0; filter: blur(4px); }
+      22% { transform: scale(1.35) rotate(180deg); opacity: 0.95; filter: blur(1px) drop-shadow(0 0 40px #38bdf8); }
+      75% { transform: scale(1.55) rotate(540deg); opacity: 0.85; filter: blur(2px) drop-shadow(0 0 55px #fde047); }
+      100% { transform: scale(2.1) rotate(720deg); opacity: 0; filter: blur(10px); }
     }
 
     /* Active Skills */
@@ -765,7 +1459,7 @@
       cursor: pointer;
       transition: all 0.14s ease;
       position: relative;
-      overflow: hidden;
+      flex-shrink: 0;
     }
 
     .gen-card:hover:not(.locked) {
@@ -1089,31 +1783,97 @@
       z-index: 90;
     }
 
-    /* Random Event: Golden Quantum Anomaly */
+    /* Random Event: 8 Tipuri de Sfere / Anomalii Cuantice Zburătoare */
     .quantum-anomaly {
       position: fixed;
-      width: 68px;
-      height: 68px;
+      width: 72px;
+      height: 72px;
       border-radius: 50%;
       background: radial-gradient(circle, #fef08a 0%, #f59e0b 55%, #ec4899 100%);
       box-shadow: 0 0 28px #f59e0b, 0 0 55px rgba(236, 72, 153, 0.7);
+      border: 2.5px solid rgba(255, 255, 255, 0.85);
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
-      font-size: 32px;
+      font-size: 30px;
       cursor: pointer;
       z-index: 120;
-      animation: anomalyBob 1.2s ease-in-out infinite alternate;
+      user-select: none;
+      animation: anomalyBob 1.1s ease-in-out infinite alternate;
       transition: transform 0.12s ease;
     }
 
+    .quantum-anomaly::before {
+      content: '';
+      position: absolute;
+      inset: -8px;
+      border-radius: 50%;
+      border: 2px dashed rgba(255, 255, 255, 0.75);
+      animation: spinCW 4.5s linear infinite;
+      pointer-events: none;
+    }
+
     .quantum-anomaly:hover {
-      transform: scale(1.18);
+      transform: scale(1.2) !important;
+    }
+
+    .anomaly-tag-label {
+      position: absolute;
+      bottom: -22px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(7, 9, 14, 0.92);
+      border: 1px solid rgba(255, 255, 255, 0.45);
+      color: #ffffff;
+      font-family: var(--font-mono);
+      font-size: 9.5px;
+      font-weight: 800;
+      padding: 2px 7px;
+      border-radius: 999px;
+      white-space: nowrap;
+      pointer-events: none;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.65);
+      letter-spacing: 0.4px;
+    }
+
+    /* Cele 8 variante vizuale de cerc / sferă zburătoare */
+    .quantum-anomaly.orb-solar {
+      background: radial-gradient(circle, #ffffff 0%, #fde047 42%, #f59e0b 78%, #ea580c 100%);
+      box-shadow: 0 0 30px #f59e0b, 0 0 60px rgba(253, 224, 71, 0.8);
+    }
+    .quantum-anomaly.orb-storm {
+      background: radial-gradient(circle, #ffffff 0%, #7dd3fc 38%, #0284c7 78%, #1e3a8a 100%);
+      box-shadow: 0 0 30px #38bdf8, 0 0 60px rgba(56, 189, 248, 0.85);
+    }
+    .quantum-anomaly.orb-crimson {
+      background: radial-gradient(circle, #ffe4e6 0%, #fb7185 38%, #e11d48 75%, #881337 100%);
+      box-shadow: 0 0 32px #f43f5e, 0 0 64px rgba(244, 63, 94, 0.85);
+    }
+    .quantum-anomaly.orb-emerald {
+      background: radial-gradient(circle, #d1fae5 0%, #34d399 40%, #059669 78%, #064e3b 100%);
+      box-shadow: 0 0 30px #10b981, 0 0 60px rgba(16, 185, 129, 0.85);
+    }
+    .quantum-anomaly.orb-mecha {
+      background: radial-gradient(circle, #fae8ff 0%, #e879f9 40%, #9333ea 76%, #3b0764 100%);
+      box-shadow: 0 0 32px #a855f7, 0 0 64px rgba(217, 70, 239, 0.85);
+    }
+    .quantum-anomaly.orb-cryo {
+      background: radial-gradient(circle, #ffffff 0%, #bae6fd 42%, #38bdf8 74%, #4f46e5 100%);
+      box-shadow: 0 0 32px #7dd3fc, 0 0 65px rgba(99, 102, 241, 0.85);
+    }
+    .quantum-anomaly.orb-antimatter {
+      background: radial-gradient(circle, #090d16 0%, #311042 48%, #ec4899 82%, #38bdf8 100%);
+      box-shadow: 0 0 34px #ec4899, 0 0 68px rgba(99, 102, 241, 0.9);
+    }
+    .quantum-anomaly.orb-prismatic {
+      background: conic-gradient(from 0deg, #f43f5e, #f59e0b, #fde047, #10b981, #38bdf8, #a855f7, #ec4899, #f43f5e);
+      box-shadow: 0 0 36px #fde047, 0 0 70px #38bdf8, inset 0 0 18px #ffffff;
     }
 
     @keyframes anomalyBob {
-      from { filter: brightness(1) drop-shadow(0 0 12px #f59e0b); }
-      to { filter: brightness(1.3) drop-shadow(0 0 25px #fde047); }
+      from { filter: brightness(1) drop-shadow(0 0 10px rgba(255, 255, 255, 0.4)); }
+      to { filter: brightness(1.28) drop-shadow(0 0 22px rgba(255, 255, 255, 0.85)); }
     }
 
     /* Toast Notifications */
@@ -1646,13 +2406,16 @@
         padding-top: 6px;
       }
       .core-stage {
-        min-height: 170px;
-        padding: 6px 0;
+        min-height: 195px;
+        padding: 2px 0;
         flex-shrink: 0;
       }
-      .core-button {
-        width: 160px;
-        height: 160px;
+      .core-ecosystem-wrap {
+        transform: scale(0.76);
+        margin: -24px 0;
+      }
+      .core-modules-strip {
+        margin-top: 2px;
       }
       .combo-box {
         padding: 8px 12px;
@@ -1769,7 +2532,7 @@
         <div class="brand-icon">⚛️</div>
         <div>
           <div class="brand-title">QUANTUM NEXUS</div>
-          <div class="brand-sub" id="versionHeaderSub">v2.6.0 // AUTO-UPDATE & CLOUD SYNC</div>
+          <div class="brand-sub" id="versionHeaderSub">v2.8.0</div>
         </div>
       </div>
 
@@ -1804,47 +2567,86 @@
           </div>
         </div>
 
-        <!-- Giant Clickable Core -->
-        <div class="core-stage">
-          <div class="core-button" id="coreBtn" role="button" tabindex="0" aria-label="Generează Energie Cuantică">
-            <div class="core-glow"></div>
-            <svg class="core-svg" viewBox="0 0 200 200">
-              <defs>
-                <radialGradient id="coreGrad" cx="50%" cy="50%" r="50%">
-                  <stop offset="0%" stop-color="#ffffff" />
-                  <stop offset="35%" stop-color="#38bdf8" />
-                  <stop offset="75%" stop-color="#6366f1" />
-                  <stop offset="100%" stop-color="#a855f7" stop-opacity="0" />
-                </radialGradient>
-              </defs>
-              <!-- Outer Tech Ring -->
-              <g class="ring-spin-slow">
-                <circle cx="100" cy="100" r="88" fill="none" stroke="rgba(56, 189, 248, 0.3)" stroke-width="2" stroke-dasharray="14 8" />
-                <circle cx="100" cy="12" r="4" fill="#38bdf8" />
-                <circle cx="100" cy="188" r="4" fill="#38bdf8" />
+        <!-- Giant Clickable Core & Orbital Visual Ecosystem -->
+        <div class="core-stage" id="coreStage">
+          <div class="core-ecosystem-wrap" id="coreEcosystemWrap">
+            <!-- 1. Cosmic Nebula & Dyson Geodesic Lattice -->
+            <div class="core-cosmic-vortex" id="coreCosmicVortex"></div>
+            <svg class="core-dyson-svg" id="coreDysonSvg" viewBox="0 0 300 300">
+              <g class="dyson-cage-spin">
+                <polygon points="150,16 266,83 266,217 150,284 34,217 34,83" fill="none" stroke="rgba(245, 158, 11, 0.42)" stroke-width="1.6" stroke-dasharray="10 6" />
+                <polygon points="150,32 252,209 48,209" fill="none" stroke="rgba(253, 224, 71, 0.28)" stroke-width="1.2" />
+                <polygon points="150,268 252,91 48,91" fill="none" stroke="rgba(253, 224, 71, 0.28)" stroke-width="1.2" />
+                <circle cx="150" cy="150" r="134" fill="none" stroke="rgba(56, 189, 248, 0.22)" stroke-width="1" stroke-dasharray="4 8" />
               </g>
-              <!-- Middle Counter-Rotating Hexagon Ring -->
-              <g class="ring-spin-rev">
-                <circle cx="100" cy="100" r="72" fill="none" stroke="rgba(168, 85, 247, 0.45)" stroke-width="3" stroke-dasharray="28 14" />
-                <circle cx="28" cy="100" r="4.5" fill="#c084fc" />
-                <circle cx="172" cy="100" r="4.5" fill="#c084fc" />
-              </g>
-              <!-- Inner High-Speed Ring -->
-              <g class="ring-spin-fast">
-                <circle cx="100" cy="100" r="54" fill="none" stroke="rgba(236, 72, 153, 0.5)" stroke-width="2.5" stroke-dasharray="18 22" />
-              </g>
-              <!-- Central Plasma Sphere -->
-              <circle cx="100" cy="100" r="44" fill="url(#coreGrad)" />
-              <circle cx="100" cy="100" r="24" fill="#ffffff" opacity="0.9" />
             </svg>
+
+            <!-- 2. Orbiting Solar Satellites (g4 / g5) -->
+            <div class="orbit-ring-layer sat-ring-spin" id="orbitSatellitesLayer"></div>
+
+            <!-- 3. Orbiting Extraction Drones with Laser Beams (g1) -->
+            <div class="orbit-ring-layer drone-ring-spin" id="orbitDronesLayer"></div>
+
+            <!-- 4. Orbiting Auto-Cursors that rotate & click the core (g0) -->
+            <div class="orbit-ring-layer cursor-ring-spin" id="orbitCursorsLayer"></div>
+
+            <!-- 5. Tesla Plasma Lightning Arcs SVG (g2 / g3 / Crits) -->
+            <svg class="core-tesla-svg" id="coreTeslaSvg" viewBox="0 0 300 300"></svg>
+
+            <!-- 6. Active Skill, Amplifier, Black Hole & Universe Genesis Overlays -->
+            <div class="core-prism-aura" id="corePrismAura"></div>
+            <div class="core-skill-reticle" id="coreSniperReticle"></div>
+            <div class="core-skill-chrono" id="coreChronoAura"></div>
+            <div class="blackhole-singularity-overlay" id="coreBlackHoleOverlay"></div>
+            <div class="universe-genesis-portal" id="coreUniversePortal"></div>
+
+            <!-- 7. Shockwave Ripples Layer -->
+            <div class="core-fx-layer" id="coreFxLayer"></div>
+
+            <!-- Central Clickable Core Button -->
+            <div class="core-button" id="coreBtn" role="button" tabindex="0" aria-label="Generează Energie Cuantică">
+              <div class="core-glow"></div>
+              <svg class="core-svg" viewBox="0 0 200 200">
+                <defs>
+                  <radialGradient id="coreGrad" cx="50%" cy="50%" r="50%">
+                    <stop offset="0%" stop-color="#ffffff" />
+                    <stop offset="35%" stop-color="#38bdf8" />
+                    <stop offset="75%" stop-color="#6366f1" />
+                    <stop offset="100%" stop-color="#a855f7" stop-opacity="0" />
+                  </radialGradient>
+                </defs>
+                <!-- Outer Tech Ring -->
+                <g class="ring-spin-slow">
+                  <circle cx="100" cy="100" r="88" fill="none" stroke="rgba(56, 189, 248, 0.3)" stroke-width="2" stroke-dasharray="14 8" />
+                  <circle cx="100" cy="12" r="4" fill="#38bdf8" />
+                  <circle cx="100" cy="188" r="4" fill="#38bdf8" />
+                </g>
+                <!-- Middle Counter-Rotating Hexagon Ring -->
+                <g class="ring-spin-rev">
+                  <circle cx="100" cy="100" r="72" fill="none" stroke="rgba(168, 85, 247, 0.45)" stroke-width="3" stroke-dasharray="28 14" />
+                  <circle cx="28" cy="100" r="4.5" fill="#c084fc" />
+                  <circle cx="172" cy="100" r="4.5" fill="#c084fc" />
+                </g>
+                <!-- Inner High-Speed Ring -->
+                <g class="ring-spin-fast">
+                  <circle cx="100" cy="100" r="54" fill="none" stroke="rgba(236, 72, 153, 0.5)" stroke-width="2.5" stroke-dasharray="18 22" />
+                </g>
+                <!-- Central Plasma Sphere -->
+                <circle cx="100" cy="100" r="44" fill="url(#coreGrad)" />
+                <circle cx="100" cy="100" r="24" fill="#ffffff" opacity="0.9" />
+              </svg>
+            </div>
           </div>
+
+          <!-- Active Visual Modules Strip -->
+          <div class="core-modules-strip" id="coreModulesStrip"></div>
         </div>
 
         <!-- Overclock Combo & Active Skills -->
         <div>
-          <div class="combo-box">
+          <div class="combo-box" id="comboBoxCard">
             <div class="combo-header">
-              <div class="combo-title">🔥 Supraîncărcare Click (Overclock)</div>
+              <div class="combo-title">🔥 Supraîncărcare Click (<span id="comboPctText">0%</span>)</div>
               <div class="combo-mult" id="comboMultText">x1.00</div>
             </div>
             <div class="combo-track">
@@ -1856,19 +2658,19 @@
             <button class="skill-btn" id="skill1" onclick="activateSkill(1)">
               <span class="skill-icon">⚡</span>
               <span class="skill-name">Impuls EM</span>
-              <span class="skill-desc">+30x CPS Instant</span>
+              <span class="skill-desc">+12x CPS Instant</span>
               <div class="skill-cooldown-overlay" id="cdSkill1" style="display:none">0s</div>
             </button>
             <button class="skill-btn" id="skill2" onclick="activateSkill(2)">
               <span class="skill-icon">🎯</span>
               <span class="skill-name">Hiper-Critică</span>
-              <span class="skill-desc">100% Crit (15s)</span>
+              <span class="skill-desc">+40% Crit (12s)</span>
               <div class="skill-cooldown-overlay" id="cdSkill2" style="display:none">0s</div>
             </button>
             <button class="skill-btn" id="skill3" onclick="activateSkill(3)">
               <span class="skill-icon">⏳</span>
               <span class="skill-name">Distorsiune</span>
-              <span class="skill-desc">2x Producție (30s)</span>
+              <span class="skill-desc">1.5x Producție (20s)</span>
               <div class="skill-cooldown-overlay" id="cdSkill3" style="display:none">0s</div>
             </button>
           </div>
@@ -1882,10 +2684,10 @@
             🔬 Tehnologii & Click
           </button>
           <button class="tab-btn" onclick="switchTab('prestige', this)">
-            🌌 Prestigiu <span class="tab-badge" id="prestigeTabBadge" style="display:none">NOU</span>
+            🌌 Prestigiu <span class="tab-badge" id="prestigeTabBadge" style="display:none">GATA</span>
           </button>
           <button class="tab-btn" onclick="switchTab('achievements', this)">
-            🏆 Realizări (<span id="achCountBadge">0/18</span>)
+            🏆 Realizări (<span id="achCountBadge">0/330</span>)
           </button>
           <button class="tab-btn" onclick="switchTab('leaderboard', this)">
             🏅 Clasament
@@ -1905,30 +2707,46 @@
             <div class="upgrades-grid" id="clickUpgradesGrid"></div>
           </div>
 
-          <!-- TAB 2: Prestige / Rebirth -->
+          <!-- TAB 2: Prestige / Rebirth (Step-by-Step) -->
           <div class="tab-pane" id="tab-prestige">
             <div class="prestige-hero">
-              <div class="prestige-title">🌌 Ascensiune în Singularitate (Rebirth)</div>
+              <div class="prestige-title">🌌 Ascensiune Pas-cu-Pas (Rebirth Secvențial)</div>
               <div class="prestige-desc">
-                Resetează energia și generatoarele actuale pentru a extrage <strong>🔮 Materie Întunecată</strong>.
-                Fiecare unitate de Materie Întunecată oferă un bonus permanent de <strong>+25% la toată producția</strong> și poate fi cheltuită pe upgrade-uri cuantice eterne.
+                Progresia în Singularitate se face <strong>strict câte un Rebirth pe rând</strong>! Nu poți acumula mai multe Rebirth-uri într-un singur run: odată atins pragul de energie, Nucleul intră în <strong>Saturație</strong> până declanșezi Rebirth-ul curent.<br/>
+                Fiecare Rebirth îți oferă <strong>+15% producție permanentă</strong> și <strong>🔮 Materie Întunecată</strong> (+10% producție fiecare).
               </div>
               <div class="prestige-stats-row">
                 <div class="prestige-stat-card">
-                  <div class="prestige-stat-label">Materie Întunecată Deținută</div>
-                  <div class="prestige-stat-val" id="dmCurrentVal">0</div>
+                  <div class="prestige-stat-label">Rebirth-uri / Materie 🔮</div>
+                  <div class="prestige-stat-val" id="dmCurrentVal">0 🌌 | 0 🔮</div>
                 </div>
                 <div class="prestige-stat-card">
-                  <div class="prestige-stat-label">Vei Primi la Ascensiune</div>
-                  <div class="prestige-stat-val" id="dmPendingVal">+0</div>
+                  <div class="prestige-stat-label" id="dmPendingLabel">Recompensă Rebirth #1</div>
+                  <div class="prestige-stat-val" id="dmPendingVal">Blocat</div>
                 </div>
                 <div class="prestige-stat-card">
-                  <div class="prestige-stat-label">Următorul Cristal la</div>
-                  <div class="prestige-stat-val" id="dmNextReq" style="font-size:16px">1.00M ⚡</div>
+                  <div class="prestige-stat-label" id="dmNextReqLabel">Prag Energie Rebirth #1</div>
+                  <div class="prestige-stat-val" id="dmNextReq" style="font-size:16px">10.00M ⚡</div>
                 </div>
               </div>
+
+              <!-- Bara de progres către următorul Rebirth -->
+              <div style="max-width:460px; margin:0 auto 14px; text-align:left;">
+                <div style="display:flex; justify-content:space-between; font-size:11.5px; font-family:var(--font-mono); color:var(--text-muted); margin-bottom:5px;">
+                  <span id="rebirthProgressLabel">Progres Energie Run Curent:</span>
+                  <span id="rebirthProgressPct" style="color:var(--accent-cyan); font-weight:800;">0.0%</span>
+                </div>
+                <div class="combo-track" style="height:10px;">
+                  <div class="combo-fill" id="rebirthProgressFill" style="width:0%"></div>
+                </div>
+              </div>
+
+              <div id="rebirthSaturationBanner" style="display:none; background:rgba(245,158,11,0.16); border:1px solid rgba(245,158,11,0.55); color:#fde047; border-radius:10px; padding:10px 14px; font-size:12px; font-weight:700; max-width:480px; margin:0 auto 14px;">
+                ⚠️ Nucleul a atins Pragul de Saturație pentru acest Rebirth! Recompensa nu se multiplică dacă mai farmezi fără Rebirth — declanșează Singularitatea acum pentru a trece la nivelul următor!
+              </div>
+
               <button class="btn-prestige" id="btnTriggerPrestige" onclick="triggerPrestige()" disabled>
-                🌌 Declanșează Singularitatea (+0 🔮)
+                🌌 Declanșează Rebirth #1 (+1 🔮)
               </button>
             </div>
 
@@ -1939,11 +2757,24 @@
             <div class="upgrades-grid" id="prestigeUpgradesGrid"></div>
           </div>
 
-          <!-- TAB 3: Achievements -->
+          <!-- TAB 3: Achievements (330 Realizări) -->
           <div class="tab-pane" id="tab-achievements">
-            <div class="section-header">
-              <div class="section-title">🏆 Realizări Deblocate</div>
-              <div class="section-subtitle">Fiecare realizare oferă +5% Multiplicator Global Permanent! (Bonus actual: <strong id="achBonusText" style="color:var(--accent-gold)">+0%</strong>)</div>
+            <div class="section-header" style="flex-wrap:wrap; gap:8px;">
+              <div>
+                <div class="section-title">🏆 Enciclopedia Realizărilor (<span id="achHeaderProgress">0 / 330</span>)</div>
+                <div class="section-subtitle">Fiecare realizare oferă <strong>+1% Multiplicator Global Permanent</strong>! (Bonus actual: <strong id="achBonusText" style="color:var(--accent-gold)">+0%</strong>)</div>
+              </div>
+              <div class="lb-cat-bar" style="margin-bottom:0;">
+                <button class="lb-cat-btn active" onclick="setAchievementFilter('all', this)">📋 Toate</button>
+                <button class="lb-cat-btn" onclick="setAchievementFilter('unlocked', this)">✅ Deblocate</button>
+                <button class="lb-cat-btn" onclick="setAchievementFilter('locked', this)">🔒 Blocate</button>
+                <button class="lb-cat-btn" onclick="setAchievementFilter('click', this)">👆 Click & Crit</button>
+                <button class="lb-cat-btn" onclick="setAchievementFilter('energy', this)">⚡ Energie & CPS</button>
+                <button class="lb-cat-btn" onclick="setAchievementFilter('fleet', this)">🤖 Flotă & Roboți</button>
+                <button class="lb-cat-btn" onclick="setAchievementFilter('prestige', this)">🌌 Rebirth & Materie</button>
+                <button class="lb-cat-btn" onclick="setAchievementFilter('tech', this)">🔬 Tehnologii & Abilități</button>
+                <button class="lb-cat-btn" onclick="setAchievementFilter('secret', this)">👑 Secrete & Timp</button>
+              </div>
             </div>
             <div class="ach-grid" id="achievementsGrid"></div>
           </div>
@@ -2031,7 +2862,7 @@
         <div class="right-header">
           <div>
             <div class="section-title">🤖 Automatizare Pasivă</div>
-            <div class="section-subtitle">La 10, 25, 50, 100 bucăți: producție x2!</div>
+            <div class="section-subtitle">La 25, 50, 100, 200, 350, 500 bucăți: +35% producție!</div>
           </div>
           <div class="buy-mult-group">
             <button class="mult-btn active" onclick="setBuyMultiplier(1, this)">1x</button>
@@ -2069,7 +2900,7 @@
     <div class="modal-card">
       <div class="modal-title">🛰️ Bine ai revenit, Comandante!</div>
       <div class="modal-body">
-        Cât timp ai fost plecat (<strong id="offlineTimeText">0s</strong>), generatoarele tale cuantice au funcționat la <strong id="offlineEffText">50%</strong> capacitate și au produs:
+        Cât timp ai fost plecat (<strong id="offlineTimeText">0s</strong>), generatoarele tale cuantice au funcționat la <strong id="offlineEffText">40%</strong> capacitate și au produs:
       </div>
       <div class="modal-reward" id="offlineRewardText">+0 ⚡</div>
       <button class="btn-prestige" onclick="closeOfflineModal()" style="width:100%">Colectează Energia</button>
@@ -2181,7 +3012,7 @@
     <div class="modal-card">
       <div class="modal-title">🚀 Actualizare Nouă Disponibilă!</div>
       <div class="modal-body">
-        O versiune nouă a jocului (<strong id="updateNewVerText" style="color:var(--accent-cyan)">v2.6.0</strong>) a fost publicată pe server!<br/><br/>
+        O versiune nouă a jocului (<strong id="updateNewVerText" style="color:var(--accent-cyan)">v2.7.0</strong>) a fost publicată pe server!<br/><br/>
         <div id="updateChangelogText" style="background:var(--bg-card); border:1px solid var(--border-subtle); border-radius:10px; padding:10px; font-size:12px; color:var(--text-main);">
           Îmbunătățiri de sistem și conținut nou.
         </div>
@@ -2197,76 +3028,207 @@
 
   <script>
     /********************************************************************
-     * 1. CONFIGURARE DATE JOC (UPGRADE-URI, GENERATOARE, REALIZĂRI)
+     * 0. FORMATARE NUMERE MARI (1.25K, 3.40M, 12.8B, T, Qa, Qi...)
+     ********************************************************************/
+    const SUFFIXES = ['', 'K', 'M', 'B', 'T', 'Qa', 'Qi', 'Sx', 'Sp', 'Oc', 'No', 'Dc', 'UDc', 'DDc'];
+
+    function formatNumber(num, decimals = 2) {
+      if (!isFinite(num) || isNaN(num)) return '0';
+      if (num < 1000) {
+        return num < 10 && num % 1 !== 0 ? num.toFixed(1) : Math.floor(num).toString();
+      }
+      const tier = Math.floor(Math.log10(Math.abs(num)) / 3);
+      if (tier === 0) return Math.floor(num).toString();
+      const suffix = SUFFIXES[tier] || `e${tier * 3}`;
+      const scale = Math.pow(10, tier * 3);
+      const scaled = num / scale;
+      return scaled.toFixed(decimals) + suffix;
+    }
+
+    function formatTime(sec) {
+      sec = Math.floor(sec);
+      if (sec < 60) return `${sec}s`;
+      const m = Math.floor(sec / 60);
+      const s = sec % 60;
+      if (m < 60) return `${m}m ${s}s`;
+      const h = Math.floor(m / 60);
+      const rm = m % 60;
+      return `${h}h ${rm}m`;
+    }
+
+    /********************************************************************
+     * 1. CONFIGURARE DATE JOC (UPGRADE-URI, GENERATOARE, 135 REALIZĂRI)
      ********************************************************************/
     const CLICK_UPGRADES_DATA = [
       {
         id: 'c_flat1',
         name: 'Amplificator Fotonic',
         icon: '🔦',
-        desc: '+2 Energie de bază pentru fiecare click manual.',
-        baseCost: 15,
-        costMult: 1.55,
+        desc: '+1 Energie de bază la click. La fiecare al 10-lea click trage o Rază Mega-Fotonică (x3 Energie)!',
+        specialBadge: '⚡ RAZĂ MEGA-FOTONICĂ (10 CLICK)',
+        badgeColor: 'gold',
+        baseCost: 20,
+        costMult: 1.65,
         maxLevel: 100
       },
       {
         id: 'c_mult1',
         name: 'Lentilă de Focalizare',
         icon: '🔍',
-        desc: '+25% multiplicator pentru puterea de click.',
-        baseCost: 100,
-        costMult: 1.85,
+        desc: '+15% putere de click per nivel și încarcă bara de Overclock mai rapid.',
+        specialBadge: '🌈 PRISMĂ HOLOGRAFICĂ & +OVERCLOCK',
+        badgeColor: 'purple',
+        baseCost: 150,
+        costMult: 1.95,
         maxLevel: 50
       },
       {
         id: 'c_synergy',
         name: 'Conector Neuro-Sinergic',
         icon: '🧠',
-        desc: 'Fiecare click adaugă +1.5% din producția ta pe secundă (CPS) per nivel!',
-        baseCost: 350,
-        costMult: 2.2,
-        maxLevel: 25
+        desc: 'Fiecare click descarcă Fulgere Sinaptice cu +0.25% din producția pasivă per nivel.',
+        specialBadge: '🧬 ARCURI SINAPTICE LA CLICK',
+        badgeColor: 'pink',
+        baseCost: 600,
+        costMult: 2.35,
+        maxLevel: 20
       },
       {
         id: 'c_critChance',
         name: 'Calibrare Cuantică (Crit %)',
         icon: '🎯',
-        desc: '+3% șansă de lovitură critică la click (Bază: 5%).',
-        baseCost: 500,
-        costMult: 2.3,
+        desc: '+2% șansă de lovitură critică la click (Bază: 5%) cu Vizor Lock-On pe țintă.',
+        specialBadge: '🎯 VIZOR LOCK-ON LA CRITICĂ',
+        badgeColor: 'gold',
+        baseCost: 800,
+        costMult: 2.4,
         maxLevel: 25
       },
       {
         id: 'c_critMult',
         name: 'Descărcare de Plasmă (Crit Dmg)',
         icon: '💥',
-        desc: '+100% daune la loviturile critice (Bază: x3).',
-        baseCost: 1200,
-        costMult: 2.4,
-        maxLevel: 30
+        desc: '+25% daune la loviturile critice per nivel (Bază: x2.0) + Cutremur de Plasmă.',
+        specialBadge: '🌋 EXPLOZIE & SHAKE PLASMĂ',
+        badgeColor: 'pink',
+        baseCost: 1800,
+        costMult: 2.5,
+        maxLevel: 20
       },
       {
         id: 'c_global1',
         name: 'Rețea Superconductoare',
         icon: '🌐',
-        desc: '+15% producție globală (CPS și Click) per nivel.',
-        baseCost: 2500,
-        costMult: 2.1,
-        maxLevel: 100
+        desc: '+8% producție globală per nivel și activează Matricea Cibernetică 3D pe reactor.',
+        specialBadge: '🌐 MATRICE CIBERNETICĂ 3D',
+        badgeColor: 'emerald',
+        baseCost: 3500,
+        costMult: 2.35,
+        maxLevel: 50
       }
     ];
 
     const GENERATORS_DATA = [
-      { id: 'g0', name: 'Nano-Cursor Autonom', icon: '🖱️', baseCost: 15, baseCps: 0.5 },
-      { id: 'g1', name: 'Dronă de Extracție', icon: '🤖', baseCost: 100, baseCps: 4 },
-      { id: 'g2', name: 'Script Neural AI', icon: '💻', baseCost: 1100, baseCps: 32 },
-      { id: 'g3', name: 'Condensator Tahionic', icon: '🔋', baseCost: 12000, baseCps: 260 },
-      { id: 'g4', name: 'Satelit Solar Orbital', icon: '🛰️', baseCost: 130000, baseCps: 1400 },
-      { id: 'g5', name: 'Reactor de Fuziune Rece', icon: '⚛️', baseCost: 1400000, baseCps: 7800 },
-      { id: 'g6', name: 'Micro-Gaură Neagră', icon: '🕳️', baseCost: 20000000, baseCps: 44000 },
-      { id: 'g7', name: 'Matrice Dyson Parțială', icon: '☀️', baseCost: 330000000, baseCps: 260000 },
-      { id: 'g8', name: 'Accelerator Temporal', icon: '⏳', baseCost: 5100000000, baseCps: 1600000 },
-      { id: 'g9', name: 'Motor de Univers Sintetic', icon: '🌌', baseCost: 75000000000, baseCps: 10000000 }
+      {
+        id: 'g0',
+        name: 'Nano-Cursor Autonom',
+        icon: '🖱️',
+        baseCost: 15,
+        baseCps: 0.25,
+        roleBadge: '👆 AUTO-CLICK RAPID & OVERCLOCK 100%',
+        badgeColor: 'gold',
+        specialSummary: (cnt) => `Apasă pe nucleu la ${(Math.max(0.28, 1.35 / (1 + cnt * 0.08))).toFixed(2)}s și urcă Overclock-ul până la 100%!`
+      },
+      {
+        id: 'g1',
+        name: 'Dronă de Extracție',
+        icon: '🤖',
+        baseCost: 180,
+        baseCps: 2.0,
+        roleBadge: '💥 SALVĂ LASER & +4% CRIT DMG',
+        badgeColor: 'pink',
+        specialSummary: (cnt) => `Baleiaj laser + Salvă la 7.5s (+${cnt * 4}% Daune Critice)`
+      },
+      {
+        id: 'g2',
+        name: 'Script Neural AI',
+        icon: '💻',
+        baseCost: 2400,
+        baseCps: 15,
+        roleBadge: '🔥 +3% PUTERE OVERCLOCK / AI',
+        badgeColor: 'purple',
+        specialSummary: (cnt) => `Stabilizează Overclock-ul și îi crește multiplicatorul cu +${cnt * 3}%`
+      },
+      {
+        id: 'g3',
+        name: 'Condensator Tahionic',
+        icon: '🔋',
+        baseCost: 35000,
+        baseCps: 85,
+        roleBadge: '⚡ EXPLOZIE BURST LA FIECARE 5 SEC',
+        badgeColor: 'gold',
+        specialSummary: (cnt) => `Descarcă un Șoc Tahionic de +${formatNumber(cnt * 420 * getGlobalMultiplier())} ⚡ la fiecare 5s!`
+      },
+      {
+        id: 'g4',
+        name: 'Satelit Solar Orbital',
+        icon: '🛰️',
+        baseCost: 550000,
+        baseCps: 900,
+        roleBadge: '🔦 +5% PUTERE CLICK MANUAL / SATELIT',
+        badgeColor: 'emerald',
+        specialSummary: (cnt) => `Focalizează raze solare: +${cnt * 5}% Putere Click Manual`
+      },
+      {
+        id: 'g5',
+        name: 'Reactor de Fuziune Rece',
+        icon: '⚛️',
+        baseCost: 9500000,
+        baseCps: 8000,
+        roleBadge: '🎯 +0.4% ȘANSĂ CRITICĂ / REACTOR',
+        badgeColor: 'pink',
+        specialSummary: (cnt) => `Injecție plasmă: +${Math.min(12, cnt * 0.4).toFixed(1)}% Șansă de Critică`
+      },
+      {
+        id: 'g6',
+        name: 'Micro-Gaură Neagră',
+        icon: '🕳️',
+        baseCost: 180000000,
+        baseCps: 75000,
+        roleBadge: '🕳️ ÎNGHITE NUCLEUL (18s) & +6% ABILITĂȚI',
+        badgeColor: 'purple',
+        specialSummary: (cnt) => `Înghite nucleul la 18s (Erupție Hawking) + ${cnt * 6}% Abilități`
+      },
+      {
+        id: 'g7',
+        name: 'Matrice Dyson Parțială',
+        icon: '☀️',
+        baseCost: 3800000000,
+        baseCps: 800000,
+        roleBadge: '☀️ +4% EFICIENȚĂ TOATĂ FLOTA',
+        badgeColor: 'gold',
+        specialSummary: (cnt) => `Sferă Dyson: amplifică toate modulele cu +${cnt * 4}%`
+      },
+      {
+        id: 'g8',
+        name: 'Accelerator Temporal',
+        icon: '⏳',
+        baseCost: 85000000000,
+        baseCps: 9500000,
+        roleBadge: '⏳ REÎNCĂRCARE RAPIDĂ ABILITĂȚI',
+        badgeColor: 'emerald',
+        specialSummary: (cnt) => `Accelerează timpul: -${Math.min(45, cnt * 2)}% timp de reîncărcare Abilități`
+      },
+      {
+        id: 'g9',
+        name: 'Motor de Univers Sintetic',
+        icon: '🌌',
+        baseCost: 2200000000000,
+        baseCps: 120000000,
+        roleBadge: '🌌 BIG BANG PORTAL (22s) & +10% GLOBAL',
+        badgeColor: 'purple',
+        specialSummary: (cnt) => `Portal Big Bang la 22s + ${cnt * 10}% Multiplicator Global Suprem`
+      }
     ];
 
     const PRESTIGE_UPGRADES_DATA = [
@@ -2274,60 +3236,552 @@
         id: 'p_prod',
         name: 'Rezonanță Întunecată',
         icon: '🔮',
-        desc: 'Dublează (+100%) toată producția de Energie per nivel.',
+        desc: '+25% la toată producția de Energie per nivel.',
         baseCost: 1,
-        costMult: 2.5,
-        maxLevel: 20
+        costMult: 2.2,
+        maxLevel: 25
       },
       {
         id: 'p_discount',
         name: 'Arhitectură Sub-Spațială',
         icon: '📐',
-        desc: 'Reduce costul tuturor generatoarelor cu 8% per nivel.',
+        desc: 'Reduce costul tuturor generatoarelor cu 4% per nivel.',
         baseCost: 2,
-        costMult: 2.5,
-        maxLevel: 8
+        costMult: 2.4,
+        maxLevel: 10
       },
       {
         id: 'p_offline',
         name: 'Cronos Cuantic',
         icon: '⌚',
-        desc: '+10% eficiență la câștigul Offline per nivel (Bază: 50%).',
+        desc: '+8% eficiență la câștigul Offline per nivel (Bază: 40%).',
         baseCost: 2,
-        costMult: 3,
+        costMult: 2.8,
         maxLevel: 5
       },
       {
         id: 'p_starter',
         name: 'Memorie Ancestrală',
         icon: '🚀',
-        desc: 'Începi fiecare Rebirth cu 1.000x mai multă energie de start.',
+        desc: 'Începi fiecare Rebirth cu +500 Energie de start per nivel.',
+        baseCost: 2,
+        costMult: 3.0,
+        maxLevel: 10
+      },
+      {
+        id: 'p_click',
+        name: 'Impuls Gravitațional',
+        icon: '⚡',
+        desc: '+20% putere de click manuală per nivel.',
+        baseCost: 2,
+        costMult: 2.3,
+        maxLevel: 20
+      },
+      {
+        id: 'p_anom',
+        name: 'Atracție Astrală',
+        icon: '☄️',
+        desc: '+20% recompensă din Anomaliile Cuantice Aurii per nivel.',
         baseCost: 3,
-        costMult: 4,
-        maxLevel: 5
+        costMult: 2.6,
+        maxLevel: 10
       }
     ];
 
-    const ACHIEVEMENTS_DATA = [
-      { id: 'a_click1', name: 'Inițiere în Sistem', desc: 'Efectuează primul tău click.', icon: '👆', check: s => s.totalClicks >= 1 },
-      { id: 'a_click2', name: 'Degete de Titan', desc: 'Efectuează 250 de click-uri manuale.', icon: '⚡', check: s => s.totalClicks >= 250 },
-      { id: 'a_click3', name: 'Viteza Luminii', desc: 'Efectuează 2.000 de click-uri manuale.', icon: '🔥', check: s => s.totalClicks >= 2000 },
-      { id: 'a_e1', name: 'Scânteie Cuantică', desc: 'Adună 1.000 Energie totală.', icon: '🔋', check: s => s.lifetimeEnergy >= 1e3 },
-      { id: 'a_e2', name: 'Megawatt Digital', desc: 'Adună 1.00M (1.000.000) Energie totală.', icon: '💡', check: s => s.lifetimeEnergy >= 1e6 },
-      { id: 'a_e3', name: 'Gigawatt Cosmic', desc: 'Adună 1.00B Energie totală.', icon: '🌟', check: s => s.lifetimeEnergy >= 1e9 },
-      { id: 'a_e4', name: 'Terawatt Interstelar', desc: 'Adună 1.00T Energie totală.', icon: '🪐', check: s => s.lifetimeEnergy >= 1e12 },
-      { id: 'a_e5', name: 'Stăpânul Galaxiei', desc: 'Adună 1.00Qa Energie totală.', icon: '🌌', check: s => s.lifetimeEnergy >= 1e15 },
-      { id: 'a_gen1', name: 'Primul Automat', desc: 'Cumpără primul tău generator pasiv.', icon: '🤖', check: s => getTotalGenerators() >= 1 },
-      { id: 'a_gen2', name: 'Fabrică Autonomă', desc: 'Deține 50 de generatoare în total.', icon: '🏭', check: s => getTotalGenerators() >= 50 },
-      { id: 'a_gen3', name: 'Imperiu Cibernetic', desc: 'Deține 200 de generatoare în total.', icon: '🏙️', check: s => getTotalGenerators() >= 200 },
-      { id: 'a_gen4', name: 'Civilizație Tip III', desc: 'Deține 500 de generatoare în total.', icon: '🛸', check: s => getTotalGenerators() >= 500 },
-      { id: 'a_crit1', name: 'Precizie Chirurgicală', desc: 'Obține 25 de lovituri critice.', icon: '🎯', check: s => s.totalCrits >= 25 },
-      { id: 'a_crit2', name: 'Suprasarcină Critică', desc: 'Obține 500 de lovituri critice.', icon: '💥', check: s => s.totalCrits >= 500 },
-      { id: 'a_anom1', name: 'Vânător de Anomalii', desc: 'Capturează o Anomalie Cuantică Aurie.', icon: '☄️', check: s => s.anomaliesCaught >= 1 },
-      { id: 'a_anom2', name: 'Colecționar Astral', desc: 'Capturează 10 Anomalii Cuantice.', icon: '🌠', check: s => s.anomaliesCaught >= 10 },
-      { id: 'a_pres1', name: 'Dincolo de Orizoant', desc: 'Efectuează primul tău Rebirth (Prestigiu).', icon: '🕳️', check: s => s.prestigeCount >= 1 },
-      { id: 'a_pres2', name: 'Arhitectul Timpului', desc: 'Efectuează 5 Rebirth-uri.', icon: '👑', check: s => s.prestigeCount >= 5 }
-    ];
+    // Construim 330 de Realizări Unice în 16 Colecții (6 Categorii de Filtrare)
+    function buildAchievementsCatalog() {
+      const list = [];
+
+      // 1. Click-uri Manuale (25 realizări - cat: 'click')
+      const clickTiers = [
+        [1, 'Inițiere în Sistem', '👆'],
+        [10, 'Contact Tactil', '👆'],
+        [25, 'Degete Încălzite', '👆'],
+        [50, 'Impuls Constant', '👆'],
+        [100, 'Operator de Consolă', '⌨️'],
+        [250, 'Degete de Titan', '⚡'],
+        [500, 'Puls Mecanic', '🔨'],
+        [1000, 'Ritm Cibernetic', '🎵'],
+        [2000, 'Cadran Supersonic', '💨'],
+        [3500, 'Viteza Sunetului', '💨'],
+        [5000, 'Furtună Sinaptică', '🌩️'],
+        [7500, 'Torent Manual', '🌊'],
+        [10000, 'Viteza Luminii', '🔥'],
+        [17500, 'Frecvență Laser', '⚡'],
+        [25000, 'Rezonanță Tactilă', '🖐️'],
+        [50000, 'Maestru al Impulsului', '💠'],
+        [75000, 'Fuziune prin Atingere', '☀️'],
+        [100000, 'Arhitectul Click-ului', '⚡'],
+        [175000, 'Voință de Neclintit', '🛡️'],
+        [250000, 'Reflexe Sub-Cuantice', '🌀'],
+        [500000, 'Suprasarcină Neuronală', '🧠'],
+        [1000000, 'Zeul Click-urilor (1M)', '👑'],
+        [2500000, 'Puls Intergalactic (2.5M)', '🌌'],
+        [5000000, 'Atingerea Eternității (5M)', '✨'],
+        [10000000, 'Omnipotență Tactilă (10M)', '🏆']
+      ];
+      clickTiers.forEach(([val, name, icon], i) => {
+        list.push({
+          id: `a_click_${i + 1}`,
+          cat: 'click',
+          name,
+          desc: `Efectuează ${val.toLocaleString('ro-RO')} click-uri manuale.`,
+          icon,
+          check: s => (s.totalClicks || 0) >= val
+        });
+      });
+
+      // 2. Lovituri Critice (20 realizări - cat: 'click')
+      const critTiers = [
+        [1, 'Scânteie Critică', '🎯'],
+        [5, 'Acuratețe Inițială', '🎯'],
+        [15, 'Țintă Fixată', '🎯'],
+        [35, 'Ochi de Șoim Cuantic', '🦅'],
+        [75, 'Precizie Chirurgicală', '🎯'],
+        [150, 'Laser Focalizat', '💥'],
+        [300, 'Breză în Nucleu', '💥'],
+        [600, 'Suprasarcină Critică', '💥'],
+        [1000, 'Maestru al Punctului Slab', '⚡'],
+        [2000, 'Rază Penetrantă', '🔦'],
+        [4000, 'Detonare în Lanț', '🧨'],
+        [7500, 'Fuziune Instabilă', '☄️'],
+        [12500, 'Impact Devastator', '🌋'],
+        [20000, 'Colaps Fotonic', '🌟'],
+        [35000, 'Lunetist Astral', '🎯'],
+        [50000, 'Infailibil (50K Critice)', '👑'],
+        [100000, 'Arhitectul Criticei (100K)', '💎'],
+        [200000, 'Supernovă la Click (200K)', '☀️'],
+        [350000, 'Ruptură Dimensională (350K)', '🌀'],
+        [500000, 'Zeul Loviturilor Critice (500K)', '🏆']
+      ];
+      critTiers.forEach(([val, name, icon], i) => {
+        list.push({
+          id: `a_crit_${i + 1}`,
+          cat: 'click',
+          name,
+          desc: `Obține ${val.toLocaleString('ro-RO')} lovituri critice.`,
+          icon,
+          check: s => (s.totalCrits || 0) >= val
+        });
+      });
+
+      // 3. Supraîncărcare / Overclock Fever >= 85% (10 realizări - cat: 'click')
+      const feverTiers = [
+        [1, 'Primul Overclock', '🔥'],
+        [10, 'Nucleu Încins (10s)', '🔥'],
+        [30, 'Fuziune la Roșu (30s)', '🌡️'],
+        [60, 'Un Minut de Foc (60s)', '⚡'],
+        [180, 'Reactor Supraîncărcat (3m)', '☄️'],
+        [360, 'Plasmă Nestăvilită (6m)', '☀️'],
+        [600, 'Frenezie Termică (10m)', '🌋'],
+        [1200, 'Stăpânul Supraîncărcării (20m)', '💥'],
+        [2400, 'Inimă de Supernovă (40m)', '🌟'],
+        [3600, 'Oră în Overclock Pur (1h)', '👑']
+      ];
+      feverTiers.forEach(([val, name, icon], i) => {
+        list.push({
+          id: `a_fever_${i + 1}`,
+          cat: 'click',
+          name,
+          desc: `Menține bara de Supraîncărcare peste 85% timp de ${val} secunde în total.`,
+          icon,
+          check: s => (s.feverSeconds || 0) >= val
+        });
+      });
+
+      // 4. Energie Totală Produsă (30 realizări - cat: 'energy')
+      const energyTiers = [
+        [50, 'Micro-Scânteie', '🔋'],
+        [250, 'Scânteie Inițială', '🔋'],
+        [1000, 'Condensator Încărcat (1K)', '🔋'],
+        [5000, 'Kilowatt Cuantic (5K)', '💡'],
+        [25000, 'Generator Local (25K)', '💡'],
+        [100000, 'Rețea Urbană (100K)', '🔌'],
+        [500000, 'Centrală Orbitală (500K)', '⚡'],
+        [2e6, 'Megawatt Digital (2M)', '🌟'],
+        [10e6, 'Fuziune Stabilizată (10M)', '🌟'],
+        [50e6, 'Nori de Plasmă (50M)', '☀️'],
+        [250e6, 'Putere Planetară (250M)', '🌍'],
+        [1e9, 'Gigawatt Cosmic (1B)', '🪐'],
+        [5e9, 'Soare Artificial (5B)', '☀️'],
+        [25e9, 'Nebuloasă Energetică (25B)', '✨'],
+        [100e9, 'Câmp de Forță Galactic (100B)', '🛸'],
+        [500e9, 'Nuclee Gemene (500B)', '⚛️'],
+        [2.5e12, 'Terawatt Interstelar (2.5T)', '🪐'],
+        [15e12, 'Pulsar Capturat (15T)', '💫'],
+        [100e12, 'Quasar Domolit (100T)', '🌠'],
+        [1e15, 'Stăpânul Galaxiei (1Qa)', '🌌'],
+        [25e15, 'Cluster Galactic (25Qa)', '🌌'],
+        [500e15, 'Super-Roi Cosmic (500Qa)', '✨'],
+        [10e18, 'Energia Big Bang-ului (10Qi)', '👑'],
+        [250e18, 'Orizont Multiversal (250Qi)', '🌀'],
+        [5e21, 'Putere Sextilionară (5Sx)', '💎'],
+        [100e21, 'Matrice Absolută (100Sx)', '🔮'],
+        [5e24, 'Imperiu Septilionar (5Sp)', '🛸'],
+        [5e27, 'Dincolo de Octilion (5Oc)', '🌟'],
+        [5e30, 'Voința Nonilionului (5No)', '⚡'],
+        [1e33, 'Arhitectul Decilionului (1Dc)', '🏆']
+      ];
+      energyTiers.forEach(([val, name, icon], i) => {
+        list.push({
+          id: `a_energy_${i + 1}`,
+          cat: 'energy',
+          name,
+          desc: `Adună ${formatNumber(val)} Energie totală (toate timpurile).`,
+          icon,
+          check: s => (s.lifetimeEnergy || 0) >= val
+        });
+      });
+
+      // 5. Viteză Pasivă CPS (25 realizări - cat: 'energy')
+      const cpsTiers = [
+        [0.4, 'Primul Flux Pasiv', '⚙️'],
+        [2, 'Flux Continuu', '⚙️'],
+        [10, 'Micro-Curent', '🔌'],
+        [35, 'Turbină Automată', '🌀'],
+        [100, 'Reactor Activ (100/s)', '⚛️'],
+        [400, 'Injecție de Plasmă (400/s)', '🔥'],
+        [1500, 'Torent Fotonic (1.5K/s)', '⚡'],
+        [6000, 'Uzina Orbitală (6K/s)', '🛰️'],
+        [25000, 'Râu de Quanta (25K/s)', '🌊'],
+        [100000, 'Cascadă Tahionică (100K/s)', '💠'],
+        [400000, 'Reactor Hiper-Dens (400K/s)', '🔋'],
+        [1.5e6, 'Frecvență Megawatt (1.5M/s)', '🚀'],
+        [7.5e6, 'Hiper-Producție (7.5M/s)', '🌟'],
+        [35e6, 'Colector Stelar (35M/s)', '☀️'],
+        [150e6, 'Coroană Solară (150M/s)', '☀️'],
+        [1e9, 'Viteză Gigawatt (1B/s)', '🪐'],
+        [10e9, 'Matrice în Plină Forță (10B/s)', '🌌'],
+        [100e9, 'Omnipotență Energetică (100B/s)', '👑'],
+        [1e12, 'Flux Terawatt (1T/s)', '💫'],
+        [25e12, 'Pulsul Quasarului (25T/s)', '🌠'],
+        [500e12, 'Furtună Galactică (500T/s)', '🌀'],
+        [10e15, 'Motorul Quadrilionului (10Qa/s)', '🔮'],
+        [500e15, 'Singularitate Activă (500Qa/s)', '🕳️'],
+        [25e18, 'Torent Quintilionar (25Qi/s)', '💎'],
+        [1e21, 'Viteză Cosmică Absolută (1Sx/s)', '🏆']
+      ];
+      cpsTiers.forEach(([val, name, icon], i) => {
+        list.push({
+          id: `a_cps_${i + 1}`,
+          cat: 'energy',
+          name,
+          desc: `Atinge o producție pasivă de ${formatNumber(val)}/sec.`,
+          icon,
+          check: s => Math.max(s.maxCps || 0, getCPS()) >= val
+        });
+      });
+
+      // 6. Flotă Totală de Generatoare (20 realizări - cat: 'fleet')
+      const fleetTiers = [
+        [1, 'Primul Automat', '🤖'],
+        [3, 'Trio Cibernetic', '🤖'],
+        [5, 'Echipă de Roboți', '🤖'],
+        [10, 'Grup de Lucru', '🔧'],
+        [20, 'Atelier Cibernetic', '🔧'],
+        [35, 'Linie de Asamblare', '🏭'],
+        [50, 'Fabrică Autonomă', '🏭'],
+        [75, 'Complex Industrial', '🏗️'],
+        [100, 'Metropolă Mecanizată', '🏙️'],
+        [150, 'Rețea Continentală', '🌐'],
+        [200, 'Armată Automată', '🤖'],
+        [300, 'Imperiu Cibernetic', '🛸'],
+        [450, 'Planetă-Mașină', '🪐'],
+        [600, 'Roiul lui Dyson', '☀️'],
+        [800, 'Flotă Interstelară', '🚀'],
+        [1000, 'Civilizație Tip III (1.000)', '👑'],
+        [1500, 'Legiunea de Oțel (1.500)', '⚙️'],
+        [2000, 'Arhiva Galactică (2.000)', '🌌'],
+        [3000, 'Mecanism Universal (3.000)', '💠'],
+        [5000, 'Stăpânul Suprem al Flotei (5.000)', '🏆']
+      ];
+      fleetTiers.forEach(([val, name, icon], i) => {
+        list.push({
+          id: `a_fleet_${i + 1}`,
+          cat: 'fleet',
+          name,
+          desc: `Deține ${val.toLocaleString('ro-RO')} generatoare în total.`,
+          icon,
+          check: () => getTotalGenerators() >= val
+        });
+      });
+
+      // 7. Maeștri pe Fiecare Tip de Generator (10 generatoare x 8 praguri = 80 realizări - cat: 'fleet')
+      const genMilestones = [
+        [1, 'Prototip'],
+        [5, 'Patrulă'],
+        [10, 'Escadrilă'],
+        [25, 'Batalion'],
+        [50, 'Divizie'],
+        [100, 'Supremație'],
+        [150, 'Armadă'],
+        [250, 'Hegemonie']
+      ];
+      GENERATORS_DATA.forEach((gen) => {
+        genMilestones.forEach(([cnt, prefix]) => {
+          list.push({
+            id: `a_${gen.id}_${cnt}`,
+            cat: 'fleet',
+            name: `${prefix}: ${gen.name}`,
+            desc: `Deține ${cnt}x ${gen.name}.`,
+            icon: gen.icon,
+            check: s => Boolean(s.generators && (s.generators[gen.id] || 0) >= cnt)
+          });
+        });
+      });
+
+      // 8. Singularități / Rebirth-uri (20 realizări - cat: 'prestige')
+      const presTiers = [
+        [1, 'Dincolo de Orizont (#1)', '🕳️'],
+        [2, 'A Doua Renaștere (#2)', '🌌'],
+        [3, 'Călător prin Singularitate (#3)', '🌀'],
+        [4, 'Patru Dimensiuni (#4)', '🔮'],
+        [5, 'Arhitectul Timpului (#5)', '⏳'],
+        [7, 'Ciclul Etern (#7)', '🔮'],
+        [10, 'Maestru al Renașterii (#10)', '🌟'],
+        [12, 'Apostolul Vidului (#12)', '🌑'],
+        [15, 'Transcendență Cuantică (#15)', '🛸'],
+        [18, 'Păzitorul Pragului (#18)', '⚡'],
+        [22, 'Conștiință Cosmică (#22)', '👁️'],
+        [26, 'Voință Astrală (#26)', '✨'],
+        [30, 'Creator de Universuri (#30)', '🌌'],
+        [35, 'Domnitorul Ciclurilor (#35)', '🪐'],
+        [40, 'Nemuritor Cuantic (#40)', '💎'],
+        [50, 'Eternitatea Absolută (#50)', '👑'],
+        [60, 'Suveran Multiversal (#60)', '🌌'],
+        [75, 'Ascensiune Divină (#75)', '☀️'],
+        [90, 'Originea Tuturor (#90)', '🌠'],
+        [100, 'Rebirth Centenar (#100)', '🏆']
+      ];
+      presTiers.forEach(([val, name, icon], i) => {
+        list.push({
+          id: `a_pres_${i + 1}`,
+          cat: 'prestige',
+          name,
+          desc: `Efectuează ${val} Rebirth-uri (Singularități) pas-cu-pas.`,
+          icon,
+          check: s => (s.prestigeCount || 0) >= val
+        });
+      });
+
+      // 9. Materie Întunecată Deținută (15 realizări - cat: 'prestige')
+      const dmTiers = [
+        [1, 'Primul Cristal Întunecat', '🔮'],
+        [3, 'Esentă din Abis', '🔮'],
+        [6, 'Rezervor de Antimaterie', '🔮'],
+        [12, 'Colecționar din Vid', '🔮'],
+        [20, 'Nucleu de Materie Neagră', '🌑'],
+        [35, 'Fântâna Întunecată', '🌑'],
+        [50, 'Trezorerie Intergalactică', '💎'],
+        [75, 'Sceptrul Singularității', '🔮'],
+        [110, 'Suveranul Materiei Întunecate', '👑'],
+        [160, 'Abisul Strălucitor', '✨'],
+        [250, 'Banca Multiversului (250)', '💎'],
+        [400, 'Oracolul Antimateriei (400)', '👁️'],
+        [750, 'Ocean de Materie Neagră (750)', '🌌'],
+        [1250, 'Împăratul Vidului (1.250)', '👑'],
+        [2500, 'Tezaurul Cosmic Absolut (2.500)', '🏆']
+      ];
+      dmTiers.forEach(([val, name, icon], i) => {
+        list.push({
+          id: `a_dm_${i + 1}`,
+          cat: 'prestige',
+          name,
+          desc: `Deține simultan ${val.toLocaleString('ro-RO')} 🔮 Materie Întunecată.`,
+          icon,
+          check: s => (s.darkMatter || 0) >= val
+        });
+      });
+
+      // 10. Arborele de Singularitate - Nivele Prestigiu (10 realizări - cat: 'prestige')
+      const presTreeTiers = [
+        [1, 'Inițiat în Singularitate', '🔮'],
+        [3, 'Atingerea Vidului', '🔮'],
+        [6, 'Arhitect Sub-Spațial', '📐'],
+        [10, 'Rezonanță Permanentă', '🌌'],
+        [15, 'Evoluție Transcendentă', '✨'],
+        [22, 'Codul Eternității', '🧬'],
+        [30, 'Maestru al Arborelui Astral', '🌳'],
+        [45, 'Dominație în Singularitate', '💎'],
+        [60, 'Aproape de Omnisciență', '👁️'],
+        [80, 'Arborele de Singularitate Complet (80/80)', '🏆']
+      ];
+      presTreeTiers.forEach(([val, name, icon], i) => {
+        list.push({
+          id: `a_ptree_${i + 1}`,
+          cat: 'prestige',
+          name,
+          desc: `Deblochează în total ${val} nivele în Arborele de Singularitate.`,
+          icon,
+          check: s => Object.values(s.prestigeUpgrades || {}).reduce((a, b) => a + b, 0) >= val
+        });
+      });
+
+      // 11. Cercetare Tehnologică - Nivele totale Click & Tech (15 realizări - cat: 'tech')
+      const techTiers = [
+        [1, 'Primul Upgrade', '🔬'],
+        [5, 'Ucenic Cercetător', '🔬'],
+        [12, 'Laborator Experimental', '🧪'],
+        [20, 'Inginer Cuantic', '🛠️'],
+        [30, 'Laborator Avansat', '🧪'],
+        [45, 'Institutul Cuantic', '🏛️'],
+        [60, 'Academia de Științe', '🎓'],
+        [80, 'Tehnologie Supremă', '🧠'],
+        [100, 'Centenar Tehnologic', '⚡'],
+        [125, 'Rețea Neurală Completă', '🌐'],
+        [150, 'Savant Interstelar', '🚀'],
+        [180, 'Cercetare de Vârf', '💠'],
+        [210, 'Arhitectul Viitorului', '🌟'],
+        [240, 'Aproape de Perfecțiune', '👑'],
+        [265, 'Tehnologie Maximă Absolută (265/265)', '🏆']
+      ];
+      techTiers.forEach(([val, name, icon], i) => {
+        list.push({
+          id: `a_tech_${i + 1}`,
+          cat: 'tech',
+          name,
+          desc: `Cumpără în total ${val} nivele de Tehnologii & Click într-un run.`,
+          icon,
+          check: s => Object.values(s.clickUpgrades || {}).reduce((a, b) => a + b, 0) >= val
+        });
+      });
+
+      // 12. Specialiști pe Fiecare Tehnologie (6 tehnologii x 3 praguri = 18 realizări - cat: 'tech')
+      CLICK_UPGRADES_DATA.forEach((upg) => {
+        const midLvl = Math.max(5, Math.floor(upg.maxLevel * 0.4));
+        const tiers = [
+          [5, 'Inițiat'],
+          [midLvl, 'Specialist'],
+          [upg.maxLevel, 'Maxim']
+        ];
+        tiers.forEach(([lvlReq, label], idx) => {
+          list.push({
+            id: `a_upg_${upg.id}_${idx + 1}`,
+            cat: 'tech',
+            name: `${label}: ${upg.name}`,
+            desc: `Atinge Nivelul ${lvlReq} la tehnologia "${upg.name}".`,
+            icon: upg.icon,
+            check: s => Boolean(s.clickUpgrades && (s.clickUpgrades[upg.id] || 0) >= lvlReq)
+          });
+        });
+      });
+
+      // 13. Comandant Tactic - Abilități Active Folosite (10 realizări - cat: 'tech')
+      const skillTiers = [
+        [1, 'Primul Impuls Tactic', '⚡'],
+        [3, 'Operator de Abilități', '🎯'],
+        [7, 'Manevră Temporală', '⏳'],
+        [15, 'Tactician Orbital', '🛰️'],
+        [30, 'Maestru al Cooldown-ului', '⚡'],
+        [60, 'Comandant de Asalt', '💥'],
+        [100, 'Strateg Cuantic (100)', '🧠'],
+        [200, 'Arhitectul Distorsiunii (200)', '🌀'],
+        [350, 'Voința Comandantului (350)', '👑'],
+        [500, 'Legenda Abilităților Active (500)', '🏆']
+      ];
+      skillTiers.forEach(([val, name, icon], i) => {
+        list.push({
+          id: `a_skill_${i + 1}`,
+          cat: 'tech',
+          name,
+          desc: `Activează abilitățile speciale (Impuls EM, Hiper-Critică, Distorsiune) de ${val} ori.`,
+          icon,
+          check: s => (s.skillsUsed || 0) >= val
+        });
+      });
+
+      // 14. Anomalii Cuantice Aurii (12 realizări - cat: 'secret')
+      const anomTiers = [
+        [1, 'Vânător de Anomalii', '☄️'],
+        [3, 'Observator Astral', '🔭'],
+        [5, 'Captură Orbitală', '☄️'],
+        [10, 'Colecționar Astral', '🌠'],
+        [20, 'Îmblânzitor de Comete', '🌠'],
+        [35, 'Radar Sub-Spațial', '📡'],
+        [60, 'Maestru al Fluctuațiilor', '✨'],
+        [100, 'Vânător Interdimensional', '🌌'],
+        [175, 'Arhiva de Aur', '🏆'],
+        [250, 'Păzitorul Cometelor (250)', '💫'],
+        [350, 'Stăpânul Anomaliilor (350)', '👑'],
+        [500, 'Zeul Anomaliilor Aurii (500)', '🏆']
+      ];
+      anomTiers.forEach(([val, name, icon], i) => {
+        list.push({
+          id: `a_anom_${i + 1}`,
+          cat: 'secret',
+          name,
+          desc: `Capturează ${val.toLocaleString('ro-RO')} Anomalii Cuantice Aurii.`,
+          icon,
+          check: s => (s.anomaliesCaught || 0) >= val
+        });
+      });
+
+      // 15. Veterani în Timp (10 realizări - cat: 'secret')
+      const timeTiers = [
+        [60, '1 Minut în Orbită', '⏱️', 'Petrece 1 minut activ în simulare.'],
+        [300, '5 Minute de Fuziune', '⏱️', 'Petrece 5 minute active în simulare.'],
+        [600, '10 Minute în Orbită', '⏱️', 'Petrece 10 minute active în simulare.'],
+        [1800, 'Jumătate de Oră Cuantică', '⌚', 'Petrece 30 minute active în simulare.'],
+        [3600, 'Comandant de Gardă (1h)', '⌚', 'Petrece 1 oră activă în simulare.'],
+        [7200, 'Explorator Deep-Space (2h)', '🛰️', 'Petrece 2 ore active în simulare.'],
+        [18000, 'Veteranul Nexusului (5h)', '🎖️', 'Petrece 5 ore active în simulare.'],
+        [36000, 'Amiralul Timpului (10h)', '🌟', 'Petrece 10 ore active în simulare.'],
+        [86400, 'Gardianul Etern (24h)', '👑', 'Petrece 24 ore active în simulare.'],
+        [180000, 'Nemuritorul din Quantum Nexus (50h)', '🏆', 'Petrece 50 ore active în simulare.']
+      ];
+      timeTiers.forEach(([val, name, icon, desc], i) => {
+        list.push({
+          id: `a_time_${i + 1}`,
+          cat: 'secret',
+          name,
+          desc,
+          icon,
+          check: s => (s.playTimeSeconds || 0) >= val
+        });
+      });
+
+      // 16. Colecționarul Cosmic & Sinergii Complete (10 realizări - cat: 'secret')
+      const fullSetCounts = [
+        [1, 'Arhitectul Tuturor Sistemelor (1x Tot)', '🌐'],
+        [5, 'Armonie Tehnologică (5x Tot)', '🎼'],
+        [10, 'Sinergie Galactică (10x Tot)', '🌌'],
+        [25, 'Matricea Completă (25x Tot)', '💠'],
+        [50, 'Imperiul celor 10 Motoare (50x Tot)', '👑'],
+        [100, 'Perfecțiunea Absolută (100x Tot)', '🏆']
+      ];
+      fullSetCounts.forEach(([minEach, name, icon], i) => {
+        list.push({
+          id: `a_synergy_all_${i + 1}`,
+          cat: 'secret',
+          name,
+          desc: `Deține simultan cel puțin ${minEach}x din FIECARE dintre cele 10 tipuri de generatoare.`,
+          icon,
+          check: s => GENERATORS_DATA.every(g => (s.generators && (s.generators[g.id] || 0) >= minEach))
+        });
+      });
+
+      const metaAchTiers = [
+        [25, 'Colecționar de Trofee (25)', '🥉'],
+        [75, 'Vânător de Glorie (75)', '🥈'],
+        [150, 'Maestru Enciclopedic (150)', '🥇'],
+        [250, 'Legenda Supremă Nexus (250)', '👑']
+      ];
+      metaAchTiers.forEach(([reqAch, name, icon], i) => {
+        list.push({
+          id: `a_meta_${i + 1}`,
+          cat: 'secret',
+          name,
+          desc: `Deblochează cel puțin ${reqAch} de realizări în Quantum Nexus.`,
+          icon,
+          check: s => (s.unlockedAchievements || []).length >= reqAch
+        });
+      });
+
+      return list;
+    }
+
+    const ACHIEVEMENTS_DATA = buildAchievementsCatalog();
+    let currentAchFilter = 'all';
 
     /********************************************************************
      * 2. STAREA JOCULUI (GAME STATE)
@@ -2352,6 +3806,8 @@
         commanderName: '',
         totalClicks: 0,
         totalCrits: 0,
+        skillsUsed: 0,
+        feverSeconds: 0,
         anomaliesCaught: 0,
         prestigeCount: 0,
         darkMatter: 0,
@@ -2359,6 +3815,17 @@
         generators: genCounts,
         prestigeUpgrades: presLvls,
         unlockedAchievements: [],
+        skillCooldowns: { 1: 0, 2: 0, 3: 0 },
+        activeBuffs: {
+          frenzyEnd: 0,
+          clickStormEnd: 0,
+          hyperCritEnd: 0,
+          timeWarpEnd: 0,
+          crimsonCritEnd: 0,
+          discountOrbEnd: 0,
+          overdriveOrbEnd: 0,
+          cryoCooldownEnd: 0
+        },
         soundEnabled: true,
         playTimeSeconds: 0,
         lastSaved: Date.now()
@@ -2368,15 +3835,12 @@
     let state = getDefaultState();
     let buyMultiplier = 1; // 1, 10, 100, or 'MAX'
 
-    // Variabile runtime (combo, buff-uri active, abilități)
+    // Variabile runtime (combo, buff-uri active și cooldown-uri sincronizate cu state)
     let comboMeter = 0; // 0 -> 100
-    let activeBuffs = {
-      frenzyEnd: 0,       // x7 CPS & Click (din anomalii)
-      clickStormEnd: 0,   // x15 Click (din anomalii)
-      hyperCritEnd: 0,    // 100% Crit (Skill 2)
-      timeWarpEnd: 0      // 2x tot (Skill 3)
-    };
-    let skillCooldowns = { 1: 0, 2: 0, 3: 0 };
+    let lastComboClickTime = 0;
+    let lastSupernovaBurstTime = 0;
+    let activeBuffs = state.activeBuffs;
+    let skillCooldowns = state.skillCooldowns;
 
     /********************************************************************
      * 3. MOTOR AUDIO SINTETIC (WEB AUDIO API - FĂRĂ FIȘIERE EXTERNE)
@@ -2415,53 +3879,24 @@
     }
 
     /********************************************************************
-     * 4. FORMATARE NUMERE MARI (1.25K, 3.40M, 12.8B, T, Qa, Qi...)
-     ********************************************************************/
-    const SUFFIXES = ['', 'K', 'M', 'B', 'T', 'Qa', 'Qi', 'Sx', 'Sp', 'Oc', 'No', 'Dc', 'UDc', 'DDc'];
-
-    function formatNumber(num, decimals = 2) {
-      if (!isFinite(num) || isNaN(num)) return '0';
-      if (num < 1000) {
-        return num < 10 && num % 1 !== 0 ? num.toFixed(1) : Math.floor(num).toString();
-      }
-      const tier = Math.floor(Math.log10(Math.abs(num)) / 3);
-      if (tier === 0) return Math.floor(num).toString();
-      const suffix = SUFFIXES[tier] || `e${tier * 3}`;
-      const scale = Math.pow(10, tier * 3);
-      const scaled = num / scale;
-      return scaled.toFixed(decimals) + suffix;
-    }
-
-    function formatTime(sec) {
-      sec = Math.floor(sec);
-      if (sec < 60) return `${sec}s`;
-      const m = Math.floor(sec / 60);
-      const s = sec % 60;
-      if (m < 60) return `${m}m ${s}s`;
-      const h = Math.floor(m / 60);
-      const rm = m % 60;
-      return `${h}h ${rm}m`;
-    }
-
-    /********************************************************************
-     * 5. CALCULE MATEMATICE PENTRU PRODUCȚIE (CPS, CLICK, PRESTIGIU)
+     * 4. CALCULE MATEMATICE PENTRU PRODUCȚIE (CPS, CLICK, PRESTIGIU)
      ********************************************************************/
     function getTotalGenerators() {
       return Object.values(state.generators).reduce((a, b) => a + b, 0);
     }
 
-    // Multiplicator de praguri pentru generatoare (la 10, 25, 50, 100, 200, 300...)
+    // Multiplicator echilibrat de praguri pentru generatoare (+35% la 25, 50, 100, 200, 350, 500)
     function getGeneratorMilestoneMultiplier(count) {
-      const thresholds = [10, 25, 50, 100, 150, 200, 300, 400, 500];
+      const thresholds = [25, 50, 100, 200, 350, 500];
       let mult = 1;
       for (const t of thresholds) {
-        if (count >= t) mult *= 2;
+        if (count >= t) mult *= 1.35;
       }
       return mult;
     }
 
     function getNextMilestoneProgress(count) {
-      const thresholds = [10, 25, 50, 100, 150, 200, 300, 400, 500];
+      const thresholds = [25, 50, 100, 200, 350, 500];
       let prev = 0;
       for (const t of thresholds) {
         if (count < t) {
@@ -2472,31 +3907,68 @@
       return 100;
     }
 
+    // Pragul de Energie necesar pentru URMĂTORUL Rebirth (Secvențial, Câte Unul)
+    function getRebirthEnergyRequirement() {
+      return 1e7 * Math.pow(7.5, state.prestigeCount || 0);
+    }
+
+    function isRebirthReady() {
+      return (state.totalEnergyThisRun || 0) >= getRebirthEnergyRequirement();
+    }
+
+    // Recompensa fixă de Materie Întunecată pentru Rebirth-ul curent (NU se multiplică dacă stai fără să dai Rebirth!)
+    function getCurrentRebirthDarkMatterReward() {
+      return 1 + Math.floor((state.prestigeCount || 0) / 2);
+    }
+
+    function getPendingDarkMatter() {
+      return isRebirthReady() ? getCurrentRebirthDarkMatterReward() : 0;
+    }
+
+    // Factor de Saturație: când atingi 100% din energia necesară pentru Rebirth-ul curent,
+    // nucleul intră în saturație dacă nu dai Rebirth (previne farmatul infinit într-un singur run!)
+    function getSaturationFactor() {
+      const req = getRebirthEnergyRequirement();
+      const cur = state.totalEnergyThisRun || 0;
+      if (cur <= req) return 1.0;
+      const overRatio = cur / req;
+      return Math.max(0.08, 1 / Math.pow(overRatio, 0.9));
+    }
+
     function getGlobalMultiplier() {
       let mult = 1;
-      // 1. Upgrade global rețea superconductoare (+15%/lvl)
+      // 1. Upgrade global rețea superconductoare (+8%/lvl)
       const gLvl = state.clickUpgrades['c_global1'] || 0;
-      mult *= 1 + gLvl * 0.15;
+      mult *= 1 + gLvl * 0.08;
 
-      // 2. Realizări (+5% fiecare)
-      mult *= 1 + state.unlockedAchievements.length * 0.05;
+      // 2. Realizări (+1% fiecare, până la +330%)
+      mult *= 1 + state.unlockedAchievements.length * 0.01;
 
-      // 3. Materie Întunecată deținută (+25% fiecare)
-      mult *= 1 + state.darkMatter * 0.25;
+      // 3. Materie Întunecată deținută (+10% fiecare) + Rebirth-uri efectuate (+15% fiecare)
+      mult *= 1 + (state.darkMatter || 0) * 0.10 + (state.prestigeCount || 0) * 0.15;
 
-      // 4. Upgrade Prestigiu Rezonanță Întunecată (x2 per nivel)
+      // 4. Upgrade Prestigiu Rezonanță Întunecată (+25% per nivel)
       const pProdLvl = state.prestigeUpgrades['p_prod'] || 0;
-      mult *= Math.pow(2, pProdLvl);
+      mult *= 1 + pProdLvl * 0.25;
 
-      // 5. Buff-uri temporare
+      // 5. Sinergii Unice din Generatoare: Matrice Dyson (g7: +4% fiecare) & Motor de Univers (g9: +10% fiecare)
+      const dysonCount = (state.generators && state.generators['g7']) || 0;
+      const uniCount = (state.generators && state.generators['g9']) || 0;
+      mult *= (1 + dysonCount * 0.04) * (1 + uniCount * 0.10);
+
+      // 6. Buff-uri temporare echilibrate
       const now = Date.now();
-      if (now < activeBuffs.frenzyEnd) mult *= 7;
-      if (now < activeBuffs.timeWarpEnd) mult *= 2;
+      if (now < (activeBuffs.frenzyEnd || 0)) mult *= 2.5;
+      if (now < (activeBuffs.timeWarpEnd || 0)) mult *= 1.5;
+      if (now < (activeBuffs.overdriveOrbEnd || 0)) mult *= 1.4;
+
+      // 7. Saturație dacă nu ai dat Rebirth după atingerea pragului
+      mult *= getSaturationFactor();
 
       return mult;
     }
 
-    function getCPS() {
+    function getBasePassiveCPS() {
       let baseTotal = 0;
       for (const gen of GENERATORS_DATA) {
         const count = state.generators[gen.id] || 0;
@@ -2505,61 +3977,91 @@
           baseTotal += count * gen.baseCps * milestoneMult;
         }
       }
-      return baseTotal * getGlobalMultiplier();
+      return baseTotal;
+    }
+
+    function getCPS() {
+      return getBasePassiveCPS() * getGlobalMultiplier();
     }
 
     function getComboMultiplier() {
-      // De la x1.00 până la x3.00 la combo 100%
-      return 1 + (comboMeter / 100) * 2;
+      // Bază: de la x1.00 până la x2.00 la combo 100%, amplificat de Scriptul Neural AI (g2: +3% per unitate)
+      const aiCount = (state.generators && state.generators['g2']) || 0;
+      const maxBonus = 1.0 * (1 + aiCount * 0.03);
+      return 1 + (comboMeter / 100) * maxBonus;
     }
 
     function getClickValue() {
       const flatLvl = state.clickUpgrades['c_flat1'] || 0;
       const multLvl = state.clickUpgrades['c_mult1'] || 0;
       const synLvl = state.clickUpgrades['c_synergy'] || 0;
+      const pClickLvl = state.prestigeUpgrades['p_click'] || 0;
+      const satCount = (state.generators && state.generators['g4']) || 0; // Satelit Solar: +5% Click per satelit
 
-      let base = 1 + flatLvl * 2;
-      base *= Math.pow(1.25, multLvl);
+      let base = 1 + flatLvl * 1;
+      base *= 1 + multLvl * 0.15;
+      base *= 1 + pClickLvl * 0.20;
+      base *= 1 + satCount * 0.05;
 
-      let val = base * getGlobalMultiplier();
+      let val = base * getGlobalMultiplier() * getComboMultiplier();
 
-      // Sinergie din CPS (+1.5% din CPS per nivel)
+      // Sinergie echilibrată din CPS (+0.25% din CPS per nivel)
       if (synLvl > 0) {
-        val += getCPS() * (synLvl * 0.015);
+        val += getCPS() * (synLvl * 0.0025);
       }
 
-      // Combo Overclock
-      val *= getComboMultiplier();
-
-      // Buff Furtună de Click-uri
-      if (Date.now() < activeBuffs.clickStormEnd) {
-        val *= 15;
+      // Buff Furtună de Click-uri (x4)
+      if (Date.now() < (activeBuffs.clickStormEnd || 0)) {
+        val *= 4;
       }
 
       return val;
     }
 
     function getCritChance() {
-      if (Date.now() < activeBuffs.hyperCritEnd) return 1.0;
+      if (Date.now() < (activeBuffs.crimsonCritEnd || 0)) return 1.0; // Sfera Crimson: 100% Crit!
       const cLvl = state.clickUpgrades['c_critChance'] || 0;
-      const comboBonus = comboMeter >= 85 ? 0.15 : 0;
-      return Math.min(0.95, 0.05 + cLvl * 0.03 + comboBonus);
+      const fusionCount = (state.generators && state.generators['g5']) || 0; // Reactor Fuziune: +0.4% Crit (max +12%)
+      const fusionBonus = Math.min(0.12, fusionCount * 0.004);
+      const comboBonus = comboMeter >= 85 ? 0.10 : 0;
+      const skillBonus = Date.now() < (activeBuffs.hyperCritEnd || 0) ? 0.40 : 0;
+      return Math.min(0.90, 0.05 + cLvl * 0.02 + fusionBonus + comboBonus + skillBonus);
     }
 
     function getCritMultiplier() {
       const mLvl = state.clickUpgrades['c_critMult'] || 0;
-      return 3 + mLvl * 1.0;
+      const droneCount = (state.generators && state.generators['g1']) || 0; // Dronă Extracție: +4% Crit Dmg per dronă
+      const crimsonMult = Date.now() < (activeBuffs.crimsonCritEnd || 0) ? 1.8 : 1.0;
+      return (2.0 + mLvl * 0.25 + droneCount * 0.04) * crimsonMult;
     }
 
-    // Costuri Generatoare cu reducere din Prestigiu
+    function getSkillCooldownFactor() {
+      const accelCount = (state.generators && state.generators['g8']) || 0; // Accelerator Temporal: -2% CD per unitate (max 45%)
+      const cryoMult = Date.now() < (activeBuffs.cryoCooldownEnd || 0) ? 0.65 : 1.0;
+      return (1 - Math.min(0.45, accelCount * 0.02)) * cryoMult;
+    }
+
+    function getAnomalyAndSkillBonusMult() {
+      const pAnom = (state.prestigeUpgrades && state.prestigeUpgrades['p_anom']) || 0;
+      const bhCount = (state.generators && state.generators['g6']) || 0; // Micro-Gaură Neagră: +6% fiecare
+      return (1 + pAnom * 0.20) * (1 + bhCount * 0.06);
+    }
+
+    // Costuri Generatoare și Amplificatoare cu reducere din Prestigiu (-4% per nivel) și Sfera Smarald (-35%)
     function getGeneratorDiscount() {
       const discLvl = state.prestigeUpgrades['p_discount'] || 0;
-      return Math.pow(0.92, discLvl);
+      const orbDisc = Date.now() < (activeBuffs.discountOrbEnd || 0) ? 0.65 : 1.0;
+      return Math.pow(0.96, discLvl) * orbDisc;
+    }
+
+    function getClickUpgradeCost(upg, lvl) {
+      const orbDisc = Date.now() < (activeBuffs.discountOrbEnd || 0) ? 0.65 : 1.0;
+      return upg.baseCost * Math.pow(upg.costMult, lvl) * orbDisc;
     }
 
     function getGeneratorBuyInfo(gen, mode) {
       const owned = state.generators[gen.id] || 0;
-      const r = 1.15;
+      const r = 1.18;
       const base = gen.baseCost * getGeneratorDiscount() * Math.pow(r, owned);
 
       if (mode === 'MAX') {
@@ -2577,17 +4079,6 @@
       }
     }
 
-    // Calcul Materie Întunecată la Prestigiu (începe de la 1.00M energie în run-ul curent)
-    function getPendingDarkMatter() {
-      if (state.totalEnergyThisRun < 1e6) return 0;
-      return Math.floor(Math.pow(state.totalEnergyThisRun / 1e6, 0.42));
-    }
-
-    function getNextDarkMatterEnergyRequirement() {
-      const nextCount = getPendingDarkMatter() + 1;
-      return Math.pow(nextCount, 1 / 0.42) * 1e6;
-    }
-
     /********************************************************************
      * 6. INTERACȚIUNEA LA CLICK PE NUCLEUL CENTRAL & EFECTE VIZUALE
      ********************************************************************/
@@ -2595,49 +4086,530 @@
 
     coreBtn.addEventListener('pointerdown', (e) => {
       e.preventDefault();
-      handleCoreClick(e.clientX, e.clientY);
+      handleCoreClick(e.clientX, e.clientY, false);
     });
 
     coreBtn.addEventListener('keydown', (e) => {
       if (e.key === ' ' || e.key === 'Enter') {
         e.preventDefault();
-        handleCoreClick();
+        handleCoreClick(null, null, false);
       }
     });
 
-    function handleCoreClick(clientX, clientY) {
-      // Dacă s-a apăsat din tastatură (Enter/Space), folosim centrul butonului
+    function handleCoreClick(clientX, clientY, isAutoCursor = false) {
+      const rect = coreBtn.getBoundingClientRect();
       if (!clientX || !clientY) {
-        const rect = coreBtn.getBoundingClientRect();
         clientX = rect.left + rect.width / 2;
         clientY = rect.top + rect.height / 2;
       }
 
-      // Crește bara de Supraîncărcare (Combo)
-      comboMeter = Math.min(100, comboMeter + 7.5);
+      // Crește garantat bara de Supraîncărcare (Combo) și scalează cu numărul de Nano-Cursoare (g0)
+      const lensLvl = (state.clickUpgrades && state.clickUpgrades['c_mult1']) || 0;
+      const g0Count = (state.generators && state.generators['g0']) || 0;
+      const comboGain = isAutoCursor
+        ? (3.5 + Math.min(18, g0Count * 0.45))
+        : (9.5 + lensLvl * 0.3);
+      lastComboClickTime = performance.now();
+      comboMeter = Math.min(100, comboMeter + comboGain);
 
       let amount = getClickValue();
       const isCrit = Math.random() < getCritChance();
       if (isCrit) {
         amount *= getCritMultiplier();
         state.totalCrits++;
-        playTone(680, 'triangle', 0.11, 0.1);
-      } else {
+        if (!isAutoCursor) playTone(680, 'triangle', 0.11, 0.1);
+      } else if (!isAutoCursor) {
         playTone(320 + comboMeter * 2, 'sine', 0.06, 0.06);
       }
 
-      addEnergy(amount);
-      state.totalClicks++;
+      if (!isAutoCursor) {
+        state.totalClicks++;
+      }
 
-      // Animație buton
+      // Efect Special Amplificator Fotonic (c_flat1): La fiecare al 10-lea click manual trage o Rază Mega-Fotonică (x3 Energie)!
+      const photonLvl = (state.clickUpgrades && state.clickUpgrades['c_flat1']) || 0;
+      let isPhotonMega = false;
+      if (!isAutoCursor && photonLvl > 0 && state.totalClicks % 10 === 0) {
+        amount *= 3;
+        isPhotonMega = true;
+        spawnPhotonMegaBeam();
+        playTone(960, 'sawtooth', 0.14, 0.11);
+      }
+
+      // Efect Supernova când bara de Supraîncărcare ajunge la 100%
+      if (comboMeter >= 100 && Date.now() - lastSupernovaBurstTime > 3800) {
+        lastSupernovaBurstTime = Date.now();
+        const novaBonus = amount * 3.5 + getCPS() * 1.5;
+        amount += novaBonus;
+        spawnCoreShockwave('em-wave');
+        spawnCoreShockwave('crit');
+        for (let k = 0; k < 4; k++) spawnCoreLightningArc(true);
+        spawnFloatingText(rect.left + rect.width / 2, rect.top + 10, `🔥 OVERCLOCK SUPERNOVA! +${formatNumber(novaBonus)}`, true);
+        setTimeout(() => {
+          if (comboMeter >= 95) comboMeter = 22;
+        }, 350);
+      }
+
+      addEnergy(amount);
+
+      // Animație buton + Unde de șoc + Efecte Amplificatoare
       coreBtn.classList.add('clicked');
       setTimeout(() => coreBtn.classList.remove('clicked'), 80);
 
+      spawnCoreShockwave(isCrit ? 'crit' : isPhotonMega ? 'em-wave' : 'normal');
+
+      if (isCrit) {
+        spawnCoreLightningArc(true);
+        spawnCoreLightningArc(true);
+        // Efect Calibrare Cuantică (c_critChance): Vizor Lock-On pe locul loviturii critice
+        if (((state.clickUpgrades && state.clickUpgrades['c_critChance']) || 0) > 0) {
+          spawnCritLockCrosshair(clientX, clientY);
+        }
+        // Efect Descărcare de Plasmă (c_critMult): Scuturare de plasmă a nucleului
+        if (((state.clickUpgrades && state.clickUpgrades['c_critMult']) || 0) > 0) {
+          const wrap = document.getElementById('coreEcosystemWrap');
+          if (wrap) {
+            wrap.classList.remove('core-plasma-shake');
+            void wrap.offsetWidth;
+            wrap.classList.add('core-plasma-shake');
+          }
+        }
+      } else if (((state.clickUpgrades && state.clickUpgrades['c_synergy']) || 0) > 0 || comboMeter >= 55) {
+        spawnCoreLightningArc(false);
+      }
+
       // Text plutitor + particule
-      spawnFloatingText(clientX, clientY, `+${formatNumber(amount)}`, isCrit);
-      spawnParticles(clientX, clientY, isCrit ? 12 : 6, isCrit ? '#fde047' : '#38bdf8');
+      const labelPrefix = isPhotonMega ? '🔦 MEGA x3 ' : (isAutoCursor ? '🖱️ ' : '');
+      spawnFloatingText(clientX, clientY, `${labelPrefix}+${formatNumber(amount)}`, isCrit || isPhotonMega);
+      spawnParticles(clientX, clientY, isCrit ? 15 : 7, isCrit ? '#fde047' : isPhotonMega ? '#22d3ee' : '#38bdf8');
 
       updateUI();
+    }
+
+    // =========================================================================
+    // MOTORUL DE ANIMAȚII VIZUALE LA NUCLEU (CURSOARE ORBITALE, DRONE, TESLA)
+    // =========================================================================
+    let lastEcosystemSignature = '';
+
+    function spawnCoreShockwave(type = 'normal') {
+      const fxLayer = document.getElementById('coreFxLayer');
+      if (!fxLayer) return;
+      const ring = document.createElement('div');
+      ring.className = 'core-shockwave-ring' + (type === 'crit' ? ' crit' : type === 'em-wave' ? ' em-wave' : '');
+      fxLayer.appendChild(ring);
+      setTimeout(() => ring.remove(), type === 'em-wave' ? 880 : 580);
+    }
+
+    function spawnCoreLightningArc(isCrit = false) {
+      const svg = document.getElementById('coreTeslaSvg');
+      if (!svg) return;
+      const cx = 150, cy = 150;
+      const angle = Math.random() * Math.PI * 2;
+      const outerR = isCrit ? 124 : 98 + Math.random() * 22;
+      const endX = cx + Math.cos(angle) * outerR;
+      const endY = cy + Math.sin(angle) * outerR;
+
+      const points = [`${cx},${cy}`];
+      const segments = 5;
+      for (let i = 1; i < segments; i++) {
+        const t = i / segments;
+        const bx = cx + (endX - cx) * t + (Math.random() - 0.5) * 26;
+        const by = cy + (endY - cy) * t + (Math.random() - 0.5) * 26;
+        points.push(`${bx.toFixed(1)},${by.toFixed(1)}`);
+      }
+      points.push(`${endX.toFixed(1)},${endY.toFixed(1)}`);
+
+      const poly = document.createElementNS('http://www.w3.org/2000/svg', 'polyline');
+      poly.setAttribute('points', points.join(' '));
+      poly.setAttribute('fill', 'none');
+      poly.setAttribute('stroke', isCrit ? '#fde047' : '#38bdf8');
+      poly.setAttribute('stroke-width', isCrit ? '3' : '2');
+      poly.setAttribute('stroke-linecap', 'round');
+      poly.style.filter = isCrit ? 'drop-shadow(0 0 10px #f59e0b)' : 'drop-shadow(0 0 8px #38bdf8)';
+      svg.appendChild(poly);
+
+      setTimeout(() => poly.remove(), 210);
+    }
+
+    function spawnPhotonMegaBeam() {
+      const fxLayer = document.getElementById('coreFxLayer');
+      if (!fxLayer) return;
+      for (let i = 0; i < 3; i++) {
+        const beam = document.createElement('div');
+        beam.className = 'photon-mega-beam';
+        const angle = -35 + i * 35;
+        beam.style.transform = `rotate(${angle}deg)`;
+        fxLayer.appendChild(beam);
+        setTimeout(() => beam.remove(), 400);
+      }
+    }
+
+    function spawnCritLockCrosshair(x, y) {
+      const el = document.createElement('div');
+      el.className = 'crit-lock-crosshair';
+      el.style.left = `${x}px`;
+      el.style.top = `${y}px`;
+      document.body.appendChild(el);
+      setTimeout(() => el.remove(), 460);
+    }
+
+    // Lansează o Sferă de Energie (Proiectil Holografic) de la butonul/cardul apăsat direct în Nucleul Cuantic!
+    function spawnActivationOrbToCore(sourceEl, color = '#38bdf8') {
+      try {
+        if (sourceEl) {
+          sourceEl.classList.remove('card-activated-flash');
+          void sourceEl.offsetWidth;
+          sourceEl.classList.add('card-activated-flash');
+        }
+        const coreRect = coreBtn.getBoundingClientRect();
+        if (coreRect.width === 0) return;
+        const targetX = coreRect.left + coreRect.width / 2;
+        const targetY = coreRect.top + coreRect.height / 2;
+
+        let startX = window.innerWidth / 2;
+        let startY = window.innerHeight / 2;
+        if (sourceEl) {
+          const sRect = sourceEl.getBoundingClientRect();
+          if (sRect.width > 0) {
+            startX = sRect.left + sRect.width / 2;
+            startY = sRect.top + sRect.height / 2;
+          }
+        }
+
+        spawnParticles(startX, startY, 10, color);
+
+        const orb = document.createElement('div');
+        orb.className = 'flying-energy-orb';
+        orb.style.color = color;
+        orb.style.background = color;
+        orb.style.left = `${startX}px`;
+        orb.style.top = `${startY}px`;
+        document.body.appendChild(orb);
+
+        const ctrlX = (startX + targetX) / 2 + (Math.random() - 0.5) * 140;
+        const ctrlY = Math.min(startY, targetY) - 60 - Math.random() * 60;
+
+        orb.animate([
+          { left: `${startX}px`, top: `${startY}px`, transform: 'translate(-50%, -50%) scale(1.2)', opacity: 1 },
+          { left: `${ctrlX}px`, top: `${ctrlY}px`, transform: 'translate(-50%, -50%) scale(1.5)', opacity: 1, offset: 0.5 },
+          { left: `${targetX}px`, top: `${targetY}px`, transform: 'translate(-50%, -50%) scale(0.4)', opacity: 0.9 }
+        ], {
+          duration: 460,
+          easing: 'cubic-bezier(0.22, 1, 0.36, 1)'
+        }).onfinish = () => {
+          orb.remove();
+          spawnCoreShockwave('em-wave');
+          spawnCoreLightningArc(true);
+          spawnParticles(targetX, targetY, 14, color);
+        };
+      } catch (e) {}
+    }
+
+    // Actualizează în timp real cursoarele care se învârt și apasă pe nucleu, dronele cu laser, sateliții, sfera Dyson și efectele Amplificatoarelor
+    function syncCoreVisualEcosystem(force = false) {
+      const g0 = (state.generators && state.generators['g0']) || 0; // Nano-Cursor Autonom
+      const g1 = (state.generators && state.generators['g1']) || 0; // Dronă de Extracție
+      const g2 = (state.generators && state.generators['g2']) || 0; // Script Neural AI
+      const g3 = (state.generators && state.generators['g3']) || 0; // Condensator Tahionic
+      const g4 = (state.generators && state.generators['g4']) || 0; // Satelit Solar Orbital
+      const g5 = (state.generators && state.generators['g5']) || 0; // Reactor de Fuziune Rece
+      const g6 = (state.generators && state.generators['g6']) || 0; // Micro-Gaură Neagră
+      const g7 = (state.generators && state.generators['g7']) || 0; // Matrice Dyson
+      const g8 = (state.generators && state.generators['g8']) || 0; // Accelerator Temporal
+      const g9 = (state.generators && state.generators['g9']) || 0; // Motor de Univers Sintetic
+
+      const cMultLvl = (state.clickUpgrades && state.clickUpgrades['c_mult1']) || 0;
+      const cGlobalLvl = (state.clickUpgrades && state.clickUpgrades['c_global1']) || 0;
+
+      const visibleCursors = g0 <= 0 ? 0 : Math.min(16, g0 <= 8 ? g0 : 8 + Math.floor(Math.log2(g0 - 6) * 2.5));
+      const visibleDrones = g1 <= 0 ? 0 : Math.min(8, g1 <= 4 ? g1 : 4 + Math.floor(Math.log2(g1 - 2) * 1.5));
+      const visibleSats = (g4 + g5) <= 0 ? 0 : Math.min(6, Math.ceil((g4 + g5) / 3));
+      const hasDyson = (g5 + g7) > 0;
+      const hasVortex = (g6 + g8 + g9) > 0;
+
+      // Efecte vizuale din Amplificatoare pe Reactor
+      const prismEl = document.getElementById('corePrismAura');
+      if (prismEl) prismEl.classList.toggle('active', cMultLvl > 0);
+      const leftZoneEl = document.getElementById('zone-left');
+      if (leftZoneEl) leftZoneEl.classList.toggle('cyber-grid-active', cGlobalLvl > 0);
+
+      const sig = `${visibleCursors}_${visibleDrones}_${visibleSats}_${hasDyson}_${hasVortex}_${g0}_${g1}_${g2 + g3}_${g4 + g5}_${g7}_${g6 + g8 + g9}_${cMultLvl}_${cGlobalLvl}`;
+      if (!force && sig === lastEcosystemSignature) return;
+      lastEcosystemSignature = sig;
+
+      // 1. Randare Cursoare Orbitale care se rotesc și apasă fizic pe nucleu
+      const cursorsLayer = document.getElementById('orbitCursorsLayer');
+      if (cursorsLayer) {
+        cursorsLayer.innerHTML = '';
+        for (let i = 0; i < visibleCursors; i++) {
+          const angleDeg = (360 / visibleCursors) * i;
+          const delaySec = ((1.15 / visibleCursors) * i).toFixed(2);
+          const slot = document.createElement('div');
+          slot.className = 'orbit-slot';
+          slot.style.transform = `rotate(${angleDeg}deg)`;
+          slot.innerHTML = `
+            <div class="orbit-cursor-bob" style="animation-delay: -${delaySec}s">
+              <svg viewBox="0 0 28 28" fill="none">
+                <path d="M14 2.5 L5.5 19.5 L11.5 17 L11.5 25.5 L16.5 25.5 L16.5 17 L22.5 19.5 L14 2.5 Z" fill="#38bdf8" stroke="#ffffff" stroke-width="1.8" stroke-linejoin="round"/>
+                <circle cx="14" cy="11" r="2.2" fill="#fde047"/>
+              </svg>
+              <div class="cursor-tip-spark" style="animation-delay: -${delaySec}s"></div>
+            </div>
+          `;
+          cursorsLayer.appendChild(slot);
+        }
+      }
+
+      // 2. Randare Drone de Extracție cu raze Laser orientate spre nucleu
+      const dronesLayer = document.getElementById('orbitDronesLayer');
+      if (dronesLayer) {
+        dronesLayer.innerHTML = '';
+        for (let i = 0; i < visibleDrones; i++) {
+          const angleDeg = (360 / visibleDrones) * i + 22;
+          const delaySec = (i * 0.25).toFixed(2);
+          const slot = document.createElement('div');
+          slot.className = 'orbit-slot';
+          slot.style.transform = `rotate(${angleDeg}deg)`;
+          slot.innerHTML = `
+            <div class="orbit-drone-bob" style="animation-delay: -${delaySec}s">
+              <span class="drone-unit-icon">🤖</span>
+              <div class="drone-laser-beam" style="animation-delay: -${delaySec}s"></div>
+            </div>
+          `;
+          dronesLayer.appendChild(slot);
+        }
+      }
+
+      // 3. Randare Sateliți Solari pe orbita exterioară
+      const satsLayer = document.getElementById('orbitSatellitesLayer');
+      if (satsLayer) {
+        satsLayer.innerHTML = '';
+        for (let i = 0; i < visibleSats; i++) {
+          const angleDeg = (360 / visibleSats) * i;
+          const slot = document.createElement('div');
+          slot.className = 'orbit-slot';
+          slot.style.transform = `rotate(${angleDeg}deg)`;
+          slot.innerHTML = `<div class="orbit-sat-bob">🛰️</div>`;
+          satsLayer.appendChild(slot);
+        }
+      }
+
+      // 4. Activare Sferă Dyson & Vortex Cosmic
+      const dysonEl = document.getElementById('coreDysonSvg');
+      if (dysonEl) dysonEl.classList.toggle('active', hasDyson);
+      const vortexEl = document.getElementById('coreCosmicVortex');
+      if (vortexEl) vortexEl.classList.toggle('active', hasVortex);
+
+      // 5. Afișare etichete vizuale sub nucleu pentru modulele active
+      const strip = document.getElementById('coreModulesStrip');
+      if (strip) {
+        const chips = [];
+        if (g0 > 0) chips.push(`<span class="core-module-chip">🖱️ ${g0} Nano-Cursoare (${visibleCursors} pe orbită)</span>`);
+        if (g1 > 0) chips.push(`<span class="core-module-chip" style="border-color:rgba(236,72,153,0.4);color:#fbcfe8">🤖 +${g1 * 4}% Crit Dmg</span>`);
+        if (g3 > 0) chips.push(`<span class="core-module-chip" style="border-color:rgba(253,224,71,0.5);color:#fde047">🔋 Burst Tahionic 5s</span>`);
+        if (g6 > 0) chips.push(`<span class="core-module-chip" style="border-color:rgba(168,85,247,0.6);color:#e9d5ff">🕳️ Devorare Gaură Neagră</span>`);
+        if (g9 > 0) chips.push(`<span class="core-module-chip" style="border-color:rgba(56,189,248,0.6);color:#bae6fd">🌌 Geneză Big Bang</span>`);
+        if (chips.length === 0) {
+          chips.push(`<span class="core-module-chip" style="opacity:0.75">💡 Activează Amplificatoare sau Module pentru animații orbitale!</span>`);
+        }
+        strip.innerHTML = chips.join('');
+      }
+    }
+
+    // Puls pasiv vizual: cursoarele și dronele lovesc vizibil nucleul și generează scântei de energie
+    function triggerPassiveVisualPulse() {
+      const cps = getCPS();
+      if (cps <= 0) return;
+
+      coreBtn.classList.remove('passive-pulse');
+      void coreBtn.offsetWidth;
+      coreBtn.classList.add('passive-pulse');
+
+      if (((state.generators && state.generators['g2']) || 0) > 0 || ((state.generators && state.generators['g3']) || 0) > 0) {
+        spawnCoreLightningArc(false);
+      }
+
+      // Dacă panoul stâng este vizibil, arătăm o scânteie pasivă pe marginea nucleului unde apasă cursoarele
+      const leftZone = document.getElementById('zone-left');
+      if (leftZone && leftZone.offsetParent !== null) {
+        const rect = coreBtn.getBoundingClientRect();
+        if (rect.width > 0) {
+          const angle = Math.random() * Math.PI * 2;
+          const r = rect.width * 0.38;
+          const sx = rect.left + rect.width / 2 + Math.cos(angle) * r;
+          const sy = rect.top + rect.height / 2 + Math.sin(angle) * r;
+          spawnParticles(sx, sy, 4, '#38bdf8');
+        }
+      }
+    }
+
+    // Mecanică Unică Nano-Cursor (g0): Efectuează un Auto-Click fizic pe Nucleu (frecvența și încărcarea cresc cu numărul de cursoare!)
+    function triggerAutoCursorStrike() {
+      const g0 = (state.generators && state.generators['g0']) || 0;
+      if (g0 <= 0) return;
+      const rect = coreBtn.getBoundingClientRect();
+      if (rect.width > 0) {
+        const angle = Math.random() * Math.PI * 2;
+        const r = rect.width * 0.34;
+        const cx = rect.left + rect.width / 2 + Math.cos(angle) * r;
+        const cy = rect.top + rect.height / 2 + Math.sin(angle) * r;
+        handleCoreClick(cx, cy, true);
+      } else {
+        handleCoreClick(null, null, true);
+      }
+    }
+
+    // Mecanică Vizuală Roboți / Drone de Extracție (g1): Salvă Laser Sincronizată asupra Nucleului!
+    function triggerRobotLaserBarrage() {
+      const g1 = (state.generators && state.generators['g1']) || 0;
+      if (g1 <= 0) return;
+      const leftZone = document.getElementById('zone-left');
+      if (!leftZone || leftZone.offsetParent === null) return;
+      const rect = coreBtn.getBoundingClientRect();
+      if (rect.width <= 0) return;
+
+      spawnCoreShockwave('normal');
+      spawnCoreLightningArc(false);
+      const cx = rect.left + rect.width / 2;
+      const cy = rect.top + rect.height / 2;
+      for (let i = 0; i < 4; i++) {
+        const ang = (Math.PI / 2) * i + Math.random() * 0.5;
+        const px = cx + Math.cos(ang) * (rect.width * 0.36);
+        const py = cy + Math.sin(ang) * (rect.height * 0.36);
+        spawnParticles(px, py, 6, '#ec4899');
+      }
+    }
+
+    // Mecanică Unică Condensator Tahionic (g3): Explozie Tahionică (Burst) la fiecare 5 secunde!
+    function triggerTachyonCapacitorBurst() {
+      const g3 = (state.generators && state.generators['g3']) || 0;
+      if (g3 <= 0) return;
+      const burstAmount = g3 * 420 * getGeneratorMilestoneMultiplier(g3) * getGlobalMultiplier();
+      addEnergy(burstAmount);
+
+      spawnCoreShockwave('em-wave');
+      spawnCoreLightningArc(true);
+      const rect = coreBtn.getBoundingClientRect();
+      if (rect.width > 0) {
+        spawnFloatingText(rect.left + rect.width / 2, rect.top + rect.height / 2 - 25, `🔋 ȘOC TAHIONIC +${formatNumber(burstAmount)}`, true);
+        spawnParticles(rect.left + rect.width / 2, rect.top + rect.height / 2, 12, '#fde047');
+      }
+    }
+
+    // Eveniment Cinematic Micro-Gaură Neagră (g6): Înghite Nucleul Cuantic pentru 3.4 secunde și apoi îl scuipă cu o Erupție Hawking!
+    let isBlackHoleDevouring = false;
+    function triggerBlackHoleDevourEvent() {
+      const g6 = (state.generators && state.generators['g6']) || 0;
+      if (g6 <= 0 || isBlackHoleDevouring) return;
+      const bhOverlay = document.getElementById('coreBlackHoleOverlay');
+      if (!bhOverlay || !coreBtn) return;
+
+      isBlackHoleDevouring = true;
+      bhOverlay.classList.remove('devouring');
+      coreBtn.classList.remove('core-devoured-by-bh');
+      void bhOverlay.offsetWidth;
+      bhOverlay.classList.add('devouring');
+      coreBtn.classList.add('core-devoured-by-bh');
+
+      playTone(145, 'sawtooth', 0.45, 0.11);
+
+      const rect = coreBtn.getBoundingClientRect();
+      const cx = rect.left + rect.width / 2;
+      const cy = rect.top + rect.height / 2;
+
+      if (rect.width > 0) {
+        spawnFloatingText(cx, cy - 42, '🕳️ GAURA NEAGRĂ ABSOARBE NUCLEUL!', true);
+        // Particule de materie aspirate din exterior direct în centrul găurii negre
+        for (let w = 0; w < 3; w++) {
+          setTimeout(() => {
+            const rNow = coreBtn.getBoundingClientRect();
+            if (rNow.width <= 0) return;
+            const centerX = rNow.left + rNow.width / 2;
+            const centerY = rNow.top + rNow.height / 2;
+            for (let i = 0; i < 12; i++) {
+              const dot = document.createElement('div');
+              dot.className = 'particle-dot';
+              dot.style.width = '7px';
+              dot.style.height = '7px';
+              dot.style.background = i % 2 === 0 ? '#a855f7' : '#f43f5e';
+              dot.style.boxShadow = '0 0 14px #a855f7';
+              const ang = (Math.PI * 2 * i) / 12 + w * 0.4;
+              const dist = 120 + Math.random() * 40;
+              const sx = centerX + Math.cos(ang) * dist;
+              const sy = centerY + Math.sin(ang) * dist;
+              dot.style.left = `${sx}px`;
+              dot.style.top = `${sy}px`;
+              document.body.appendChild(dot);
+              dot.animate([
+                { left: `${sx}px`, top: `${sy}px`, transform: 'translate(-50%, -50%) scale(1.3)', opacity: 1 },
+                { left: `${centerX}px`, top: `${centerY}px`, transform: 'translate(-50%, -50%) scale(0.1)', opacity: 0 }
+              ], {
+                duration: 750,
+                easing: 'cubic-bezier(0.55, 0.055, 0.675, 0.19)'
+              }).onfinish = () => dot.remove();
+            }
+          }, w * 650);
+        }
+      }
+
+      // La 2.75s gaura neagră eliberează nucleul cu o explozie de radiație Hawking
+      setTimeout(() => {
+        const hawkingBonus = Math.max(500, getCPS() * 3.5);
+        addEnergy(hawkingBonus);
+        spawnCoreShockwave('em-wave');
+        spawnCoreShockwave('crit');
+        for (let k = 0; k < 4; k++) spawnCoreLightningArc(true);
+        playTone(620, 'triangle', 0.25, 0.12);
+        const rEnd = coreBtn.getBoundingClientRect();
+        if (rEnd.width > 0) {
+          spawnFloatingText(rEnd.left + rEnd.width / 2, rEnd.top + rEnd.height / 2 - 20, `💥 ERUPȚIE HAWKING +${formatNumber(hawkingBonus)}`, true);
+          spawnParticles(rEnd.left + rEnd.width / 2, rEnd.top + rEnd.height / 2, 22, '#a855f7');
+        }
+      }, 2750);
+
+      setTimeout(() => {
+        bhOverlay.classList.remove('devouring');
+        coreBtn.classList.remove('core-devoured-by-bh');
+        isBlackHoleDevouring = false;
+      }, 3450);
+    }
+
+    // Eveniment Cinematic Motor de Univers Sintetic (g9): Portal Big Bang Multi-Dimensional!
+    let isUniverseGenesisActive = false;
+    function triggerSyntheticUniverseGenesis() {
+      const g9 = (state.generators && state.generators['g9']) || 0;
+      if (g9 <= 0 || isUniverseGenesisActive) return;
+      const portalEl = document.getElementById('coreUniversePortal');
+      if (!portalEl || !coreBtn) return;
+
+      isUniverseGenesisActive = true;
+      portalEl.classList.remove('active-genesis');
+      void portalEl.offsetWidth;
+      portalEl.classList.add('active-genesis');
+
+      const genesisBonus = Math.max(2500, getCPS() * 4.5);
+      addEnergy(genesisBonus);
+
+      playTone(520, 'sine', 0.35, 0.11);
+      setTimeout(() => playTone(780, 'triangle', 0.35, 0.12), 220);
+
+      spawnCoreShockwave('em-wave');
+      setTimeout(() => spawnCoreShockwave('crit'), 250);
+      for (let k = 0; k < 5; k++) spawnCoreLightningArc(true);
+
+      const rect = coreBtn.getBoundingClientRect();
+      if (rect.width > 0) {
+        const cx = rect.left + rect.width / 2;
+        const cy = rect.top + rect.height / 2;
+        spawnFloatingText(cx, cy - 48, `🌌 GENEZĂ UNIVERS SINTETIC! +${formatNumber(genesisBonus)}`, true);
+        spawnParticles(cx, cy, 20, '#38bdf8');
+        spawnParticles(cx, cy, 18, '#fde047');
+      }
+
+      setTimeout(() => {
+        portalEl.classList.remove('active-genesis');
+        isUniverseGenesisActive = false;
+      }, 3650);
     }
 
     function spawnFloatingText(x, y, text, isCrit = false) {
@@ -2693,13 +4665,20 @@
       const upg = CLICK_UPGRADES_DATA.find(u => u.id === id);
       const lvl = state.clickUpgrades[id] || 0;
       if (lvl >= upg.maxLevel) return;
-      const cost = upg.baseCost * Math.pow(upg.costMult, lvl);
+      const cost = getClickUpgradeCost(upg, lvl);
       if (state.energy >= cost) {
+        const cardEl = document.getElementById(`u_card_${id}`);
+        spawnActivationOrbToCore(cardEl, '#a855f7');
         state.energy -= cost;
         state.clickUpgrades[id] = lvl + 1;
         playTone(540, 'triangle', 0.1, 0.09);
+        if (id === 'c_flat1') spawnPhotonMegaBeam();
+        syncCoreVisualEcosystem(true);
         renderClickUpgrades();
+        const newCardEl = document.getElementById(`u_card_${id}`);
+        if (newCardEl) newCardEl.classList.add('card-activated-flash');
         updateUI();
+        saveGame();
       }
     }
 
@@ -2707,11 +4686,22 @@
       const gen = GENERATORS_DATA.find(g => g.id === id);
       const info = getGeneratorBuyInfo(gen, buyMultiplier);
       if (state.energy >= info.cost) {
+        const cardEl = document.getElementById(`g_card_${id}`);
+        spawnActivationOrbToCore(cardEl, '#38bdf8');
         state.energy -= info.cost;
         state.generators[id] = (state.generators[id] || 0) + info.count;
         playTone(460, 'sine', 0.09, 0.08);
+        spawnCoreShockwave('normal');
+        syncCoreVisualEcosystem(true);
+        if (id === 'g1') setTimeout(() => triggerRobotLaserBarrage(), 350);
+        if (id === 'g3') setTimeout(() => triggerTachyonCapacitorBurst(), 350);
+        if (id === 'g6') setTimeout(() => triggerBlackHoleDevourEvent(), 420);
+        if (id === 'g9') setTimeout(() => triggerSyntheticUniverseGenesis(), 420);
         renderGenerators();
+        const newCardEl = document.getElementById(`g_card_${id}`);
+        if (newCardEl) newCardEl.classList.add('card-activated-flash');
         updateUI();
+        saveGame();
       }
     }
 
@@ -2721,11 +4711,13 @@
       if (lvl >= upg.maxLevel) return;
       const cost = Math.round(upg.baseCost * Math.pow(upg.costMult, lvl));
       if (state.darkMatter >= cost) {
+        spawnActivationOrbToCore(null, '#fde047');
         state.darkMatter -= cost;
         state.prestigeUpgrades[id] = lvl + 1;
         playTone(760, 'triangle', 0.14, 0.12);
         renderPrestigeUpgrades();
         updateUI();
+        saveGame();
       }
     }
 
@@ -2738,86 +4730,239 @@
 
     function activateSkill(skillNum) {
       const now = Date.now();
-      if (now < skillCooldowns[skillNum]) return;
+      if (now < (skillCooldowns[skillNum] || 0)) return;
+      state.skillsUsed = (state.skillsUsed || 0) + 1;
+
+      const cdFactor = getSkillCooldownFactor();
+      const skillBonusMult = getAnomalyAndSkillBonusMult();
+      const btnEl = document.getElementById(`skill${skillNum}`);
 
       if (skillNum === 1) {
-        // Impuls EM: +30x CPS instant (minim 50 energie)
-        const gain = Math.max(50, getCPS() * 30);
+        // Impuls EM: +12x CPS instant (amplificat de Găurile Negre g6) + 3 unde de șoc electromagnetice
+        const gain = Math.max(25, getCPS() * 12 * skillBonusMult);
         addEnergy(gain);
-        skillCooldowns[1] = now + 60000;
+        skillCooldowns[1] = now + Math.round(90000 * cdFactor);
+        spawnActivationOrbToCore(btnEl, '#22d3ee');
+        spawnCoreShockwave('em-wave');
+        setTimeout(() => spawnCoreShockwave('em-wave'), 180);
+        setTimeout(() => spawnCoreShockwave('em-wave'), 360);
+        for (let k = 0; k < 4; k++) spawnCoreLightningArc(true);
         showToast(`⚡ Impuls EM activat! Ai primit +${formatNumber(gain)} Energie!`);
         playTone(880, 'sawtooth', 0.18, 0.1);
       } else if (skillNum === 2) {
-        // Hiper-Critică: 100% Crit timp de 15s
-        activeBuffs.hyperCritEnd = now + 15000;
-        skillCooldowns[2] = now + 120000;
-        showToast('🎯 Fuziune Hiper-Critică: 100% Lovituri Critice pentru 15s!');
+        // Hiper-Critică: +40% Crit timp de 12s + Vizor Lunetist pe Nucleu
+        activeBuffs.hyperCritEnd = now + 12000;
+        skillCooldowns[2] = now + Math.round(120000 * cdFactor);
+        spawnActivationOrbToCore(btnEl, '#f43f5e');
+        spawnCoreShockwave('crit');
+        showToast('🎯 Fuziune Hiper-Critică: +40% Șansă Critică pentru 12s!');
         playTone(740, 'triangle', 0.18, 0.1);
       } else if (skillNum === 3) {
-        // Distorsiune Temporală: 2x producție timp de 30s
-        activeBuffs.timeWarpEnd = now + 30000;
-        skillCooldowns[3] = now + 180000;
-        showToast('⏳ Distorsiune Temporală: Producție x2 pentru 30s!');
+        // Distorsiune Temporală: 1.5x producție timp de 20s + Aură Temporală
+        activeBuffs.timeWarpEnd = now + 20000;
+        skillCooldowns[3] = now + Math.round(180000 * cdFactor);
+        spawnActivationOrbToCore(btnEl, '#a855f7');
+        spawnCoreShockwave('em-wave');
+        showToast('⏳ Distorsiune Temporală: Producție x1.5 pentru 20s!');
         playTone(620, 'sine', 0.2, 0.1);
       }
+
+      // Salvăm IMEDIAT în localStorage ca refresh-ul să nu reseteze niciodată cooldown-ul!
+      state.skillCooldowns = skillCooldowns;
+      state.activeBuffs = activeBuffs;
+      saveGame();
+      checkAchievements();
       updateUI();
     }
 
     /********************************************************************
-     * 8. EVENIMENTE ALEATORII (ANOMALII CUANTICE AURII)
+     * 8. EVENIMENTE ALEATORII: 8 TIPURI DE SFERE / CERCURI ZBURĂTOARE CU BUFF-URI UNICE
      ********************************************************************/
+    const ANOMALY_ORB_TYPES = [
+      {
+        id: 'solar',
+        cssClass: 'orb-solar',
+        icon: '🌟',
+        tag: 'FRENEZIE x2.5',
+        color: '#fde047',
+        name: 'Sferă Solară Aurie',
+        applyBuff: (cx, cy, mult) => {
+          activeBuffs.frenzyEnd = Date.now() + 22000;
+          showToast('🌟 SFERĂ SOLARĂ CAPTURATĂ! Producție x2.5 timp de 22 secunde!');
+          spawnFloatingText(cx, cy, '🌟 x2.5 PRODUCȚIE (22s)', true);
+        }
+      },
+      {
+        id: 'storm',
+        cssClass: 'orb-storm',
+        icon: '⚡',
+        tag: 'CLICK x4',
+        color: '#38bdf8',
+        name: 'Sferă Fulgurită Cyan',
+        applyBuff: (cx, cy, mult) => {
+          activeBuffs.clickStormEnd = Date.now() + 16000;
+          showToast('⚡ SFERĂ FULGURITĂ! Putere Click x4 timp de 16 secunde!');
+          spawnFloatingText(cx, cy, '⚡ x4 CLICK STORM (16s)', true);
+        }
+      },
+      {
+        id: 'crimson',
+        cssClass: 'orb-crimson',
+        icon: '🎯',
+        tag: '100% CRIT',
+        color: '#f43f5e',
+        name: 'Sferă Crimson-Laser',
+        applyBuff: (cx, cy, mult) => {
+          activeBuffs.crimsonCritEnd = Date.now() + 14000;
+          showToast('🎯 SFERĂ CRIMSON-LASER! 100% Șansă Critică + Daune Critice x1.8 timp de 14s!');
+          spawnFloatingText(cx, cy, '🎯 100% CRIT + DMG (14s)', true);
+        }
+      },
+      {
+        id: 'emerald',
+        cssClass: 'orb-emerald',
+        icon: '🍀',
+        tag: '-35% COSTURI',
+        color: '#10b981',
+        name: 'Sferă Smarald de Subvenție',
+        applyBuff: (cx, cy, mult) => {
+          activeBuffs.discountOrbEnd = Date.now() + 25000;
+          renderClickUpgrades();
+          renderGenerators();
+          showToast('🍀 SFERĂ SMARALD! Toate Generatoarele & Amplificatoarele au -35% Cost timp de 25s!');
+          spawnFloatingText(cx, cy, '🍀 -35% COSTURI (25s)', true);
+        }
+      },
+      {
+        id: 'mecha',
+        cssClass: 'orb-mecha',
+        icon: '🤖',
+        tag: 'TURBO FLOTĂ',
+        color: '#a855f7',
+        name: 'Sferă Mecha-Overdrive',
+        applyBuff: (cx, cy, mult) => {
+          activeBuffs.overdriveOrbEnd = Date.now() + 18000;
+          comboMeter = 100;
+          lastComboClickTime = performance.now();
+          showToast('🤖 SFERĂ MECHA-OVERDRIVE! Auto-Cursoare x3.5 viteză, Overclock 100% & +40% Producție (18s)!');
+          spawnFloatingText(cx, cy, '🤖 TURBO FLOTĂ & 100% OVERCLOCK', true);
+        }
+      },
+      {
+        id: 'cryo',
+        cssClass: 'orb-cryo',
+        icon: '❄️',
+        tag: 'RESET ABILITĂȚI',
+        color: '#7dd3fc',
+        name: 'Sferă Crio-Temporală',
+        applyBuff: (cx, cy, mult) => {
+          skillCooldowns[1] = 0;
+          skillCooldowns[2] = 0;
+          skillCooldowns[3] = 0;
+          activeBuffs.cryoCooldownEnd = Date.now() + 20000;
+          showToast('❄️ SFERĂ CRIO-TEMPORALĂ! Toate cele 3 Abilități Active au fost reîncărcate INSTANT + -35% CD (20s)!');
+          spawnFloatingText(cx, cy, '❄️ ABILITĂȚI REÎNCĂRCATE INSTANT!', true);
+        }
+      },
+      {
+        id: 'antimatter',
+        cssClass: 'orb-antimatter',
+        icon: '☄️',
+        tag: 'PLOAIE METEORIȚI',
+        color: '#ec4899',
+        name: 'Sferă de Antimaterie',
+        applyBuff: (cx, cy, mult) => {
+          showToast('☄️ PLOAIE DE ANTIMATERIE! 12 Meteoriți Cuantici bombardează Nucleul!');
+          spawnFloatingText(cx, cy, '☄️ BOMBARDAMENT ANTIMATERIE!', true);
+          for (let m = 0; m < 12; m++) {
+            setTimeout(() => {
+              const hitVal = Math.max(25, (getCPS() * 2.2 + getClickValue() * 2) * mult);
+              addEnergy(hitVal);
+              spawnActivationOrbToCore(null, m % 2 === 0 ? '#ec4899' : '#38bdf8');
+              const r = coreBtn.getBoundingClientRect();
+              if (r.width > 0) {
+                spawnFloatingText(
+                  r.left + r.width / 2 + (Math.random() - 0.5) * 70,
+                  r.top + r.height / 2 + (Math.random() - 0.5) * 50,
+                  `☄️ +${formatNumber(hitVal)}`,
+                  true
+                );
+              }
+            }, m * 280);
+          }
+        }
+      },
+      {
+        id: 'prismatic',
+        cssClass: 'orb-prismatic',
+        icon: '💎',
+        tag: 'MEGA JACKPOT',
+        color: '#fde047',
+        name: 'Sferă Prismatică Astrală',
+        applyBuff: (cx, cy, mult) => {
+          const jackpot = Math.max(200, (getCPS() * 28 + getClickValue() * 18) * mult);
+          addEnergy(jackpot);
+          activeBuffs.frenzyEnd = Math.max(activeBuffs.frenzyEnd || 0, Date.now() + 12000);
+          comboMeter = 100;
+          lastComboClickTime = performance.now();
+          showToast(`💎 JACKPOT PRISMATIC! +${formatNumber(jackpot)} ⚡ + Frenezie & Overclock 100%!`);
+          spawnFloatingText(cx, cy, `💎 +${formatNumber(jackpot)} ⚡`, true);
+        }
+      }
+    ];
+
     function spawnQuantumAnomaly(manual = false) {
       if (document.querySelector('.quantum-anomaly')) return;
 
-      const el = document.createElement('div');
-      el.className = 'quantum-anomaly';
-      el.innerHTML = '☄️';
-      el.title = 'Click pentru Bonus Cuantic Masiv!';
+      const orbType = ANOMALY_ORB_TYPES[Math.floor(Math.random() * ANOMALY_ORB_TYPES.length)];
 
-      const startY = 90 + Math.random() * (window.innerHeight - 220);
+      const el = document.createElement('div');
+      el.className = `quantum-anomaly ${orbType.cssClass}`;
+      el.innerHTML = `<span>${orbType.icon}</span><span class="anomaly-tag-label">${orbType.tag}</span>`;
+      el.title = `${orbType.name} — Click pentru ${orbType.tag}!`;
+
+      const fromLeft = Math.random() < 0.5;
+      const startX = fromLeft ? -90 : window.innerWidth + 90;
+      const endX = fromLeft ? window.innerWidth + 90 : -90;
+      const startY = 85 + Math.random() * Math.max(120, window.innerHeight - 250);
+      const midY = Math.max(75, Math.min(window.innerHeight - 140, startY + (Math.random() - 0.5) * 220));
+      const endY = 85 + Math.random() * Math.max(120, window.innerHeight - 250);
+
       el.style.top = `${startY}px`;
-      el.style.left = '-80px';
+      el.style.left = `${startX}px`;
       document.body.appendChild(el);
 
       if (!manual) {
-        showToast('☄️ O Anomalie Cuantică traversează ecranul! Apasă pe ea!');
+        showToast(`${orbType.icon} ${orbType.name} [${orbType.tag}] traversează ecranul! Apasă pe ea!`);
       }
       playTone(920, 'sine', 0.15, 0.08);
 
       const anim = el.animate([
-        { left: '-80px', transform: 'rotate(0deg)' },
-        { left: `${window.innerWidth + 80}px`, transform: 'rotate(360deg)' }
+        { left: `${startX}px`, top: `${startY}px`, transform: 'scale(0.9) rotate(0deg)' },
+        { left: `${window.innerWidth / 2}px`, top: `${midY}px`, transform: 'scale(1.08) rotate(180deg)', offset: 0.5 },
+        { left: `${endX}px`, top: `${endY}px`, transform: 'scale(0.95) rotate(360deg)' }
       ], {
-        duration: 11000,
+        duration: 11500,
         easing: 'linear'
       });
 
       el.addEventListener('pointerdown', (e) => {
         e.stopPropagation();
         state.anomaliesCaught++;
-        spawnParticles(e.clientX, e.clientY, 22, '#fde047');
+        spawnParticles(e.clientX, e.clientY, 26, orbType.color);
+        spawnActivationOrbToCore(el, orbType.color);
         playTone(1040, 'triangle', 0.22, 0.14);
 
-        // Alege o recompensă aleatorie spectaculoasă
-        const roll = Math.random();
-        const now = Date.now();
-        if (roll < 0.38) {
-          activeBuffs.frenzyEnd = now + 30000;
-          showToast('🌟 FRENEZIE CUANTICĂ! Producție x7 timp de 30 secunde!');
-          spawnFloatingText(e.clientX, e.clientY, 'x7 FRENEZIE (30s)', true);
-        } else if (roll < 0.72) {
-          activeBuffs.clickStormEnd = now + 20000;
-          showToast('⚡ FURTUNĂ DE CLICK-URI! Putere Click x15 timp de 20 secunde!');
-          spawnFloatingText(e.clientX, e.clientY, 'x15 CLICK STORM (20s)', true);
-        } else {
-          const jackpot = Math.max(250, getCPS() * 60 + getClickValue() * 25);
-          addEnergy(jackpot);
-          showToast(`💰 JACKPOT ASTRAL! +${formatNumber(jackpot)} Energie Cuantică!`);
-          spawnFloatingText(e.clientX, e.clientY, `+${formatNumber(jackpot)}`, true);
-        }
+        const anomBonusMult = getAnomalyAndSkillBonusMult();
+        orbType.applyBuff(e.clientX, e.clientY, anomBonusMult);
+
+        state.skillCooldowns = skillCooldowns;
+        state.activeBuffs = activeBuffs;
+        saveGame();
 
         anim.cancel();
         el.remove();
+        checkAchievements();
         updateUI();
       });
 
@@ -2827,37 +4972,158 @@
     }
 
     /********************************************************************
-     * 9. SISTEM DE PRESTIGIU (REBIRTH / SINGULARITATE)
+     * 9. SISTEM DE PRESTIGIU SECVENȚIAL + ANIMAȚIE EXPLOZIE ÎN BUCĂȚI & RECONSTRUCȚIE
      ********************************************************************/
-    function triggerPrestige() {
-      const pending = getPendingDarkMatter();
-      if (pending <= 0) return;
+    let isRebirthAnimating = false;
 
-      if (!confirm(`Ești sigur că vrei să declanșezi Singularitatea?\n\nVei primi +${formatNumber(pending, 0)} 🔮 Materie Întunecată (+${pending * 25}% producție permanentă), iar energia și generatoarele actuale vor fi resetate.`)) {
+    function playRebirthCinematicExplosion(onStabilizeCallback) {
+      if (isRebirthAnimating) return;
+      isRebirthAnimating = true;
+
+      // Dacă suntem pe telefon și panoul Nucleului este ascuns, comutăm pe Nucleu să se vadă explozia!
+      const leftZone = document.getElementById('zone-left');
+      if (leftZone && window.getComputedStyle(leftZone).display === 'none') {
+        const firstMobBtn = document.querySelector('.mobile-nav-btn');
+        if (typeof switchMobileZone === 'function') {
+          switchMobileZone('left', firstMobBtn);
+        }
+      }
+
+      const wrap = document.getElementById('coreEcosystemWrap');
+      if (!wrap || !coreBtn) {
+        isRebirthAnimating = false;
+        onStabilizeCallback();
         return;
       }
 
-      state.darkMatter += pending;
-      state.prestigeCount++;
+      // Faza 1 (0 - 700ms): Supraîncălzire critică, vibrație violentă și implozie a Nucleului
+      wrap.classList.remove('core-prestige-reborn');
+      wrap.classList.add('core-prestige-imploding');
+      playTone(180, 'sawtooth', 0.65, 0.14);
+      setTimeout(() => playTone(120, 'sawtooth', 0.45, 0.15), 300);
 
-      // Energia de start din upgrade-ul Memorie Ancestrală
-      const starterLvl = state.prestigeUpgrades['p_starter'] || 0;
-      const startEnergy = starterLvl > 0 ? Math.pow(1000, starterLvl) : 0;
+      // Faza 2 (700ms): BUBUIE NUCLEUL ÎN 32 DE BUCĂȚI CRISTALINE!
+      setTimeout(() => {
+        wrap.classList.remove('core-prestige-imploding');
+        coreBtn.style.opacity = '0';
+        coreBtn.style.transform = 'scale(0.05)';
 
-      state.energy = startEnergy;
-      state.totalEnergyThisRun = startEnergy;
+        // Flash cosmic pe tot ecranul
+        const flash = document.createElement('div');
+        flash.className = 'prestige-screen-flash';
+        document.body.appendChild(flash);
+        setTimeout(() => flash.remove(), 2200);
 
-      CLICK_UPGRADES_DATA.forEach(u => state.clickUpgrades[u.id] = 0);
-      GENERATORS_DATA.forEach(g => state.generators[g.id] = 0);
+        playTone(95, 'square', 0.55, 0.16);
+        setTimeout(() => playTone(520, 'triangle', 0.4, 0.12), 140);
 
-      playTone(440, 'sawtooth', 0.3, 0.12);
-      showToast(`🌌 Singularitate completă! Ai câștigat +${pending} 🔮 Materie Întunecată!`);
+        const rect = wrap.getBoundingClientRect();
+        const cx = rect.width > 0 ? rect.left + rect.width / 2 : window.innerWidth / 2;
+        const cy = rect.height > 0 ? rect.top + rect.height / 2 : window.innerHeight / 2;
 
-      renderAll();
-      saveGame();
-      if (cloudSession && cloudSession.access_token) {
-        cloudPushSave(false);
+        spawnFloatingText(cx, cy - 30, '💥 COLAPS CUANTIC: NUCLEU SPULBERAT!', true);
+
+        const shardColors = [
+          'linear-gradient(135deg, #ffffff, #38bdf8, #0284c7)',
+          'linear-gradient(135deg, #fde047, #f59e0b, #ea580c)',
+          'linear-gradient(135deg, #f0abfc, #a855f7, #6366f1)',
+          'linear-gradient(135deg, #fbcfe8, #ec4899, #be185d)'
+        ];
+
+        const shards = [];
+        const shardCount = 32;
+        for (let i = 0; i < shardCount; i++) {
+          const shard = document.createElement('div');
+          shard.className = 'prestige-shard';
+          const size = 14 + Math.random() * 22;
+          shard.style.width = `${size}px`;
+          shard.style.height = `${size}px`;
+          shard.style.background = shardColors[i % shardColors.length];
+          shard.style.left = `${cx}px`;
+          shard.style.top = `${cy}px`;
+          document.body.appendChild(shard);
+
+          const angle = (Math.PI * 2 * i) / shardCount + (Math.random() - 0.5) * 0.25;
+          const dist = 110 + Math.random() * 190;
+          const tx = Math.cos(angle) * dist;
+          const ty = Math.sin(angle) * dist;
+          const rot = (Math.random() - 0.5) * 720;
+
+          // Explozie în afară + înghețare scurtă în aer + reconstrucție magnetică înapoi în centru!
+          shard.animate([
+            { transform: 'translate(-50%, -50%) translate(0px, 0px) rotate(0deg) scale(0.4)', opacity: 1, offset: 0 },
+            { transform: `translate(-50%, -50%) translate(${tx * 0.85}px, ${ty * 0.85}px) rotate(${rot * 0.7}deg) scale(1.25)`, opacity: 1, offset: 0.38 },
+            { transform: `translate(-50%, -50%) translate(${tx}px, ${ty}px) rotate(${rot}deg) scale(1.1)`, opacity: 0.95, offset: 0.58 },
+            { transform: 'translate(-50%, -50%) translate(0px, 0px) rotate(0deg) scale(0.15)', opacity: 1, offset: 1 }
+          ], {
+            duration: 1950,
+            easing: 'cubic-bezier(0.22, 1, 0.36, 1)'
+          }).onfinish = () => shard.remove();
+
+          shards.push(shard);
+        }
+
+        // Sunet de absorbție magnetică la jumătatea zborului când bucățile se întorc
+        setTimeout(() => {
+          playTone(340, 'sine', 0.4, 0.11);
+          setTimeout(() => playTone(680, 'triangle', 0.45, 0.13), 260);
+        }, 1100);
+
+        // Faza 3 (2650ms): Bucățile s-au unit la loc -> Nucleul se stabilizează într-o nouă Singularitate!
+        setTimeout(() => {
+          coreBtn.style.opacity = '';
+          coreBtn.style.transform = '';
+          wrap.classList.add('core-prestige-reborn');
+          spawnCoreShockwave('em-wave');
+          spawnCoreShockwave('crit');
+          for (let k = 0; k < 6; k++) spawnCoreLightningArc(true);
+          spawnParticles(cx, cy, 30, '#fde047');
+          spawnParticles(cx, cy, 24, '#38bdf8');
+          playTone(880, 'triangle', 0.45, 0.14);
+
+          onStabilizeCallback();
+
+          setTimeout(() => {
+            wrap.classList.remove('core-prestige-reborn');
+            isRebirthAnimating = false;
+          }, 950);
+        }, 1950);
+      }, 700);
+    }
+
+    function triggerPrestige() {
+      if (!isRebirthReady() || isRebirthAnimating) return;
+      const dmReward = getCurrentRebirthDarkMatterReward();
+      const nextRebirthNum = (state.prestigeCount || 0) + 1;
+
+      if (!confirm(`Ești sigur că vrei să declanșezi Rebirth #${nextRebirthNum}?\n\n• Nucleul actual va colapsa și se va reconstrui în Singularitatea #${nextRebirthNum} (+15% producție permanentă)\n• Vei primi +${dmReward} 🔮 Materie Întunecată (+${dmReward * 10}% producție permanentă)\n• Energia și generatoarele actuale se vor reseta pentru noul ciclu.`)) {
+        return;
       }
+
+      playRebirthCinematicExplosion(() => {
+        state.darkMatter += dmReward;
+        state.prestigeCount = nextRebirthNum;
+
+        // Energia de start din upgrade-ul Memorie Ancestrală (+500 per nivel)
+        const starterLvl = state.prestigeUpgrades['p_starter'] || 0;
+        const startEnergy = starterLvl * 500;
+
+        state.energy = startEnergy;
+        state.totalEnergyThisRun = startEnergy;
+        comboMeter = 0;
+
+        CLICK_UPGRADES_DATA.forEach(u => state.clickUpgrades[u.id] = 0);
+        GENERATORS_DATA.forEach(g => state.generators[g.id] = 0);
+
+        showToast(`🌌 Singularitatea #${nextRebirthNum} Stabilizată! Ai primit +${dmReward} 🔮 Materie Întunecată!`);
+
+        checkAchievements();
+        renderAll();
+        saveGame();
+        if (cloudSession && (cloudSession.access_token || cloudSession.refresh_token)) {
+          cloudPushSave(false);
+        }
+      });
     }
 
     /********************************************************************
@@ -2870,7 +5136,7 @@
       CLICK_UPGRADES_DATA.forEach(upg => {
         const lvl = state.clickUpgrades[upg.id] || 0;
         const isMax = lvl >= upg.maxLevel;
-        const cost = upg.baseCost * Math.pow(upg.costMult, lvl);
+        const cost = getClickUpgradeCost(upg, lvl);
         const canAfford = !isMax && state.energy >= cost;
 
         const card = document.createElement('div');
@@ -2887,6 +5153,7 @@
                 <span class="upgrade-lvl">Niv. ${lvl}/${upg.maxLevel}</span>
               </div>
               <div class="upgrade-desc">${upg.desc}</div>
+              ${upg.specialBadge ? `<div class="special-mechanic-badge ${upg.badgeColor || ''}">${upg.specialBadge}</div>` : ''}
             </div>
           </div>
           <div class="upgrade-footer">
@@ -2922,10 +5189,11 @@
               <span class="gen-count" id="g_cnt_${gen.id}">${count}</span>
             </div>
             <div class="gen-meta">
-              <span class="gen-prod" id="g_prod_${gen.id}">+${formatNumber(unitProd)}/s fiecare</span>
+              <span class="gen-prod" id="g_prod_${gen.id}">+${formatNumber(unitProd)}/s bază</span>
               <span class="gen-cost" id="g_cost_${gen.id}">+${info.count}x: ${formatNumber(info.cost)} ⚡</span>
             </div>
-            <div class="gen-milestone-bar" title="Progres către următorul multiplicator x2">
+            ${gen.roleBadge ? `<div class="special-mechanic-badge ${gen.badgeColor || ''}" id="g_spec_${gen.id}">${gen.roleBadge}</div>` : ''}
+            <div class="gen-milestone-bar" title="Progres către următorul prag (+35% producție)">
               <div class="gen-milestone-fill" style="width:${progress}%"></div>
             </div>
           </div>
@@ -2968,26 +5236,51 @@
       });
     }
 
+    function setAchievementFilter(filterMode, btnEl) {
+      currentAchFilter = filterMode;
+      if (btnEl && btnEl.parentElement) {
+        btnEl.parentElement.querySelectorAll('.lb-cat-btn').forEach(b => b.classList.remove('active'));
+        btnEl.classList.add('active');
+      }
+      renderAchievements();
+    }
+
     function renderAchievements() {
       const container = document.getElementById('achievementsGrid');
       container.innerHTML = '';
 
-      ACHIEVEMENTS_DATA.forEach(ach => {
-        const unlocked = state.unlockedAchievements.includes(ach.id);
-        const card = document.createElement('div');
-        card.className = 'ach-card' + (unlocked ? ' unlocked' : '');
-        card.innerHTML = `
-          <div class="ach-icon">${unlocked ? ach.icon : '🔒'}</div>
-          <div>
-            <div class="ach-title">${ach.name}</div>
-            <div class="ach-desc">${ach.desc}</div>
-          </div>
-        `;
-        container.appendChild(card);
+      const filtered = ACHIEVEMENTS_DATA.filter(ach => {
+        const isUnl = state.unlockedAchievements.includes(ach.id);
+        if (currentAchFilter === 'unlocked') return isUnl;
+        if (currentAchFilter === 'locked') return !isUnl;
+        if (currentAchFilter !== 'all') return ach.cat === currentAchFilter;
+        return true;
       });
 
-      document.getElementById('achCountBadge').innerText = `${state.unlockedAchievements.length}/${ACHIEVEMENTS_DATA.length}`;
-      document.getElementById('achBonusText').innerText = `+${state.unlockedAchievements.length * 5}%`;
+      if (filtered.length === 0) {
+        container.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding:24px; color:var(--text-muted); font-size:13px;">Nicio realizare în acest filtru momentan.</div>`;
+      } else {
+        filtered.forEach(ach => {
+          const unlocked = state.unlockedAchievements.includes(ach.id);
+          const card = document.createElement('div');
+          card.className = 'ach-card' + (unlocked ? ' unlocked' : '');
+          card.innerHTML = `
+            <div class="ach-icon">${unlocked ? ach.icon : '🔒'}</div>
+            <div>
+              <div class="ach-title">${ach.name}</div>
+              <div class="ach-desc">${ach.desc}</div>
+            </div>
+          `;
+          container.appendChild(card);
+        });
+      }
+
+      const unlockedCount = state.unlockedAchievements.length;
+      const totalCount = ACHIEVEMENTS_DATA.length;
+      document.getElementById('achCountBadge').innerText = `${unlockedCount}/${totalCount}`;
+      const headerProg = document.getElementById('achHeaderProgress');
+      if (headerProg) headerProg.innerText = `${unlockedCount} / ${totalCount}`;
+      document.getElementById('achBonusText').innerText = `+${unlockedCount}%`;
     }
 
     function renderStats() {
@@ -2995,12 +5288,13 @@
       const items = [
         { label: 'Energie Totală (Toate Timpurile)', val: formatNumber(state.lifetimeEnergy) + ' ⚡' },
         { label: 'Multiplicator Global Actual', val: 'x' + formatNumber(getGlobalMultiplier()) },
-        { label: 'Șansă / Multiplicator Critic', val: `${Math.round(getCritChance() * 100)}% (x${getCritMultiplier()})` },
+        { label: 'Șansă / Multiplicator Critic', val: `${Math.round(getCritChance() * 100)}% (x${getCritMultiplier().toFixed(2)})` },
         { label: 'Click-uri Manuale Efectuate', val: state.totalClicks.toLocaleString('ro-RO') },
         { label: 'Lovituri Critice Reușite', val: state.totalCrits.toLocaleString('ro-RO') },
         { label: 'Generatoare Deținute', val: getTotalGenerators().toLocaleString('ro-RO') },
         { label: 'Anomalii Aurii Capturate', val: state.anomaliesCaught.toString() },
         { label: 'Singularități (Rebirth-uri)', val: state.prestigeCount.toString() },
+        { label: 'Realizări Deblocate', val: `${state.unlockedAchievements.length} / ${ACHIEVEMENTS_DATA.length}` },
         { label: 'Timp Activ în Simulare', val: formatTime(state.playTimeSeconds) }
       ];
 
@@ -3018,7 +5312,7 @@
         if (!state.unlockedAchievements.includes(ach.id) && ach.check(state)) {
           state.unlockedAchievements.push(ach.id);
           newlyUnlocked = true;
-          showToast(`🏆 Realizare Deblocată: ${ach.name} (+5% Bonus!)`);
+          showToast(`🏆 Realizare Deblocată: ${ach.name} (+1% Bonus!)`);
           playTone(820, 'triangle', 0.16, 0.11);
         }
       }
@@ -3034,37 +5328,45 @@
       document.getElementById('vpcAmount').innerText = formatNumber(getClickValue());
 
       // Bara mini Prestigiu
-      document.getElementById('darkMatterMini').innerText = formatNumber(state.darkMatter, 0);
-      document.getElementById('prestigeMultMini').innerText = `+${formatNumber(state.darkMatter * 25, 0)}%`;
+      const totalPresBonusPct = Math.round(((state.darkMatter || 0) * 10) + ((state.prestigeCount || 0) * 15));
+      document.getElementById('darkMatterMini').innerText = `${formatNumber(state.darkMatter, 0)} (Rebirth #${state.prestigeCount || 0})`;
+      document.getElementById('prestigeMultMini').innerText = `+${formatNumber(totalPresBonusPct, 0)}%`;
 
-      // Combo Bar
+      // Combo Bar (Overclock)
       const comboMult = getComboMultiplier();
       const comboMultEl = document.getElementById('comboMultText');
       comboMultEl.innerText = `x${comboMult.toFixed(2)}`;
-      document.getElementById('comboBarFill').style.width = `${comboMeter}%`;
+      const comboPctEl = document.getElementById('comboPctText');
+      if (comboPctEl) comboPctEl.innerText = `${Math.round(comboMeter)}%`;
+      document.getElementById('comboBarFill').style.width = `${Math.min(100, Math.max(0, comboMeter))}%`;
+      const comboBoxCard = document.getElementById('comboBoxCard');
       if (comboMeter >= 85) {
         comboMultEl.classList.add('fever-text');
         coreBtn.classList.add('fever');
+        if (comboBoxCard) comboBoxCard.classList.add('fever-box');
       } else {
         comboMultEl.classList.remove('fever-text');
         coreBtn.classList.remove('fever');
+        if (comboBoxCard) comboBoxCard.classList.remove('fever-box');
       }
 
-      // Actualizare accesibilitate carduri Upgrade-uri Click
+      // Actualizare accesibilitate și cost dinamic carduri Upgrade-uri Click
       CLICK_UPGRADES_DATA.forEach(upg => {
         const card = document.getElementById(`u_card_${upg.id}`);
         if (!card) return;
         const lvl = state.clickUpgrades[upg.id] || 0;
         const isMax = lvl >= upg.maxLevel;
-        const cost = upg.baseCost * Math.pow(upg.costMult, lvl);
+        const cost = getClickUpgradeCost(upg, lvl);
         if (!isMax && state.energy >= cost) {
           card.classList.remove('locked');
         } else {
           card.classList.add('locked');
         }
+        const uCostEl = document.getElementById(`u_cost_${upg.id}`);
+        if (uCostEl) uCostEl.innerText = isMax ? 'MAXIM' : `${formatNumber(cost)} ⚡`;
       });
 
-      // Actualizare dinamică Generatoare (inclusiv modul MAX)
+      // Actualizare dinamică Generatoare (inclusiv modul MAX și descrierea specială)
       GENERATORS_DATA.forEach(gen => {
         const card = document.getElementById(`g_card_${gen.id}`);
         if (!card) return;
@@ -3080,21 +5382,45 @@
         if (costEl) costEl.innerText = `+${info.count}x: ${formatNumber(info.cost)} ⚡`;
         const prodEl = document.getElementById(`g_prod_${gen.id}`);
         const unitProd = gen.baseCps * getGeneratorMilestoneMultiplier(count) * getGlobalMultiplier();
-        if (prodEl) prodEl.innerText = `+${formatNumber(unitProd)}/s fiecare`;
+        if (prodEl) prodEl.innerText = `+${formatNumber(unitProd)}/s bază`;
+        const specEl = document.getElementById(`g_spec_${gen.id}`);
+        if (specEl && gen.specialSummary) {
+          specEl.innerText = count > 0 ? gen.specialSummary(count) : gen.roleBadge;
+        }
       });
 
-      // Actualizare secțiune Prestigiu
-      const pendingDM = getPendingDarkMatter();
-      document.getElementById('dmCurrentVal').innerText = formatNumber(state.darkMatter, 0);
-      document.getElementById('dmPendingVal').innerText = `+${formatNumber(pendingDM, 0)}`;
-      document.getElementById('dmNextReq').innerText = `${formatNumber(getNextDarkMatterEnergyRequirement())} ⚡`;
+      // Actualizare secțiune Prestigiu Secvențial (Câte un Rebirth pe rând)
+      const nextRebirthNum = (state.prestigeCount || 0) + 1;
+      const reqEnergy = getRebirthEnergyRequirement();
+      const ready = isRebirthReady();
+      const dmReward = getCurrentRebirthDarkMatterReward();
+      const pct = Math.min(100, ((state.totalEnergyThisRun || 0) / reqEnergy) * 100);
+
+      document.getElementById('dmCurrentVal').innerText = `${state.prestigeCount || 0} 🌌 | ${formatNumber(state.darkMatter, 0)} 🔮`;
+      const pendingLbl = document.getElementById('dmPendingLabel');
+      if (pendingLbl) pendingLbl.innerText = `Recompensă Rebirth #${nextRebirthNum}`;
+      document.getElementById('dmPendingVal').innerText = ready ? `+1 🌌 & +${dmReward} 🔮` : `Blocat (+${dmReward} 🔮)`;
+
+      const nextReqLbl = document.getElementById('dmNextReqLabel');
+      if (nextReqLbl) nextReqLbl.innerText = `Prag Energie Rebirth #${nextRebirthNum}`;
+      document.getElementById('dmNextReq').innerText = `${formatNumber(reqEnergy)} ⚡`;
+
+      const progPctEl = document.getElementById('rebirthProgressPct');
+      if (progPctEl) progPctEl.innerText = `${pct.toFixed(1)}% (${formatNumber(state.totalEnergyThisRun || 0)} / ${formatNumber(reqEnergy)} ⚡)`;
+      const progFillEl = document.getElementById('rebirthProgressFill');
+      if (progFillEl) progFillEl.style.width = `${pct}%`;
+
+      const satBanner = document.getElementById('rebirthSaturationBanner');
+      if (satBanner) satBanner.style.display = ready ? 'block' : 'none';
 
       const btnPres = document.getElementById('btnTriggerPrestige');
-      btnPres.disabled = pendingDM <= 0;
-      btnPres.innerText = `🌌 Declanșează Singularitatea (+${formatNumber(pendingDM, 0)} 🔮)`;
+      btnPres.disabled = !ready;
+      btnPres.innerText = ready
+        ? `🌌 Declanșează Rebirth #${nextRebirthNum} (+1 🌌 & +${dmReward} 🔮)`
+        : `🔒 Rebirth #${nextRebirthNum} Blocat (${pct.toFixed(1)}%)`;
 
       const presBadge = document.getElementById('prestigeTabBadge');
-      presBadge.style.display = pendingDM > 0 ? 'inline-block' : 'none';
+      presBadge.style.display = ready ? 'inline-block' : 'none';
 
       // Actualizare Cooldown-uri Abilități Active
       const now = Date.now();
@@ -3112,22 +5438,43 @@
         }
       }
 
-      // Afișare Buff-uri Active în bara de sus
+      // Afișare Buff-uri Active în bara de sus (inclusiv cele 8 tipuri de Sfere Cuantice!)
       const buffsContainer = document.getElementById('activeBuffsContainer');
       const pills = [];
-      if (now < activeBuffs.frenzyEnd) {
-        pills.push(`<div class="buff-pill">🌟 Frenezie x7 (${Math.ceil((activeBuffs.frenzyEnd - now) / 1000)}s)</div>`);
+      if (now < (activeBuffs.frenzyEnd || 0)) {
+        pills.push(`<div class="buff-pill">🌟 Frenezie x2.5 (${Math.ceil((activeBuffs.frenzyEnd - now) / 1000)}s)</div>`);
       }
-      if (now < activeBuffs.clickStormEnd) {
-        pills.push(`<div class="buff-pill">⚡ Click Storm x15 (${Math.ceil((activeBuffs.clickStormEnd - now) / 1000)}s)</div>`);
+      if (now < (activeBuffs.clickStormEnd || 0)) {
+        pills.push(`<div class="buff-pill" style="border-color:#38bdf8;color:#bae6fd">⚡ Click Storm x4 (${Math.ceil((activeBuffs.clickStormEnd - now) / 1000)}s)</div>`);
       }
-      if (now < activeBuffs.hyperCritEnd) {
-        pills.push(`<div class="buff-pill">🎯 100% Crit (${Math.ceil((activeBuffs.hyperCritEnd - now) / 1000)}s)</div>`);
+      if (now < (activeBuffs.crimsonCritEnd || 0)) {
+        pills.push(`<div class="buff-pill" style="border-color:#f43f5e;color:#fecdd3;background:rgba(244,63,94,0.18)">🎯 100% Crit (${Math.ceil((activeBuffs.crimsonCritEnd - now) / 1000)}s)</div>`);
       }
-      if (now < activeBuffs.timeWarpEnd) {
-        pills.push(`<div class="buff-pill">⏳ Distorsiune x2 (${Math.ceil((activeBuffs.timeWarpEnd - now) / 1000)}s)</div>`);
+      if (now < (activeBuffs.discountOrbEnd || 0)) {
+        pills.push(`<div class="buff-pill" style="border-color:#10b981;color:#a7f3d0;background:rgba(16,185,129,0.18)">🍀 -35% Costuri (${Math.ceil((activeBuffs.discountOrbEnd - now) / 1000)}s)</div>`);
+      }
+      if (now < (activeBuffs.overdriveOrbEnd || 0)) {
+        pills.push(`<div class="buff-pill" style="border-color:#a855f7;color:#f3e8ff;background:rgba(168,85,247,0.2)">🤖 Turbo Flotă (${Math.ceil((activeBuffs.overdriveOrbEnd - now) / 1000)}s)</div>`);
+      }
+      if (now < (activeBuffs.cryoCooldownEnd || 0)) {
+        pills.push(`<div class="buff-pill" style="border-color:#7dd3fc;color:#e0f2fe;background:rgba(56,189,248,0.18)">❄️ -35% Cooldown (${Math.ceil((activeBuffs.cryoCooldownEnd - now) / 1000)}s)</div>`);
+      }
+      if (now < (activeBuffs.hyperCritEnd || 0)) {
+        pills.push(`<div class="buff-pill">🎯 +40% Crit (${Math.ceil((activeBuffs.hyperCritEnd - now) / 1000)}s)</div>`);
+      }
+      if (now < (activeBuffs.timeWarpEnd || 0)) {
+        pills.push(`<div class="buff-pill">⏳ Distorsiune x1.5 (${Math.ceil((activeBuffs.timeWarpEnd - now) / 1000)}s)</div>`);
+      }
+      if (ready) {
+        pills.push(`<div class="buff-pill" style="border-color:#c084fc; color:#e9d5ff; background:rgba(168,85,247,0.2);">🌌 Rebirth #${nextRebirthNum} Gata! (Saturație ${Math.round(getSaturationFactor()*100)}%)</div>`);
       }
       buffsContainer.innerHTML = pills.join('');
+
+      // Suprapuneri vizuale pe Nucleu pentru Abilități Active
+      const reticleEl = document.getElementById('coreSniperReticle');
+      if (reticleEl) reticleEl.classList.toggle('active', now < (activeBuffs.hyperCritEnd || 0) || now < (activeBuffs.crimsonCritEnd || 0));
+      const chronoEl = document.getElementById('coreChronoAura');
+      if (chronoEl) chronoEl.classList.toggle('active', now < (activeBuffs.timeWarpEnd || 0) || now < (activeBuffs.cryoCooldownEnd || 0));
     }
 
     function switchTab(tabName, btnEl) {
@@ -3161,6 +5508,7 @@
       renderGenerators();
       renderPrestigeUpgrades();
       renderAchievements();
+      syncCoreVisualEcosystem(true);
       updateUI();
     }
 
@@ -3169,6 +5517,8 @@
      ********************************************************************/
     function saveGame() {
       state.lastSaved = Date.now();
+      state.skillCooldowns = skillCooldowns;
+      state.activeBuffs = activeBuffs;
       try {
         localStorage.setItem(SAVE_KEY, JSON.stringify(state));
         if (!navigator.onLine && cloudSession && cloudSession.access_token) {
@@ -3203,20 +5553,37 @@
           ...parsed,
           clickUpgrades: { ...def.clickUpgrades, ...(parsed.clickUpgrades || {}) },
           generators: { ...def.generators, ...(parsed.generators || {}) },
-          prestigeUpgrades: { ...def.prestigeUpgrades, ...(parsed.prestigeUpgrades || {}) }
+          prestigeUpgrades: { ...def.prestigeUpgrades, ...(parsed.prestigeUpgrades || {}) },
+          skillCooldowns: { ...def.skillCooldowns, ...(parsed.skillCooldowns || {}) },
+          activeBuffs: { ...def.activeBuffs, ...(parsed.activeBuffs || {}) }
         };
+        skillCooldowns = state.skillCooldowns;
+        activeBuffs = state.activeBuffs;
+
+        // Curățăm ID-urile vechi de realizări și sincronizăm silențios realizările deja îndeplinite din cele 330
+        const validAchIds = new Set(ACHIEVEMENTS_DATA.map(a => a.id));
+        state.unlockedAchievements = Array.isArray(state.unlockedAchievements)
+          ? state.unlockedAchievements.filter(id => validAchIds.has(id))
+          : [];
+        for (const ach of ACHIEVEMENTS_DATA) {
+          if (!state.unlockedAchievements.includes(ach.id) && ach.check(state)) {
+            state.unlockedAchievements.push(ach.id);
+          }
+        }
 
         document.getElementById('btnSound').innerText = state.soundEnabled ? '🔊 Sunet: ON' : '🔇 Sunet: OFF';
 
-        // Calcul Progres Offline
+        // Calcul Progres Offline (plafonat la pragul Rebirth-ului curent ca să nu sară peste Rebirth-uri)
         const now = Date.now();
         const elapsedSec = (now - (state.lastSaved || now)) / 1000;
         const currentCps = getCPS();
         if (elapsedSec > 8 && currentCps > 0) {
-          const cappedSec = Math.min(elapsedSec, 86400 * 7); // Până la 7 zile offline
+          const cappedSec = Math.min(elapsedSec, 86400 * 2); // Maxim 48h offline
           const effLvl = state.prestigeUpgrades['p_offline'] || 0;
-          const efficiency = Math.min(1.0, 0.5 + effLvl * 0.1);
-          const offlineEarned = currentCps * cappedSec * efficiency;
+          const efficiency = Math.min(0.80, 0.40 + effLvl * 0.08);
+          const rawOffline = currentCps * cappedSec * efficiency;
+          const maxRunCap = Math.max(0, getRebirthEnergyRequirement() * 1.1 - (state.totalEnergyThisRun || 0));
+          const offlineEarned = Math.min(rawOffline, Math.max(currentCps * 60, maxRunCap));
 
           if (offlineEarned >= 1) {
             addEnergy(offlineEarned);
@@ -3241,6 +5608,8 @@
       if (confirm('⚠️ Ești sigur că vrei să ștergi definitiv tot progresul (inclusiv Materia Întunecată și Realizările)?')) {
         localStorage.removeItem(SAVE_KEY);
         state = getDefaultState();
+        skillCooldowns = state.skillCooldowns;
+        activeBuffs = state.activeBuffs;
         comboMeter = 0;
         renderAll();
         renderStats();
@@ -3253,8 +5622,8 @@
      *       + AUTO-SYNC SILENȚIOS OFFLINE -> ONLINE + AUTO-UPDATE LIVE
      *       + NAVIGARE MOBIL & INSTALARE PWA (MACBOOK / PC / ANDROID / iOS)
      ********************************************************************/
-    const APP_VERSION = '2.6.0';
-    const APP_BUILD = 260;
+    const APP_VERSION = '2.8.0';
+    const APP_BUILD = 280;
     // URL-ul oficial de pe GitHub Pages pentru verificarea automată de Update (și în aplicațiile .exe / .dmg):
     const REMOTE_UPDATE_BASE_URL = 'https://mariusinfo.github.io/quantum-nexus';
 
@@ -4109,6 +6478,12 @@
      ********************************************************************/
     let lastTick = performance.now();
     let secAccumulator = 0;
+    let passivePulseAccumulator = 0;
+    let autoCursorAccumulator = 0;
+    let robotBarrageAccumulator = 0;
+    let tachyonBurstAccumulator = 0;
+    let blackHoleEventAccumulator = 0;
+    let universeEventAccumulator = 0;
 
     function gameLoop(now) {
       const dt = Math.min(0.25, (now - lastTick) / 1000);
@@ -4121,11 +6496,73 @@
         if (cps > (state.maxCps || 0)) {
           state.maxCps = cps;
         }
+        passivePulseAccumulator += dt;
+        if (passivePulseAccumulator >= 1.35) {
+          passivePulseAccumulator %= 1.35;
+          triggerPassiveVisualPulse();
+        }
       }
 
-      // Scăderea naturală a barei de Supraîncărcare (Combo)
-      if (comboMeter > 0) {
-        comboMeter = Math.max(0, comboMeter - 14 * dt);
+      // Mecanică Unică Nano-Cursor (g0): Auto-Click pe Nucleu (mai multe cursoare = frecvență mai rapidă + încărcare completă până la 100% Overclock!)
+      const g0Count = (state.generators && state.generators['g0']) || 0;
+      const isOverdriveActive = Date.now() < (activeBuffs.overdriveOrbEnd || 0);
+      if (g0Count > 0 || isOverdriveActive) {
+        const baseInterval = Math.max(0.28, 1.35 / (1 + g0Count * 0.08));
+        const autoInterval = isOverdriveActive ? Math.max(0.12, baseInterval / 3.5) : baseInterval;
+        autoCursorAccumulator += dt;
+        if (autoCursorAccumulator >= autoInterval) {
+          autoCursorAccumulator %= autoInterval;
+          triggerAutoCursorStrike();
+        }
+      }
+
+      // Mecanică Vizuală Dronă de Extracție / Roboți (g1): Salvă Laser Sincronizată la fiecare 7.5s
+      if (((state.generators && state.generators['g1']) || 0) > 0) {
+        robotBarrageAccumulator += dt;
+        if (robotBarrageAccumulator >= 7.5) {
+          robotBarrageAccumulator %= 7.5;
+          triggerRobotLaserBarrage();
+        }
+      }
+
+      // Mecanică Unică Condensator Tahionic (g3): Explozie Burst la fiecare 5.0s
+      if (((state.generators && state.generators['g3']) || 0) > 0) {
+        tachyonBurstAccumulator += dt;
+        if (tachyonBurstAccumulator >= 5.0) {
+          tachyonBurstAccumulator %= 5.0;
+          triggerTachyonCapacitorBurst();
+        }
+      }
+
+      // Eveniment Cinematic Micro-Gaură Neagră (g6): La fiecare 18s înghite Nucleul pentru câteva secunde și îl scuipă cu Erupție Hawking!
+      if (((state.generators && state.generators['g6']) || 0) > 0) {
+        blackHoleEventAccumulator += dt;
+        if (blackHoleEventAccumulator >= 18.0) {
+          blackHoleEventAccumulator %= 18.0;
+          triggerBlackHoleDevourEvent();
+        }
+      }
+
+      // Eveniment Cinematic Motor de Univers Sintetic (g9): La fiecare 22s deschide Portalul Big Bang Multi-Dimensional!
+      if (((state.generators && state.generators['g9']) || 0) > 0) {
+        universeEventAccumulator += dt;
+        if (universeEventAccumulator >= 22.0) {
+          universeEventAccumulator %= 22.0;
+          triggerSyntheticUniverseGenesis();
+        }
+      }
+
+      // Contorizare secunde în Overclock Fever (>=85%) & scădere doar dacă nu s-a dat click în ultimele 1.55s
+      if (isOverdriveActive) {
+        comboMeter = 100;
+      }
+      if (comboMeter >= 85) {
+        state.feverSeconds = (state.feverSeconds || 0) + dt;
+      }
+      if (!isOverdriveActive && comboMeter > 0 && (now - lastComboClickTime) > 1550) {
+        const aiCount = (state.generators && state.generators['g2']) || 0;
+        const decayRate = Math.max(3.5, 9.5 - aiCount * 0.25);
+        comboMeter = Math.max(0, comboMeter - decayRate * dt);
       }
 
       secAccumulator += dt;
@@ -4151,7 +6588,7 @@
       requestAnimationFrame(gameLoop);
 
       const verSub = document.getElementById('versionHeaderSub');
-      if (verSub) verSub.innerText = `v${APP_VERSION} // AUTO-UPDATE & CLOUD SYNC`;
+      if (verSub) verSub.innerText = `v${APP_VERSION}`;
 
       // Înregistrare Service Worker pentru rulare 100% Offline + Auto-Update
       if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost' || location.hostname === '127.0.0.1')) {
@@ -4187,10 +6624,11 @@
         }
       }, 25000);
 
-      // Eveniment aleatoriu (Anomalie Cuantică Aurie) la fiecare 55 secunde
+      // Primul cerc aleatoriu apare la 16 secunde de la intrarea în joc, apoi la fiecare 34 secunde!
+      setTimeout(() => spawnQuantumAnomaly(false), 16000);
       setInterval(() => {
-        if (Math.random() < 0.75) spawnQuantumAnomaly(false);
-      }, 55000);
+        if (Math.random() < 0.85) spawnQuantumAnomaly(false);
+      }, 34000);
     });
 
     // Salvare garantată la închiderea sau schimbarea aplicației/tab-ului
