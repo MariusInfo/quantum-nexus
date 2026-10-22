@@ -8,10 +8,10 @@
   "license": "MIT",
   "scripts": {
     "start": "electron .",
-    "dist:win": "electron-builder --win --x64",
-    "dist:mac": "electron-builder --mac --x64 --arm64",
-    "dist:linux": "electron-builder --linux",
-    "dist:all": "electron-builder -mwl"
+    "dist:win": "electron-builder --win --x64 --publish never",
+    "dist:mac": "electron-builder --mac --x64 --arm64 --publish never",
+    "dist:linux": "electron-builder --linux --publish never",
+    "dist:all": "electron-builder -mwl --publish never"
   },
   "build": {
     "appId": "com.quantumnexus.idle",
