@@ -618,7 +618,7 @@
     .top-actions {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 7px;
     }
 
     .save-status {
@@ -627,7 +627,7 @@
       display: flex;
       align-items: center;
       gap: 6px;
-      margin-right: 6px;
+      margin-right: 4px;
     }
 
     .save-dot {
@@ -640,23 +640,34 @@
     }
 
     .btn-header {
-      background: var(--bg-card);
+      background: rgba(15, 23, 42, 0.7);
       color: var(--text-main);
       border: 1px solid var(--border-subtle);
-      padding: 7px 12px;
-      border-radius: 8px;
-      font-size: 12px;
+      padding: 6px 12px;
+      border-radius: 999px;
+      font-size: 11.5px;
       font-weight: 600;
       cursor: pointer;
       display: flex;
       align-items: center;
-      gap: 6px;
+      gap: 5px;
       transition: all 0.15s ease;
+      white-space: nowrap;
+    }
+
+    @media (max-width: 1250px) {
+      .btn-header-label {
+        display: none;
+      }
+      .btn-header {
+        padding: 6px 10px;
+      }
     }
 
     .btn-header:hover {
       background: var(--bg-card-hover);
       border-color: var(--accent-cyan);
+      box-shadow: 0 0 10px rgba(56, 189, 248, 0.25);
       transform: translateY(-1px);
     }
 
@@ -735,41 +746,18 @@
     .resource-display {
       position: relative;
       text-align: center;
-      background: linear-gradient(145deg, rgba(14, 21, 38, 0.96) 0%, rgba(9, 14, 28, 0.98) 100%);
-      border: 1px solid rgba(56, 189, 248, 0.42);
-      border-radius: 18px;
-      padding: 16px 16px 14px 16px;
-      box-shadow:
-        0 14px 34px rgba(0, 0, 0, 0.6),
-        0 0 24px rgba(56, 189, 248, 0.12),
-        inset 0 1px 0 rgba(255, 255, 255, 0.16),
-        inset 0 0 16px rgba(56, 189, 248, 0.05);
+      background: linear-gradient(145deg, rgba(14, 21, 38, 0.94) 0%, rgba(9, 14, 28, 0.96) 100%);
+      border: 1px solid rgba(56, 189, 248, 0.35);
+      border-radius: 14px;
+      padding: 12px 14px 10px 14px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5), 0 0 16px rgba(56, 189, 248, 0.08);
       overflow: hidden;
       z-index: 2;
     }
 
-    /* Colțare decorative Cyber-HUD */
-    .hud-bracket {
-      position: absolute;
-      width: 9px;
-      height: 9px;
-      pointer-events: none;
-      opacity: 0.9;
-    }
-    .hud-bracket-tl { top: 6px; left: 6px; border-top: 2px solid #38bdf8; border-left: 2px solid #38bdf8; }
-    .hud-bracket-tr { top: 6px; right: 6px; border-top: 2px solid #38bdf8; border-right: 2px solid #38bdf8; }
-    .hud-bracket-bl { bottom: 6px; left: 6px; border-bottom: 2px solid #38bdf8; border-left: 2px solid #38bdf8; }
-    .hud-bracket-br { bottom: 6px; right: 6px; border-bottom: 2px solid #38bdf8; border-right: 2px solid #38bdf8; }
-
-    .hud-glass-glare {
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 45%;
-      background: linear-gradient(180deg, rgba(255, 255, 255, 0.06) 0%, transparent 100%);
-      pointer-events: none;
-      border-radius: 18px 18px 0 0;
+    /* Colțare decorative Cyber-HUD (Ascunse pentru aspect curat și aerisit) */
+    .hud-bracket, .hud-glass-glare {
+      display: none !important;
     }
 
     .resource-header-row {
@@ -931,15 +919,7 @@
     }
 
     .prestige-hud-bar {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-      padding: 8px 12px;
-      border-radius: 12px;
-      background: linear-gradient(135deg, rgba(168, 85, 247, 0.12) 0%, rgba(88, 28, 135, 0.22) 100%);
-      border: 1px solid rgba(168, 85, 247, 0.38);
-      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 0 14px rgba(168, 85, 247, 0.15);
-      transition: border-color 0.2s ease;
+      display: none !important;
     }
 
     .prestige-hud-bar:hover {
@@ -2955,13 +2935,13 @@
     .tech-row-card {
       background: var(--bg-card);
       border: 1px solid var(--border-subtle);
-      border-radius: 12px;
-      padding: 12px 14px;
+      border-radius: 10px;
+      padding: 7px 11px;
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 10px;
       cursor: pointer;
-      transition: all 0.14s ease;
+      transition: background 0.14s ease, border-color 0.14s ease, box-shadow 0.14s ease;
       position: relative;
       flex-shrink: 0;
     }
@@ -2984,15 +2964,15 @@
     }
 
     .tech-icon-box {
-      width: 44px;
-      height: 44px;
-      border-radius: 12px;
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
       background: linear-gradient(135deg, rgba(59, 130, 246, 0.16), rgba(168, 85, 247, 0.16));
       border: 1px solid rgba(99, 179, 237, 0.25);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 22px;
+      font-size: 20px;
       flex-shrink: 0;
     }
 
@@ -3310,11 +3290,11 @@
     .gen-card {
       background: var(--bg-card);
       border: 1px solid var(--border-subtle);
-      border-radius: 12px;
-      padding: 12px 14px;
+      border-radius: 10px;
+      padding: 7px 11px;
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 10px;
       cursor: pointer;
       transition: background 0.14s ease, border-color 0.14s ease, box-shadow 0.14s ease;
       position: relative;
@@ -3339,15 +3319,15 @@
     }
 
     .gen-icon {
-      width: 46px;
-      height: 46px;
-      border-radius: 12px;
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
       background: linear-gradient(135deg, rgba(59, 130, 246, 0.16), rgba(168, 85, 247, 0.16));
       border: 1px solid rgba(99, 179, 237, 0.25);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 24px;
+      font-size: 21px;
       flex-shrink: 0;
       overflow: hidden;
       line-height: 1;
@@ -3362,18 +3342,19 @@
     .gen-title-row {
       display: flex;
       justify-content: space-between;
-      align-items: baseline;
+      align-items: center;
+      line-height: 1.2;
     }
 
     .gen-name {
-      font-size: 14px;
+      font-size: 13px;
       font-weight: 700;
       color: var(--text-main);
     }
 
     .gen-count {
       font-family: var(--font-mono);
-      font-size: 16px;
+      font-size: 14.5px;
       font-weight: 800;
       color: var(--accent-cyan);
     }
@@ -3382,9 +3363,9 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-top: 4px;
+      margin-top: 2px;
       font-family: var(--font-mono);
-      font-size: 11.5px;
+      font-size: 11px;
     }
 
     .gen-prod {
@@ -3393,7 +3374,7 @@
 
     .gen-cost {
       font-weight: 700;
-      color: var(--accent-emerald);
+      color: #fde047;
     }
 
     .gen-card.locked .gen-cost {
@@ -3402,10 +3383,10 @@
 
     .gen-milestone-bar {
       width: 100%;
-      height: 4px;
+      height: 3px;
       background: rgba(7, 9, 14, 0.7);
       border-radius: 999px;
-      margin-top: 7px;
+      margin-top: 4px;
       overflow: hidden;
     }
 
@@ -3494,12 +3475,7 @@
     }
 
     .gen-tier-footer {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-top: 5px;
-      font-size: 10.5px;
-      font-family: var(--font-mono);
+      display: none !important;
     }
 
     .gen-next-tier {
@@ -6970,7 +6946,7 @@
       <!-- Subtitlu & Versiune Sistem -->
       <div class="loading-footer-tip">
         <span class="loading-pulse-dot"></span>
-        <span id="loadingVersionSub">Simulare Multiversală v3.5.4 // Auto-Stabilizare Activă</span>
+        <span id="loadingVersionSub">Simulare Multiversală v3.6.0 // Auto-Stabilizare Activă</span>
       </div>
 
       <!-- Hint discret dacă browserul a reținut temporar autoplay înainte de primul gest -->
@@ -6988,7 +6964,7 @@
         <div class="brand-icon">⚛️</div>
         <div>
           <div class="brand-title">QUANTUM NEXUS</div>
-          <div class="brand-sub" id="versionHeaderSub">v3.5.4</div>
+          <div class="brand-sub" id="versionHeaderSub">v3.6.0</div>
         </div>
         <div class="fps-meter-badge fps-high" id="fpsMeterBadge" onclick="showFpsInfo()" title="Monitorizare Cadre pe Secundă (FPS în timp real) - Click pentru detalii">
           <span class="fps-dot"></span>
@@ -6999,27 +6975,28 @@
       <div class="top-buffs" id="activeBuffsContainer"></div>
 
       <div class="top-actions">
-        <button class="btn-header cloud-header-btn not-logged-in" id="btnTopCloudAuth" onclick="openCloudModal()" title="Conectează-te pentru salvare automată în Cloud">
+        <button class="btn-header cloud-header-btn not-logged-in" id="btnTopCloudAuth" onclick="openCloudModal()" title="Salvare automată & Sincronizare în Cloud">
           <span id="topCloudIcon">☁️</span>
-          <span id="topCloudLabel">Conectare / Salvează</span>
+          <span id="topCloudLabel" class="btn-header-label">Cloud</span>
         </button>
         <button class="btn-header social-btn" id="btnSocialHeader" onclick="openSocialModal()" title="Social Hub Galactic & Comandanți Online">
-          <span>👥 Social</span>
+          <span>👥</span>
+          <span class="btn-header-label">Social</span>
           <span class="social-online-pill" id="socialHeaderOnlineCount">🟢 1</span>
         </button>
         <button class="btn-header daily-btn" id="btnDailyHeader" onclick="openDailyModal()" title="Recompense Zilnice & Misiuni (Daily Login & Quests)">
           <span class="daily-gift-icon">🎁</span>
-          <span>Zilnic</span>
+          <span class="btn-header-label">Zilnic</span>
           <span class="daily-badge-dot" id="dailyBadgeDot" style="display:none">!</span>
         </button>
         <button class="btn-header weather-btn" id="btnWeatherHeader" onclick="openWeatherModal()" title="Radar Meteo Cosmic & Furtuni Stelare (Evenimente Dinamice)">
           <span id="topWeatherIcon">🛰️</span>
-          <span id="topWeatherLabel">Radar</span>
+          <span id="topWeatherLabel" class="btn-header-label">Radar</span>
           <span class="weather-active-dot" id="weatherActiveDot" style="display:none"></span>
         </button>
-        <button class="btn-header settings-btn" id="btnSettingsHeader" onclick="openSettingsModal()" title="Setări & Opțiuni (Sunet, Muzică, Salvare, Cloud, Reset)">
+        <button class="btn-header settings-btn" id="btnSettingsHeader" onclick="openSettingsModal()" title="Setări & Opțiuni (Sunet, Muzică, FPS, Reset)">
           <span class="gear-spin">⚙️</span>
-          <span>Setări</span>
+          <span class="btn-header-label">Setări</span>
         </button>
       </div>
     </header>
@@ -7603,7 +7580,7 @@
           <button class="btn-header install-btn" id="btnInstallApp" onclick="triggerInstallApp()">📲 Instalează</button>
         </div>
         <div style="font-size: 11px; color: var(--text-dim); margin-top: 8px;">
-          Versiune instalată: <strong id="settingsVersionText">v3.5.4</strong> // Auto-Update activ
+          Versiune instalată: <strong id="settingsVersionText">v3.6.0</strong> // Auto-Update activ
         </div>
       </div>
 
@@ -15207,9 +15184,9 @@
         const tierBadgeHtml = tier > 0 
           ? `<span class="gen-tier-pill tier-${tier}" title="Tier ${tierMeta.roman}: ${tierMeta.name}">T-${tierMeta.roman}</span>` 
           : '';
-        const nextTierText = nextThreshold 
-          ? `<span class="gen-next-tier">Tier următor: ${count}/${nextThreshold}</span>` 
-          : `<span class="gen-next-tier max-tier">👑 MAX TIER</span>`;
+        const milestoneTooltip = count >= 100 
+          ? `👑 MAX TIER (${tierMeta.name})` 
+          : `Următorul prag (+35%): ${count}/${nextThreshold} (${tierMeta.name})`;
 
         const card = document.createElement('div');
         card.className = `gen-card gen-tier-${tier}` + (canAfford ? '' : ' locked');
@@ -15227,16 +15204,12 @@
               <span class="gen-count" id="g_cnt_${gen.id}">${count}</span>
             </div>
             <div class="gen-meta">
-              <span class="gen-prod" id="g_prod_${gen.id}">+${formatNumber(unitProd)}/s bază</span>
+              <span class="gen-prod" id="g_prod_${gen.id}">+${formatNumber(unitProd)}/s</span>
               <span class="gen-cost" id="g_cost_${gen.id}">+${info.count}x: ${formatNumber(info.cost)} ⚡</span>
             </div>
-            ${gen.roleBadge ? `<div class="special-mechanic-badge ${gen.badgeColor || ''}" id="g_spec_${gen.id}">${gen.roleBadge}</div>` : ''}
-            <div class="gen-milestone-bar tier-${tier}" title="Progres către următorul prag (+35% producție)">
+            ${gen.roleBadge ? `<div class="special-mechanic-badge ${gen.badgeColor || ''}" id="g_spec_${gen.id}">${count > 0 && gen.specialSummary ? gen.specialSummary(count) : gen.roleBadge}</div>` : ''}
+            <div class="gen-milestone-bar tier-${tier}" title="${milestoneTooltip}">
               <div class="gen-milestone-fill" style="width:${progress}%"></div>
-            </div>
-            <div class="gen-tier-footer">
-              ${nextTierText}
-              <span class="gen-tier-desc">${tierMeta.name}</span>
             </div>
           </div>
         `;
@@ -16294,7 +16267,7 @@
           if (costEl) costEl.innerText = `+${info.count}x: ${formatNumber(info.cost)} ⚡`;
           const prodEl = document.getElementById(`g_prod_${gen.id}`);
           const unitProd = gen.baseCps * getGeneratorMilestoneMultiplier(count) * getGlobalSharedMultiplier() * (curCore.cpsMult || 1.0);
-          if (prodEl) prodEl.innerText = `+${formatNumber(unitProd)}/s bază`;
+          if (prodEl) prodEl.innerText = `+${formatNumber(unitProd)}/s`;
           const specEl = document.getElementById(`g_spec_${gen.id}`);
           if (specEl && gen.specialSummary) {
             specEl.innerText = count > 0 ? gen.specialSummary(count) : gen.roleBadge;
@@ -16669,8 +16642,8 @@
      *       + AUTO-SYNC SILENȚIOS OFFLINE -> ONLINE + AUTO-UPDATE LIVE
      *       + NAVIGARE MOBIL & INSTALARE PWA (MACBOOK / PC / ANDROID / iOS)
      ********************************************************************/
-    const APP_VERSION = '3.5.4';
-    const APP_BUILD = 354;
+    const APP_VERSION = '3.6.0';
+    const APP_BUILD = 360;
     // URL-ul oficial de pe GitHub Pages pentru verificarea automată de Update (și în aplicațiile .exe / .dmg):
     const REMOTE_UPDATE_BASE_URL = 'https://mariusinfo.github.io/quantum-nexus';
 

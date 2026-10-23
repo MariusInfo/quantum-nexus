@@ -1,7 +1,7 @@
 {
   "name": "quantum-nexus",
   "productName": "Quantum Nexus",
-  "version": "3.5.4",
+  "version": "3.6.0",
   "description": "QUANTUM NEXUS // Idle Clicker Simulator pentru MacBook, Windows PC, Android și iOS cu Cloud Save",
   "main": "electron-main.js",
   "author": "Quantum Nexus Studio",

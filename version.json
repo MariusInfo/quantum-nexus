@@ -1,7 +1,7 @@
 {
-  "version": "3.5.4",
-  "build": 354,
+  "version": "3.6.0",
+  "build": 360,
   "releaseDate": "2026-10-23",
-  "changelog": "v3.5.4: Responsive Multiplier Group Fix - Ajustat dimensiunile și spațierea pentru grupul de multiplicatori (1x - MAX) și tab-urile Tehnologii/Automatizări pentru a încăpea perfect în întregime, fără a fi trunchiat niciun buton.",
+  "changelog": "v3.6.0: Modern & Clean UI Overhaul - Header compact cu iconițe responsive, nucleu aerisit fără aglomerație și carduri de magazin compacte (Opțiunea A) cu vizibilitate crescută și stabilitate la click-uri rapide.",
   "autoApply": true
 }
