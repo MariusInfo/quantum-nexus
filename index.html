@@ -6475,7 +6475,663 @@
       box-shadow: 0 0 12px rgba(239, 68, 68, 0.35);
     }
 
-    /* Constellation Canvas View */
+    /* =========================================================================
+       WARP TRANSITION & FULLSCREEN CONSTELLATION OVERLAY (V3.7.0)
+       ========================================================================= */
+    .app-shell.app-shell-warp-out {
+      opacity: 0 !important;
+      transform: scale(0.92) !important;
+      filter: blur(14px) !important;
+      pointer-events: none !important;
+      transition: opacity 0.55s cubic-bezier(0.16, 1, 0.3, 1),
+                  transform 0.55s cubic-bezier(0.16, 1, 0.3, 1),
+                  filter 0.55s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    }
+
+    .constellation-warp-canvas {
+      position: fixed;
+      inset: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 9999999;
+      pointer-events: none;
+    }
+
+    .constellation-fullscreen {
+      position: fixed;
+      inset: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 999999;
+      background: #02040a;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      opacity: 0;
+      transition: opacity 0.4s ease, filter 0.4s ease;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
+    .constellation-fullscreen.active {
+      opacity: 1;
+    }
+
+    .c-fullscreen-bg-canvas,
+    .c-fullscreen-main-canvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    .c-fullscreen-main-canvas {
+      cursor: grab;
+      z-index: 2;
+    }
+
+    .c-fullscreen-main-canvas:active {
+      cursor: grabbing;
+    }
+
+    /* Top Floating Sci-Fi HUD */
+    .c-hud-top {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 22px;
+      pointer-events: auto;
+      background: linear-gradient(180deg, rgba(2, 6, 18, 0.92) 0%, rgba(2, 6, 18, 0.5) 75%, transparent 100%);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(168, 85, 247, 0.15);
+    }
+
+    .c-hud-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-shrink: 0;
+    }
+
+    .c-hud-icon-wrap {
+      position: relative;
+      width: 38px;
+      height: 38px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 10px;
+      background: radial-gradient(circle, rgba(168, 85, 247, 0.3) 0%, rgba(15, 23, 42, 0.8) 100%);
+      border: 1px solid rgba(168, 85, 247, 0.5);
+      box-shadow: 0 0 16px rgba(168, 85, 247, 0.35);
+    }
+
+    .c-hud-icon {
+      font-size: 20px;
+      animation: floatOrbit 4s ease-in-out infinite;
+    }
+
+    .c-hud-pulse-ring {
+      position: absolute;
+      inset: -3px;
+      border-radius: 13px;
+      border: 1px solid rgba(56, 189, 248, 0.4);
+      animation: hudLivePulse 2.2s ease-in-out infinite;
+      pointer-events: none;
+    }
+
+    .c-hud-titles {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .c-hud-main-title {
+      font-size: 15px;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      background: linear-gradient(135deg, #ffffff 0%, #d8b4fe 50%, #38bdf8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      line-height: 1.2;
+    }
+
+    .c-hud-sub-title {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 700;
+      color: rgba(216, 180, 254, 0.7);
+      letter-spacing: 0.04em;
+    }
+
+    .c-hud-center {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .c-hud-dm-badge {
+      background: linear-gradient(135deg, rgba(168, 85, 247, 0.22), rgba(88, 28, 135, 0.38));
+      border: 1.5px solid rgba(168, 85, 247, 0.6);
+      padding: 6px 14px;
+      border-radius: 999px;
+      box-shadow: 0 0 18px rgba(168, 85, 247, 0.35), inset 0 0 10px rgba(168, 85, 247, 0.2);
+      font-family: var(--font-mono);
+      font-size: 12.5px;
+      font-weight: 800;
+      color: #f3e8ff;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .c-dm-spark {
+      font-size: 14px;
+      filter: drop-shadow(0 0 6px rgba(168, 85, 247, 0.9));
+      animation: pulseGlow 2s ease-in-out infinite;
+    }
+
+    .c-dm-label {
+      color: rgba(216, 180, 254, 0.8);
+      font-size: 11px;
+    }
+
+    .c-hud-stars-badge {
+      background: rgba(15, 23, 42, 0.75);
+      border: 1px solid rgba(253, 224, 71, 0.4);
+      padding: 6px 12px;
+      border-radius: 999px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 700;
+      color: #fef08a;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 0 12px rgba(253, 224, 71, 0.15);
+    }
+
+    .c-branch-filters {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      background: rgba(15, 23, 42, 0.75);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      padding: 4px;
+      border-radius: 999px;
+    }
+
+    .c-branch-btn {
+      background: transparent;
+      border: 1px solid transparent;
+      color: #94a3b8;
+      padding: 5px 11px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.18s ease;
+      white-space: nowrap;
+    }
+
+    .c-branch-btn:hover {
+      color: #ffffff;
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .c-branch-btn.active {
+      color: #ffffff;
+      background: rgba(168, 85, 247, 0.25);
+      border-color: rgba(168, 85, 247, 0.5);
+      box-shadow: 0 0 12px rgba(168, 85, 247, 0.35);
+    }
+
+    .c-branch-btn.branch-universal.active {
+      background: rgba(168, 85, 247, 0.28);
+      border-color: #a855f7;
+      color: #e9d5ff;
+      box-shadow: 0 0 12px rgba(168, 85, 247, 0.4);
+    }
+
+    .c-branch-btn.branch-manual.active {
+      background: rgba(244, 63, 94, 0.28);
+      border-color: #f43f5e;
+      color: #fecdd3;
+      box-shadow: 0 0 12px rgba(244, 63, 94, 0.4);
+    }
+
+    .c-branch-btn.branch-passive.active {
+      background: rgba(6, 182, 212, 0.28);
+      border-color: #06b6d4;
+      color: #cffafe;
+      box-shadow: 0 0 12px rgba(6, 182, 212, 0.4);
+    }
+
+    .c-branch-btn.branch-anomaly.active {
+      background: rgba(245, 158, 11, 0.28);
+      border-color: #f59e0b;
+      color: #fef3c7;
+      box-shadow: 0 0 12px rgba(245, 158, 11, 0.4);
+    }
+
+    .c-hud-right {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+
+    .c-btn-respec {
+      background: rgba(239, 68, 68, 0.15);
+      border: 1px solid rgba(239, 68, 68, 0.45);
+      color: #fca5a5;
+      padding: 6px 13px;
+      border-radius: 999px;
+      font-size: 11.5px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .c-btn-respec:hover {
+      background: rgba(239, 68, 68, 0.28);
+      border-color: #ef4444;
+      color: #ffffff;
+      box-shadow: 0 0 14px rgba(239, 68, 68, 0.35);
+      transform: translateY(-1px);
+    }
+
+    .c-btn-close {
+      background: linear-gradient(135deg, rgba(56, 189, 248, 0.25), rgba(168, 85, 247, 0.25));
+      border: 1.5px solid rgba(56, 189, 248, 0.6);
+      color: #ffffff;
+      padding: 7px 16px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 800;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 0 16px rgba(56, 189, 248, 0.3);
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .c-btn-close:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 24px rgba(56, 189, 248, 0.6);
+      border-color: #38bdf8;
+      background: linear-gradient(135deg, rgba(56, 189, 248, 0.4), rgba(168, 85, 247, 0.4));
+    }
+
+    /* Floating Docked Inspector Console */
+    .c-inspector-card {
+      position: absolute;
+      bottom: 22px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: min(780px, calc(100vw - 36px));
+      z-index: 10;
+      pointer-events: auto;
+      background: linear-gradient(135deg, rgba(14, 21, 38, 0.94) 0%, rgba(8, 12, 24, 0.96) 100%);
+      border: 1.5px solid rgba(168, 85, 247, 0.45);
+      border-radius: 16px;
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.85), 0 0 28px rgba(168, 85, 247, 0.22);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      transition: border-color 0.25s ease, box-shadow 0.25s ease;
+      animation: fadeIn 0.25s ease;
+    }
+
+    .c-inspector-left {
+      flex-shrink: 0;
+    }
+
+    .c-node-avatar {
+      width: 50px;
+      height: 50px;
+      border-radius: 14px;
+      background: radial-gradient(circle, rgba(168, 85, 247, 0.28) 0%, rgba(15, 23, 42, 0.85) 100%);
+      border: 1.5px solid rgba(168, 85, 247, 0.6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 26px;
+      position: relative;
+      box-shadow: 0 0 16px rgba(168, 85, 247, 0.35);
+    }
+
+    .c-inspector-mid {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .c-inspector-header-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 3px;
+    }
+
+    .c-node-name {
+      font-size: 14px;
+      font-weight: 800;
+      color: #ffffff;
+      margin: 0;
+      letter-spacing: 0.02em;
+    }
+
+    .c-node-branch-tag {
+      font-size: 10px;
+      font-weight: 800;
+      padding: 2px 8px;
+      border-radius: 999px;
+      background: rgba(168, 85, 247, 0.2);
+      border: 1px solid #a855f7;
+      color: #d8b4fe;
+    }
+
+    .c-node-tier-tag {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: 6px;
+      background: rgba(255, 255, 255, 0.08);
+      color: #94a3b8;
+    }
+
+    .c-node-level-pill {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 800;
+      color: var(--accent-cyan);
+      background: rgba(56, 189, 248, 0.14);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      padding: 2px 8px;
+      border-radius: 6px;
+    }
+
+    .c-node-desc {
+      font-size: 11.5px;
+      color: var(--text-muted);
+      line-height: 1.4;
+      max-width: 480px;
+    }
+
+    .c-node-req {
+      font-size: 11px;
+      color: #f87171;
+      margin-top: 3px;
+      font-weight: 600;
+    }
+
+    .c-inspector-right {
+      flex-shrink: 0;
+    }
+
+    .c-buy-btn {
+      background: linear-gradient(135deg, #a855f7 0%, #7c3aed 100%);
+      color: #ffffff;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      padding: 10px 20px;
+      border-radius: 12px;
+      font-size: 12.5px;
+      font-weight: 800;
+      cursor: pointer;
+      white-space: nowrap;
+      box-shadow: 0 0 20px rgba(168, 85, 247, 0.45);
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .c-buy-btn.can-buy:hover {
+      transform: scale(1.03);
+      box-shadow: 0 0 28px rgba(168, 85, 247, 0.7);
+      filter: brightness(1.1);
+    }
+
+    .c-buy-btn.cannot-buy {
+      background: rgba(15, 23, 42, 0.7);
+      border-color: rgba(255, 255, 255, 0.12);
+      color: #94a3b8;
+      cursor: not-allowed;
+      box-shadow: none;
+    }
+
+    .c-buy-btn.maxed-btn {
+      background: linear-gradient(135deg, rgba(245, 158, 11, 0.25), rgba(217, 119, 6, 0.35));
+      border-color: #fde047;
+      color: #fde047;
+      cursor: default;
+      box-shadow: 0 0 16px rgba(253, 224, 71, 0.3);
+    }
+
+    /* Floating Zoom Controls */
+    .c-zoom-controls {
+      position: absolute;
+      bottom: 26px;
+      right: 22px;
+      z-index: 10;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      pointer-events: auto;
+    }
+
+    .c-ctrl-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: rgba(15, 23, 42, 0.85);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      color: #ffffff;
+      font-size: 12px;
+      font-weight: 800;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      transition: all 0.18s ease;
+    }
+
+    .c-ctrl-btn:hover {
+      border-color: #38bdf8;
+      box-shadow: 0 0 12px rgba(56, 189, 248, 0.45);
+      transform: scale(1.06);
+    }
+
+    .c-nav-hint {
+      position: absolute;
+      bottom: 26px;
+      left: 22px;
+      z-index: 10;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: rgba(255, 255, 255, 0.55);
+      pointer-events: none;
+      background: rgba(15, 23, 42, 0.7);
+      padding: 5px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+    }
+
+    /* Portal Card in Tab-Constellation */
+    .constellation-tab-portal {
+      position: relative;
+      background: radial-gradient(circle at 50% 20%, rgba(168, 85, 247, 0.16) 0%, rgba(15, 23, 42, 0.95) 85%);
+      border: 1.5px solid rgba(168, 85, 247, 0.45);
+      border-radius: 16px;
+      padding: 28px 24px;
+      text-align: center;
+      box-shadow: 0 14px 35px rgba(0, 0, 0, 0.6), 0 0 28px rgba(168, 85, 247, 0.18);
+      overflow: hidden;
+      margin-bottom: 16px;
+    }
+
+    .constellation-portal-glow {
+      position: absolute;
+      top: -60px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 240px;
+      height: 140px;
+      background: radial-gradient(circle, rgba(168, 85, 247, 0.45), transparent 70%);
+      pointer-events: none;
+      filter: blur(30px);
+    }
+
+    .constellation-portal-icon-box {
+      width: 68px;
+      height: 68px;
+      margin: 0 auto 14px;
+      border-radius: 18px;
+      background: radial-gradient(circle, rgba(168, 85, 247, 0.3) 0%, rgba(15, 23, 42, 0.9) 100%);
+      border: 1.5px solid rgba(168, 85, 247, 0.6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 34px;
+      box-shadow: 0 0 24px rgba(168, 85, 247, 0.4);
+      animation: floatOrbit 3.5s ease-in-out infinite;
+    }
+
+    .constellation-portal-title {
+      font-size: 18px;
+      font-weight: 900;
+      color: #ffffff;
+      margin-bottom: 8px;
+      letter-spacing: 0.02em;
+    }
+
+    .constellation-portal-desc {
+      font-size: 12.5px;
+      color: var(--text-muted);
+      max-width: 540px;
+      margin: 0 auto 18px;
+      line-height: 1.5;
+    }
+
+    .constellation-portal-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      max-width: 580px;
+      margin: 0 auto 20px;
+    }
+
+    .c-portal-stat-box {
+      background: rgba(10, 14, 23, 0.7);
+      border: 1px solid rgba(168, 85, 247, 0.25);
+      border-radius: 10px;
+      padding: 9px 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .c-portal-stat-label {
+      font-size: 10.5px;
+      color: var(--text-muted);
+    }
+
+    .c-portal-stat-val {
+      font-family: var(--font-mono);
+      font-size: 13.5px;
+      font-weight: 800;
+      color: #d8b4fe;
+    }
+
+    .btn-portal-launch {
+      background: linear-gradient(135deg, #a855f7 0%, #6366f1 50%, #38bdf8 100%);
+      color: #ffffff;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      padding: 13px 28px;
+      border-radius: 12px;
+      font-size: 14px;
+      font-weight: 800;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 0 25px rgba(168, 85, 247, 0.45);
+      transition: all 0.2s ease;
+      letter-spacing: 0.02em;
+    }
+
+    .btn-portal-launch:hover {
+      transform: translateY(-2px) scale(1.02);
+      box-shadow: 0 0 35px rgba(168, 85, 247, 0.75);
+    }
+
+    .portal-btn-arrow {
+      transition: transform 0.2s ease;
+    }
+
+    .btn-portal-launch:hover .portal-btn-arrow {
+      transform: translateX(4px);
+    }
+
+    @media (max-width: 900px) {
+      .c-hud-top {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
+        padding: 10px 14px;
+      }
+      .c-hud-brand {
+        justify-content: space-between;
+      }
+      .c-hud-center {
+        justify-content: space-between;
+      }
+      .c-nav-hint {
+        display: none;
+      }
+      .c-inspector-card {
+        bottom: 12px;
+        left: 12px;
+        right: 12px;
+        width: auto;
+        transform: none;
+        padding: 12px 14px;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
+      }
+      .c-zoom-controls {
+        bottom: 150px;
+        right: 14px;
+      }
+    }
+
+    /* Constellation Canvas View (Legacy inline compat) */
     .constellation-wrapper {
       position: relative;
       width: 100%;
@@ -6946,7 +7602,7 @@
       <!-- Subtitlu & Versiune Sistem -->
       <div class="loading-footer-tip">
         <span class="loading-pulse-dot"></span>
-        <span id="loadingVersionSub">Simulare Multiversală v3.6.0 // Auto-Stabilizare Activă</span>
+        <span id="loadingVersionSub">Simulare Multiversală v3.7.0 // Auto-Stabilizare Activă</span>
       </div>
 
       <!-- Hint discret dacă browserul a reținut temporar autoplay înainte de primul gest -->
@@ -6964,7 +7620,7 @@
         <div class="brand-icon">⚛️</div>
         <div>
           <div class="brand-title">QUANTUM NEXUS</div>
-          <div class="brand-sub" id="versionHeaderSub">v3.6.0</div>
+          <div class="brand-sub" id="versionHeaderSub">v3.7.0</div>
         </div>
         <div class="fps-meter-badge fps-high" id="fpsMeterBadge" onclick="showFpsInfo()" title="Monitorizare Cadre pe Secundă (FPS în timp real) - Click pentru detalii">
           <span class="fps-dot"></span>
@@ -7254,58 +7910,52 @@
             <div id="prestigeUpgradesGrid" style="display:none;"></div>
           </div>
 
-          <!-- TAB 2.5: Constellation Skill Tree (Harta Stelară Interactivă Exclusivă) -->
+          <!-- TAB 2.5: Constellation Skill Tree (Portal Harta Stelara) -->
           <div class="tab-pane" id="tab-constellation">
-            <div class="section-header" style="flex-wrap:wrap; gap:8px;">
-              <div>
-                <div class="section-title">🔮 Constelația Cuantică & Arborele de Talente</div>
-                <div class="section-subtitle">Conectează stelele cosmice pentru a debloca multiplicatori permanenți și abilități unice în cele 4 căi.</div>
+            <div class="constellation-tab-portal">
+              <div class="constellation-portal-glow"></div>
+              <div class="constellation-portal-icon-box">
+                <span class="constellation-portal-icon">🌌</span>
               </div>
-            </div>
-
-            <!-- Bara de Control a Arborelui de Talente -->
-            <div class="skill-tree-controls" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:12px;">
-              <div style="display:flex; align-items:center; gap:12px; flex-wrap:wrap;">
-                <div style="display:flex; align-items:center; gap:10px; font-size:11.5px; background:rgba(15,23,42,0.6); padding:6px 12px; border-radius:8px; border:1px solid var(--border-subtle);">
-                  <span style="display:inline-flex; align-items:center; gap:5px; color:#d8b4fe;"><span class="status-dot" style="background:#a855f7;"></span> Universal</span>
-                  <span style="display:inline-flex; align-items:center; gap:5px; color:#fca5a5;"><span class="status-dot" style="background:#f43f5e;"></span> Manual</span>
-                  <span style="display:inline-flex; align-items:center; gap:5px; color:#67e8f9;"><span class="status-dot" style="background:#06b6d4;"></span> Flotă/AFK</span>
-                  <span style="display:inline-flex; align-items:center; gap:5px; color:#fde047;"><span class="status-dot" style="background:#f59e0b;"></span> Anomalii</span>
+              <div class="constellation-portal-title">Arborele de Talente & Constelația Cuantică</div>
+              <div class="constellation-portal-desc">Pășește dincolo de reactor într-o călătorie cosmică hiperspațială ecran complet. Conectează stelele cosmice pentru a debloca multiplicatori permanenți și abilități unice în cele 4 căi astrale.</div>
+              
+              <div class="constellation-portal-stats">
+                <div class="c-portal-stat-box">
+                  <span class="c-portal-stat-label">🔮 Materie Întunecată</span>
+                  <span class="c-portal-stat-val" id="portalDmVal">0</span>
+                </div>
+                <div class="c-portal-stat-box">
+                  <span class="c-portal-stat-label">⭐ Stele Active</span>
+                  <span class="c-portal-stat-val" id="portalStarsVal">0 / 26</span>
+                </div>
+                <div class="c-portal-stat-box">
+                  <span class="c-portal-stat-label">👑 Multiplicator Global</span>
+                  <span class="c-portal-stat-val" id="portalMultVal">+0%</span>
                 </div>
               </div>
-              <div style="display:flex; align-items:center; gap:10px;">
-                <span style="font-family:var(--font-mono); font-size:13px; font-weight:800; color:#d8b4fe; background:rgba(168,85,247,0.15); padding:6px 12px; border-radius:8px; border:1px solid rgba(168,85,247,0.3);" id="skillTreeDmBadge">🔮 Materie: 0</span>
-                <button class="btn-respec-tree" onclick="respecSkillTree()" title="Recuperează 100% din Materia Întunecată cheltuită în talente">
-                  <span>🔄 Resetează Gratuit</span>
-                </button>
+
+              <button class="btn-portal-launch" onclick="openConstellationFullscreen()">
+                <span>🚀 Deschide Constelația Cuantică (Ecran Complet)</span>
+                <span class="portal-btn-arrow">➔</span>
+              </button>
+
+              <div style="font-size:11px; color:var(--text-dim); margin-top:14px; font-family:var(--font-mono);">
+                💡 Modul Ecran Complet include tranziție hiperspațială, zoom & rotire liberă, trasee energetice și efecte stelare.
               </div>
             </div>
 
-            <!-- Hartă Constelație Interactivă (Canvas Exclusiv) -->
-            <div class="constellation-wrapper" id="constellationWrapper">
+            <!-- Fallback elements for backwards JS compatibility -->
+            <div style="display:none;" aria-hidden="true">
+              <span id="skillTreeDmBadge"></span>
+              <div id="inspectorIcon"></div>
+              <div id="inspectorTitle"></div>
+              <div id="inspectorBranchBadge"></div>
+              <div id="inspectorLvl"></div>
+              <div id="inspectorDesc"></div>
+              <div id="inspectorReq"></div>
+              <button id="inspectorBuyBtn"></button>
               <canvas id="constellationCanvas"></canvas>
-              <div class="constellation-hint-banner">💡 Click pe o stea pentru a inspecta și a debloca talentul cu Materie Întunecată</div>
-            </div>
-
-            <!-- Inspector de Nod Selectat -->
-            <div class="constellation-docked-inspector" id="constellationInspector">
-              <div style="display:flex; align-items:center; gap:14px;">
-                <div id="inspectorIcon" style="font-size:32px; filter:drop-shadow(0 0 10px rgba(168,85,247,0.7));">🔮</div>
-                <div>
-                  <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
-                    <strong id="inspectorTitle" style="color:#ffffff; font-size:13.5px;">Selectează un Talent</strong>
-                    <span class="social-online-pill" id="inspectorBranchBadge" style="background:rgba(168,85,247,0.2); border-color:#a855f7; color:#d8b4fe;">Universal</span>
-                    <span class="upgrade-lvl" id="inspectorLvl">Niv. 0/10</span>
-                  </div>
-                  <div style="font-size:11.5px; color:var(--text-muted); margin-top:2px; max-width:440px;" id="inspectorDesc">Apasă pe oricare nod din constelație pentru a-i vedea bonusurile și cerințele.</div>
-                  <div style="font-size:11px; color:#f87171; margin-top:3px; display:none;" id="inspectorReq">🔒 Necesar: -</div>
-                </div>
-              </div>
-              <div style="display:flex; flex-direction:column; align-items:flex-end; gap:6px; min-width:160px; flex-shrink:0;">
-                <button class="skill-node-btn can-buy" id="inspectorBuyBtn" onclick="buySelectedInspectorNode()">
-                  ✨ Cumpără Talent
-                </button>
-              </div>
             </div>
           </div>
 
@@ -7467,6 +8117,100 @@
   <!-- Xbox-Style Achievement Notification Container (Max 3 pe ecran, Queue pe rând) -->
   <div class="xbox-achievement-container" id="xboxAchievementContainer"></div>
 
+  <!-- =========================================================================
+       WARP TRANSITION CANVAS & FULLSCREEN CONSTELLATION EXPERIENCE (V3.7.0)
+       ========================================================================= -->
+  <canvas id="constellationWarpCanvas" class="constellation-warp-canvas" style="display:none;"></canvas>
+
+  <div id="constellationFullscreen" class="constellation-fullscreen" style="display:none;">
+    <!-- Cosmic Nebula & Stardust Canvas -->
+    <canvas id="constellationBgCanvas" class="c-fullscreen-bg-canvas"></canvas>
+
+    <!-- Interactive Star Map Canvas (Pan & Zoom, Stellar Links, Node Rendering) -->
+    <canvas id="constellationMainCanvas" class="c-fullscreen-main-canvas"></canvas>
+
+    <!-- Top Sci-Fi Galactic HUD -->
+    <header class="c-hud-top">
+      <div class="c-hud-brand">
+        <div class="c-hud-icon-wrap">
+          <span class="c-hud-icon">🌌</span>
+          <div class="c-hud-pulse-ring"></div>
+        </div>
+        <div class="c-hud-titles">
+          <div class="c-hud-main-title">CONSTELAȚIA CUANTICĂ</div>
+          <div class="c-hud-sub-title">HARTA STELARĂ A SINGULARITĂȚII // ARBORE DE TALENTE</div>
+        </div>
+      </div>
+
+      <div class="c-hud-center">
+        <div class="c-hud-dm-badge" id="cDmCounterBadge" title="Materie Întunecată disponibilă pentru investit în stele">
+          <span class="c-dm-spark">🔮</span>
+          <span class="c-dm-label">Materie:</span>
+          <strong id="cDmValue">0</strong>
+        </div>
+        <div class="c-hud-stars-badge" id="cStarsProgressBadge" title="Total stele deblocate în galaxie">
+          <span>⭐</span>
+          <strong id="cStarsProgressVal">0 / 26</strong>
+        </div>
+        <nav class="c-branch-filters" id="cBranchFilters">
+          <button class="c-branch-btn active" data-branch="all" onclick="focusConstellationBranch('all', this)">🌌 Toate</button>
+          <button class="c-branch-btn branch-universal" data-branch="universal" onclick="focusConstellationBranch('universal', this)">🟣 Universal</button>
+          <button class="c-branch-btn branch-manual" data-branch="manual" onclick="focusConstellationBranch('manual', this)">🔴 Manual</button>
+          <button class="c-branch-btn branch-passive" data-branch="passive" onclick="focusConstellationBranch('passive', this)">🔵 Flotă</button>
+          <button class="c-branch-btn branch-anomaly" data-branch="anomaly" onclick="focusConstellationBranch('anomaly', this)">🟡 Anomalii</button>
+        </nav>
+      </div>
+
+      <div class="c-hud-right">
+        <button class="c-btn-respec" onclick="confirmRespecSkillTree()" title="Recuperează 100% din Materia Întunecată cheltuită în talente">
+          <span class="c-btn-icon">🔄</span>
+          <span class="c-btn-label">Resetare Gratuită</span>
+        </button>
+        <button class="c-btn-close" onclick="closeConstellationFullscreen()" title="Închide și revino la reactor (Tasta Esc)">
+          <span class="c-btn-icon">✖</span>
+          <span class="c-btn-label">Înapoi la Nucleu</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Bottom Floating Inspector Card (Consolă Holografică Docked) -->
+    <div class="c-inspector-card" id="cInspectorCard">
+      <div class="c-inspector-left">
+        <div class="c-node-avatar" id="cNodeAvatar">
+          <span class="c-node-avatar-icon" id="cNodeAvatarIcon">🔮</span>
+          <div class="c-node-avatar-halo" id="cNodeAvatarHalo"></div>
+        </div>
+      </div>
+      <div class="c-inspector-mid">
+        <div class="c-inspector-header-row">
+          <h3 class="c-node-name" id="cNodeName">Selectează o Stea</h3>
+          <span class="c-node-branch-tag" id="cNodeBranchTag">Universal</span>
+          <span class="c-node-tier-tag" id="cNodeTierTag">Tier 1</span>
+          <span class="c-node-level-pill" id="cNodeLevelPill">Niv. 0/10</span>
+        </div>
+        <div class="c-node-desc" id="cNodeDesc">Apasă pe oricare stea din constelație pentru a-i vedea bonusurile permanente și cerințele.</div>
+        <div class="c-node-req" id="cNodeReq" style="display:none;">🔒 Necesar: -</div>
+      </div>
+      <div class="c-inspector-right">
+        <button class="c-buy-btn" id="cNodeBuyBtn" onclick="buySelectedInspectorNode()">
+          ✨ Cumpără Talent
+        </button>
+      </div>
+    </div>
+
+    <!-- Navigation / Zoom Floating Controls (Bottom Right) -->
+    <div class="c-zoom-controls">
+      <button class="c-ctrl-btn" onclick="constellationZoomIn()" title="Mărește perspectiva (Zoom In)">➕</button>
+      <button class="c-ctrl-btn" onclick="constellationZoomOut()" title="Micșorează perspectiva (Zoom Out)">➖</button>
+      <button class="c-ctrl-btn" onclick="constellationResetView()" title="Centrare generală">⛶ Centrare</button>
+    </div>
+
+    <!-- Navigation Hint (Bottom Left) -->
+    <div class="c-nav-hint">
+      <span>🖱️ Trage pentru deplasare • Rotiță / Pinch pentru Zoom • <strong>Esc</strong> pentru ieșire</span>
+    </div>
+  </div>
+
   <!-- Core Skins & Click Evolution Modal -->
   <div class="modal-backdrop" id="coreSkinsModal" onclick="if(event.target===this) closeCoreSkinsModal()">
     <div class="modal-card wide" style="max-width: 680px; text-align: left;">
@@ -7580,7 +8324,7 @@
           <button class="btn-header install-btn" id="btnInstallApp" onclick="triggerInstallApp()">📲 Instalează</button>
         </div>
         <div style="font-size: 11px; color: var(--text-dim); margin-top: 8px;">
-          Versiune instalată: <strong id="settingsVersionText">v3.6.0</strong> // Auto-Update activ
+          Versiune instalată: <strong id="settingsVersionText">v3.7.0</strong> // Auto-Update activ
         </div>
       </div>
 
@@ -15329,19 +16073,1069 @@
     }
 
     // =========================================================================
-    // V3.2.0: ARBORE DE TALENTE RAMIFICAT & CONSTELAȚIE CUANTICĂ (SKILL TREE)
+    // V3.7.0: ARBORE DE TALENTE RAMIFICAT & CONSTELAȚIE CUANTICĂ (FULLSCREEN & WARP)
     // =========================================================================
+    let isConstellationFullscreenOpen = false;
+    let selectedConstellationNodeId = 'p_starter';
     let currentSkillTreeView = 'constellation';
-    let selectedConstellationNodeId = 'p_click';
     let constellationAnimFrame = null;
     let constellationCanvasInitialized = false;
 
-    function switchSkillTreeView(view) {
-      currentSkillTreeView = 'constellation';
-      initConstellationCanvas();
-      drawConstellationCanvas();
+    // Camera & Canvas State for Fullscreen Constellation
+    const GALAXY_BASE_W = 1400;
+    const GALAXY_BASE_H = 960;
+    let cCamX = 700;
+    let cCamY = 480;
+    let cCamZoom = 1.0;
+    let cTargetCamX = 700;
+    let cTargetCamY = 480;
+    let cTargetCamZoom = 1.0;
+    let cIsDragging = false;
+    let cDragStartX = 0;
+    let cDragStartY = 0;
+    let cCamStartX = 700;
+    let cCamStartY = 480;
+    let cDragDistance = 0;
+    let cTouchStartDist = 0;
+    let cTouchStartZoom = 1.0;
+
+    let cBgAnimFrame = null;
+    let cMainAnimFrame = null;
+    let cBurstParticles = [];
+    let cShockwaves = [];
+    let cBgStars = [];
+    let cShootingStars = [];
+    let cNextShootingStarTime = 0;
+
+    // Constellation Branch Names & Metas
+    const CONSTELLATION_BRANCH_META = {
+      universal: {
+        codeName: 'URSA SINGULARIS',
+        subName: 'Rădăcina Primordială a Creației',
+        color: '#a855f7',
+        center: { x: 700, y: 260, zoom: 1.35 }
+      },
+      manual: {
+        codeName: 'CORONA FOTONICA',
+        subName: 'Calea Manuală a Impulsului & Crit',
+        color: '#f43f5e',
+        center: { x: 260, y: 540, zoom: 1.35 }
+      },
+      passive: {
+        codeName: 'CYGNUS AUTOMATA',
+        subName: 'Flota Autonomă & Sinteză Pasivă AFK',
+        color: '#06b6d4',
+        center: { x: 700, y: 720, zoom: 1.35 }
+      },
+      anomaly: {
+        codeName: 'PHOENIX ANOMALIS',
+        subName: 'Vânătorul de Anomalii Astrale',
+        color: '#f59e0b',
+        center: { x: 1140, y: 540, zoom: 1.35 }
+      }
+    };
+
+    function playCosmicWarpSound(direction = 'enter') {
+      if (!state.soundEnabled) return;
+      try {
+        if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        if (audioCtx.state === 'suspended') audioCtx.resume();
+        const now = audioCtx.currentTime;
+
+        if (direction === 'enter') {
+          // 1. Sub-bass warp sweep
+          const subOsc = audioCtx.createOscillator();
+          const subGain = audioCtx.createGain();
+          subOsc.type = 'sine';
+          subOsc.frequency.setValueAtTime(45, now);
+          subOsc.frequency.exponentialRampToValueAtTime(190, now + 0.5);
+          subGain.gain.setValueAtTime(0.001, now);
+          subGain.gain.linearRampToValueAtTime(0.24, now + 0.15);
+          subGain.gain.exponentialRampToValueAtTime(0.001, now + 0.65);
+          subOsc.connect(subGain);
+          subGain.connect(audioCtx.destination);
+          subOsc.start(now);
+          subOsc.stop(now + 0.65);
+
+          // 2. High celestial warp arpeggio (C5, G5, B5, E6)
+          const freqs = [523.25, 783.99, 987.77, 1318.51];
+          freqs.forEach((f, idx) => {
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            const startT = now + 0.12 + idx * 0.055;
+            osc.type = 'triangle';
+            osc.frequency.setValueAtTime(f, startT);
+            osc.frequency.exponentialRampToValueAtTime(f * 1.45, startT + 0.4);
+            gain.gain.setValueAtTime(0.001, startT);
+            gain.gain.linearRampToValueAtTime(0.08, startT + 0.12);
+            gain.gain.exponentialRampToValueAtTime(0.0001, startT + 0.55);
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.start(startT);
+            osc.stop(startT + 0.55);
+          });
+        } else {
+          // Exit warp: descending soft sub-bass + starry resolution
+          const subOsc = audioCtx.createOscillator();
+          const subGain = audioCtx.createGain();
+          subOsc.type = 'sine';
+          subOsc.frequency.setValueAtTime(170, now);
+          subOsc.frequency.exponentialRampToValueAtTime(50, now + 0.38);
+          subGain.gain.setValueAtTime(0.16, now);
+          subGain.gain.exponentialRampToValueAtTime(0.001, now + 0.42);
+          subOsc.connect(subGain);
+          subGain.connect(audioCtx.destination);
+          subOsc.start(now);
+          subOsc.stop(now + 0.42);
+
+          const chimeOsc = audioCtx.createOscillator();
+          const chimeGain = audioCtx.createGain();
+          chimeOsc.type = 'sine';
+          chimeOsc.frequency.setValueAtTime(659.25, now);
+          chimeGain.gain.setValueAtTime(0.1, now);
+          chimeGain.gain.exponentialRampToValueAtTime(0.001, now + 0.35);
+          chimeOsc.connect(chimeGain);
+          chimeGain.connect(audioCtx.destination);
+          chimeOsc.start(now);
+          chimeOsc.stop(now + 0.35);
+        }
+      } catch (e) {}
     }
 
+    function playConstellationStarBurstSound(isKeystone = false) {
+      if (!state.soundEnabled) return;
+      try {
+        if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        if (audioCtx.state === 'suspended') audioCtx.resume();
+        const now = audioCtx.currentTime;
+
+        const chord = isKeystone 
+          ? [523.25, 659.25, 783.99, 1046.50, 1318.51] 
+          : [587.33, 739.99, 880.00, 1174.66];
+
+        chord.forEach((f, idx) => {
+          const osc = audioCtx.createOscillator();
+          const gain = audioCtx.createGain();
+          const st = now + idx * 0.04;
+          osc.type = isKeystone ? 'sawtooth' : 'triangle';
+          osc.frequency.setValueAtTime(f, st);
+          osc.frequency.exponentialRampToValueAtTime(f * 1.02, st + 0.3);
+          gain.gain.setValueAtTime(0.001, st);
+          gain.gain.linearRampToValueAtTime(isKeystone ? 0.09 : 0.07, st + 0.02);
+          gain.gain.exponentialRampToValueAtTime(0.0001, st + 0.4);
+          osc.connect(gain);
+          gain.connect(audioCtx.destination);
+          osc.start(st);
+          osc.stop(st + 0.4);
+        });
+
+        if (isKeystone) {
+          const sub = audioCtx.createOscillator();
+          const sGain = audioCtx.createGain();
+          sub.type = 'sine';
+          sub.frequency.setValueAtTime(70, now);
+          sub.frequency.exponentialRampToValueAtTime(35, now + 0.5);
+          sGain.gain.setValueAtTime(0.2, now);
+          sGain.gain.exponentialRampToValueAtTime(0.001, now + 0.5);
+          sub.connect(sGain);
+          sGain.connect(audioCtx.destination);
+          sub.start(now);
+          sub.stop(now + 0.5);
+        }
+      } catch (e) {}
+    }
+
+    // =========================================================================
+    // HYPERSPACE WARP TRANSITION ANIMATION
+    // =========================================================================
+    let warpAnimFrameId = null;
+
+    function runWarpTransition(duration = 750, onComplete) {
+      const canvas = document.getElementById('constellationWarpCanvas');
+      if (!canvas) {
+        if (onComplete) onComplete();
+        return;
+      }
+
+      const dpr = window.devicePixelRatio || 1;
+      const w = window.innerWidth;
+      const h = window.innerHeight;
+      canvas.width = Math.floor(w * dpr);
+      canvas.height = Math.floor(h * dpr);
+      const ctx = canvas.getContext('2d');
+
+      const starCount = 420;
+      const stars = [];
+      for (let i = 0; i < starCount; i++) {
+        stars.push({
+          x: (Math.random() - 0.5) * w * 2.2,
+          y: (Math.random() - 0.5) * h * 2.2,
+          z: Math.random() * 1600 + 100,
+          pz: 1700,
+          color: Math.random() < 0.25 ? '#38bdf8' : Math.random() < 0.5 ? '#c084fc' : Math.random() < 0.75 ? '#fde047' : '#ffffff',
+          size: Math.random() * 1.8 + 0.8
+        });
+      }
+
+      const startTime = performance.now();
+
+      function stepWarp(now) {
+        const elapsed = now - startTime;
+        const progress = Math.min(1, elapsed / duration);
+
+        ctx.fillStyle = 'rgba(2, 4, 10, 0.28)';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        // Speed curve: ramps up fast to peak warp, then decelerates
+        let speed = 25;
+        if (progress < 0.45) {
+          speed = 25 + Math.sin(progress / 0.45 * Math.PI * 0.5) * 115;
+        } else {
+          speed = 140 * (1 - (progress - 0.45) / 0.55);
+        }
+        speed = Math.max(10, speed);
+
+        const fov = 340 * dpr;
+        const cx = canvas.width / 2;
+        const cy = canvas.height / 2;
+
+        for (let i = 0; i < starCount; i++) {
+          const s = stars[i];
+          s.pz = s.z;
+          s.z -= speed;
+
+          if (s.z <= 20) {
+            s.z = 1600;
+            s.pz = 1600;
+            s.x = (Math.random() - 0.5) * w * 2.2;
+            s.y = (Math.random() - 0.5) * h * 2.2;
+          }
+
+          const sx = (s.x / s.z) * fov + cx;
+          const sy = (s.y / s.z) * fov + cy;
+          const px = (s.x / s.pz) * fov + cx;
+          const py = (s.y / s.pz) * fov + cy;
+
+          if (sx >= 0 && sx <= canvas.width && sy >= 0 && sy <= canvas.height) {
+            ctx.beginPath();
+            ctx.moveTo(px, py);
+            ctx.lineTo(sx, sy);
+            ctx.strokeStyle = s.color;
+            ctx.lineWidth = Math.min(4.5 * dpr, (1 - s.z / 1600) * 3.8 * dpr + 0.5);
+            ctx.shadowColor = s.color;
+            ctx.shadowBlur = 8 * dpr;
+            ctx.stroke();
+            ctx.shadowBlur = 0;
+          }
+        }
+
+        // Singularity Event Horizon Ring Expanding
+        if (progress > 0.15) {
+          const ringNorm = (progress - 0.15) / 0.85;
+          const maxR = Math.hypot(canvas.width, canvas.height) * 0.65;
+          const curR = ringNorm * maxR;
+
+          ctx.save();
+          ctx.beginPath();
+          ctx.arc(cx, cy, curR, 0, Math.PI * 2);
+          ctx.strokeStyle = `rgba(168, 85, 247, ${Math.max(0, 1 - ringNorm)})`;
+          ctx.lineWidth = (1 - ringNorm) * 10 * dpr + 1;
+          ctx.shadowColor = '#38bdf8';
+          ctx.shadowBlur = 20 * dpr;
+          ctx.stroke();
+          ctx.restore();
+        }
+
+        if (progress < 1) {
+          warpAnimFrameId = requestAnimationFrame(stepWarp);
+        } else {
+          cancelAnimationFrame(warpAnimFrameId);
+          warpAnimFrameId = null;
+          if (onComplete) onComplete();
+        }
+      }
+
+      warpAnimFrameId = requestAnimationFrame(stepWarp);
+    }
+
+    // =========================================================================
+    // FULLSCREEN CONSTELLATION CONTROLLER
+    // =========================================================================
+    function computeFitZoom() {
+      const w = window.innerWidth;
+      const h = window.innerHeight;
+      if (w < 768) {
+        return Math.max(0.48, Math.min(w / 1100, (h - 260) / 960));
+      }
+      const fit = Math.min((w - 120) / GALAXY_BASE_W, (h - 220) / GALAXY_BASE_H);
+      return Math.min(1.25, Math.max(0.6, fit));
+    }
+
+    function openConstellationFullscreen() {
+      if (isConstellationFullscreenOpen) return;
+      isConstellationFullscreenOpen = true;
+
+      // 1. Audio
+      playCosmicWarpSound('enter');
+
+      // 2. Hide & blur app shell
+      const appShell = document.querySelector('.app-shell');
+      if (appShell) appShell.classList.add('app-shell-warp-out');
+
+      // 3. Launch Warp Transition
+      const warpCanvas = document.getElementById('constellationWarpCanvas');
+      if (warpCanvas) {
+        warpCanvas.style.display = 'block';
+        warpCanvas.style.opacity = '1';
+        runWarpTransition(750, () => {
+          if (warpCanvas) {
+            warpCanvas.style.transition = 'opacity 0.25s ease';
+            warpCanvas.style.opacity = '0';
+            setTimeout(() => {
+              warpCanvas.style.display = 'none';
+              warpCanvas.style.transition = '';
+            }, 250);
+          }
+        });
+      }
+
+      // 4. Reveal Fullscreen Menu at Midpoint
+      setTimeout(() => {
+        const fsEl = document.getElementById('constellationFullscreen');
+        if (fsEl) {
+          fsEl.style.display = 'flex';
+          void fsEl.offsetWidth;
+          fsEl.classList.add('active');
+        }
+        initConstellationFullscreen();
+        focusConstellationBranch('all');
+        selectInspectorNode(selectedConstellationNodeId || 'p_starter');
+      }, 420);
+    }
+
+    function closeConstellationFullscreen() {
+      if (!isConstellationFullscreenOpen) return;
+      isConstellationFullscreenOpen = false;
+
+      playCosmicWarpSound('exit');
+
+      const fsEl = document.getElementById('constellationFullscreen');
+      if (fsEl) {
+        fsEl.classList.remove('active');
+      }
+
+      const appShell = document.querySelector('.app-shell');
+      if (appShell) {
+        appShell.classList.remove('app-shell-warp-out');
+      }
+
+      setTimeout(() => {
+        if (fsEl) fsEl.style.display = 'none';
+        if (cBgAnimFrame) {
+          cancelAnimationFrame(cBgAnimFrame);
+          cBgAnimFrame = null;
+        }
+        if (cMainAnimFrame) {
+          cancelAnimationFrame(cMainAnimFrame);
+          cMainAnimFrame = null;
+        }
+        updateUI();
+      }, 380);
+    }
+
+    function focusConstellationBranch(branch = 'all', btnEl = null) {
+      document.querySelectorAll('.c-branch-btn').forEach(b => b.classList.remove('active'));
+      if (btnEl) {
+        btnEl.classList.add('active');
+      } else {
+        const targetBtn = document.querySelector(`.c-branch-btn[data-branch="${branch}"]`);
+        if (targetBtn) targetBtn.classList.add('active');
+      }
+
+      if (branch === 'all') {
+        cTargetCamX = 700;
+        cTargetCamY = 480;
+        cTargetCamZoom = computeFitZoom();
+      } else if (CONSTELLATION_BRANCH_META[branch]) {
+        const meta = CONSTELLATION_BRANCH_META[branch].center;
+        cTargetCamX = meta.x;
+        cTargetCamY = meta.y;
+        cTargetCamZoom = meta.zoom;
+      }
+    }
+
+    function constellationZoomIn() {
+      cTargetCamZoom = Math.min(2.5, cTargetCamZoom * 1.3);
+    }
+
+    function constellationZoomOut() {
+      cTargetCamZoom = Math.max(0.45, cTargetCamZoom / 1.3);
+    }
+
+    function constellationResetView() {
+      focusConstellationBranch('all');
+    }
+
+    // =========================================================================
+    // FULLSCREEN CONSTELLATION CANVAS INITIALIZATION & LOOPS
+    // =========================================================================
+    let constellationFsEventsBound = false;
+
+    function initConstellationFullscreen() {
+      const bgCanvas = document.getElementById('constellationBgCanvas');
+      const mainCanvas = document.getElementById('constellationMainCanvas');
+      if (!bgCanvas || !mainCanvas) return;
+
+      const dpr = window.devicePixelRatio || 1;
+      const w = window.innerWidth;
+      const h = window.innerHeight;
+
+      bgCanvas.width = Math.floor(w * dpr);
+      bgCanvas.height = Math.floor(h * dpr);
+      mainCanvas.width = Math.floor(w * dpr);
+      mainCanvas.height = Math.floor(h * dpr);
+
+      // Generate Background Stars if empty
+      if (cBgStars.length === 0) {
+        for (let i = 0; i < 220; i++) {
+          cBgStars.push({
+            x: Math.random(),
+            y: Math.random(),
+            r: Math.random() * 1.5 + 0.5,
+            phase: Math.random() * Math.PI * 2,
+            speed: Math.random() * 0.002 + 0.001,
+            color: Math.random() < 0.2 ? '#c084fc' : Math.random() < 0.4 ? '#38bdf8' : Math.random() < 0.6 ? '#fde047' : '#ffffff'
+          });
+        }
+      }
+
+      if (!constellationFsEventsBound) {
+        constellationFsEventsBound = true;
+
+        // Mouse Drag / Pan
+        mainCanvas.addEventListener('mousedown', (e) => {
+          if (e.button !== 0) return;
+          cIsDragging = true;
+          cDragStartX = e.clientX;
+          cDragStartY = e.clientY;
+          cCamStartX = cTargetCamX;
+          cCamStartY = cTargetCamY;
+          cDragDistance = 0;
+        });
+
+        window.addEventListener('mousemove', (e) => {
+          if (cIsDragging) {
+            const dx = e.clientX - cDragStartX;
+            const dy = e.clientY - cDragStartY;
+            cDragDistance += Math.hypot(dx, dy);
+            cTargetCamX = cCamStartX - dx / cCamZoom;
+            cTargetCamY = cCamStartY - dy / cCamZoom;
+          } else if (isConstellationFullscreenOpen) {
+            const rect = mainCanvas.getBoundingClientRect();
+            const mouseX = e.clientX - rect.left;
+            const mouseY = e.clientY - rect.top;
+            const w = mainCanvas.width / (window.devicePixelRatio || 1);
+            const h = mainCanvas.height / (window.devicePixelRatio || 1);
+            const worldX = (mouseX - w / 2) / cCamZoom + cCamX;
+            const worldY = (mouseY - h / 2) / cCamZoom + cCamY;
+
+            let isHover = false;
+            ALL_SKILL_TREE_NODES.forEach(node => {
+              const nx = node.cx * GALAXY_BASE_W;
+              const ny = node.cy * GALAXY_BASE_H;
+              if (Math.hypot(worldX - nx, worldY - ny) < 28) {
+                isHover = true;
+              }
+            });
+            mainCanvas.style.cursor = isHover ? 'pointer' : 'grab';
+          }
+        });
+
+        window.addEventListener('mouseup', () => {
+          cIsDragging = false;
+        });
+
+        // Click selection
+        mainCanvas.addEventListener('click', (e) => {
+          if (cDragDistance > 10) return; // Ignore drag clicks
+          const rect = mainCanvas.getBoundingClientRect();
+          const mouseX = e.clientX - rect.left;
+          const mouseY = e.clientY - rect.top;
+          const w = mainCanvas.width / (window.devicePixelRatio || 1);
+          const h = mainCanvas.height / (window.devicePixelRatio || 1);
+          const worldX = (mouseX - w / 2) / cCamZoom + cCamX;
+          const worldY = (mouseY - h / 2) / cCamZoom + cCamY;
+
+          let closest = null;
+          let minDist = 42;
+          ALL_SKILL_TREE_NODES.forEach(node => {
+            const nx = node.cx * GALAXY_BASE_W;
+            const ny = node.cy * GALAXY_BASE_H;
+            const d = Math.hypot(worldX - nx, worldY - ny);
+            if (d < minDist) {
+              minDist = d;
+              closest = node;
+            }
+          });
+
+          if (closest) {
+            selectInspectorNode(closest.id);
+            spawnConstellationClickShockwave(closest);
+            playTone(660, 'sine', 0.08, 0.08);
+          }
+        });
+
+        // Wheel Zoom
+        mainCanvas.addEventListener('wheel', (e) => {
+          if (!isConstellationFullscreenOpen) return;
+          e.preventDefault();
+          const zoomFactor = e.deltaY < 0 ? 1.15 : 0.87;
+          cTargetCamZoom = Math.min(2.5, Math.max(0.45, cTargetCamZoom * zoomFactor));
+        }, { passive: false });
+
+        // Touch Drag & Pinch Zoom
+        mainCanvas.addEventListener('touchstart', (e) => {
+          if (e.touches.length === 1) {
+            cIsDragging = true;
+            cDragStartX = e.touches[0].clientX;
+            cDragStartY = e.touches[0].clientY;
+            cCamStartX = cTargetCamX;
+            cCamStartY = cTargetCamY;
+            cDragDistance = 0;
+          } else if (e.touches.length === 2) {
+            cIsDragging = false;
+            cTouchStartDist = Math.hypot(
+              e.touches[0].clientX - e.touches[1].clientX,
+              e.touches[0].clientY - e.touches[1].clientY
+            );
+            cTouchStartZoom = cTargetCamZoom;
+          }
+        }, { passive: true });
+
+        mainCanvas.addEventListener('touchmove', (e) => {
+          if (e.touches.length === 1 && cIsDragging) {
+            const dx = e.touches[0].clientX - cDragStartX;
+            const dy = e.touches[0].clientY - cDragStartY;
+            cDragDistance += Math.hypot(dx, dy);
+            cTargetCamX = cCamStartX - dx / cCamZoom;
+            cTargetCamY = cCamStartY - dy / cCamZoom;
+          } else if (e.touches.length === 2) {
+            const curDist = Math.hypot(
+              e.touches[0].clientX - e.touches[1].clientX,
+              e.touches[0].clientY - e.touches[1].clientY
+            );
+            if (cTouchStartDist > 0) {
+              const ratio = curDist / cTouchStartDist;
+              cTargetCamZoom = Math.min(2.5, Math.max(0.45, cTouchStartZoom * ratio));
+            }
+          }
+        }, { passive: true });
+
+        mainCanvas.addEventListener('touchend', (e) => {
+          cIsDragging = false;
+          if (e.touches.length === 0 && cDragDistance < 8) {
+            // Touch tap handled
+          }
+        });
+
+        // Window resize
+        window.addEventListener('resize', () => {
+          if (isConstellationFullscreenOpen) {
+            const dpr = window.devicePixelRatio || 1;
+            const w = window.innerWidth;
+            const h = window.innerHeight;
+            bgCanvas.width = Math.floor(w * dpr);
+            bgCanvas.height = Math.floor(h * dpr);
+            mainCanvas.width = Math.floor(w * dpr);
+            mainCanvas.height = Math.floor(h * dpr);
+          }
+        });
+
+        // Keydown Escape
+        window.addEventListener('keydown', (e) => {
+          if (isConstellationFullscreenOpen && e.key === 'Escape') {
+            closeConstellationFullscreen();
+          }
+        });
+      }
+
+      // Start Loops
+      if (!cBgAnimFrame) {
+        cBgAnimFrame = requestAnimationFrame(runConstellationBgLoop);
+      }
+      if (!cMainAnimFrame) {
+        cMainAnimFrame = requestAnimationFrame(runConstellationMainLoop);
+      }
+    }
+
+    function spawnConstellationClickShockwave(node) {
+      cShockwaves.push({
+        x: node.cx * GALAXY_BASE_W,
+        y: node.cy * GALAXY_BASE_H,
+        radius: 10,
+        maxRadius: 65,
+        alpha: 1.0,
+        color: node.branch === 'manual' ? '#f43f5e' : node.branch === 'passive' ? '#06b6d4' : node.branch === 'anomaly' ? '#f59e0b' : '#a855f7'
+      });
+    }
+
+    function spawnConstellationStarBurst(node) {
+      const wx = node.cx * GALAXY_BASE_W;
+      const wy = node.cy * GALAXY_BASE_H;
+      const color = node.branch === 'manual' ? '#f43f5e' : node.branch === 'passive' ? '#06b6d4' : node.branch === 'anomaly' ? '#f59e0b' : '#a855f7';
+
+      cShockwaves.push({
+        x: wx,
+        y: wy,
+        radius: 12,
+        maxRadius: node.keystone ? 120 : 80,
+        alpha: 1.0,
+        color: color
+      });
+
+      const count = node.keystone ? 45 : 28;
+      for (let i = 0; i < count; i++) {
+        const ang = Math.random() * Math.PI * 2;
+        const spd = Math.random() * 4.5 + 1.2;
+        cBurstParticles.push({
+          x: wx,
+          y: wy,
+          vx: Math.cos(ang) * spd,
+          vy: Math.sin(ang) * spd,
+          life: 1.0,
+          decay: Math.random() * 0.02 + 0.015,
+          size: Math.random() * 3 + 1.5,
+          color: Math.random() < 0.3 ? '#ffffff' : color
+        });
+      }
+    }
+
+    // Background Canvas Loop
+    function runConstellationBgLoop(timestamp) {
+      if (!isConstellationFullscreenOpen) {
+        cBgAnimFrame = null;
+        return;
+      }
+
+      const canvas = document.getElementById('constellationBgCanvas');
+      if (canvas) {
+        const ctx = canvas.getContext('2d');
+        const w = canvas.width;
+        const h = canvas.height;
+        const dpr = window.devicePixelRatio || 1;
+        const now = timestamp || performance.now();
+
+        ctx.fillStyle = '#02040a';
+        ctx.fillRect(0, 0, w, h);
+
+        // 4 Nebula Clouds
+        const parallaxX = (cCamX - 700) * 0.03 * dpr;
+        const parallaxY = (cCamY - 480) * 0.03 * dpr;
+
+        // Universal (Purple)
+        drawNebula(ctx, w * 0.5 - parallaxX, h * 0.25 - parallaxY, Math.min(w, h) * 0.45, 'rgba(168, 85, 247, 0.16)', now * 0.0004);
+        // Manual (Crimson)
+        drawNebula(ctx, w * 0.2 - parallaxX, h * 0.55 - parallaxY, Math.min(w, h) * 0.4, 'rgba(244, 63, 94, 0.14)', now * 0.0003 + 1);
+        // Passive (Cyan)
+        drawNebula(ctx, w * 0.5 - parallaxX, h * 0.75 - parallaxY, Math.min(w, h) * 0.45, 'rgba(6, 182, 212, 0.16)', now * 0.0004 + 2);
+        // Anomaly (Amber)
+        drawNebula(ctx, w * 0.8 - parallaxX, h * 0.55 - parallaxY, Math.min(w, h) * 0.4, 'rgba(245, 158, 11, 0.14)', now * 0.0003 + 3);
+
+        // Twinkling Background Stars
+        for (let i = 0; i < cBgStars.length; i++) {
+          const s = cBgStars[i];
+          const sx = (s.x * w - parallaxX * 0.5) % w;
+          const sy = (s.y * h - parallaxY * 0.5) % h;
+          const alpha = 0.35 + 0.55 * Math.sin(now * s.speed + s.phase);
+
+          ctx.beginPath();
+          ctx.arc(sx < 0 ? sx + w : sx, sy < 0 ? sy + h : sy, s.r * dpr, 0, Math.PI * 2);
+          ctx.fillStyle = s.color;
+          ctx.globalAlpha = Math.max(0.1, alpha);
+          ctx.fill();
+        }
+        ctx.globalAlpha = 1.0;
+
+        // Shooting Stars
+        if (now > cNextShootingStarTime) {
+          cNextShootingStarTime = now + Math.random() * 4500 + 3500;
+          cShootingStars.push({
+            x: Math.random() * w * 0.8,
+            y: Math.random() * h * 0.4,
+            len: Math.random() * 120 + 80,
+            speed: Math.random() * 8 + 6,
+            angle: Math.PI / 4 + (Math.random() - 0.5) * 0.3,
+            life: 1.0,
+            decay: 0.02
+          });
+        }
+
+        for (let i = cShootingStars.length - 1; i >= 0; i--) {
+          const ss = cShootingStars[i];
+          const tailX = ss.x - Math.cos(ss.angle) * ss.len;
+          const tailY = ss.y - Math.sin(ss.angle) * ss.len;
+
+          const grad = ctx.createLinearGradient(ss.x, ss.y, tailX, tailY);
+          grad.addColorStop(0, `rgba(255, 255, 255, ${ss.life})`);
+          grad.addColorStop(0.3, `rgba(56, 189, 248, ${ss.life * 0.8})`);
+          grad.addColorStop(1, 'rgba(168, 85, 247, 0)');
+
+          ctx.beginPath();
+          ctx.moveTo(ss.x, ss.y);
+          ctx.lineTo(tailX, tailY);
+          ctx.strokeStyle = grad;
+          ctx.lineWidth = 2 * dpr;
+          ctx.stroke();
+
+          ss.x += Math.cos(ss.angle) * ss.speed;
+          ss.y += Math.sin(ss.angle) * ss.speed;
+          ss.life -= ss.decay;
+          if (ss.life <= 0) cShootingStars.splice(i, 1);
+        }
+      }
+
+      cBgAnimFrame = requestAnimationFrame(runConstellationBgLoop);
+    }
+
+    function drawNebula(ctx, x, y, radius, color, time) {
+      ctx.save();
+      const driftX = Math.sin(time) * 20;
+      const driftY = Math.cos(time * 0.8) * 20;
+      const grad = ctx.createRadialGradient(x + driftX, y + driftY, radius * 0.05, x + driftX, y + driftY, radius);
+      grad.addColorStop(0, color);
+      grad.addColorStop(0.5, color.replace(/[\d\.]+\)$/, '0.08)'));
+      grad.addColorStop(1, 'transparent');
+      ctx.fillStyle = grad;
+      ctx.beginPath();
+      ctx.arc(x + driftX, y + driftY, radius, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.restore();
+    }
+
+    // Main Galaxy Canvas Loop
+    function runConstellationMainLoop(timestamp) {
+      if (!isConstellationFullscreenOpen) {
+        cMainAnimFrame = null;
+        return;
+      }
+
+      const canvas = document.getElementById('constellationMainCanvas');
+      if (canvas) {
+        const ctx = canvas.getContext('2d');
+        const w = canvas.width;
+        const h = canvas.height;
+        const dpr = window.devicePixelRatio || 1;
+        const now = timestamp || performance.now();
+
+        // Smooth camera easing
+        cCamX += (cTargetCamX - cCamX) * 0.12;
+        cCamY += (cTargetCamY - cCamY) * 0.12;
+        cCamZoom += (cTargetCamZoom - cCamZoom) * 0.12;
+
+        ctx.clearRect(0, 0, w, h);
+
+        const cx = w / 2;
+        const cy = h / 2;
+
+        function toScreenX(worldX) {
+          return (worldX - cCamX) * cCamZoom * dpr + cx;
+        }
+        function toScreenY(worldY) {
+          return (worldY - cCamY) * cCamZoom * dpr + cy;
+        }
+
+        // 1. Draw Constellation Titles & Badges
+        drawConstellationBranchTitles(ctx, toScreenX, toScreenY, dpr);
+
+        // 2. Draw Connection Lines & Energy Photons
+        ALL_SKILL_TREE_NODES.forEach((node, idx) => {
+          if (!node.req) return;
+          const parent = ALL_SKILL_TREE_NODES.find(n => n.id === node.req);
+          if (!parent) return;
+
+          const x1 = toScreenX(parent.cx * GALAXY_BASE_W);
+          const y1 = toScreenY(parent.cy * GALAXY_BASE_H);
+          const x2 = toScreenX(node.cx * GALAXY_BASE_W);
+          const y2 = toScreenY(node.cy * GALAXY_BASE_H);
+
+          const isChildUnlocked = isSkillNodeUnlocked(node);
+          const childLvl = (state.prestigeUpgrades && state.prestigeUpgrades[node.id]) || 0;
+          const branchColor = node.branch === 'manual' ? '#f43f5e' : node.branch === 'passive' ? '#06b6d4' : node.branch === 'anomaly' ? '#f59e0b' : '#a855f7';
+
+          ctx.beginPath();
+          ctx.moveTo(x1, y1);
+          ctx.lineTo(x2, y2);
+
+          if (childLvl > 0) {
+            // Unlocked Beam
+            ctx.strokeStyle = branchColor;
+            ctx.lineWidth = 4 * dpr;
+            ctx.shadowColor = branchColor;
+            ctx.shadowBlur = 16 * dpr;
+            ctx.stroke();
+
+            // Inner white line
+            ctx.strokeStyle = '#ffffff';
+            ctx.lineWidth = 1.6 * dpr;
+            ctx.shadowBlur = 6 * dpr;
+            ctx.stroke();
+            ctx.shadowBlur = 0;
+
+            // Animated Traveling Photons (2 packets)
+            for (let p = 0; p < 2; p++) {
+              const t = ((now * 0.0005) + (idx * 0.14) + (p * 0.5)) % 1;
+              const px = x1 + (x2 - x1) * t;
+              const py = y1 + (y2 - y1) * t;
+
+              ctx.beginPath();
+              ctx.arc(px, py, 3.8 * dpr, 0, Math.PI * 2);
+              ctx.fillStyle = '#ffffff';
+              ctx.shadowColor = branchColor;
+              ctx.shadowBlur = 14 * dpr;
+              ctx.fill();
+              ctx.shadowBlur = 0;
+            }
+          } else if (isChildUnlocked) {
+            // Available: glowing dashed line
+            ctx.strokeStyle = branchColor;
+            ctx.lineWidth = 2.2 * dpr;
+            ctx.shadowColor = branchColor;
+            ctx.shadowBlur = 8 * dpr;
+            ctx.setLineDash([8 * dpr, 6 * dpr]);
+            ctx.lineDashOffset = (-now * 0.015) % 14;
+            ctx.stroke();
+            ctx.setLineDash([]);
+            ctx.shadowBlur = 0;
+          } else {
+            // Locked: faint stardust line
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.12)';
+            ctx.lineWidth = 1.2 * dpr;
+            ctx.setLineDash([4 * dpr, 6 * dpr]);
+            ctx.stroke();
+            ctx.setLineDash([]);
+          }
+        });
+
+        // 3. Draw Shockwaves
+        for (let i = cShockwaves.length - 1; i >= 0; i--) {
+          const sw = cShockwaves[i];
+          const sx = toScreenX(sw.x);
+          const sy = toScreenY(sw.y);
+
+          ctx.beginPath();
+          ctx.arc(sx, sy, sw.radius * dpr * cCamZoom, 0, Math.PI * 2);
+          ctx.strokeStyle = sw.color;
+          ctx.globalAlpha = sw.alpha;
+          ctx.lineWidth = 3 * dpr;
+          ctx.shadowColor = sw.color;
+          ctx.shadowBlur = 16 * dpr;
+          ctx.stroke();
+          ctx.shadowBlur = 0;
+          ctx.globalAlpha = 1.0;
+
+          sw.radius += 3.2;
+          sw.alpha -= 0.038;
+          if (sw.alpha <= 0 || sw.radius >= sw.maxRadius) {
+            cShockwaves.splice(i, 1);
+          }
+        }
+
+        // 4. Draw Burst Particles
+        for (let i = cBurstParticles.length - 1; i >= 0; i--) {
+          const bp = cBurstParticles[i];
+          const sx = toScreenX(bp.x);
+          const sy = toScreenY(bp.y);
+
+          ctx.beginPath();
+          ctx.arc(sx, sy, bp.size * dpr, 0, Math.PI * 2);
+          ctx.fillStyle = bp.color;
+          ctx.globalAlpha = bp.life;
+          ctx.shadowColor = bp.color;
+          ctx.shadowBlur = 10 * dpr;
+          ctx.fill();
+          ctx.shadowBlur = 0;
+          ctx.globalAlpha = 1.0;
+
+          bp.x += bp.vx;
+          bp.y += bp.vy;
+          bp.life -= bp.decay;
+          if (bp.life <= 0) cBurstParticles.splice(i, 1);
+        }
+
+        // 5. Draw Star Nodes
+        ALL_SKILL_TREE_NODES.forEach(node => {
+          const sx = toScreenX(node.cx * GALAXY_BASE_W);
+          const sy = toScreenY(node.cy * GALAXY_BASE_H);
+
+          // Cull if offscreen with margin
+          if (sx < -80 || sx > w + 80 || sy < -80 || sy > h + 80) return;
+
+          const lvl = (state.prestigeUpgrades && state.prestigeUpgrades[node.id]) || 0;
+          const isMax = lvl >= node.maxLevel;
+          const isUnlocked = isSkillNodeUnlocked(node);
+          const isSelected = selectedConstellationNodeId === node.id;
+          const cost = getPrestigeUpgradeCost(node, lvl);
+          const canAfford = isUnlocked && !isMax && (state.darkMatter || 0) >= cost;
+
+          const baseR = (node.keystone ? 26 : 18) * dpr * Math.min(1.4, Math.max(0.7, cCamZoom));
+          const branchColor = node.branch === 'manual' ? '#f43f5e' : node.branch === 'passive' ? '#06b6d4' : node.branch === 'anomaly' ? '#f59e0b' : '#a855f7';
+
+          // Selection Targeting Reticle
+          if (isSelected) {
+            const rot = now * 0.0012;
+            const reticleR = baseR + 10 * dpr;
+            ctx.save();
+            ctx.strokeStyle = '#ffffff';
+            ctx.lineWidth = 2 * dpr;
+            ctx.shadowColor = '#ffffff';
+            ctx.shadowBlur = 16 * dpr;
+
+            // 4 corner arcs
+            for (let a = 0; a < 4; a++) {
+              const startA = rot + a * (Math.PI / 2) + 0.15;
+              const endA = startA + (Math.PI / 2) - 0.3;
+              ctx.beginPath();
+              ctx.arc(sx, sy, reticleR, startA, endA);
+              ctx.stroke();
+            }
+
+            // Radial pulse halo
+            const pulseR = reticleR + (3 + Math.sin(now * 0.005) * 3) * dpr;
+            ctx.beginPath();
+            ctx.arc(sx, sy, pulseR, 0, Math.PI * 2);
+            ctx.strokeStyle = branchColor;
+            ctx.lineWidth = 1 * dpr;
+            ctx.stroke();
+            ctx.restore();
+          }
+
+          // Keystone Node Special: 4-Point Cross Diffraction Flare & Orbiting Rings
+          if (node.keystone) {
+            ctx.save();
+            // 4-point cross diffraction flare
+            const flareLen = (lvl > 0 ? 55 : 35) * dpr;
+            const gradH = ctx.createLinearGradient(sx - flareLen, sy, sx + flareLen, sy);
+            gradH.addColorStop(0, 'transparent');
+            gradH.addColorStop(0.5, '#ffffff');
+            gradH.addColorStop(1, 'transparent');
+            ctx.fillStyle = gradH;
+            ctx.fillRect(sx - flareLen, sy - 1 * dpr, flareLen * 2, 2 * dpr);
+
+            const gradV = ctx.createLinearGradient(sx, sy - flareLen, sx, sy + flareLen);
+            gradV.addColorStop(0, 'transparent');
+            gradV.addColorStop(0.5, '#ffffff');
+            gradV.addColorStop(1, 'transparent');
+            ctx.fillStyle = gradV;
+            ctx.fillRect(sx - 1 * dpr, sy - flareLen, 2 * dpr, flareLen * 2);
+
+            // Orbiting Ring
+            const ringR = baseR + 7 * dpr;
+            ctx.beginPath();
+            ctx.ellipse(sx, sy, ringR, ringR * 0.45, now * 0.0008, 0, Math.PI * 2);
+            ctx.strokeStyle = isMax ? '#fde047' : branchColor;
+            ctx.lineWidth = 1.5 * dpr;
+            ctx.shadowColor = isMax ? '#fde047' : branchColor;
+            ctx.shadowBlur = 12 * dpr;
+            ctx.stroke();
+            ctx.restore();
+          }
+
+          // Buyable Pulse Beacon
+          if (canAfford) {
+            const beaconR = baseR + (4 + Math.sin(now * 0.006) * 4) * dpr;
+            ctx.beginPath();
+            ctx.arc(sx, sy, beaconR, 0, Math.PI * 2);
+            ctx.strokeStyle = '#fde047';
+            ctx.lineWidth = 2 * dpr;
+            ctx.shadowColor = '#fde047';
+            ctx.shadowBlur = 12 * dpr;
+            ctx.stroke();
+            ctx.shadowBlur = 0;
+          }
+
+          // Star Core Disc
+          ctx.beginPath();
+          ctx.arc(sx, sy, baseR, 0, Math.PI * 2);
+
+          if (lvl > 0) {
+            const grad = ctx.createRadialGradient(sx, sy, 2 * dpr, sx, sy, baseR);
+            grad.addColorStop(0, '#ffffff');
+            grad.addColorStop(0.35, branchColor);
+            grad.addColorStop(1, '#090d16');
+            ctx.fillStyle = grad;
+            ctx.shadowColor = branchColor;
+            ctx.shadowBlur = (isMax ? 24 : 16) * dpr;
+          } else if (canAfford) {
+            const grad = ctx.createRadialGradient(sx, sy, 2 * dpr, sx, sy, baseR);
+            grad.addColorStop(0, '#fef08a');
+            grad.addColorStop(0.5, '#475569');
+            grad.addColorStop(1, '#0f172a');
+            ctx.fillStyle = grad;
+            ctx.shadowColor = '#fde047';
+            ctx.shadowBlur = 12 * dpr;
+          } else if (isUnlocked) {
+            ctx.fillStyle = '#1e293b';
+            ctx.shadowBlur = 0;
+          } else {
+            ctx.fillStyle = 'rgba(15, 23, 42, 0.7)';
+            ctx.shadowBlur = 0;
+          }
+          ctx.fill();
+
+          ctx.lineWidth = 2 * dpr;
+          ctx.strokeStyle = lvl > 0 ? (isMax ? '#fde047' : branchColor) : isUnlocked ? 'rgba(255, 255, 255, 0.45)' : 'rgba(255, 255, 255, 0.12)';
+          ctx.stroke();
+          ctx.shadowBlur = 0;
+
+          // Emoji Icon
+          ctx.font = `${Math.round((node.keystone ? 17 : 14) * dpr * Math.min(1.3, Math.max(0.8, cCamZoom)))}px sans-serif`;
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'middle';
+          ctx.fillText(node.icon, sx, sy);
+
+          // Level Badge Text below
+          ctx.font = `bold ${Math.round(10 * dpr)}px 'JetBrains Mono', monospace`;
+          ctx.fillStyle = isMax ? '#fde047' : lvl > 0 ? '#ffffff' : isUnlocked ? '#94a3b8' : '#64748b';
+          const lvlText = isMax ? '👑 MAX' : isUnlocked ? `${lvl}/${node.maxLevel}` : '🔒';
+          ctx.fillText(lvlText, sx, sy + baseR + 12 * dpr);
+        });
+      }
+
+      cMainAnimFrame = requestAnimationFrame(runConstellationMainLoop);
+    }
+
+    function drawConstellationBranchTitles(ctx, toScreenX, toScreenY, dpr) {
+      // Universal
+      drawBranchTitleCard(ctx, toScreenX(700), toScreenY(50), CONSTELLATION_BRANCH_META.universal, dpr);
+      // Manual
+      drawBranchTitleCard(ctx, toScreenX(200), toScreenY(170), CONSTELLATION_BRANCH_META.manual, dpr);
+      // Passive
+      drawBranchTitleCard(ctx, toScreenX(700), toScreenY(1005), CONSTELLATION_BRANCH_META.passive, dpr);
+      // Anomaly
+      drawBranchTitleCard(ctx, toScreenX(1200), toScreenY(170), CONSTELLATION_BRANCH_META.anomaly, dpr);
+    }
+
+    function drawBranchTitleCard(ctx, sx, sy, meta, dpr) {
+      ctx.save();
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+
+      ctx.font = `900 ${Math.round(13 * dpr * Math.min(1.3, Math.max(0.8, cCamZoom)))}px sans-serif`;
+      ctx.fillStyle = '#ffffff';
+      ctx.shadowColor = meta.color;
+      ctx.shadowBlur = 10 * dpr;
+      ctx.fillText(`✦ ${meta.codeName} ✦`, sx, sy);
+
+      ctx.font = `700 ${Math.round(9.5 * dpr * Math.min(1.3, Math.max(0.8, cCamZoom)))}px sans-serif`;
+      ctx.fillStyle = meta.color;
+      ctx.shadowBlur = 6 * dpr;
+      ctx.fillText(meta.subName, sx, sy + 14 * dpr);
+      ctx.restore();
+    }
+
+    // =========================================================================
+    // INSPECTOR & TALENT ACTIONS
+    // =========================================================================
     function isSkillNodeUnlocked(node) {
       if (!node.req) return true;
       const parentLvl = (state.prestigeUpgrades && state.prestigeUpgrades[node.req]) || 0;
@@ -15359,6 +17153,17 @@
       return total;
     }
 
+    function confirmRespecSkillTree() {
+      const spent = calculateTotalSpentDarkMatter();
+      if (spent <= 0) {
+        showToast('ℹ️ Nu ai Materie Întunecată cheltuită în talente.');
+        return;
+      }
+      if (confirm(`🔄 Ești sigur că vrei să resetezi toate talentele din Constelație?\n\nÎți va fi restituită 100% Materia Întunecată investită (+${spent} 🔮)!`)) {
+        respecSkillTree();
+      }
+    }
+
     function respecSkillTree() {
       const spent = calculateTotalSpentDarkMatter();
       if (spent <= 0) {
@@ -15371,6 +17176,7 @@
       });
       playTone(520, 'sine', 0.2, 0.15);
       showToast(`🔄 Talente resetate complet! Ți-au fost restituite +${spent} 🔮 Materie Întunecată.`);
+
       renderSkillTree();
       updateUI();
       saveGame();
@@ -15404,9 +17210,16 @@
       state.darkMatter -= cost;
       state.prestigeUpgrades[id] = lvl + 1;
       const branchColor = node.branch === 'manual' ? '#f43f5e' : node.branch === 'passive' ? '#06b6d4' : node.branch === 'anomaly' ? '#f59e0b' : '#a855f7';
-      spawnActivationOrbToCore(null, branchColor);
-      playTone(node.keystone ? 880 : 720, 'triangle', 0.16, 0.12);
-      spawnParticles(window.innerWidth / 2, window.innerHeight / 2, node.keystone ? 32 : 16, branchColor);
+
+      if (isConstellationFullscreenOpen) {
+        spawnConstellationStarBurst(node);
+        playConstellationStarBurstSound(node.keystone);
+      } else {
+        spawnActivationOrbToCore(null, branchColor);
+        playTone(node.keystone ? 880 : 720, 'triangle', 0.16, 0.12);
+        spawnParticles(window.innerWidth / 2, window.innerHeight / 2, node.keystone ? 32 : 16, branchColor);
+      }
+
       showToast(`✨ Talent deblocat: ${node.name} (Nivel ${lvl + 1}/${node.maxLevel})!`);
 
       selectInspectorNode(id);
@@ -15423,226 +17236,6 @@
       buySkillTreeNode(id);
     }
 
-    function initConstellationCanvas() {
-      const canvas = document.getElementById('constellationCanvas');
-      if (!canvas) return;
-      const parent = canvas.parentElement;
-      if (parent) {
-        const rect = parent.getBoundingClientRect();
-        const dpr = window.devicePixelRatio || 1;
-        if (rect.width > 50 && rect.height > 50) {
-          canvas.width = Math.floor(rect.width * dpr);
-          canvas.height = Math.floor(rect.height * dpr);
-        }
-      }
-
-      if (!constellationCanvasInitialized) {
-        constellationCanvasInitialized = true;
-
-        canvas.addEventListener('click', (e) => {
-          const cRect = canvas.getBoundingClientRect();
-          const clickX = (e.clientX - cRect.left) / cRect.width;
-          const clickY = (e.clientY - cRect.top) / cRect.height;
-
-          let closestNode = null;
-          let minDist = 0.07;
-          ALL_SKILL_TREE_NODES.forEach(node => {
-            const d = Math.hypot(clickX - node.cx, clickY - node.cy);
-            if (d < minDist) {
-              minDist = d;
-              closestNode = node;
-            }
-          });
-
-          if (closestNode) {
-            selectInspectorNode(closestNode.id);
-            playTone(600, 'sine', 0.06, 0.06);
-          }
-        });
-
-        canvas.addEventListener('mousemove', (e) => {
-          const cRect = canvas.getBoundingClientRect();
-          const moveX = (e.clientX - cRect.left) / cRect.width;
-          const moveY = (e.clientY - cRect.top) / cRect.height;
-          const isOver = ALL_SKILL_TREE_NODES.some(node => Math.hypot(moveX - node.cx, moveY - node.cy) < 0.055);
-          canvas.style.cursor = isOver ? 'pointer' : 'default';
-        });
-
-        window.addEventListener('resize', () => {
-          const tabConst = document.getElementById('tab-constellation');
-          if (tabConst && tabConst.classList.contains('active')) {
-            const parent = canvas.parentElement;
-            if (parent) {
-              const rect = parent.getBoundingClientRect();
-              const dpr = window.devicePixelRatio || 1;
-              if (rect.width > 50 && rect.height > 50) {
-                canvas.width = Math.floor(rect.width * dpr);
-                canvas.height = Math.floor(rect.height * dpr);
-                drawConstellationCanvas();
-              }
-            }
-          }
-        });
-
-        if (!constellationAnimFrame) {
-          const runLoop = () => {
-            const tabConst = document.getElementById('tab-constellation');
-            if (tabConst && tabConst.classList.contains('active')) {
-              drawConstellationCanvas();
-            }
-            constellationAnimFrame = requestAnimationFrame(runLoop);
-          };
-          constellationAnimFrame = requestAnimationFrame(runLoop);
-        }
-      }
-    }
-
-    function drawConstellationCanvas() {
-      const canvas = document.getElementById('constellationCanvas');
-      if (!canvas) return;
-      const ctx = canvas.getContext('2d');
-      const w = canvas.width;
-      const h = canvas.height;
-      ctx.clearRect(0, 0, w, h);
-
-      const dpr = window.devicePixelRatio || 1;
-      const now = Date.now();
-
-      // Desenare conexiuni (linii între părinți și copii)
-      ALL_SKILL_TREE_NODES.forEach(node => {
-        if (!node.req) return;
-        const parent = ALL_SKILL_TREE_NODES.find(n => n.id === node.req);
-        if (!parent) return;
-
-        const x1 = parent.cx * w;
-        const y1 = parent.cy * h;
-        const x2 = node.cx * w;
-        const y2 = node.cy * h;
-
-        const isChildUnlocked = isSkillNodeUnlocked(node);
-        const childLvl = (state.prestigeUpgrades && state.prestigeUpgrades[node.id]) || 0;
-        const branchColor = node.branch === 'manual' ? '#f43f5e' : node.branch === 'passive' ? '#06b6d4' : node.branch === 'anomaly' ? '#f59e0b' : '#a855f7';
-
-        ctx.beginPath();
-        ctx.moveTo(x1, y1);
-        ctx.lineTo(x2, y2);
-
-        if (childLvl > 0) {
-          ctx.strokeStyle = branchColor;
-          ctx.lineWidth = 3.5 * dpr;
-          ctx.shadowColor = branchColor;
-          ctx.shadowBlur = 12 * dpr;
-          ctx.setLineDash([]);
-          ctx.stroke();
-
-          // Puls de lumină
-          const t = ((now / 1800) + (node.tier * 0.2)) % 1;
-          const px = x1 + (x2 - x1) * t;
-          const py = y1 + (y2 - y1) * t;
-          ctx.beginPath();
-          ctx.arc(px, py, 3.5 * dpr, 0, Math.PI * 2);
-          ctx.fillStyle = '#ffffff';
-          ctx.shadowColor = '#ffffff';
-          ctx.shadowBlur = 10 * dpr;
-          ctx.fill();
-        } else if (isChildUnlocked) {
-          ctx.strokeStyle = 'rgba(255, 255, 255, 0.45)';
-          ctx.lineWidth = 2 * dpr;
-          ctx.shadowBlur = 4 * dpr;
-          ctx.shadowColor = 'rgba(255, 255, 255, 0.5)';
-          ctx.setLineDash([4 * dpr, 4 * dpr]);
-          ctx.stroke();
-        } else {
-          ctx.strokeStyle = 'rgba(255, 255, 255, 0.1)';
-          ctx.lineWidth = 1.2 * dpr;
-          ctx.shadowBlur = 0;
-          ctx.setLineDash([3 * dpr, 5 * dpr]);
-          ctx.stroke();
-        }
-        ctx.setLineDash([]);
-        ctx.shadowBlur = 0;
-      });
-
-      // Desenare noduri
-      ALL_SKILL_TREE_NODES.forEach(node => {
-        const x = node.cx * w;
-        const y = node.cy * h;
-        const lvl = (state.prestigeUpgrades && state.prestigeUpgrades[node.id]) || 0;
-        const isMax = lvl >= node.maxLevel;
-        const isUnlocked = isSkillNodeUnlocked(node);
-        const isSelected = selectedConstellationNodeId === node.id;
-        const cost = getPrestigeUpgradeCost(node, lvl);
-        const canAfford = isUnlocked && !isMax && (state.darkMatter || 0) >= cost;
-
-        const baseR = (node.keystone ? 22 : 17) * dpr;
-        const branchColor = node.branch === 'manual' ? '#f43f5e' : node.branch === 'passive' ? '#06b6d4' : node.branch === 'anomaly' ? '#f59e0b' : '#a855f7';
-
-        if (isSelected) {
-          const pulseR = baseR + (3 + Math.sin(now / 200) * 2.5) * dpr;
-          ctx.beginPath();
-          ctx.arc(x, y, pulseR, 0, Math.PI * 2);
-          ctx.strokeStyle = '#ffffff';
-          ctx.lineWidth = 2 * dpr;
-          ctx.shadowColor = '#ffffff';
-          ctx.shadowBlur = 14 * dpr;
-          ctx.stroke();
-          ctx.shadowBlur = 0;
-        }
-
-        if (node.keystone || isMax) {
-          ctx.beginPath();
-          ctx.arc(x, y, baseR + 4 * dpr, 0, Math.PI * 2);
-          ctx.strokeStyle = isMax ? '#fde047' : branchColor;
-          ctx.lineWidth = 1.5 * dpr;
-          ctx.shadowColor = isMax ? '#fde047' : branchColor;
-          ctx.shadowBlur = 10 * dpr;
-          ctx.stroke();
-          ctx.shadowBlur = 0;
-        }
-
-        ctx.beginPath();
-        ctx.arc(x, y, baseR, 0, Math.PI * 2);
-        if (lvl > 0) {
-          const grad = ctx.createRadialGradient(x, y, 2 * dpr, x, y, baseR);
-          grad.addColorStop(0, '#ffffff');
-          grad.addColorStop(0.4, branchColor);
-          grad.addColorStop(1, '#090d16');
-          ctx.fillStyle = grad;
-          ctx.shadowColor = branchColor;
-          ctx.shadowBlur = 14 * dpr;
-        } else if (canAfford) {
-          const grad = ctx.createRadialGradient(x, y, 2 * dpr, x, y, baseR);
-          grad.addColorStop(0, '#fef08a');
-          grad.addColorStop(0.5, '#475569');
-          grad.addColorStop(1, '#0f172a');
-          ctx.fillStyle = grad;
-          ctx.shadowColor = '#fde047';
-          ctx.shadowBlur = 10 * dpr;
-        } else if (isUnlocked) {
-          ctx.fillStyle = '#1e293b';
-          ctx.shadowBlur = 0;
-        } else {
-          ctx.fillStyle = 'rgba(15, 23, 42, 0.6)';
-          ctx.shadowBlur = 0;
-        }
-        ctx.fill();
-
-        ctx.lineWidth = 1.8 * dpr;
-        ctx.strokeStyle = lvl > 0 ? branchColor : isUnlocked ? 'rgba(255, 255, 255, 0.4)' : 'rgba(255, 255, 255, 0.12)';
-        ctx.stroke();
-        ctx.shadowBlur = 0;
-
-        ctx.font = `${Math.round((node.keystone ? 16 : 13) * dpr)}px sans-serif`;
-        ctx.textAlign = 'center';
-        ctx.textBaseline = 'middle';
-        ctx.fillText(node.icon, x, y);
-
-        ctx.font = `bold ${Math.round(9.5 * dpr)}px 'JetBrains Mono', monospace`;
-        ctx.fillStyle = isMax ? '#fde047' : lvl > 0 ? '#ffffff' : isUnlocked ? '#94a3b8' : '#475569';
-        ctx.fillText(isMax ? '👑 MAX' : `${lvl}/${node.maxLevel}`, x, y + baseR + 11 * dpr);
-      });
-    }
-
     function selectInspectorNode(id) {
       selectedConstellationNodeId = id;
       const node = ALL_SKILL_TREE_NODES.find(n => n.id === id);
@@ -15653,7 +17246,57 @@
       const isUnlocked = isSkillNodeUnlocked(node);
       const cost = getPrestigeUpgradeCost(node, lvl);
       const canAfford = isUnlocked && !isMax && (state.darkMatter || 0) >= cost;
+      const bColor = node.branch === 'manual' ? '#f43f5e' : node.branch === 'passive' ? '#06b6d4' : node.branch === 'anomaly' ? '#f59e0b' : '#a855f7';
 
+      // 1. Update Fullscreen Inspector Elements
+      const cAvatarIcon = document.getElementById('cNodeAvatarIcon');
+      const cAvatarHalo = document.getElementById('cNodeAvatarHalo');
+      const cName = document.getElementById('cNodeName');
+      const cBranchTag = document.getElementById('cNodeBranchTag');
+      const cTierTag = document.getElementById('cNodeTierTag');
+      const cLevelPill = document.getElementById('cNodeLevelPill');
+      const cDesc = document.getElementById('cNodeDesc');
+      const cReq = document.getElementById('cNodeReq');
+      const cBuyBtn = document.getElementById('cNodeBuyBtn');
+      const cCard = document.getElementById('cInspectorCard');
+
+      if (cAvatarIcon) cAvatarIcon.innerText = node.icon;
+      if (cAvatarHalo) {
+        cAvatarHalo.style.borderColor = bColor;
+        cAvatarHalo.style.boxShadow = `0 0 16px ${bColor}`;
+      }
+      if (cName) cName.innerText = node.name;
+      if (cBranchTag) {
+        cBranchTag.innerText = node.branchName;
+        cBranchTag.style.borderColor = bColor;
+        cBranchTag.style.color = bColor;
+        cBranchTag.style.background = `${bColor}26`;
+      }
+      if (cTierTag) cTierTag.innerText = `Tier ${node.tier}${node.keystone ? ' (Keystone)' : ''}`;
+      if (cLevelPill) {
+        cLevelPill.innerText = isMax ? '👑 MAX' : `Niv. ${lvl}/${node.maxLevel}`;
+        cLevelPill.style.color = isMax ? '#fde047' : '#38bdf8';
+      }
+      if (cDesc) cDesc.innerText = node.desc;
+      if (cCard) cCard.style.borderColor = `${bColor}70`;
+
+      if (cReq) {
+        if (!isUnlocked && node.req) {
+          const parentNode = ALL_SKILL_TREE_NODES.find(n => n.id === node.req);
+          cReq.style.display = 'block';
+          cReq.innerText = `🔒 Necesar: ${parentNode ? parentNode.name : node.req} (Nivel ${node.reqLvl}+)`;
+        } else {
+          cReq.style.display = 'none';
+        }
+      }
+
+      if (cBuyBtn) {
+        cBuyBtn.className = 'c-buy-btn ' + (isMax ? 'maxed-btn' : canAfford ? 'can-buy' : 'cannot-buy');
+        cBuyBtn.disabled = isMax || !canAfford;
+        cBuyBtn.innerText = isMax ? '👑 Talent Maximizat' : !isUnlocked ? '🔒 Blocat de Cerințe' : canAfford ? `✨ Cumpără (${cost} 🔮)` : `⚠️ Necesită ${cost} 🔮`;
+      }
+
+      // 2. Sync Legacy Inline Elements (for backwards compatibility)
       const iconEl = document.getElementById('inspectorIcon');
       const titleEl = document.getElementById('inspectorTitle');
       const branchBadgeEl = document.getElementById('inspectorBranchBadge');
@@ -15666,13 +17309,11 @@
       if (titleEl) titleEl.innerText = node.name;
       if (branchBadgeEl) {
         branchBadgeEl.innerText = node.branchName;
-        const bColor = node.branch === 'manual' ? '#f43f5e' : node.branch === 'passive' ? '#06b6d4' : node.branch === 'anomaly' ? '#f59e0b' : '#a855f7';
         branchBadgeEl.style.borderColor = bColor;
         branchBadgeEl.style.color = bColor;
       }
       if (lvlEl) lvlEl.innerText = isMax ? 'NIVEL MAXIM' : `Niv. ${lvl}/${node.maxLevel}`;
       if (descEl) descEl.innerText = node.desc;
-
       if (reqEl) {
         if (!isUnlocked && node.req) {
           const parentNode = ALL_SKILL_TREE_NODES.find(n => n.id === node.req);
@@ -15682,7 +17323,6 @@
           reqEl.style.display = 'none';
         }
       }
-
       if (buyBtn) {
         buyBtn.className = 'skill-node-btn ' + (isMax ? 'maxed-btn' : canAfford ? 'can-buy' : 'cannot-buy');
         buyBtn.disabled = isMax || !canAfford;
@@ -15701,8 +17341,29 @@
       if (dmBadge) {
         dmBadge.innerText = `🔮 Materie Disponibilă: ${state.darkMatter || 0}`;
       }
-      initConstellationCanvas();
-      drawConstellationCanvas();
+
+      // Sync Fullscreen Counters
+      const cDmVal = document.getElementById('cDmValue');
+      if (cDmVal) cDmVal.innerText = formatNumber(state.darkMatter || 0, 0);
+
+      const cProgVal = document.getElementById('cStarsProgressVal');
+      let unlockedCount = 0;
+      ALL_SKILL_TREE_NODES.forEach(n => {
+        if ((state.prestigeUpgrades && state.prestigeUpgrades[n.id]) > 0) unlockedCount++;
+      });
+      if (cProgVal) cProgVal.innerText = `${unlockedCount} / ${ALL_SKILL_TREE_NODES.length}`;
+
+      // Sync Tab Portal Stats
+      const portalDm = document.getElementById('portalDmVal');
+      if (portalDm) portalDm.innerText = formatNumber(state.darkMatter || 0, 0);
+      const portalStars = document.getElementById('portalStarsVal');
+      if (portalStars) portalStars.innerText = `${unlockedCount} / ${ALL_SKILL_TREE_NODES.length}`;
+      const portalMult = document.getElementById('portalMultVal');
+      if (portalMult) {
+        const bonus = Math.round(unlockedCount * 3.5);
+        portalMult.innerText = `+${bonus}%`;
+      }
+
       if (selectedConstellationNodeId) {
         selectInspectorNode(selectedConstellationNodeId);
       }
@@ -16334,6 +17995,12 @@
         if (selectedConstellationNodeId) selectInspectorNode(selectedConstellationNodeId);
       }
 
+      if (isConstellationFullscreenOpen) {
+        const cDmVal = document.getElementById('cDmValue');
+        if (cDmVal) cDmVal.innerText = formatNumber(state.darkMatter || 0, 0);
+        if (selectedConstellationNodeId) selectInspectorNode(selectedConstellationNodeId);
+      }
+
       // Actualizare Cooldown-uri Abilități Active
       const now = Date.now();
       for (let i = 1; i <= 3; i++) {
@@ -16431,10 +18098,8 @@
       if (tabName === 'prestige') renderPrestigeUpgrades();
       if (tabName === 'constellation') {
         renderConstellationSkillTree();
-        setTimeout(() => {
-          initConstellationCanvas();
-          drawConstellationCanvas();
-        }, 40);
+        openConstellationFullscreen();
+        return;
       }
       if (tabName === 'achievements') renderAchievements();
       if (tabName === 'leaderboard') renderLeaderboardTab();
@@ -16642,8 +18307,8 @@
      *       + AUTO-SYNC SILENȚIOS OFFLINE -> ONLINE + AUTO-UPDATE LIVE
      *       + NAVIGARE MOBIL & INSTALARE PWA (MACBOOK / PC / ANDROID / iOS)
      ********************************************************************/
-    const APP_VERSION = '3.6.0';
-    const APP_BUILD = 360;
+    const APP_VERSION = '3.7.0';
+    const APP_BUILD = 370;
     // URL-ul oficial de pe GitHub Pages pentru verificarea automată de Update (și în aplicațiile .exe / .dmg):
     const REMOTE_UPDATE_BASE_URL = 'https://mariusinfo.github.io/quantum-nexus';
 

@@ -1,7 +1,7 @@
 {
-  "version": "3.6.0",
-  "build": 360,
+  "version": "3.7.0",
+  "build": 370,
   "releaseDate": "2026-10-23",
-  "changelog": "v3.6.0: Modern & Clean UI Overhaul - Header compact cu iconițe responsive, nucleu aerisit fără aglomerație și carduri de magazin compacte (Opțiunea A) cu vizibilitate crescută și stabilitate la click-uri rapide.",
+  "changelog": "v3.7.0: Epic Fullscreen Constellation & Hyperspace Warp Transition - Tranziție spectaculoasă la hiper-viteză cosmică, ecran complet imersiv fără distrageri, navigare fluidă Pan & Zoom, trasee fotonice energetice și console stelare modernizate.",
   "autoApply": true
 }
