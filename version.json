@@ -1,7 +1,7 @@
 {
-  "version": "3.9.1",
-  "build": 391,
+  "version": "3.9.3",
+  "build": 393,
   "releaseDate": "2026-10-23",
-  "changelog": "v3.9.1: Animație cinematografică Dimensional Leap la comutarea nucleelor în Omnivers (vortex canvas relativist, colaps și implozie reactor în singularitate, banner HUD holografic și Web Audio SFX) + curățarea completă a informațiilor de Rebirth/puncte/multiplicator din pagina normală, rezervate exclusiv pentru Camera Singularității.",
+  "changelog": "v3.9.3: Curățare completă a nucleelor din pagina principală (administrare exclusiv în Omnivers Fullscreen), salt dimensional cinematografic cu teleportare în reactorul principal și explozie nova la comutare + calibrare anti-jitter/fără spasme pe ecranul dedicat.",
   "autoApply": true
 }

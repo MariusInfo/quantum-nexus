@@ -8454,6 +8454,538 @@
       box-shadow: 0 0 35px rgba(168, 85, 247, 0.75);
     }
 
+    /* =========================================================================
+       OMNIVERSE FULLSCREEN & DIMENSIONAL WARP TRANSITION (V3.9.3)
+       ========================================================================= */
+    .omniverse-warp-canvas {
+      position: fixed;
+      inset: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 9999999;
+      pointer-events: none;
+    }
+
+    .omniverse-fullscreen {
+      position: fixed;
+      inset: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 999999;
+      background: #02020a;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      opacity: 0;
+      transition: opacity 0.4s ease;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
+    .omniverse-fullscreen.active {
+      opacity: 1;
+    }
+
+    .omni-fs-bg-canvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .omni-fs-header {
+      position: relative;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 24px;
+      background: linear-gradient(180deg, rgba(2, 4, 18, 0.96) 0%, rgba(2, 4, 18, 0.75) 80%, transparent 100%);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(56, 189, 248, 0.25);
+      flex-shrink: 0;
+    }
+
+    .omni-fs-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-shrink: 0;
+    }
+
+    .omni-fs-crest {
+      position: relative;
+      width: 42px;
+      height: 42px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 12px;
+      background: radial-gradient(circle, rgba(56, 189, 248, 0.35) 0%, rgba(15, 23, 42, 0.9) 100%);
+      border: 1px solid rgba(56, 189, 248, 0.6);
+      box-shadow: 0 0 20px rgba(56, 189, 248, 0.4);
+      font-size: 22px;
+    }
+
+    .omni-crest-halo {
+      position: absolute;
+      inset: -3px;
+      border-radius: 15px;
+      border: 1px solid rgba(56, 189, 248, 0.5);
+      animation: hudLivePulse 2.2s ease-in-out infinite;
+      pointer-events: none;
+    }
+
+    .omni-fs-titles {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .omni-fs-main-title {
+      font-size: 15.5px;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      background: linear-gradient(135deg, #ffffff 0%, #38bdf8 45%, #ec4899 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      line-height: 1.2;
+    }
+
+    .omni-fs-sub-title {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 700;
+      color: rgba(56, 189, 248, 0.7);
+      letter-spacing: 0.04em;
+    }
+
+    .omni-fs-stats-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .omni-fs-badge {
+      background: rgba(15, 23, 42, 0.85);
+      border: 1.5px solid rgba(56, 189, 248, 0.5);
+      padding: 5px 14px;
+      border-radius: 999px;
+      box-shadow: 0 0 16px rgba(56, 189, 248, 0.25);
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 800;
+      color: #e2e8f0;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .omni-btn-close {
+      background: linear-gradient(135deg, rgba(56, 189, 248, 0.25), rgba(168, 85, 247, 0.25));
+      border: 1.5px solid rgba(56, 189, 248, 0.6);
+      color: #ffffff;
+      padding: 7px 16px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 800;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 0 16px rgba(56, 189, 248, 0.3);
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .omni-btn-close:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 24px rgba(56, 189, 248, 0.6);
+      border-color: #38bdf8;
+      background: linear-gradient(135deg, rgba(56, 189, 248, 0.4), rgba(168, 85, 247, 0.4));
+    }
+
+    /* Main Showcase Stage (Anti-Jitter & Stable Hit-Area Calibration) */
+    .omni-fs-body {
+      position: relative;
+      z-index: 2;
+      flex: 1;
+      overflow-y: auto;
+      overflow-x: hidden;
+      scrollbar-gutter: stable;
+      scrollbar-width: thin;
+      padding: 14px 20px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      box-sizing: border-box;
+    }
+
+    .omni-showcase-stage {
+      max-width: 620px;
+      width: 100%;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      background: radial-gradient(circle at 50% 20%, rgba(15, 23, 42, 0.88) 0%, rgba(5, 7, 16, 0.96) 100%);
+      border: 1.5px solid rgba(56, 189, 248, 0.4);
+      border-radius: 18px;
+      padding: 16px 24px;
+      box-shadow: 0 16px 45px rgba(0, 0, 0, 0.8), 0 0 35px rgba(56, 189, 248, 0.15);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      box-sizing: border-box;
+      transform: translateZ(0);
+    }
+
+    .omni-stage-hologram {
+      position: relative;
+      width: 104px;
+      height: 104px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.35s ease;
+      pointer-events: none;
+    }
+
+    .omni-stage-core-orb {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 36px;
+      border: 2px solid rgba(255, 255, 255, 0.6);
+      box-shadow: 0 0 35px var(--stage-theme, #38bdf8), inset 0 0 20px rgba(255, 255, 255, 0.4);
+      z-index: 2;
+      animation: floatOrbit 4s ease-in-out infinite;
+      transition: all 0.3s ease;
+      pointer-events: none;
+    }
+
+    .omni-stage-rings {
+      position: absolute;
+      inset: -12px;
+      border-radius: 50%;
+      border: 1.5px dashed var(--stage-theme, #38bdf8);
+      animation: hudLivePulse 2.5s linear infinite;
+      pointer-events: none;
+    }
+
+    .omni-stage-rings-outer {
+      position: absolute;
+      inset: -24px;
+      border-radius: 50%;
+      border: 1px solid var(--stage-theme, #38bdf8);
+      opacity: 0.5;
+      animation: cardPrismShimmer 5s linear infinite alternate;
+      pointer-events: none;
+    }
+
+    .omni-stage-info {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .omni-stage-title {
+      font-size: 21px;
+      font-weight: 900;
+      letter-spacing: 0.03em;
+      color: #ffffff;
+      text-shadow: 0 0 20px var(--stage-theme, #38bdf8);
+    }
+
+    .omni-stage-perk {
+      background: rgba(245, 158, 11, 0.16);
+      border: 1px solid rgba(245, 158, 11, 0.5);
+      color: #fde047;
+      padding: 3px 12px;
+      border-radius: 999px;
+      font-size: 11.5px;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+    }
+
+    .omni-stage-desc {
+      font-size: 12px;
+      color: var(--text-muted);
+      max-width: 500px;
+      line-height: 1.4;
+    }
+
+    .omni-stage-metrics {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      width: 100%;
+      margin: 8px 0 2px;
+    }
+
+    .omni-stage-metric-box {
+      background: rgba(10, 14, 26, 0.75);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      padding: 8px 6px;
+      text-align: center;
+      pointer-events: none;
+    }
+
+    .omni-stage-metric-lbl {
+      display: block;
+      font-size: 10px;
+      color: var(--text-muted);
+      margin-bottom: 2px;
+    }
+
+    .omni-stage-metric-val {
+      font-family: var(--font-mono);
+      font-size: 12.5px;
+      font-weight: 800;
+      color: var(--stage-theme, #38bdf8);
+    }
+
+    .omni-stage-action-btn {
+      width: 100%;
+      max-width: 460px;
+      padding: 12px 24px;
+      border-radius: 12px;
+      font-size: 13.5px;
+      font-weight: 900;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      border: 1.5px solid rgba(255, 255, 255, 0.35);
+      transition: background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease, transform 0.2s cubic-bezier(0.2, 0, 0, 1);
+      letter-spacing: 0.03em;
+      margin-top: 4px;
+      position: relative;
+      transform: translateZ(0);
+      will-change: transform, box-shadow;
+    }
+
+    .omni-stage-action-btn * {
+      pointer-events: none;
+    }
+
+    .omni-stage-action-btn.can-switch {
+      background: linear-gradient(135deg, var(--stage-theme, #38bdf8) 0%, #2563eb 100%);
+      color: #ffffff;
+      box-shadow: 0 0 25px var(--stage-theme, rgba(56, 189, 248, 0.5));
+    }
+
+    .omni-stage-action-btn.can-switch:hover {
+      transform: translateY(-2px);
+      filter: brightness(1.15);
+      box-shadow: 0 0 40px var(--stage-theme, rgba(56, 189, 248, 0.85)), inset 0 1px 0 rgba(255, 255, 255, 0.4);
+    }
+
+    .omni-stage-action-btn::after {
+      content: '';
+      position: absolute;
+      inset: -4px;
+      z-index: 1;
+      pointer-events: auto;
+    }
+
+    .omni-stage-action-btn.is-active {
+      background: rgba(16, 185, 129, 0.2);
+      border-color: var(--accent-emerald);
+      color: var(--accent-emerald);
+      cursor: default;
+      box-shadow: 0 0 20px rgba(16, 185, 129, 0.3);
+    }
+
+    .omni-stage-action-btn.is-locked {
+      background: rgba(15, 23, 42, 0.7);
+      border-color: rgba(255, 255, 255, 0.12);
+      color: #64748b;
+      cursor: not-allowed;
+      box-shadow: none;
+    }
+
+    /* Bottom Shelf Cards (Anti-Jitter, Zero Hover Spasms) */
+    .omni-fs-shelf {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 10px;
+      width: 100%;
+      max-width: 960px;
+      box-sizing: border-box;
+    }
+
+    .omni-shelf-card {
+      background: rgba(15, 23, 42, 0.88);
+      border: 1.5px solid rgba(255, 255, 255, 0.12);
+      border-radius: 12px;
+      padding: 10px 8px;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 5px;
+      text-align: center;
+      position: relative;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease, transform 0.2s cubic-bezier(0.2, 0, 0, 1);
+      transform: translateZ(0);
+      will-change: transform, box-shadow;
+      box-sizing: border-box;
+    }
+
+    .omni-shelf-card * {
+      pointer-events: none;
+    }
+
+    .omni-shelf-card:hover {
+      transform: translateY(-2px);
+      border-color: var(--card-theme, #38bdf8);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6), 0 0 20px var(--card-theme, rgba(56, 189, 248, 0.4));
+    }
+
+    .omni-shelf-card::after {
+      content: '';
+      position: absolute;
+      inset: -4px;
+      z-index: 1;
+      pointer-events: auto;
+    }
+
+    .omni-shelf-card.focused {
+      border-color: var(--card-theme, #38bdf8) !important;
+      background: radial-gradient(circle at 50% 20%, rgba(56, 189, 248, 0.18) 0%, rgba(15, 23, 42, 0.95) 100%);
+      box-shadow: 0 0 25px var(--card-theme, rgba(56, 189, 248, 0.5));
+    }
+
+    .omni-shelf-card.active-core {
+      border-color: var(--accent-emerald) !important;
+    }
+
+    .omni-shelf-icon {
+      font-size: 24px;
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.06);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      transition: all 0.2s ease;
+    }
+
+    .omni-shelf-title {
+      font-size: 12.5px;
+      font-weight: 800;
+      color: #ffffff;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      width: 100%;
+    }
+
+    .omni-shelf-status {
+      font-size: 10px;
+      font-family: var(--font-mono);
+      font-weight: 800;
+      border-radius: 999px;
+      padding: 2px 7px;
+    }
+
+    .omni-shelf-status.active {
+      background: rgba(16, 185, 129, 0.2);
+      color: var(--accent-emerald);
+      border: 1px solid var(--accent-emerald);
+    }
+
+    .omni-shelf-status.ready {
+      background: rgba(56, 189, 248, 0.15);
+      color: #38bdf8;
+      border: 1px solid rgba(56, 189, 248, 0.4);
+    }
+
+    .omni-shelf-status.locked {
+      background: rgba(255, 255, 255, 0.05);
+      color: #64748b;
+      border: 1px dashed rgba(255, 255, 255, 0.15);
+    }
+
+    /* Tab Portal in Normal View */
+    .omniverse-tab-portal {
+      position: relative;
+      background: radial-gradient(circle at 50% 20%, rgba(56, 189, 248, 0.18) 0%, rgba(15, 23, 42, 0.95) 85%);
+      border: 1.5px solid rgba(56, 189, 248, 0.45);
+      border-radius: 16px;
+      padding: 26px 22px;
+      text-align: center;
+      box-shadow: 0 14px 35px rgba(0, 0, 0, 0.6), 0 0 28px rgba(56, 189, 248, 0.2);
+      overflow: hidden;
+      margin-bottom: 16px;
+    }
+
+    .omniverse-portal-glow {
+      position: absolute;
+      top: -60px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 240px;
+      height: 140px;
+      background: radial-gradient(circle, rgba(56, 189, 248, 0.45), transparent 70%);
+      pointer-events: none;
+      filter: blur(30px);
+    }
+
+    .omniverse-portal-icon-box {
+      width: 68px;
+      height: 68px;
+      margin: 0 auto 14px;
+      border-radius: 18px;
+      background: radial-gradient(circle, rgba(56, 189, 248, 0.35) 0%, rgba(15, 23, 42, 0.9) 100%);
+      border: 1.5px solid rgba(56, 189, 248, 0.6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 34px;
+      box-shadow: 0 0 24px rgba(56, 189, 248, 0.45);
+      animation: floatOrbit 3.5s ease-in-out infinite;
+    }
+
+    .btn-portal-launch-omni {
+      background: linear-gradient(135deg, #0284c7 0%, #38bdf8 50%, #a855f7 100%);
+      color: #ffffff;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      padding: 12px 26px;
+      border-radius: 12px;
+      font-size: 13.5px;
+      font-weight: 800;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 0 25px rgba(56, 189, 248, 0.45);
+      transition: all 0.2s ease;
+      letter-spacing: 0.02em;
+    }
+
+    .btn-portal-launch-omni:hover {
+      transform: translateY(-2px) scale(1.02);
+      box-shadow: 0 0 35px rgba(56, 189, 248, 0.75);
+    }
+
     @media (max-width: 900px) {
       .pres-fs-header {
         flex-direction: column;
@@ -8911,7 +9443,7 @@
       <!-- Subtitlu & Versiune Sistem -->
       <div class="loading-footer-tip">
         <span class="loading-pulse-dot"></span>
-        <span id="loadingVersionSub">Simulare Multiversală v3.9.1 // Auto-Stabilizare Activă</span>
+        <span id="loadingVersionSub">Simulare Multiversală v3.9.3 // Auto-Stabilizare Activă</span>
       </div>
 
       <!-- Hint discret dacă browserul a reținut temporar autoplay înainte de primul gest -->
@@ -8929,7 +9461,7 @@
         <div class="brand-icon">⚛️</div>
         <div>
           <div class="brand-title">QUANTUM NEXUS</div>
-          <div class="brand-sub" id="versionHeaderSub">v3.9.1</div>
+          <div class="brand-sub" id="versionHeaderSub">v3.9.3</div>
         </div>
         <div class="fps-meter-badge fps-high" id="fpsMeterBadge" onclick="showFpsInfo()" title="Monitorizare Cadre pe Secundă (FPS în timp real) - Click pentru detalii">
           <span class="fps-dot"></span>
@@ -9133,27 +9665,31 @@
         <div class="center-content">
           <!-- TAB 1: Omniverse Parallel Multi-Cores Nexus -->
           <div class="tab-pane active" id="tab-multicores">
-            <div class="omniverse-hero">
-              <div class="omniverse-hero-title">🌌 Omniversul Cuantic & Rețeaua Multi-Nuclee</div>
-              <div class="omniverse-hero-desc">
-                Fiecare Nucleu deblocat prin Rebirth produce energie <strong>simultan în paralel</strong>! Comută între nuclee pentru a construi tehnologii și generatoare independente pe fiecare, obținând o rată cumulativă de <strong>farming excesiv</strong>!
+            <div class="omniverse-tab-portal">
+              <div class="omniverse-portal-glow"></div>
+              <div class="omniverse-portal-icon-box">
+                <span class="omniverse-portal-icon">🪐</span>
               </div>
-              <div class="omniverse-hero-stats">
-                <div class="omniverse-stat-box">
-                  <div class="omniverse-stat-label">Producție Totală Omnivers</div>
-                  <div class="omniverse-stat-val" id="omniTotalCpsVal">0 ⚡/s</div>
-                </div>
-                <div class="omniverse-stat-box">
-                  <div class="omniverse-stat-label">Nuclee Deblocate</div>
-                  <div class="omniverse-stat-val" id="omniCoresUnlockedVal">1 / 5</div>
-                </div>
-                <div class="omniverse-stat-box">
-                  <div class="omniverse-stat-label">Nucleu Selectat Activ</div>
-                  <div class="omniverse-stat-val" id="omniActiveCoreVal" style="font-size:12.5px">⚛️ Cuantic Alfa</div>
-                </div>
+              <div class="constellation-portal-title">Omniversul Cuantic & Rețeaua Multi-Nuclee</div>
+              <div class="constellation-portal-desc">
+                Pășește în Omniversul Cuantic ecran complet pentru a explora toate cele 5 dimensiuni paralele, a comuta instantaneu nucleele cu salt dimensional și a administra generatoarele independente.
+              </div>
+
+              <div style="display:flex; justify-content:center; margin:16px 0 20px;">
+                <button class="btn-portal-launch-omni" onclick="openOmniverseFullscreen()">
+                  <span>🚀 Deschide Omniversul Cuantic (Ecran Complet)</span>
+                  <span class="portal-btn-arrow">➔</span>
+                </button>
               </div>
             </div>
-            <div class="omniverse-cores-grid" id="omniverseCoresGrid"></div>
+
+            <!-- Fallback elements for backwards JS compatibility (Toate nucleele se administrează exclusiv în Omnivers Fullscreen) -->
+            <div style="display:none;" aria-hidden="true">
+              <div class="omniverse-cores-grid" id="omniverseCoresGrid"></div>
+              <div id="omniTotalCpsVal">0 ⚡/s</div>
+              <div id="omniCoresUnlockedVal">1 / 5</div>
+              <div id="omniActiveCoreVal">⚛️ Cuantic Alfa</div>
+            </div>
           </div>
 
           <!-- TAB 2: Prestige / Rebirth (Portal Camera Singularitatii) -->
@@ -9761,6 +10297,102 @@
     </div>
   </div>
 
+  <!-- =========================================================================
+       OMNIVERSE WARP CANVAS & FULLSCREEN MULTIVERSE NEXUS (V3.9.3)
+       ========================================================================= -->
+  <canvas id="omniverseWarpCanvas" class="omniverse-warp-canvas" style="display:none;"></canvas>
+
+  <div id="omniverseFullscreen" class="omniverse-fullscreen" style="display:none;">
+    <!-- Multiverse 3D Sector Starfield & Energy Conduits Canvas -->
+    <canvas id="omniverseBgCanvas" class="omni-fs-bg-canvas"></canvas>
+
+    <!-- Top Galactic Header -->
+    <header class="omni-fs-header">
+      <div class="omni-fs-brand">
+        <div class="omni-fs-crest">
+          <span>🪐</span>
+          <div class="omni-crest-halo"></div>
+        </div>
+        <div class="omni-fs-titles">
+          <div class="omni-fs-main-title">OMNIVERSUL CUANTIC // NEXUSUL MULTIVERSAL</div>
+          <div class="omni-fs-sub-title">5 DIMENSIUNI PARALELE // PRODUCȚIE CUMULATIVĂ SIMULTANĂ</div>
+        </div>
+      </div>
+
+      <div class="omni-fs-stats-row">
+        <div class="omni-fs-badge" title="Rata cumulativă de producție a tuturor nucleelor din rețea">
+          <span>⚡</span>
+          <span>Producție Totală:</span>
+          <strong id="omniFsTotalCps">0 ⚡/s</strong>
+        </div>
+        <div class="omni-fs-badge" title="Numărul de nuclee dimensionale deblocate">
+          <span>🪐</span>
+          <span>Nuclee:</span>
+          <strong id="omniFsUnlockedCount">1 / 5</strong>
+        </div>
+        <div class="omni-fs-badge" title="Nucleul activ în prezent în reactorul principal">
+          <span>💎</span>
+          <span>Activ:</span>
+          <strong id="omniFsActiveName" style="color:#38bdf8;">Cuantic Alfa</strong>
+        </div>
+      </div>
+
+      <div class="omni-fs-right">
+        <button class="omni-btn-close" onclick="closeOmniverseFullscreen()" title="Închide Omniversul și revino la nucleu (Tasta Esc)">
+          <span>✖</span>
+          <span>Înapoi la Nucleu</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Fullscreen Showcase Stage & Carousel Shelf -->
+    <div class="omni-fs-body" id="omniFsBody">
+      <!-- 1. Central Holographic Core Showcase -->
+      <div class="omni-showcase-stage" id="omniShowcaseStage">
+        <div class="omni-stage-hologram" id="omniStageHologram">
+          <div class="omni-stage-rings-outer"></div>
+          <div class="omni-stage-rings"></div>
+          <div class="omni-stage-core-orb" id="omniStageCoreOrb">⚛️</div>
+        </div>
+
+        <div class="omni-stage-info">
+          <div class="omni-stage-title" id="omniStageTitle">Nucleu Cuantic Alfa</div>
+          <div class="omni-stage-perk" id="omniStagePerk">⚡ Producție Echilibrată Cuantică</div>
+          <div class="omni-stage-desc" id="omniStageDesc">Aspectul clasic de fuziune temporală. Baza rețelei cuantice cu producție stabilă.</div>
+          
+          <div class="omni-stage-metrics">
+            <div class="omni-stage-metric-box">
+              <span class="omni-stage-metric-lbl">Producție Pasivă</span>
+              <strong class="omni-stage-metric-val" id="omniStageCps">+0/s</strong>
+            </div>
+            <div class="omni-stage-metric-box">
+              <span class="omni-stage-metric-lbl">Multiplicator Nativ</span>
+              <strong class="omni-stage-metric-val" id="omniStageMult">1.0x</strong>
+            </div>
+            <div class="omni-stage-metric-box">
+              <span class="omni-stage-metric-lbl">Generatoare Construite</span>
+              <strong class="omni-stage-metric-val" id="omniStageGens">0 buc.</strong>
+            </div>
+            <div class="omni-stage-metric-box">
+              <span class="omni-stage-metric-lbl">Tehnologii Cercetate</span>
+              <strong class="omni-stage-metric-val" id="omniStageTech">0 nivele</strong>
+            </div>
+          </div>
+
+          <button id="btnOmniStageAction" class="omni-stage-action-btn can-switch" onclick="triggerOmniStageAction()">
+            <span>⚡</span>
+            <span id="omniStageActionText">ACTIVEAZĂ ACEST NUCLEU (SALT DIMENSIONAL)</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- 2. Bottom Multiverse Dimension Shelf (Selector Cards) -->
+      <div class="omni-fs-shelf" id="omniFsShelf">
+        <!-- Rendered dynamically -->
+      </div>
+    </div>
+  </div>
+
   <div class="modal-backdrop" id="coreSkinsModal" onclick="if(event.target===this) closeCoreSkinsModal()">
     <div class="modal-card wide" style="max-width: 680px; text-align: left;">
       <div class="modal-header-row">
@@ -9873,7 +10505,7 @@
           <button class="btn-header install-btn" id="btnInstallApp" onclick="triggerInstallApp()">📲 Instalează</button>
         </div>
         <div style="font-size: 11px; color: var(--text-dim); margin-top: 8px;">
-          Versiune instalată: <strong id="settingsVersionText">v3.9.1</strong> // Auto-Update activ
+          Versiune instalată: <strong id="settingsVersionText">v3.9.3</strong> // Auto-Update activ
         </div>
       </div>
 
@@ -17743,66 +18375,130 @@
       }
 
       if (state.activeCoreId === coreId) {
-        showToast(`⚡ Nucleul ${core.name} este deja activ!`);
+        showToast(`🟢 Nucleul ${core.name} este deja activ!`);
         return;
       }
 
       isOmniShiftAnimating = true;
 
-      // 1. Play Dimensional Sound
-      playOmniverseDimensionalSound(core);
+      if (isOmniverseFullscreenOpen) {
+        // =========================================================================
+        // CINEMATIC TRANSITION: Exit Fullscreen via Hyperspace Warp -> Jump to Main Stage!
+        // =========================================================================
+        playOmniverseWarpSound('exit');
 
-      // 2. Animate clicked card in Omniverse Tab
-      const cards = document.querySelectorAll('.omniverse-core-card');
-      cards.forEach(card => card.classList.remove('card-switching'));
-      const activeCard = Array.from(cards).find(c => c.querySelector(`button[onclick*="${coreId}"]`));
-      if (activeCard) activeCard.classList.add('card-switching');
-
-      // 3. Trigger core reactor dimensional leap animation
-      const ecoWrap = document.getElementById('coreEcosystemWrap');
-      if (ecoWrap) {
-        ecoWrap.style.setProperty('--leap-color', core.color);
-        ecoWrap.classList.remove('dimensional-leap');
-        void ecoWrap.offsetWidth;
-        ecoWrap.classList.add('dimensional-leap');
-      }
-
-      // 4. Run Canvas Dimensional Warp
-      runOmniverseDimensionalWarp(core, () => {
-        // Midpoint: switch active core data & update skins
-        state.activeCoreId = coreId;
-        state.equippedCoreSkin = coreId;
-
-        renderCoreButtonSkin(coreId);
-        syncCoreVisualEcosystem(true);
-        renderMultiCoreSelector();
-        renderRightZone();
-        renderMultiCoresTab();
-        updateUI(true);
-
-        // Core shockwaves & sparks
-        const coreBtn = document.getElementById('coreBtn');
-        if (coreBtn) {
-          const rect = coreBtn.getBoundingClientRect();
-          const cx = rect.left + rect.width / 2;
-          const cy = rect.top + rect.height / 2;
-          spawnCoreShockwave('em-wave');
-          spawnCoreShockwave('crit');
-          for (let k = 0; k < 8; k++) spawnCoreLightningArc(true);
-          spawnParticles(cx, cy, 35, core.color);
-          spawnParticles(cx, cy, 25, '#ffffff');
+        const stageHolo = document.getElementById('omniStageHologram');
+        if (stageHolo) {
+          stageHolo.style.transform = 'scale(1.25) rotate(15deg)';
+          stageHolo.style.filter = `drop-shadow(0 0 30px ${core.color})`;
         }
 
-        // Show Holographic HUD banner
-        showOmniDimensionBanner(core);
-        showToast(`🌀 Omnivers: Conectat cu succes la ${core.name}!`);
-        saveGame();
-      }, () => {
-        // Completion
-        if (ecoWrap) ecoWrap.classList.remove('dimensional-leap');
-        if (activeCard) activeCard.classList.remove('card-switching');
-        isOmniShiftAnimating = false;
-      });
+        // Run exit warp with target core's dimensional signature
+        runOmniverseFullscreenWarp(620, () => {}, core.color);
+
+        // At midpoint: hide fullscreen, reveal main page, and trigger reactor leap!
+        setTimeout(() => {
+          const fsEl = document.getElementById('omniverseFullscreen');
+          if (fsEl) {
+            fsEl.classList.remove('active');
+            fsEl.style.display = 'none';
+          }
+          isOmniverseFullscreenOpen = false;
+          if (omniBgAnimFrame) {
+            cancelAnimationFrame(omniBgAnimFrame);
+            omniBgAnimFrame = null;
+          }
+
+          const appShell = document.querySelector('.app-shell');
+          if (appShell) {
+            appShell.classList.remove('app-shell-warp-out');
+          }
+
+          // Switch active core data
+          state.activeCoreId = coreId;
+          state.equippedCoreSkin = coreId;
+
+          renderCoreButtonSkin(coreId);
+          syncCoreVisualEcosystem(true);
+          renderRightZone();
+          updateUI(true);
+
+          // Once back on main stage, trigger grand reactor dimensional leap!
+          setTimeout(() => {
+            const ecoWrap = document.getElementById('coreEcosystemWrap');
+            if (ecoWrap) {
+              ecoWrap.style.setProperty('--leap-color', core.color);
+              ecoWrap.classList.remove('dimensional-leap');
+              void ecoWrap.offsetWidth;
+              ecoWrap.classList.add('dimensional-leap');
+            }
+
+            playOmniverseDimensionalSound(core);
+
+            runOmniverseDimensionalWarp(core, () => {
+              const coreBtn = document.getElementById('coreBtn');
+              if (coreBtn) {
+                const rect = coreBtn.getBoundingClientRect();
+                const cx = rect.left + rect.width / 2;
+                const cy = rect.top + rect.height / 2;
+                spawnCoreShockwave('em-wave');
+                spawnCoreShockwave('crit');
+                for (let k = 0; k < 10; k++) spawnCoreLightningArc(true);
+                spawnParticles(cx, cy, 45, core.color);
+                spawnParticles(cx, cy, 30, '#ffffff');
+              }
+
+              showOmniDimensionBanner(core);
+              showToast(`🌀 Salt Dimensional Reușit! Conectat la Nucleul ${core.name}!`);
+              saveGame();
+            }, () => {
+              if (ecoWrap) ecoWrap.classList.remove('dimensional-leap');
+              isOmniShiftAnimating = false;
+            });
+          }, 60);
+        }, 320);
+
+      } else {
+        // Direct switch if already on normal page
+        playOmniverseDimensionalSound(core);
+
+        const ecoWrap = document.getElementById('coreEcosystemWrap');
+        if (ecoWrap) {
+          ecoWrap.style.setProperty('--leap-color', core.color);
+          ecoWrap.classList.remove('dimensional-leap');
+          void ecoWrap.offsetWidth;
+          ecoWrap.classList.add('dimensional-leap');
+        }
+
+        runOmniverseDimensionalWarp(core, () => {
+          state.activeCoreId = coreId;
+          state.equippedCoreSkin = coreId;
+
+          renderCoreButtonSkin(coreId);
+          syncCoreVisualEcosystem(true);
+          renderRightZone();
+          updateUI(true);
+
+          const coreBtn = document.getElementById('coreBtn');
+          if (coreBtn) {
+            const rect = coreBtn.getBoundingClientRect();
+            const cx = rect.left + rect.width / 2;
+            const cy = rect.top + rect.height / 2;
+            spawnCoreShockwave('em-wave');
+            spawnCoreShockwave('crit');
+            for (let k = 0; k < 10; k++) spawnCoreLightningArc(true);
+            spawnParticles(cx, cy, 45, core.color);
+            spawnParticles(cx, cy, 30, '#ffffff');
+          }
+
+          showOmniDimensionBanner(core);
+          showToast(`🌀 Conectat cu succes la Nucleul ${core.name}!`);
+          saveGame();
+        }, () => {
+          if (ecoWrap) ecoWrap.classList.remove('dimensional-leap');
+          isOmniShiftAnimating = false;
+        });
+      }
     }
 
     function renderMultiCoreSelector() {
@@ -17885,6 +18581,530 @@
       }
       const badgeEl = document.getElementById('coresUnlockedBadge');
       if (badgeEl) badgeEl.innerText = `${unlockedCount}/${CORES_DATA.length}`;
+    }
+
+    // =========================================================================
+    // V3.9.3: OMNIVERSUL CUANTIC (FULLSCREEN MULTIVERSE & DIMENSIONAL WARP)
+    // =========================================================================
+    let isOmniverseFullscreenOpen = false;
+    let omniBgAnimFrame = null;
+    let omniWarpAnimFrameId = null;
+    let omniFocusedCoreId = 'quantum';
+    let omniBgParticles = [];
+    let omniFsEventsBound = false;
+
+    function playOmniverseWarpSound(direction = 'enter') {
+      if (!state.soundEnabled) return;
+      try {
+        if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        if (audioCtx.state === 'suspended') audioCtx.resume();
+        const now = audioCtx.currentTime;
+
+        if (direction === 'enter') {
+          // Sub-bass dimensional swell (sine 75Hz -> 180Hz)
+          const subOsc = audioCtx.createOscillator();
+          const subGain = audioCtx.createGain();
+          subOsc.type = 'sine';
+          subOsc.frequency.setValueAtTime(75, now);
+          subOsc.frequency.exponentialRampToValueAtTime(180, now + 0.45);
+          subGain.gain.setValueAtTime(0.001, now);
+          subGain.gain.linearRampToValueAtTime(0.24, now + 0.15);
+          subGain.gain.exponentialRampToValueAtTime(0.001, now + 0.65);
+          subOsc.connect(subGain);
+          subGain.connect(audioCtx.destination);
+          subOsc.start(now);
+          subOsc.stop(now + 0.65);
+
+          // Multiverse Chords (C4, E4, G4, B4, D5)
+          const freqs = [261.63, 329.63, 392.00, 493.88, 587.33];
+          freqs.forEach((f, idx) => {
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            const st = now + 0.08 + idx * 0.04;
+            osc.type = 'triangle';
+            osc.frequency.setValueAtTime(f, st);
+            osc.frequency.exponentialRampToValueAtTime(f * 1.02, st + 0.4);
+            gain.gain.setValueAtTime(0.001, st);
+            gain.gain.linearRampToValueAtTime(0.08, st + 0.08);
+            gain.gain.exponentialRampToValueAtTime(0.0001, st + 0.55);
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.start(st);
+            osc.stop(st + 0.55);
+          });
+        } else {
+          // Exit warp
+          const subOsc = audioCtx.createOscillator();
+          const subGain = audioCtx.createGain();
+          subOsc.type = 'sine';
+          subOsc.frequency.setValueAtTime(160, now);
+          subOsc.frequency.exponentialRampToValueAtTime(55, now + 0.35);
+          subGain.gain.setValueAtTime(0.16, now);
+          subGain.gain.exponentialRampToValueAtTime(0.001, now + 0.38);
+          subOsc.connect(subGain);
+          subGain.connect(audioCtx.destination);
+          subOsc.start(now);
+          subOsc.stop(now + 0.38);
+        }
+      } catch (e) {}
+    }
+
+    function runOmniverseFullscreenWarp(duration = 700, onComplete, themeColor = null) {
+      const canvas = document.getElementById('omniverseWarpCanvas');
+      if (!canvas) {
+        if (onComplete) onComplete();
+        return;
+      }
+      const dpr = window.devicePixelRatio || 1;
+      const w = window.innerWidth;
+      const h = window.innerHeight;
+      canvas.width = Math.floor(w * dpr);
+      canvas.height = Math.floor(h * dpr);
+      const ctx = canvas.getContext('2d');
+
+      canvas.style.display = 'block';
+      canvas.style.opacity = '1';
+
+      const particleCount = 380;
+      const particles = [];
+      const colors = themeColor
+        ? [themeColor, '#ffffff', themeColor, '#ffffff', '#e0f2fe', '#f8fafc']
+        : ['#38bdf8', '#f59e0b', '#06b6d4', '#e11d48', '#ffffff', '#a855f7'];
+      for (let i = 0; i < particleCount; i++) {
+        particles.push({
+          x: (Math.random() - 0.5) * w * 2.2,
+          y: (Math.random() - 0.5) * h * 2.2,
+          z: Math.random() * 1500 + 100,
+          pz: 1600,
+          color: colors[i % colors.length],
+          size: Math.random() * 2.2 + 0.8
+        });
+      }
+
+      const startTime = performance.now();
+
+      function stepWarp(now) {
+        const elapsed = now - startTime;
+        const progress = Math.min(1, elapsed / duration);
+
+        ctx.save();
+        ctx.scale(dpr, dpr);
+        ctx.fillStyle = 'rgba(2, 2, 10, 0.28)';
+        ctx.fillRect(0, 0, w, h);
+
+        const cx = w / 2;
+        const cy = h / 2;
+        const speed = 25 + progress * 55;
+
+        particles.forEach(p => {
+          p.pz = p.z;
+          p.z -= speed;
+          if (p.z <= 0) {
+            p.z = 1500;
+            p.pz = 1500;
+            p.x = (Math.random() - 0.5) * w * 2.2;
+            p.y = (Math.random() - 0.5) * h * 2.2;
+          }
+
+          const k = 400 / p.z;
+          const px = p.x * k + cx;
+          const py = p.y * k + cy;
+
+          const pk = 400 / p.pz;
+          const ppx = p.x * pk + cx;
+          const ppy = p.y * pk + cy;
+
+          ctx.beginPath();
+          ctx.moveTo(ppx, ppy);
+          ctx.lineTo(px, py);
+          ctx.strokeStyle = p.color;
+          ctx.lineWidth = Math.min(4, p.size * k * 0.8);
+          ctx.lineCap = 'round';
+          ctx.stroke();
+        });
+
+        // Peak Flash
+        if (progress > 0.35 && progress < 0.7) {
+          const flashAlpha = Math.sin(((progress - 0.35) / 0.35) * Math.PI) * 0.7;
+          ctx.fillStyle = themeColor || 'rgba(56, 189, 248, 0.4)';
+          ctx.globalAlpha = flashAlpha * 0.45;
+          ctx.fillRect(0, 0, w, h);
+          ctx.globalAlpha = 1.0;
+        }
+
+        ctx.restore();
+
+        if (progress < 1) {
+          omniWarpAnimFrameId = requestAnimationFrame(stepWarp);
+        } else {
+          canvas.style.transition = 'opacity 0.25s ease';
+          canvas.style.opacity = '0';
+          setTimeout(() => {
+            canvas.style.display = 'none';
+            canvas.style.transition = '';
+            if (onComplete) onComplete();
+          }, 250);
+        }
+      }
+
+      omniWarpAnimFrameId = requestAnimationFrame(stepWarp);
+    }
+
+    function openOmniverseFullscreen() {
+      if (isOmniverseFullscreenOpen) return;
+      isOmniverseFullscreenOpen = true;
+
+      playOmniverseWarpSound('enter');
+
+      const appShell = document.querySelector('.app-shell');
+      if (appShell) appShell.classList.add('app-shell-warp-out');
+
+      runOmniverseFullscreenWarp(700, () => {});
+
+      setTimeout(() => {
+        const fsEl = document.getElementById('omniverseFullscreen');
+        if (fsEl) {
+          fsEl.style.display = 'flex';
+          void fsEl.offsetWidth;
+          fsEl.classList.add('active');
+        }
+        omniFocusedCoreId = state.activeCoreId || 'quantum';
+        initOmniverseFullscreen();
+        updateOmniverseFullscreen();
+      }, 420);
+    }
+
+    function closeOmniverseFullscreen() {
+      if (!isOmniverseFullscreenOpen) return;
+      isOmniverseFullscreenOpen = false;
+
+      playOmniverseWarpSound('exit');
+
+      const fsEl = document.getElementById('omniverseFullscreen');
+      if (fsEl) {
+        fsEl.classList.remove('active');
+      }
+
+      const appShell = document.querySelector('.app-shell');
+      if (appShell) {
+        appShell.classList.remove('app-shell-warp-out');
+      }
+
+      setTimeout(() => {
+        if (fsEl && !isOmniverseFullscreenOpen) {
+          fsEl.style.display = 'none';
+        }
+        if (omniBgAnimFrame) {
+          cancelAnimationFrame(omniBgAnimFrame);
+          omniBgAnimFrame = null;
+        }
+      }, 380);
+    }
+
+    function initOmniverseFullscreen() {
+      const bgCanvas = document.getElementById('omniverseBgCanvas');
+      if (!bgCanvas) return;
+
+      const dpr = window.devicePixelRatio || 1;
+      const w = window.innerWidth;
+      const h = window.innerHeight;
+      bgCanvas.width = Math.floor(w * dpr);
+      bgCanvas.height = Math.floor(h * dpr);
+
+      if (omniBgParticles.length === 0) {
+        const pCount = 180;
+        const colors = ['#38bdf8', '#f59e0b', '#06b6d4', '#e11d48', '#ffffff', '#a855f7'];
+        for (let i = 0; i < pCount; i++) {
+          omniBgParticles.push({
+            x: Math.random() * w,
+            y: Math.random() * h,
+            r: Math.random() * 1.8 + 0.4,
+            baseAlpha: Math.random() * 0.6 + 0.2,
+            twinkleSpeed: Math.random() * 0.003 + 0.001,
+            phase: Math.random() * Math.PI * 2,
+            color: colors[i % colors.length]
+          });
+        }
+      }
+
+      if (!omniFsEventsBound) {
+        omniFsEventsBound = true;
+        window.addEventListener('resize', () => {
+          if (isOmniverseFullscreenOpen && bgCanvas) {
+            const curDpr = window.devicePixelRatio || 1;
+            bgCanvas.width = Math.floor(window.innerWidth * curDpr);
+            bgCanvas.height = Math.floor(window.innerHeight * curDpr);
+          }
+        });
+      }
+
+      if (!omniBgAnimFrame) {
+        omniBgAnimFrame = requestAnimationFrame(runOmniverseBgLoop);
+      }
+    }
+
+    function runOmniverseBgLoop(timestamp) {
+      if (!isOmniverseFullscreenOpen) {
+        omniBgAnimFrame = null;
+        return;
+      }
+
+      const canvas = document.getElementById('omniverseBgCanvas');
+      if (canvas) {
+        const ctx = canvas.getContext('2d');
+        const w = canvas.width;
+        const h = canvas.height;
+        const dpr = window.devicePixelRatio || 1;
+
+        ctx.fillStyle = '#02020a';
+        ctx.fillRect(0, 0, w, h);
+
+        const cx = w / 2;
+        const cy = h / 2;
+
+        // 1. Ambient Cosmic Stars
+        omniBgParticles.forEach(s => {
+          const alpha = s.baseAlpha + Math.sin(timestamp * s.twinkleSpeed + s.phase) * 0.25;
+          ctx.beginPath();
+          ctx.arc(s.x * dpr, s.y * dpr, s.r * dpr, 0, Math.PI * 2);
+          ctx.fillStyle = s.color;
+          ctx.globalAlpha = Math.max(0.1, alpha);
+          ctx.fill();
+        });
+        ctx.globalAlpha = 1.0;
+
+        // 2. 5 Multiverse Reality Sectors in 3D Perspective Orbit
+        const orbitRadius = Math.min(w, h) * 0.38;
+        const activeCoreIndex = CORES_DATA.findIndex(c => c.id === (state.activeCoreId || 'quantum'));
+        const activeNodeAngle = (activeCoreIndex * (Math.PI * 2 / 5)) + timestamp * 0.0003;
+        const activeNodeX = cx + Math.cos(activeNodeAngle) * orbitRadius;
+        const activeNodeY = cy + Math.sin(activeNodeAngle) * (orbitRadius * 0.65);
+
+        CORES_DATA.forEach((core, idx) => {
+          const angle = (idx * (Math.PI * 2 / 5)) + timestamp * 0.0003;
+          const nodeX = cx + Math.cos(angle) * orbitRadius;
+          const nodeY = cy + Math.sin(angle) * (orbitRadius * 0.65);
+
+          // Energy Conduit Beams from active node to other nodes
+          if (idx !== activeCoreIndex) {
+            ctx.beginPath();
+            ctx.moveTo(activeNodeX, activeNodeY);
+            const midX = (activeNodeX + nodeX) / 2;
+            const midY = (activeNodeY + nodeY) / 2 + Math.sin(timestamp * 0.002 + idx) * 20 * dpr;
+            ctx.quadraticCurveTo(midX, midY, nodeX, nodeY);
+            ctx.strokeStyle = core.color;
+            ctx.lineWidth = (isCoreUnlocked(core.id) ? 2.5 : 1) * dpr;
+            ctx.globalAlpha = isCoreUnlocked(core.id) ? 0.35 + Math.sin(timestamp * 0.003 + idx) * 0.15 : 0.08;
+            ctx.stroke();
+
+            const pulseT = ((timestamp * 0.001 + idx * 0.25) % 1);
+            const px = (1 - pulseT) * (1 - pulseT) * activeNodeX + 2 * (1 - pulseT) * pulseT * midX + pulseT * pulseT * nodeX;
+            const py = (1 - pulseT) * (1 - pulseT) * activeNodeY + 2 * (1 - pulseT) * pulseT * midY + pulseT * pulseT * nodeY;
+            ctx.beginPath();
+            ctx.arc(px, py, 4 * dpr, 0, Math.PI * 2);
+            ctx.fillStyle = '#ffffff';
+            ctx.globalAlpha = isCoreUnlocked(core.id) ? 0.8 : 0.2;
+            ctx.fill();
+          }
+
+          // Node Aura
+          const isAct = state.activeCoreId === core.id;
+          const nodeR = (isAct ? 32 : 22) * dpr;
+          const grad = ctx.createRadialGradient(nodeX, nodeY, 0, nodeX, nodeY, nodeR * 2);
+          grad.addColorStop(0, core.color);
+          grad.addColorStop(1, 'rgba(0,0,0,0)');
+          ctx.fillStyle = grad;
+          ctx.globalAlpha = isCoreUnlocked(core.id) ? (isAct ? 0.6 : 0.3) : 0.1;
+          ctx.beginPath();
+          ctx.arc(nodeX, nodeY, nodeR * 2, 0, Math.PI * 2);
+          ctx.fill();
+
+          // Node Circle
+          ctx.beginPath();
+          ctx.arc(nodeX, nodeY, nodeR, 0, Math.PI * 2);
+          ctx.fillStyle = isAct ? core.color : 'rgba(15, 23, 42, 0.9)';
+          ctx.globalAlpha = isCoreUnlocked(core.id) ? 1.0 : 0.4;
+          ctx.fill();
+          ctx.strokeStyle = core.color;
+          ctx.lineWidth = (isAct ? 3 : 1.5) * dpr;
+          ctx.stroke();
+        });
+
+        ctx.globalAlpha = 1.0;
+      }
+
+      omniBgAnimFrame = requestAnimationFrame(runOmniverseBgLoop);
+    }
+
+    function focusOmniverseCore(coreId) {
+      const core = CORES_DATA.find(c => c.id === coreId);
+      if (!core) return;
+      omniFocusedCoreId = coreId;
+
+      const stage = document.getElementById('omniShowcaseStage');
+      if (stage) {
+        stage.style.setProperty('--stage-theme', core.color);
+      }
+
+      const orb = document.getElementById('omniStageCoreOrb');
+      if (orb) {
+        orb.innerText = core.icon;
+        orb.style.background = `radial-gradient(circle at 35% 35%, #ffffff 0%, ${core.color} 50%, #050716 100%)`;
+      }
+
+      const title = document.getElementById('omniStageTitle');
+      if (title) title.innerText = core.name;
+
+      const perk = document.getElementById('omniStagePerk');
+      if (perk) perk.innerText = core.perk;
+
+      const desc = document.getElementById('omniStageDesc');
+      if (desc) desc.innerText = core.desc;
+
+      const coreCps = typeof getCoreCPS === 'function' ? getCoreCPS(core.id) : 0;
+      const coreData = (state.cores && state.cores[core.id]) || { generators: {}, clickUpgrades: {} };
+      const totalGens = Object.values(coreData.generators || {}).reduce((a, b) => a + (Number(b) || 0), 0);
+      const totalTech = Object.values(coreData.clickUpgrades || {}).reduce((a, b) => a + (Number(b) || 0), 0);
+
+      const cpsEl = document.getElementById('omniStageCps');
+      if (cpsEl) cpsEl.innerText = `+${formatNumber(coreCps)}/s`;
+
+      const multEl = document.getElementById('omniStageMult');
+      if (multEl) multEl.innerText = `${core.cpsMult}x Producție`;
+
+      const gensEl = document.getElementById('omniStageGens');
+      if (gensEl) gensEl.innerText = `${totalGens} buc.`;
+
+      const techEl = document.getElementById('omniStageTech');
+      if (techEl) techEl.innerText = `${totalTech} nivele`;
+
+      const actionBtn = document.getElementById('btnOmniStageAction');
+      const actionText = document.getElementById('omniStageActionText');
+      const isUnlocked = isCoreUnlocked(core.id);
+      const isActive = (state.activeCoreId || 'quantum') === core.id;
+
+      if (actionBtn && actionText) {
+        actionBtn.className = 'omni-stage-action-btn';
+        if (isActive) {
+          actionBtn.classList.add('is-active');
+          actionBtn.disabled = true;
+          actionText.innerText = '🟢 NUCLEU ACTIV ÎN PREZENT';
+        } else if (isUnlocked) {
+          actionBtn.classList.add('can-switch');
+          actionBtn.disabled = false;
+          actionText.innerText = `⚡ ACTIVEAZĂ ${core.name.toUpperCase()} (SALT DIMENSIONAL) ➔`;
+        } else {
+          actionBtn.classList.add('is-locked');
+          actionBtn.disabled = true;
+          actionText.innerText = `🔒 DEBLOCARE LA REBIRTH #${core.reqRebirth}`;
+        }
+      }
+
+      // Sync Shelf highlight
+      const shelfCards = document.querySelectorAll('.omni-shelf-card');
+      shelfCards.forEach(c => {
+        const cId = c.getAttribute('data-core-id');
+        c.classList.toggle('focused', cId === coreId);
+        c.classList.toggle('active-core', cId === state.activeCoreId);
+      });
+    }
+
+    function triggerOmniStageAction() {
+      if (!omniFocusedCoreId) return;
+      switchActiveCore(omniFocusedCoreId);
+    }
+
+    function renderOmniverseShelf() {
+      const shelf = document.getElementById('omniFsShelf');
+      if (!shelf) return;
+      if (shelf.children.length === CORES_DATA.length) return;
+      shelf.innerHTML = '';
+      CORES_DATA.forEach(core => {
+        const card = document.createElement('div');
+        card.className = 'omni-shelf-card';
+        card.setAttribute('data-core-id', core.id);
+        card.style.setProperty('--card-theme', core.color);
+        card.onclick = () => focusOmniverseCore(core.id);
+        card.ondblclick = () => {
+          if (isCoreUnlocked(core.id) && state.activeCoreId !== core.id) {
+            switchActiveCore(core.id);
+          }
+        };
+
+        card.innerHTML = `
+          <div class="omni-shelf-icon" style="color:${core.color}; border-color:${core.color}55;">${core.icon}</div>
+          <div class="omni-shelf-title">${core.shortName}</div>
+          <span class="omni-shelf-status" id="omniShelfStatus_${core.id}"></span>
+        `;
+        shelf.appendChild(card);
+      });
+    }
+
+    function updateOmniverseFullscreen() {
+      renderOmniverseShelf();
+      const activeId = state.activeCoreId || 'quantum';
+      const curCore = CORES_DATA.find(c => c.id === activeId) || CORES_DATA[0];
+      const totalCps = getCPS();
+      let unlockedCount = 0;
+      CORES_DATA.forEach(c => { if (isCoreUnlocked(c.id)) unlockedCount++; });
+
+      const totalCpsEl = document.getElementById('omniFsTotalCps');
+      if (totalCpsEl) totalCpsEl.innerText = `${formatNumber(totalCps)} ⚡/s`;
+
+      const unlCountEl = document.getElementById('omniFsUnlockedCount');
+      if (unlCountEl) unlCountEl.innerText = `${unlockedCount} / ${CORES_DATA.length}`;
+
+      const activeNameEl = document.getElementById('omniFsActiveName');
+      if (activeNameEl) {
+        activeNameEl.innerText = `${curCore.icon} ${curCore.shortName}`;
+        activeNameEl.style.color = curCore.color;
+      }
+
+      // Update shelf cards state without recreating DOM
+      const shelfCards = document.querySelectorAll('.omni-shelf-card');
+      shelfCards.forEach(c => {
+        const cId = c.getAttribute('data-core-id');
+        const core = CORES_DATA.find(item => item.id === cId);
+        if (!core) return;
+        const isAct = activeId === cId;
+        const isFoc = (omniFocusedCoreId || activeId) === cId;
+        const isUnl = isCoreUnlocked(cId);
+
+        c.classList.toggle('focused', isFoc);
+        c.classList.toggle('active-core', isAct);
+
+        const stBadge = document.getElementById(`omniShelfStatus_${cId}`);
+        if (stBadge) {
+          const statusClass = isAct ? 'active' : (isUnl ? 'ready' : 'locked');
+          const statusText = isAct ? 'ACTIV' : (isUnl ? 'DISPONIBIL' : `Rebirth #${core.reqRebirth}`);
+          if (stBadge.innerText !== statusText) {
+            stBadge.className = `omni-shelf-status ${statusClass}`;
+            stBadge.innerText = statusText;
+          }
+        }
+      });
+
+      // Update focused core metrics
+      const focId = omniFocusedCoreId || activeId;
+      const focCore = CORES_DATA.find(c => c.id === focId);
+      if (focCore) {
+        const coreCps = typeof getCoreCPS === 'function' ? getCoreCPS(focCore.id) : 0;
+        const coreData = (state.cores && state.cores[focCore.id]) || { generators: {}, clickUpgrades: {} };
+        const totalGens = Object.values(coreData.generators || {}).reduce((a, b) => a + (Number(b) || 0), 0);
+        const totalTech = Object.values(coreData.clickUpgrades || {}).reduce((a, b) => a + (Number(b) || 0), 0);
+
+        const cpsEl = document.getElementById('omniStageCps');
+        const newCpsText = `+${formatNumber(coreCps)}/s`;
+        if (cpsEl && cpsEl.innerText !== newCpsText) cpsEl.innerText = newCpsText;
+
+        const gensEl = document.getElementById('omniStageGens');
+        const newGensText = `${totalGens} buc.`;
+        if (gensEl && gensEl.innerText !== newGensText) gensEl.innerText = newGensText;
+
+        const techEl = document.getElementById('omniStageTech');
+        const newTechText = `${totalTech} nivele`;
+        if (techEl && techEl.innerText !== newTechText) techEl.innerText = newTechText;
+      }
     }
 
     // =========================================================================
@@ -19240,6 +20460,10 @@
       if (isPrestigeFullscreenOpen) {
         updatePrestigeFullscreen();
       }
+
+      if (isOmniverseFullscreenOpen) {
+        updateOmniverseFullscreen();
+      }
     }
 
     // =========================================================================
@@ -20433,6 +21657,10 @@
       if (isPrestigeFullscreenOpen) {
         updatePrestigeFullscreen();
       }
+
+      if (isOmniverseFullscreenOpen) {
+        updateOmniverseFullscreen();
+      }
     }
 
     function renderStats() {
@@ -20973,6 +22201,10 @@
         updatePrestigeFullscreen();
       }
 
+      if (isOmniverseFullscreenOpen) {
+        updateOmniverseFullscreen();
+      }
+
       // Actualizare Cooldown-uri Abilități Active
       const now = Date.now();
       for (let i = 1; i <= 3; i++) {
@@ -21275,8 +22507,8 @@
      *       + AUTO-SYNC SILENȚIOS OFFLINE -> ONLINE + AUTO-UPDATE LIVE
      *       + NAVIGARE MOBIL & INSTALARE PWA (MACBOOK / PC / ANDROID / iOS)
      ********************************************************************/
-    const APP_VERSION = '3.9.1';
-    const APP_BUILD = 391;
+    const APP_VERSION = '3.9.3';
+    const APP_BUILD = 393;
     // URL-ul oficial de pe GitHub Pages pentru verificarea automată de Update (și în aplicațiile .exe / .dmg):
     const REMOTE_UPDATE_BASE_URL = 'https://mariusinfo.github.io/quantum-nexus';
 
@@ -22883,6 +24115,10 @@
         const achModal = document.getElementById('achInspectModal');
         if (achModal && achModal.style.display !== 'none') {
           closeAchInspectModal();
+          return;
+        }
+        if (isOmniverseFullscreenOpen) {
+          closeOmniverseFullscreen();
           return;
         }
         if (isPrestigeFullscreenOpen) {
