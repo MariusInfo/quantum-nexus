@@ -5588,16 +5588,16 @@
         }
       }
       .core-stage {
-        min-height: 195px;
-        padding: 2px 0;
-        flex-shrink: 0;
+        min-height: 220px;
+        padding: 4px 0;
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
       }
       .core-ecosystem-wrap {
-        transform: scale(0.76);
-        margin: -24px 0;
-      }
-      .core-modules-strip {
-        margin-top: 2px;
+        transform: scale(0.88);
+        margin: 0;
       }
       .combo-box {
         padding: 8px 12px;
@@ -6557,7 +6557,7 @@
       <!-- Subtitlu & Versiune Sistem -->
       <div class="loading-footer-tip">
         <span class="loading-pulse-dot"></span>
-        <span id="loadingVersionSub">Simulare Multiversală v3.4.0 // Auto-Stabilizare Activă</span>
+        <span id="loadingVersionSub">Simulare Multiversală v3.4.1 // Auto-Stabilizare Activă</span>
       </div>
 
       <!-- Hint discret dacă browserul a reținut temporar autoplay înainte de primul gest -->
@@ -6575,7 +6575,7 @@
         <div class="brand-icon">⚛️</div>
         <div>
           <div class="brand-title">QUANTUM NEXUS</div>
-          <div class="brand-sub" id="versionHeaderSub">v3.4.0</div>
+          <div class="brand-sub" id="versionHeaderSub">v3.4.1</div>
         </div>
       </div>
 
@@ -6663,18 +6663,6 @@
           </div>
         </div>
 
-        <!-- Omniverse Parallel Multi-Core Quick Selector -->
-        <div class="multi-core-switcher-bar" id="multiCoreSwitcherBar">
-          <!-- Populat dinamic de renderMultiCoreSelector() -->
-        </div>
-
-        <div class="active-core-info-strip" id="activeCoreInfoStrip" onclick="switchTab('multicores'); switchMobileZone('center');" title="Apasă pentru detalii complete în Omnivers">
-          <div class="active-core-title-row">
-            <span class="active-core-name" id="activeCoreNameText">⚛️ Nucleu Cuantic Alfa</span>
-            <span class="active-core-cps-badge" id="activeCoreCpsBadge">Producție: +0/s</span>
-          </div>
-          <div class="active-core-perk" id="activeCorePerkText">⚡ Producție Echilibrată Cuantică</div>
-        </div>
 
         <!-- Giant Clickable Core & Orbital Visual Ecosystem -->
         <div class="core-stage" id="coreStage">
@@ -6750,8 +6738,6 @@
             </div>
           </div>
 
-          <!-- Active Visual Modules Strip -->
-          <div class="core-modules-strip" id="coreModulesStrip"></div>
         </div>
 
         <!-- Overclock Combo & Active Skills -->
@@ -7210,7 +7196,7 @@
           <button class="btn-header install-btn" id="btnInstallApp" onclick="triggerInstallApp()">📲 Instalează</button>
         </div>
         <div style="font-size: 11px; color: var(--text-dim); margin-top: 8px;">
-          Versiune instalată: <strong id="settingsVersionText">v3.4.0</strong> // Auto-Update activ
+          Versiune instalată: <strong id="settingsVersionText">v3.4.1</strong> // Auto-Update activ
         </div>
       </div>
 
@@ -10318,14 +10304,9 @@
       return isRebirthReady() ? getCurrentRebirthDarkMatterReward() : 0;
     }
 
-    // Factor de Saturație: când atingi 100% din energia necesară pentru Rebirth-ul curent cu fondurile actuale,
-    // nucleul intră în saturație dacă nu dai Rebirth (previne farmatul infinit într-un singur run!)
+    // Producție constantă și stabilă: fără degradare artificială a energiei
     function getSaturationFactor() {
-      const req = getRebirthEnergyRequirement();
-      const cur = state.energy || 0;
-      if (cur <= req) return 1.0;
-      const overRatio = cur / req;
-      return Math.max(0.08, 1 / Math.pow(overRatio, 0.9));
+      return 1.0;
     }
 
     function getGlobalSharedMultiplier() {
@@ -11701,22 +11682,6 @@
       }
 
       // 6. Afișare etichete vizuale sub nucleu pentru modulele active (cu Tiers stilizate)
-      const strip = document.getElementById('coreModulesStrip');
-      if (strip) {
-        const chips = [];
-        if (g0 > 0) chips.push(`<span class="core-module-chip tier-${t0}">🖱️ T-${AUTOMATION_TIERS_META[t0].roman}: ${g0} Cursoare</span>`);
-        if (g1 > 0) chips.push(`<span class="core-module-chip tier-${t1}">🤖 T-${AUTOMATION_TIERS_META[t1].roman}: +${g1 * 4}% Crit Dmg</span>`);
-        if (g2 > 0) chips.push(`<span class="core-module-chip tier-${t2}">💻 T-${AUTOMATION_TIERS_META[t2].roman}: +${g2 * 3}% AI</span>`);
-        if (g3 > 0) chips.push(`<span class="core-module-chip tier-${t3}">🔋 T-${AUTOMATION_TIERS_META[t3].roman}: Tahionic Burst</span>`);
-        if (g4 > 0) chips.push(`<span class="core-module-chip tier-${t4}">🛰️ T-${AUTOMATION_TIERS_META[t4].roman}: +${g4 * 5}% Solar</span>`);
-        if (g6 > 0) chips.push(`<span class="core-module-chip tier-${t6}">🕳️ T-${AUTOMATION_TIERS_META[t6].roman}: Gaură Neagră</span>`);
-        if (g7 > 0) chips.push(`<span class="core-module-chip tier-${t7}">☀️ T-${AUTOMATION_TIERS_META[t7].roman}: Dyson</span>`);
-        if (g9 > 0) chips.push(`<span class="core-module-chip tier-${t9}">🌌 T-${AUTOMATION_TIERS_META[t9].roman}: Big Bang</span>`);
-        if (chips.length === 0) {
-          chips.push(`<span class="core-module-chip" style="opacity:0.75">💡 Cumpără Automatizări pentru a debloca Animații Orbitale Evolutive!</span>`);
-        }
-        strip.innerHTML = chips.join('');
-      }
     }
 
     // Puls pasiv vizual: cursoarele și dronele lovesc vizibil nucleul și generează scântei de energie
@@ -13445,59 +13410,7 @@
     }
 
     function renderMultiCoreSelector() {
-      const container = document.getElementById('multiCoreSwitcherBar');
-      if (!container) return;
-      container.innerHTML = '';
-
-      const activeId = state.activeCoreId || 'quantum';
-
-      CORES_DATA.forEach(core => {
-        const unlocked = isCoreUnlocked(core.id);
-        const isActive = activeId === core.id;
-        const coreCps = getCoreCPS(core.id);
-
-        const btn = document.createElement('button');
-        btn.className = `core-pill-btn ${isActive ? 'active' : ''} ${unlocked ? 'unlocked' : 'locked'}`;
-        btn.style.setProperty('--core-theme', core.color);
-        btn.title = unlocked 
-          ? `${core.name} (${core.perk})\nProducție proprie: +${formatNumber(coreCps)}/s` 
-          : `Blocat. Necesită Rebirth #${core.reqRebirth}`;
-
-        btn.onclick = () => {
-          if (unlocked) {
-            switchActiveCore(core.id);
-          } else {
-            showToast(`🔒 ${core.name} se deblochează la Rebirth #${core.reqRebirth}!`);
-            playTone(220, 'sawtooth', 0.15, 0.08);
-          }
-        };
-
-        btn.innerHTML = `
-          <span class="pill-icon">${core.icon}</span>
-          <span class="pill-name">${core.shortName}</span>
-          ${!unlocked ? `<span class="pill-lock">🔒 R#${core.reqRebirth}</span>` : (coreCps > 0 ? `<span class="pill-cps">+${formatNumber(coreCps)}/s</span>` : `<span class="pill-ready">Gata</span>`)}
-        `;
-        container.appendChild(btn);
-      });
-
-      const activeCore = CORES_DATA.find(c => c.id === activeId) || CORES_DATA[0];
-      const activeNameEl = document.getElementById('activeCoreNameText');
-      const activeCpsEl = document.getElementById('activeCoreCpsBadge');
-      const activePerkEl = document.getElementById('activeCorePerkText');
-
-      if (activeNameEl) {
-        activeNameEl.innerText = `${activeCore.icon} ${activeCore.name}`;
-        activeNameEl.style.color = activeCore.color;
-      }
-      if (activeCpsEl) {
-        const activeCps = getCoreCPS(activeCore.id);
-        activeCpsEl.innerText = `Producție: +${formatNumber(activeCps)}/s`;
-        activeCpsEl.style.color = activeCore.color;
-        activeCpsEl.style.borderColor = `${activeCore.color}55`;
-      }
-      if (activePerkEl) {
-        activePerkEl.innerText = activeCore.perk;
-      }
+      // Comutarea între nuclee se face direct din tab-ul Omnivers conform cerinței
     }
 
     function renderMultiCoresTab() {
@@ -14835,7 +14748,7 @@
      *       + AUTO-SYNC SILENȚIOS OFFLINE -> ONLINE + AUTO-UPDATE LIVE
      *       + NAVIGARE MOBIL & INSTALARE PWA (MACBOOK / PC / ANDROID / iOS)
      ********************************************************************/
-    const APP_VERSION = '3.4.0';
+    const APP_VERSION = '3.4.1';
     const APP_BUILD = 332;
     // URL-ul oficial de pe GitHub Pages pentru verificarea automată de Update (și în aplicațiile .exe / .dmg):
     const REMOTE_UPDATE_BASE_URL = 'https://mariusinfo.github.io/quantum-nexus';

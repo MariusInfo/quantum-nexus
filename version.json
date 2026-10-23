@@ -1,7 +1,7 @@
 {
-  "version": "3.4.0",
-  "build": 340,
+  "version": "3.4.1",
+  "build": 341,
   "releaseDate": "2026-10-23",
-  "changelog": "v3.4.0: Sistem Omnivers Multi-Nuclee & Magazin Unificat - Unificare coloana din dreapta cu switch intre Tehnologii si Automatizari Pasive, transformare skin-uri in Nuclee Paralele cu deblocare la Rebirth (Core 2 Solar la Rebirth 10), generatoare si tehnologii 100% independente per nucleu, si farming excesiv simultan din toate nucleele deblocate.",
+  "changelog": "v3.4.1: Fix Degradare Producție & Curățare UI Nucleu - Eliminare definitivă a degradării de saturație (producția pasivă este acum 100% constantă și stabilă), eliminare benzi și cipuri aglomerate de pe pagina nucleului pentru vizibilitate maximă și spațiere perfectă a reactorului, comutarea nucleelor rămânând curată și organizată exclusiv în Omnivers.",
   "autoApply": true
 }
