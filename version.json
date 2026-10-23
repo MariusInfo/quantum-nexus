@@ -1,7 +1,7 @@
 {
-  "version": "3.3.2",
-  "build": 332,
+  "version": "3.4.0",
+  "build": 340,
   "releaseDate": "2026-10-23",
-  "changelog": "v3.3.2: Optimizare Extremă pentru telefoane Samsung (S21/S22/S23 120Hz) - Eliminare completă backdrop-filter blur, eliminare drop-shadow per-frame pe SVG nucleu, oprire canvas invizibil pe mobil, sincronizare impact mecanic cursoare fără idle loop, menținând toate skin-urile și nivelurile vizuale la 120 FPS fluid.",
+  "changelog": "v3.4.0: Sistem Omnivers Multi-Nuclee & Magazin Unificat - Unificare coloana din dreapta cu switch intre Tehnologii si Automatizari Pasive, transformare skin-uri in Nuclee Paralele cu deblocare la Rebirth (Core 2 Solar la Rebirth 10), generatoare si tehnologii 100% independente per nucleu, si farming excesiv simultan din toate nucleele deblocate.",
   "autoApply": true
 }

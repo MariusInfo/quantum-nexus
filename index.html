@@ -1291,8 +1291,129 @@
     }
 
     /* =========================================================================
-       SISTEM DE SKIN-URI NUCLEU CENTRAL & EVOLUȚIE EFECTE CLICK (TIER 1 -> 4)
+       SISTEM DE MULTI-NUCLEE PARALELE OMNIVERS & SELECTOR RAPID NUCLEE
        ========================================================================= */
+    .multi-core-switcher-bar {
+      display: flex;
+      gap: 6px;
+      overflow-x: auto;
+      padding: 4px 2px 8px 2px;
+      margin: 2px 0 6px 0;
+      scrollbar-width: thin;
+      -webkit-overflow-scrolling: touch;
+      z-index: 10;
+      position: relative;
+    }
+
+    .core-pill-btn {
+      flex: 1 0 auto;
+      min-width: 86px;
+      background: rgba(15, 23, 42, 0.7);
+      border: 1px solid var(--border-subtle);
+      border-radius: 10px;
+      padding: 6px 8px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+      cursor: pointer;
+      transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative;
+    }
+
+    .core-pill-btn.active {
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.08) 0%, rgba(15, 23, 42, 0.95) 100%);
+      border-color: var(--core-theme, var(--accent-cyan));
+      box-shadow: 0 0 14px var(--core-theme, var(--accent-cyan));
+      transform: translateY(-1px);
+    }
+
+    .core-pill-btn.locked {
+      opacity: 0.52;
+      border-style: dashed;
+    }
+
+    .core-pill-btn:hover:not(.locked) {
+      border-color: var(--core-theme, var(--accent-cyan));
+    }
+
+    .pill-icon {
+      font-size: 16px;
+      line-height: 1;
+    }
+
+    .pill-name {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-main);
+      white-space: nowrap;
+    }
+
+    .pill-cps {
+      font-family: var(--font-mono);
+      font-size: 9.5px;
+      font-weight: 800;
+      color: var(--accent-emerald);
+    }
+
+    .pill-ready {
+      font-size: 9.5px;
+      color: var(--text-muted);
+    }
+
+    .pill-lock {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      font-weight: 800;
+      color: #f87171;
+    }
+
+    /* Active Core Info Strip */
+    .active-core-info-strip {
+      background: rgba(14, 19, 31, 0.75);
+      border: 1px solid var(--border-subtle);
+      border-radius: 10px;
+      padding: 7px 12px;
+      margin-bottom: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      cursor: pointer;
+      transition: border-color 0.15s ease;
+      z-index: 10;
+      position: relative;
+    }
+
+    .active-core-info-strip:hover {
+      border-color: var(--accent-cyan);
+    }
+
+    .active-core-title-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .active-core-name {
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .active-core-cps-badge {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 800;
+      padding: 2px 7px;
+      border-radius: 6px;
+      border: 1px solid;
+      background: rgba(15, 23, 42, 0.6);
+    }
+
+    .active-core-perk {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
     .core-customizer-bar {
       display: flex;
       justify-content: center;
@@ -2346,7 +2467,7 @@
       color: var(--text-dim);
     }
 
-    /* Right Column: Passive Generators (Buildings) */
+    /* Right Column: Technologies & Passive Generators (Combined with switch) */
     .right-zone {
       background: rgba(14, 19, 31, 0.8);
       border-left: 1px solid var(--border-subtle);
@@ -2354,6 +2475,406 @@
       flex-direction: column;
       height: 100%;
       overflow: hidden;
+    }
+
+    .right-header-tabs {
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--border-subtle);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      background: rgba(14, 19, 31, 0.95);
+      flex-shrink: 0;
+    }
+
+    .right-tab-switcher {
+      display: flex;
+      background: var(--bg-base);
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      padding: 3px;
+      gap: 3px;
+    }
+
+    .right-tab-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      font-family: var(--font-sans);
+      font-size: 12px;
+      font-weight: 700;
+      padding: 6px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.15s ease;
+    }
+
+    .right-tab-btn:hover:not(.active) {
+      color: var(--text-main);
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .right-tab-btn.active {
+      background: linear-gradient(135deg, rgba(56, 189, 248, 0.25), rgba(59, 130, 246, 0.3));
+      border: 1px solid rgba(56, 189, 248, 0.5);
+      color: #fff;
+      box-shadow: 0 0 10px rgba(56, 189, 248, 0.2);
+    }
+
+    .right-sub-header {
+      padding: 8px 14px;
+      background: rgba(10, 14, 23, 0.85);
+      border-bottom: 1px solid rgba(99, 179, 237, 0.08);
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      flex-shrink: 0;
+    }
+
+    .right-sub-info {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .right-sub-title {
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--text-main);
+    }
+
+    .right-sub-core {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 6px;
+      border: 1px solid rgba(56, 189, 248, 0.4);
+      background: rgba(15, 23, 42, 0.6);
+    }
+
+    .right-sub-desc {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .tech-upgrades-list {
+      flex: 1;
+      overflow-y: auto;
+      padding: 12px 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .tech-row-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      padding: 12px 14px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+      transition: all 0.14s ease;
+      position: relative;
+      flex-shrink: 0;
+    }
+
+    .tech-row-card:hover:not(.locked) {
+      background: var(--bg-card-hover);
+      border-color: var(--accent-cyan);
+      transform: translateX(-2px);
+    }
+
+    .tech-row-card:active:not(.locked) {
+      transform: scale(0.98);
+    }
+
+    .tech-row-card.locked {
+      opacity: 0.48;
+      cursor: not-allowed;
+    }
+
+    .tech-icon-box {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.16), rgba(168, 85, 247, 0.16));
+      border: 1px solid rgba(99, 179, 237, 0.25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      flex-shrink: 0;
+    }
+
+    .tech-body-box {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .tech-title-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .tech-name-wrap {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      overflow: hidden;
+    }
+
+    .tech-name {
+      font-size: 13.5px;
+      font-weight: 700;
+      color: var(--text-main);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .tech-core-tag {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 800;
+      background: rgba(255, 255, 255, 0.08);
+      padding: 1px 6px;
+      border-radius: 4px;
+      flex-shrink: 0;
+    }
+
+    .tech-lvl-badge {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--accent-cyan);
+      flex-shrink: 0;
+    }
+
+    .tech-meta-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .tech-desc {
+      font-size: 11px;
+      color: var(--text-muted);
+      line-height: 1.25;
+      flex: 1;
+      white-space: normal;
+    }
+
+    .tech-cost-tag {
+      font-family: var(--font-mono);
+      font-size: 11.5px;
+      font-weight: 800;
+      color: #fde047;
+      white-space: nowrap;
+      background: rgba(245, 158, 11, 0.12);
+      padding: 2px 7px;
+      border-radius: 6px;
+      border: 1px solid rgba(245, 158, 11, 0.3);
+      flex-shrink: 0;
+    }
+
+    .tech-progress-bar {
+      width: 100%;
+      height: 4px;
+      background: rgba(15, 23, 42, 0.6);
+      border-radius: 999px;
+      overflow: hidden;
+      margin-top: 2px;
+    }
+
+    .tech-progress-fill {
+      height: 100%;
+      border-radius: 999px;
+      transition: width 0.2s ease;
+    }
+
+    /* Omniverse Multi-Cores Tab & Hub */
+    .omniverse-hero {
+      background: radial-gradient(circle at 50% 30%, rgba(56, 189, 248, 0.12), transparent 70%), var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 14px;
+      padding: 18px;
+      margin-bottom: 16px;
+      text-align: center;
+    }
+
+    .omniverse-hero-title {
+      font-size: 17px;
+      font-weight: 800;
+      color: var(--text-main);
+      margin-bottom: 5px;
+    }
+
+    .omniverse-hero-desc {
+      font-size: 12px;
+      color: var(--text-muted);
+      max-width: 540px;
+      margin: 0 auto 14px;
+      line-height: 1.45;
+    }
+
+    .omniverse-hero-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      max-width: 580px;
+      margin: 0 auto;
+    }
+
+    .omniverse-stat-box {
+      background: rgba(10, 14, 23, 0.7);
+      border: 1px solid var(--border-subtle);
+      border-radius: 10px;
+      padding: 8px 10px;
+    }
+
+    .omniverse-stat-label {
+      font-size: 10.5px;
+      color: var(--text-muted);
+      margin-bottom: 2px;
+    }
+
+    .omniverse-stat-val {
+      font-family: var(--font-mono);
+      font-size: 14px;
+      font-weight: 800;
+      color: var(--accent-cyan);
+    }
+
+    .omniverse-cores-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 12px;
+    }
+
+    .omniverse-core-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      transition: all 0.2s ease;
+      position: relative;
+    }
+
+    .omniverse-core-card.active {
+      border-color: var(--card-theme, var(--accent-cyan));
+      box-shadow: 0 0 16px rgba(56, 189, 248, 0.2);
+    }
+
+    .omniverse-core-card.locked {
+      opacity: 0.6;
+    }
+
+    .omni-card-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .omni-card-icon {
+      font-size: 26px;
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.05);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .omni-card-title-box {
+      flex: 1;
+    }
+
+    .omni-card-title {
+      font-size: 14px;
+      font-weight: 800;
+      color: var(--text-main);
+    }
+
+    .omni-card-sub {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .omni-card-metrics {
+      background: rgba(10, 14, 23, 0.5);
+      border-radius: 8px;
+      padding: 8px 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .omni-metric-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 11.5px;
+    }
+
+    .omni-metric-label {
+      color: var(--text-muted);
+    }
+
+    .omni-metric-val {
+      font-family: var(--font-mono);
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .btn-omni-switch {
+      width: 100%;
+      padding: 9px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 12.5px;
+      cursor: pointer;
+      border: none;
+      transition: all 0.15s ease;
+    }
+
+    .btn-omni-switch.is-active {
+      background: rgba(16, 185, 129, 0.2);
+      border: 1px solid var(--accent-emerald);
+      color: var(--accent-emerald);
+      cursor: default;
+    }
+
+    .btn-omni-switch.can-switch {
+      background: linear-gradient(135deg, var(--accent-blue), var(--accent-cyan));
+      color: #fff;
+    }
+
+    .btn-omni-switch.can-switch:hover {
+      filter: brightness(1.15);
+      transform: translateY(-1px);
+    }
+
+    .btn-omni-switch.is-locked {
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--text-dim);
+      border: 1px dashed rgba(255, 255, 255, 0.15);
+      cursor: not-allowed;
     }
 
     .right-header {
@@ -6036,7 +6557,7 @@
       <!-- Subtitlu & Versiune Sistem -->
       <div class="loading-footer-tip">
         <span class="loading-pulse-dot"></span>
-        <span id="loadingVersionSub">Simulare Multiversală v3.3.2 // Auto-Stabilizare Activă</span>
+        <span id="loadingVersionSub">Simulare Multiversală v3.4.0 // Auto-Stabilizare Activă</span>
       </div>
 
       <!-- Hint discret dacă browserul a reținut temporar autoplay înainte de primul gest -->
@@ -6054,7 +6575,7 @@
         <div class="brand-icon">⚛️</div>
         <div>
           <div class="brand-title">QUANTUM NEXUS</div>
-          <div class="brand-sub" id="versionHeaderSub">v3.3.2</div>
+          <div class="brand-sub" id="versionHeaderSub">v3.4.0</div>
         </div>
       </div>
 
@@ -6142,13 +6663,17 @@
           </div>
         </div>
 
-        <!-- Core Skins & Customization Trigger Bar -->
-        <div class="core-customizer-bar">
-          <button class="btn-core-skins-trigger" id="btnCoreSkinsModal" onclick="openCoreSkinsModal()" title="Personalizează aspectul Nucleului Cuantic & Skin-uri de Click">
-            <span class="skins-palette-icon">🎨</span>
-            <span class="skins-btn-text">Skin Nucleu: <strong id="coreSkinActivePill">Cuantic</strong></span>
-            <span class="skins-tier-badge" id="clickTierBadge">Lvl 0 (T1)</span>
-          </button>
+        <!-- Omniverse Parallel Multi-Core Quick Selector -->
+        <div class="multi-core-switcher-bar" id="multiCoreSwitcherBar">
+          <!-- Populat dinamic de renderMultiCoreSelector() -->
+        </div>
+
+        <div class="active-core-info-strip" id="activeCoreInfoStrip" onclick="switchTab('multicores'); switchMobileZone('center');" title="Apasă pentru detalii complete în Omnivers">
+          <div class="active-core-title-row">
+            <span class="active-core-name" id="activeCoreNameText">⚛️ Nucleu Cuantic Alfa</span>
+            <span class="active-core-cps-badge" id="activeCoreCpsBadge">Producție: +0/s</span>
+          </div>
+          <div class="active-core-perk" id="activeCorePerkText">⚡ Producție Echilibrată Cuantică</div>
         </div>
 
         <!-- Giant Clickable Core & Orbital Visual Ecosystem -->
@@ -6267,11 +6792,11 @@
       <!-- CENTER PANEL: Upgrades, Prestige, Achievements, Stats/Save -->
       <section class="center-zone" id="zone-center">
         <nav class="nav-tabs">
-          <button class="tab-btn active" onclick="switchTab('upgrades', this)">
-            🔬 Tehnologii
+          <button class="tab-btn active" id="btnTabMultiCores" onclick="switchTab('multicores', this)">
+            🌌 Omnivers <span class="tab-badge" id="coresUnlockedBadge">1/5</span>
           </button>
           <button class="tab-btn" onclick="switchTab('prestige', this)">
-            🌌 Prestigiu <span class="tab-badge" id="prestigeTabBadge" style="display:none">GATA</span>
+            🌀 Prestigiu <span class="tab-badge" id="prestigeTabBadge" style="display:none">GATA</span>
           </button>
           <button class="tab-btn" id="btnTabConstellation" onclick="switchTab('constellation', this)">
             🔮 Constelație <span class="tab-badge" id="constellationTabBadge" style="display:none">0 🔮</span>
@@ -6288,20 +6813,29 @@
         </nav>
 
         <div class="center-content">
-          <!-- TAB 1: Click & Tech Upgrades -->
-          <div class="tab-pane active" id="tab-upgrades">
-            <div class="section-header" style="align-items: center; flex-wrap: wrap; gap: 8px;">
-              <div>
-                <div class="section-title">⚡ Amplificatoare de Click & Sinergie</div>
-                <div class="section-subtitle">Crește puterea fiecărui click și șansa de lovitură critică</div>
+          <!-- TAB 1: Omniverse Parallel Multi-Cores Nexus -->
+          <div class="tab-pane active" id="tab-multicores">
+            <div class="omniverse-hero">
+              <div class="omniverse-hero-title">🌌 Omniversul Cuantic & Rețeaua Multi-Nuclee</div>
+              <div class="omniverse-hero-desc">
+                Fiecare Nucleu deblocat prin Rebirth produce energie <strong>simultan în paralel</strong>! Comută între nuclee pentru a construi tehnologii și generatoare independente pe fiecare, obținând o rată cumulativă de <strong>farming excesiv</strong>!
               </div>
-              <div class="buy-mult-group">
-                <button class="mult-btn active" onclick="setClickUpgradeBuyMultiplier(1, this)">1x</button>
-                <button class="mult-btn" onclick="setClickUpgradeBuyMultiplier(10, this)">10x</button>
-                <button class="mult-btn" onclick="setClickUpgradeBuyMultiplier('MAX', this)">MAX</button>
+              <div class="omniverse-hero-stats">
+                <div class="omniverse-stat-box">
+                  <div class="omniverse-stat-label">Producție Totală Omnivers</div>
+                  <div class="omniverse-stat-val" id="omniTotalCpsVal">0 ⚡/s</div>
+                </div>
+                <div class="omniverse-stat-box">
+                  <div class="omniverse-stat-label">Nuclee Deblocate</div>
+                  <div class="omniverse-stat-val" id="omniCoresUnlockedVal">1 / 5</div>
+                </div>
+                <div class="omniverse-stat-box">
+                  <div class="omniverse-stat-label">Nucleu Selectat Activ</div>
+                  <div class="omniverse-stat-val" id="omniActiveCoreVal" style="font-size:12.5px">⚛️ Cuantic Alfa</div>
+                </div>
               </div>
             </div>
-            <div class="upgrades-grid" id="clickUpgradesGrid"></div>
+            <div class="omniverse-cores-grid" id="omniverseCoresGrid"></div>
           </div>
 
           <!-- TAB 2: Prestige / Rebirth (Step-by-Step) -->
@@ -6523,21 +7057,37 @@
         </div>
       </section>
 
-      <!-- RIGHT PANEL: Passive Generators -->
+      <!-- RIGHT PANEL: Technologies & Passive Generators -->
       <section class="right-zone" id="zone-right">
-        <div class="right-header">
-          <div>
-            <div class="section-title">🤖 Automatizare Pasivă</div>
-            <div class="section-subtitle">La 25, 50, 100, 200, 350, 500 bucăți: +35% producție!</div>
+        <div class="right-header-tabs">
+          <div class="right-tab-switcher">
+            <button class="right-tab-btn" id="rightTabBtnTech" onclick="switchRightZoneTab('tech')">
+              <span class="tab-icon">⚡</span>
+              <span class="tab-text">Tehnologii</span>
+            </button>
+            <button class="right-tab-btn active" id="rightTabBtnGens" onclick="switchRightZoneTab('gens')">
+              <span class="tab-icon">🤖</span>
+              <span class="tab-text">Automatizări</span>
+            </button>
           </div>
-          <div class="buy-mult-group">
-            <button class="mult-btn active" onclick="setBuyMultiplier(1, this)">1x</button>
-            <button class="mult-btn" onclick="setBuyMultiplier(10, this)">10x</button>
-            <button class="mult-btn" onclick="setBuyMultiplier(100, this)">100x</button>
-            <button class="mult-btn" onclick="setBuyMultiplier('MAX', this)">MAX</button>
+          <div class="buy-mult-group" id="rightBuyMultGroup">
+            <button class="mult-btn active" id="multBtn1" onclick="setRightZoneMultiplier(1, this)">1x</button>
+            <button class="mult-btn" id="multBtn10" onclick="setRightZoneMultiplier(10, this)">10x</button>
+            <button class="mult-btn" id="multBtn100" onclick="setRightZoneMultiplier(100, this)">100x</button>
+            <button class="mult-btn" id="multBtnMAX" onclick="setRightZoneMultiplier('MAX', this)">MAX</button>
           </div>
         </div>
+
+        <div class="right-sub-header">
+          <div class="right-sub-info">
+            <span class="right-sub-title" id="rightSubTitle">🤖 Automatizări Pasive</span>
+            <span class="right-sub-core" id="rightSubCoreBadge">⚛️ Cuantic Alfa</span>
+          </div>
+          <div class="right-sub-desc" id="rightSubDesc">La 25, 50, 100, 200, 350, 500 bucăți: +35% producție!</div>
+        </div>
+
         <div class="generators-list" id="generatorsList"></div>
+        <div class="tech-upgrades-list" id="rightTechUpgradesList" style="display:none;"></div>
       </section>
     </main>
 
@@ -6548,12 +7098,12 @@
         <span>Nucleu</span>
       </button>
       <button class="mobile-nav-btn" onclick="switchMobileZone('right', this)">
-        <span class="m-icon">🤖</span>
-        <span>Generatoare</span>
+        <span class="m-icon">⚡</span>
+        <span>Magazin</span>
       </button>
       <button class="mobile-nav-btn" onclick="switchMobileZone('center', this)">
-        <span class="m-icon">🔬</span>
-        <span>Upgrade & Cloud</span>
+        <span class="m-icon">🌌</span>
+        <span>Omnivers</span>
       </button>
     </nav>
   </div>
@@ -6660,7 +7210,7 @@
           <button class="btn-header install-btn" id="btnInstallApp" onclick="triggerInstallApp()">📲 Instalează</button>
         </div>
         <div style="font-size: 11px; color: var(--text-dim); margin-top: 8px;">
-          Versiune instalată: <strong id="settingsVersionText">v3.3.2</strong> // Auto-Update activ
+          Versiune instalată: <strong id="settingsVersionText">v3.4.0</strong> // Auto-Update activ
         </div>
       </div>
 
@@ -8186,17 +8736,179 @@
      ********************************************************************/
     const SAVE_KEY = 'QUANTUM_NEXUS_SAVE_V2';
 
-    function getDefaultState() {
+    /********************************************************************
+     * 2.1. OMNIVERSUL MULTI-NUCLEE PARALELE (PARALLEL MULTI-CORE SYSTEM)
+     ********************************************************************/
+    const CORES_DATA = [
+      {
+        id: 'quantum',
+        name: 'Nucleu Cuantic Alfa',
+        shortName: 'Cuantic Alfa',
+        icon: '⚛️',
+        color: '#38bdf8',
+        glowColor: 'rgba(56, 189, 248, 0.45)',
+        reqRebirth: 0,
+        cpsMult: 1.0,
+        clickMult: 1.0,
+        desc: 'Aspectul clasic de fuziune temporală. Baza rețelei cuantice cu producție stabilă.',
+        perk: '⚡ Producție Echilibrată Cuantică'
+      },
+      {
+        id: 'solar',
+        name: 'Nucleu de Plasmă Solară',
+        shortName: 'Plasmă Solară',
+        icon: '☀️',
+        color: '#f59e0b',
+        glowColor: 'rgba(245, 158, 11, 0.65)',
+        reqRebirth: 10, // Deblocat la Rebirth 10 exact conform cerinței utilizatorului
+        cpsMult: 2.0,
+        clickMult: 1.5,
+        desc: 'Fuziune de stea supergigantă cu coroană de flăcări aurii și protuberanțe magmatice incandescente.',
+        perk: '🔥 2.0x Producție Pasivă & 1.5x Click'
+      },
+      {
+        id: 'tesseract',
+        name: 'Tesseract 4D Hiper-Cibernetic',
+        shortName: 'Tesseract 4D',
+        icon: '🧊',
+        color: '#06b6d4',
+        glowColor: 'rgba(6, 182, 212, 0.6)',
+        reqRebirth: 25,
+        cpsMult: 4.0,
+        clickMult: 2.5,
+        desc: 'Hipercub cvadridimensional transparent ce pliază spațiul pentru producție cvadruplă.',
+        perk: '🌀 4.0x Producție Pasivă & 2.5x Click'
+      },
+      {
+        id: 'void',
+        name: 'Singularitate Abisală Void',
+        shortName: 'Abisal Void',
+        icon: '🩸',
+        color: '#e11d48',
+        glowColor: 'rgba(225, 29, 72, 0.7)',
+        reqRebirth: 50,
+        cpsMult: 10.0,
+        clickMult: 5.0,
+        desc: 'Singularitate demonică întunecată ce devorează materia și multiplică exponențial energia.',
+        perk: '🩸 10.0x Producție Pasivă & 5.0x Click'
+      },
+      {
+        id: 'whitehole',
+        name: 'Gaură Albă Superluminoasă',
+        shortName: 'Gaură Albă',
+        icon: '✨',
+        color: '#ffffff',
+        glowColor: 'rgba(255, 255, 255, 0.85)',
+        reqRebirth: 100,
+        cpsMult: 25.0,
+        clickMult: 12.0,
+        desc: 'Lumină pură superluminică cu 8 raze prismatice. Punctul culminant al Omniversului.',
+        perk: '✨ 25.0x Producție Pasivă & 12.0x Click'
+      }
+    ];
+
+    function createEmptyCoreData() {
       const clickLvls = {};
       CLICK_UPGRADES_DATA.forEach(u => clickLvls[u.id] = 0);
-
       const genCounts = {};
       GENERATORS_DATA.forEach(g => genCounts[g.id] = 0);
+      return {
+        clickUpgrades: clickLvls,
+        generators: genCounts
+      };
+    }
 
+    function isCoreUnlocked(coreId) {
+      const core = CORES_DATA.find(c => c.id === coreId);
+      if (!core) return false;
+      return (state.prestigeCount || 0) >= core.reqRebirth;
+    }
+
+    function ensureStateCoreBindings(s) {
+      if (!s) return s;
+      if (!s.cores || typeof s.cores !== 'object') {
+        s.cores = {};
+      }
+      if (!s.activeCoreId) s.activeCoreId = 'quantum';
+
+      const rawOldGens = s.generators && typeof s.generators === 'object' && !Array.isArray(s.generators) ? s.generators : null;
+      const rawOldUps = s.clickUpgrades && typeof s.clickUpgrades === 'object' && !Array.isArray(s.clickUpgrades) ? s.clickUpgrades : null;
+
+      CORES_DATA.forEach(c => {
+        if (!s.cores[c.id]) s.cores[c.id] = createEmptyCoreData();
+        if (!s.cores[c.id].generators) s.cores[c.id].generators = {};
+        if (!s.cores[c.id].clickUpgrades) s.cores[c.id].clickUpgrades = {};
+
+        GENERATORS_DATA.forEach(g => {
+          if (s.cores[c.id].generators[g.id] === undefined) s.cores[c.id].generators[g.id] = 0;
+        });
+        CLICK_UPGRADES_DATA.forEach(u => {
+          if (s.cores[c.id].clickUpgrades[u.id] === undefined) s.cores[c.id].clickUpgrades[u.id] = 0;
+        });
+      });
+
+      // Migrare date vechi din salvare în nucleul Quantum dacă acesta era gol
+      if (rawOldGens) {
+        const sumQ = Object.values(s.cores.quantum.generators).reduce((a, b) => a + (Number(b) || 0), 0);
+        if (sumQ === 0) {
+          s.cores.quantum.generators = { ...s.cores.quantum.generators, ...rawOldGens };
+        }
+      }
+      if (rawOldUps) {
+        const sumU = Object.values(s.cores.quantum.clickUpgrades).reduce((a, b) => a + (Number(b) || 0), 0);
+        if (sumU === 0) {
+          s.cores.quantum.clickUpgrades = { ...s.cores.quantum.clickUpgrades, ...rawOldUps };
+        }
+      }
+
+      try {
+        delete s.generators;
+        delete s.clickUpgrades;
+      } catch (e) {}
+
+      Object.defineProperty(s, 'generators', {
+        get() {
+          const cid = this.activeCoreId || 'quantum';
+          if (!this.cores[cid]) this.cores[cid] = createEmptyCoreData();
+          return this.cores[cid].generators;
+        },
+        set(val) {
+          const cid = this.activeCoreId || 'quantum';
+          if (!this.cores[cid]) this.cores[cid] = createEmptyCoreData();
+          this.cores[cid].generators = val;
+        },
+        configurable: true,
+        enumerable: true
+      });
+
+      Object.defineProperty(s, 'clickUpgrades', {
+        get() {
+          const cid = this.activeCoreId || 'quantum';
+          if (!this.cores[cid]) this.cores[cid] = createEmptyCoreData();
+          return this.cores[cid].clickUpgrades;
+        },
+        set(val) {
+          const cid = this.activeCoreId || 'quantum';
+          if (!this.cores[cid]) this.cores[cid] = createEmptyCoreData();
+          this.cores[cid].clickUpgrades = val;
+        },
+        configurable: true,
+        enumerable: true
+      });
+
+      return s;
+    }
+
+    function getDefaultState() {
       const presLvls = {};
       PRESTIGE_UPGRADES_DATA.forEach(p => presLvls[p.id] = 0);
 
-      return {
+      const defaultCores = {};
+      CORES_DATA.forEach(c => {
+        defaultCores[c.id] = createEmptyCoreData();
+      });
+
+      const baseState = {
         energy: 0,
         totalEnergyThisRun: 0,
         lifetimeEnergy: 0,
@@ -8210,8 +8922,8 @@
         prestigeCount: 0,
         darkMatter: 0,
         equippedCoreSkin: 'quantum',
-        clickUpgrades: clickLvls,
-        generators: genCounts,
+        activeCoreId: 'quantum',
+        cores: defaultCores,
         prestigeUpgrades: presLvls,
         unlockedAchievements: [],
         skillCooldowns: { 1: 0, 2: 0, 3: 0 },
@@ -8249,11 +8961,14 @@
         playTimeSeconds: 0,
         lastSaved: Date.now()
       };
+
+      return ensureStateCoreBindings(baseState);
     }
 
     let state = getDefaultState();
     let buyMultiplier = 1; // 1, 10, 100, or 'MAX'
     let clickBuyMultiplier = 1; // 1, 10, or 'MAX'
+    let activeRightTab = 'gens'; // 'gens' sau 'tech'
 
     // Variabile runtime (combo, buff-uri active și cooldown-uri sincronizate cu state)
     let comboMeter = 0; // 0 -> 100
@@ -9613,31 +10328,28 @@
       return Math.max(0.08, 1 / Math.pow(overRatio, 0.9));
     }
 
-    function getGlobalMultiplier() {
+    function getGlobalSharedMultiplier() {
       let mult = 1;
-      // 1. Upgrade global rețea superconductoare (+8%/lvl)
-      const gLvl = state.clickUpgrades['c_global1'] || 0;
-      mult *= 1 + gLvl * 0.08;
 
-      // 2. Realizări (+1% fiecare, sau +1.5% cu Transcendință Cosmică)
+      // 1. Realizări (+1% fiecare, sau +1.5% cu Transcendință Cosmică)
       const transLvl = (state.prestigeUpgrades && state.prestigeUpgrades['p_transcendence']) || 0;
       const achMult = transLvl > 0 ? 0.015 : 0.010;
-      mult *= 1 + state.unlockedAchievements.length * achMult;
+      mult *= 1 + (state.unlockedAchievements ? state.unlockedAchievements.length : 0) * achMult;
 
-      // 3. Materie Întunecată deținută (+10% fiecare) + Rebirth-uri efectuate (+15% fiecare, sau mai mult cu Rezonanță Cuantică)
+      // 2. Materie Întunecată deținută (+10% fiecare) + Rebirth-uri efectuate (+15% fiecare, sau mai mult cu Rezonanță Cuantică)
       const cosmicResLvl = (state.prestigeUpgrades && state.prestigeUpgrades['p_cosmic_resonance']) || 0;
       const rebirthPctBonus = 0.15 + cosmicResLvl * 0.03;
       mult *= 1 + (state.darkMatter || 0) * 0.10 + (state.prestigeCount || 0) * rebirthPctBonus;
 
-      // 4. Upgrade Prestigiu Rezonanță Întunecată (+25% per nivel)
+      // 3. Upgrade Prestigiu Rezonanță Întunecată (+25% per nivel)
       const pProdLvl = (state.prestigeUpgrades && state.prestigeUpgrades['p_prod']) || 0;
       mult *= 1 + pProdLvl * 0.25;
 
-      // 4.5. Keystone Pasiv: Motorul Perpetuu al Vidului (+50% multiplicat per nivel)
+      // 4. Keystone Pasiv: Motorul Perpetuu al Vidului (+50% multiplicat per nivel)
       const voidLvl = (state.prestigeUpgrades && state.prestigeUpgrades['p_perpetual_void']) || 0;
       if (voidLvl > 0) mult *= (1 + voidLvl * 0.50);
 
-      // 4.6. Sinergie Flotă: Rețea Neurală de Flotă (+2% per tip unic de generator)
+      // 5. Sinergie Flotă: Rețea Neurală de Flotă (+2% per tip unic de generator activ)
       const fleetSynLvl = (state.prestigeUpgrades && state.prestigeUpgrades['p_fleet_synergy']) || 0;
       if (fleetSynLvl > 0) {
         let uniqueGens = 0;
@@ -9647,12 +10359,7 @@
         mult *= (1 + fleetSynLvl * uniqueGens * 0.02);
       }
 
-      // 5. Sinergii Unice din Generatoare: Matrice Dyson (g7: +4% fiecare) & Motor de Univers (g9: +10% fiecare)
-      const dysonCount = (state.generators && state.generators['g7']) || 0;
-      const uniCount = (state.generators && state.generators['g9']) || 0;
-      mult *= (1 + dysonCount * 0.04) * (1 + uniCount * 0.10);
-
-      // 6. Buff-uri temporare echilibrate
+      // 6. Buff-uri temporare active
       const now = Date.now();
       if (now < (activeBuffs.frenzyEnd || 0)) mult *= 2.5;
       if (now < (activeBuffs.timeWarpEnd || 0)) mult *= 1.5;
@@ -9664,20 +10371,30 @@
       return mult;
     }
 
+    // Păstrăm getGlobalMultiplier pentru compatibilitate apeluri existente
+    function getGlobalMultiplier() {
+      const gLvl = (state.clickUpgrades && state.clickUpgrades['c_global1']) || 0;
+      return getGlobalSharedMultiplier() * (1 + gLvl * 0.08);
+    }
+
     let secondsSinceLastManualClick = 0;
 
-    function getBasePassiveCPS() {
-      let baseTotal = 0;
+    function getCoreBaseCPS(coreId) {
+      const coreDef = CORES_DATA.find(c => c.id === coreId);
+      if (!coreDef) return 0;
+      const coreData = (state.cores && state.cores[coreId]) || { generators: {}, clickUpgrades: {} };
+      const gens = coreData.generators || {};
+      const ups = coreData.clickUpgrades || {};
+
       const qOverdriveLvl = (state.prestigeUpgrades && state.prestigeUpgrades['p_quantum_overdrive']) || 0;
-      const afkSynLvl = (state.prestigeUpgrades && state.prestigeUpgrades['p_automated_synergy']) || 0;
+      let baseTotal = 0;
 
       for (let i = 0; i < GENERATORS_DATA.length; i++) {
         const gen = GENERATORS_DATA[i];
-        const count = state.generators[gen.id] || 0;
+        const count = gens[gen.id] || 0;
         if (count > 0) {
           const milestoneMult = getGeneratorMilestoneMultiplier(count);
           let genOutput = count * gen.baseCps * milestoneMult;
-          // Supraconductori de Flotă: +30%/niv pentru generatoare mari (de la g4 în sus)
           if (i >= 4 && qOverdriveLvl > 0) {
             genOutput *= (1 + qOverdriveLvl * 0.30);
           }
@@ -9685,7 +10402,20 @@
         }
       }
 
-      // Sinteză Autonomă AFK (+15%/niv max, crește treptat în timp după 15s)
+      // Multiplicator nativ specific acestui nucleu!
+      baseTotal *= (coreDef.cpsMult || 1.0);
+
+      // Sinergii locale construite pe acest nucleu: Matrice Dyson (g7) & Motor Univers (g9)
+      const dysonCount = gens['g7'] || 0;
+      const uniCount = gens['g9'] || 0;
+      baseTotal *= (1 + dysonCount * 0.04) * (1 + uniCount * 0.10);
+
+      // Tehnologie Rețea Superconductoare (c_global1) dezvoltată pe acest nucleu (+8%/lvl)
+      const gLvl = ups['c_global1'] || 0;
+      baseTotal *= (1 + gLvl * 0.08);
+
+      // Sinteză Autonomă AFK (+15%/niv max, crește treptat după 15s)
+      const afkSynLvl = (state.prestigeUpgrades && state.prestigeUpgrades['p_automated_synergy']) || 0;
       if (afkSynLvl > 0 && secondsSinceLastManualClick >= 15) {
         const maxAfkPct = afkSynLvl * 0.15;
         const progressRatio = Math.min(1.0, secondsSinceLastManualClick / 120);
@@ -9695,12 +10425,33 @@
       return baseTotal;
     }
 
+    function getCoreCPS(coreId) {
+      if (!isCoreUnlocked(coreId)) return 0;
+      return getCoreBaseCPS(coreId) * getGlobalSharedMultiplier();
+    }
+
+    function getBasePassiveCPS() {
+      let sum = 0;
+      CORES_DATA.forEach(c => {
+        if (isCoreUnlocked(c.id)) {
+          sum += getCoreBaseCPS(c.id);
+        }
+      });
+      return sum;
+    }
+
+    // Producție TOTALĂ CUMULATIVĂ a tuturor nucleelor deblocate în paralel (Farming Excesiv!)
     function getCPS() {
-      return getBasePassiveCPS() * getGlobalMultiplier();
+      let total = 0;
+      CORES_DATA.forEach(c => {
+        if (isCoreUnlocked(c.id)) {
+          total += getCoreCPS(c.id);
+        }
+      });
+      return total;
     }
 
     function getComboMultiplier() {
-      // Bază: de la x1.00 până la x2.00 la combo 100%, amplificat de Scriptul Neural AI și Sincronizare Tahionică
       const aiCount = (state.generators && state.generators['g2']) || 0;
       const comboLockLvl = (state.prestigeUpgrades && state.prestigeUpgrades['p_combo_lock']) || 0;
       const maxBonus = (1.0 + comboLockLvl * 0.30) * (1 + aiCount * 0.03);
@@ -9708,22 +10459,26 @@
     }
 
     function getClickValue() {
-      const flatLvl = state.clickUpgrades['c_flat1'] || 0;
-      const multLvl = state.clickUpgrades['c_mult1'] || 0;
-      const synLvl = state.clickUpgrades['c_synergy'] || 0;
+      const curCore = CORES_DATA.find(c => c.id === (state.activeCoreId || 'quantum')) || CORES_DATA[0];
+      const flatLvl = (state.clickUpgrades && state.clickUpgrades['c_flat1']) || 0;
+      const multLvl = (state.clickUpgrades && state.clickUpgrades['c_mult1']) || 0;
+      const synLvl = (state.clickUpgrades && state.clickUpgrades['c_synergy']) || 0;
       const pClickLvl = (state.prestigeUpgrades && state.prestigeUpgrades['p_click']) || 0;
-      const satCount = (state.generators && state.generators['g4']) || 0; // Satelit Solar: +5% Click per satelit
+      const satCount = (state.generators && state.generators['g4']) || 0;
 
       let base = 1 + flatLvl * 1;
       base *= 1 + multLvl * 0.15;
       base *= 1 + pClickLvl * 0.25;
       base *= 1 + satCount * 0.05;
 
-      let val = base * getGlobalMultiplier() * getComboMultiplier();
+      // Multiplicator nativ de Click al Nucleului Activ!
+      base *= (curCore.clickMult || 1.0);
 
-      // Sinergie echilibrată din CPS (+0.25% din CPS per nivel)
+      let val = base * getGlobalSharedMultiplier() * getComboMultiplier();
+
+      // Sinergie din producția proprie a nucleului curent (+0.25% din CPS per nivel)
       if (synLvl > 0) {
-        val += getCPS() * (synLvl * 0.0025);
+        val += getCoreCPS(curCore.id) * (synLvl * 0.0025);
       }
 
       // Buff Furtună de Click-uri (x4)
@@ -9731,26 +10486,41 @@
         val *= 4;
       }
 
-      return val;
+      return Math.max(1, Math.round(val));
     }
 
     function getCritChance() {
-      if (Date.now() < (activeBuffs.crimsonCritEnd || 0)) return 1.0; // Sfera Crimson: 100% Crit!
-      const cLvl = state.clickUpgrades['c_critChance'] || 0;
+      if (Date.now() < (activeBuffs.crimsonCritEnd || 0)) return 1.0;
+      const curCore = CORES_DATA.find(c => c.id === (state.activeCoreId || 'quantum')) || CORES_DATA[0];
+      const cLvl = (state.clickUpgrades && state.clickUpgrades['c_critChance']) || 0;
       const pCritDev = (state.prestigeUpgrades && state.prestigeUpgrades['p_crit_devastator']) || 0;
-      const fusionCount = (state.generators && state.generators['g5']) || 0; // Reactor Fuziune: +0.4% Crit (max +12%)
+      const fusionCount = (state.generators && state.generators['g5']) || 0;
       const fusionBonus = Math.min(0.12, fusionCount * 0.004);
       const comboBonus = comboMeter >= 85 ? 0.10 : 0;
       const skillBonus = Date.now() < (activeBuffs.hyperCritEnd || 0) ? 0.40 : 0;
-      return Math.min(0.95, 0.05 + cLvl * 0.02 + fusionBonus + comboBonus + skillBonus + pCritDev * 0.04);
+
+      // Bonus nativ critică în funcție de nucleul activ
+      let coreCritBonus = 0;
+      if (curCore.id === 'solar') coreCritBonus = 0.08;
+      else if (curCore.id === 'void') coreCritBonus = 0.15;
+      else if (curCore.id === 'whitehole') coreCritBonus = 0.25;
+
+      return Math.min(0.95, 0.05 + cLvl * 0.02 + fusionBonus + comboBonus + skillBonus + pCritDev * 0.04 + coreCritBonus);
     }
 
     function getCritMultiplier() {
-      const mLvl = state.clickUpgrades['c_critMult'] || 0;
+      const curCore = CORES_DATA.find(c => c.id === (state.activeCoreId || 'quantum')) || CORES_DATA[0];
+      const mLvl = (state.clickUpgrades && state.clickUpgrades['c_critMult']) || 0;
       const pCritDev = (state.prestigeUpgrades && state.prestigeUpgrades['p_crit_devastator']) || 0;
-      const droneCount = (state.generators && state.generators['g1']) || 0; // Dronă Extracție: +4% Crit Dmg per dronă
+      const droneCount = (state.generators && state.generators['g1']) || 0;
       const crimsonMult = Date.now() < (activeBuffs.crimsonCritEnd || 0) ? 1.8 : 1.0;
-      return (2.0 + mLvl * 0.25 + droneCount * 0.04 + pCritDev * 0.50) * crimsonMult;
+
+      let coreCritMultBonus = 0;
+      if (curCore.id === 'solar') coreCritMultBonus = 0.5;
+      else if (curCore.id === 'void') coreCritMultBonus = 1.5;
+      else if (curCore.id === 'whitehole') coreCritMultBonus = 3.0;
+
+      return (2.0 + mLvl * 0.25 + droneCount * 0.04 + pCritDev * 0.50 + coreCritMultBonus) * crimsonMult;
     }
 
     function getSkillCooldownFactor() {
@@ -9866,17 +10636,12 @@
         glowColor: 'rgba(245, 158, 11, 0.65)',
         desc: 'Fuziune de stea supergigantă cu coroană de flăcări aurii și protuberanțe magmatice incandescente.',
         clickFxDesc: 'Flăcări solare & unde aurii de șoc',
-        unlockDesc: 'Rebirth #1 SAU 10.000 Click-uri Totale',
-        isUnlocked: () => (state.prestigeCount || 0) >= 1 || (state.totalClicks || 0) >= 10000,
+        unlockDesc: 'Rebirth #10',
+        isUnlocked: () => isCoreUnlocked('solar'),
         getProgress: () => {
           const p = state.prestigeCount || 0;
-          const c = state.totalClicks || 0;
-          if (p >= 1 || c >= 10000) return { current: 1, target: 1, text: 'Deblocat' };
-          return {
-            current: Math.max(p, Math.min(1, c / 10000)),
-            target: 1,
-            text: `Rebirth ${p}/1 sau Click-uri ${formatNumber(c)}/10.000`
-          };
+          if (p >= 10) return { current: 1, target: 1, text: 'Deblocat' };
+          return { current: p, target: 10, text: `Rebirth ${p}/10` };
         }
       },
       {
@@ -9889,40 +10654,30 @@
         glowColor: 'rgba(168, 85, 247, 0.6)',
         desc: 'Hipercub cvadridimensional transparent cu wireframe cibernetic și reflexii neon violet/cyan.',
         clickFxDesc: 'Unde matriciale rombice & scântei holografice',
-        unlockDesc: 'Rebirth #5 SAU 50 Realizări Deblocate',
-        isUnlocked: () => (state.prestigeCount || 0) >= 5 || (state.unlockedAchievements || []).length >= 50,
+        unlockDesc: 'Rebirth #25',
+        isUnlocked: () => isCoreUnlocked('tesseract'),
         getProgress: () => {
           const p = state.prestigeCount || 0;
-          const a = (state.unlockedAchievements || []).length;
-          if (p >= 5 || a >= 50) return { current: 1, target: 1, text: 'Deblocat' };
-          return {
-            current: Math.max(p / 5, a / 50),
-            target: 1,
-            text: `Rebirth ${p}/5 sau Realizări ${a}/50`
-          };
+          if (p >= 25) return { current: 1, target: 1, text: 'Deblocat' };
+          return { current: p, target: 25, text: `Rebirth ${p}/25` };
         }
       },
       {
         id: 'void',
-        name: 'Nucleu Void / Demon Cuantic',
+        name: 'Singularitate Abisală Void',
         icon: '🩸',
         rarity: 'mythic',
         rarityLabel: 'Abisală Mitică',
         color: '#e11d48',
         glowColor: 'rgba(225, 29, 72, 0.7)',
-        desc: 'Singularitate demonică întunecată cu pupila sângerie pulsatorie și țepi de antimaterie.',
+        desc: 'Singularitate demonică întunecată ce devorează materia și multiplică exponențial energia.',
         clickFxDesc: 'Fulgere negre/crimson & erupție demonică',
-        unlockDesc: '15.000 Click-uri Critice SAU Rebirth #10',
-        isUnlocked: () => (state.totalCrits || 0) >= 15000 || (state.prestigeCount || 0) >= 10,
+        unlockDesc: 'Rebirth #50',
+        isUnlocked: () => isCoreUnlocked('void'),
         getProgress: () => {
-          const crits = state.totalCrits || 0;
           const p = state.prestigeCount || 0;
-          if (crits >= 15000 || p >= 10) return { current: 1, target: 1, text: 'Deblocat' };
-          return {
-            current: Math.max(crits / 15000, p / 10),
-            target: 1,
-            text: `Critice ${formatNumber(crits)}/15.000 sau Rebirth ${p}/10`
-          };
+          if (p >= 50) return { current: 1, target: 1, text: 'Deblocat' };
+          return { current: p, target: 50, text: `Rebirth ${p}/50` };
         }
       },
       {
@@ -9935,17 +10690,12 @@
         glowColor: 'rgba(255, 255, 255, 0.85)',
         desc: 'Lumină pură superluminică cu 8 raze prismatice curcubeu și lentilă gravitațională inversată.',
         clickFxDesc: 'Explozii de fotoni albi & inele prismatice curcubeu',
-        unlockDesc: '100 Realizări Deblocate SAU 1 Quadrilion (1e15) Energie',
-        isUnlocked: () => (state.unlockedAchievements || []).length >= 100 || (state.lifetimeEnergy || 0) >= 1e15,
+        unlockDesc: 'Rebirth #100',
+        isUnlocked: () => isCoreUnlocked('whitehole'),
         getProgress: () => {
-          const a = (state.unlockedAchievements || []).length;
-          const e = state.lifetimeEnergy || 0;
-          if (a >= 100 || e >= 1e15) return { current: 1, target: 1, text: 'Deblocat' };
-          return {
-            current: Math.max(a / 100, Math.min(1, e / 1e15)),
-            target: 1,
-            text: `Realizări ${a}/100 sau Energie ${formatNumber(e)}/1.00Q`
-          };
+          const p = state.prestigeCount || 0;
+          if (p >= 100) return { current: 1, target: 1, text: 'Deblocat' };
+          return { current: p, target: 100, text: `Rebirth ${p}/100` };
         }
       }
     ];
@@ -11449,27 +12199,11 @@
     }
 
     function setBuyMultiplier(mode, btn) {
-      buyMultiplier = mode;
-      if (btn && btn.parentElement) {
-        btn.parentElement.querySelectorAll('.mult-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-      } else {
-        document.querySelectorAll('#zone-right .mult-btn').forEach(b => b.classList.remove('active'));
-        if (btn) btn.classList.add('active');
-      }
-      renderGenerators();
+      setRightZoneMultiplier(mode, btn);
     }
 
     function setClickUpgradeBuyMultiplier(mode, btn) {
-      clickBuyMultiplier = mode;
-      if (btn && btn.parentElement) {
-        btn.parentElement.querySelectorAll('.mult-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-      } else {
-        document.querySelectorAll('#tab-upgrades .mult-btn').forEach(b => b.classList.remove('active'));
-        if (btn) btn.classList.add('active');
-      }
-      renderClickUpgrades();
+      setRightZoneMultiplier(mode, btn);
     }
 
     function activateSkill(skillNum) {
@@ -12466,10 +13200,36 @@
         state.totalEnergyThisRun = startEnergy;
         comboMeter = 0;
 
-        CLICK_UPGRADES_DATA.forEach(u => state.clickUpgrades[u.id] = 0);
-        GENERATORS_DATA.forEach(g => state.generators[g.id] = 0);
+        CORES_DATA.forEach(c => {
+          if (state.cores && state.cores[c.id]) {
+            CLICK_UPGRADES_DATA.forEach(u => state.cores[c.id].clickUpgrades[u.id] = 0);
+            GENERATORS_DATA.forEach(g => state.cores[c.id].generators[g.id] = 0);
+          }
+        });
 
         showToast(`🌌 Singularitatea #${nextRebirthNum} Stabilizată! Ai primit +${dmReward} 🔮 Materie Întunecată!`);
+
+        if (nextRebirthNum === 10) {
+          setTimeout(() => {
+            showToast(`☀️ OMNIVERS EXTINS: Ai deblocat Nucleul de Plasmă Solară! Comută pe el pentru farming paralel!`);
+            playTone(660, 'triangle', 0.4, 0.15);
+          }, 1200);
+        } else if (nextRebirthNum === 25) {
+          setTimeout(() => {
+            showToast(`🧊 OMNIVERS EXTINS: Ai deblocat Tesseractul 4D Hiper-Cibernetic!`);
+            playTone(720, 'triangle', 0.4, 0.15);
+          }, 1200);
+        } else if (nextRebirthNum === 50) {
+          setTimeout(() => {
+            showToast(`🩸 OMNIVERS EXTINS: Ai deblocat Singularitatea Abisală Void!`);
+            playTone(330, 'sawtooth', 0.4, 0.15);
+          }, 1200);
+        } else if (nextRebirthNum === 100) {
+          setTimeout(() => {
+            showToast(`✨ OMNIVERS SUPREM: Ai deblocat Gaura Albă Superluminoasă!`);
+            playTone(990, 'triangle', 0.5, 0.2);
+          }, 1200);
+        }
 
         updateDailyQuestProgress('prestige', 1);
         checkAchievements();
@@ -12484,42 +13244,119 @@
     /********************************************************************
      * 10. RANDARE ELEMENTE UI ȘI ACTUALIZARE ÎN TIMP REAL
      ********************************************************************/
-    function renderClickUpgrades() {
-      const container = document.getElementById('clickUpgradesGrid');
+    /********************************************************************
+     * 10. RANDARE ELEMENTE UI ȘI ACTUALIZARE ÎN TIMP REAL
+     ********************************************************************/
+    function switchRightZoneTab(tab) {
+      activeRightTab = tab;
+      const btnTech = document.getElementById('rightTabBtnTech');
+      const btnGens = document.getElementById('rightTabBtnGens');
+      const gensList = document.getElementById('generatorsList');
+      const techList = document.getElementById('rightTechUpgradesList');
+      const subTitle = document.getElementById('rightSubTitle');
+      const subDesc = document.getElementById('rightSubDesc');
+      const coreBadge = document.getElementById('rightSubCoreBadge');
+
+      const curCore = CORES_DATA.find(c => c.id === (state.activeCoreId || 'quantum')) || CORES_DATA[0];
+
+      if (tab === 'tech') {
+        if (btnTech) btnTech.classList.add('active');
+        if (btnGens) btnGens.classList.remove('active');
+        if (gensList) gensList.style.display = 'none';
+        if (techList) techList.style.display = 'flex';
+        if (subTitle) subTitle.innerText = `⚡ Tehnologii & Click: ${curCore.shortName}`;
+        if (subDesc) subDesc.innerText = `Amplifică puterea fiecărui click și sinergia pe acest nucleu`;
+        renderRightClickUpgrades();
+      } else {
+        if (btnGens) btnGens.classList.add('active');
+        if (btnTech) btnTech.classList.remove('active');
+        if (techList) techList.style.display = 'none';
+        if (gensList) gensList.style.display = 'flex';
+        if (subTitle) subTitle.innerText = `🤖 Automatizări Pasive: ${curCore.shortName}`;
+        if (subDesc) subDesc.innerText = `La 25, 50, 100, 200, 350, 500 bucăți: +35% producție!`;
+        renderGenerators();
+      }
+
+      // Sincronizare buton multiplicator activ
+      const curMult = (tab === 'tech') ? clickBuyMultiplier : buyMultiplier;
+      document.querySelectorAll('#rightBuyMultGroup .mult-btn').forEach(b => {
+        const txt = b.innerText.trim();
+        b.classList.toggle('active', txt === String(curMult) || (curMult === 'MAX' && txt === 'MAX'));
+      });
+
+      if (coreBadge) {
+        coreBadge.innerText = `${curCore.icon} ${curCore.shortName}`;
+        coreBadge.style.color = curCore.color;
+        coreBadge.style.borderColor = `${curCore.color}55`;
+      }
+    }
+
+    function setRightZoneMultiplier(mode, btn) {
+      if (btn && btn.parentElement) {
+        btn.parentElement.querySelectorAll('.mult-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+      }
+      if (activeRightTab === 'tech') {
+        clickBuyMultiplier = mode;
+        renderRightClickUpgrades();
+      } else {
+        buyMultiplier = mode;
+        renderGenerators();
+      }
+    }
+
+    function renderRightClickUpgrades() {
+      const container = document.getElementById('rightTechUpgradesList') || document.getElementById('clickUpgradesGrid');
+      if (!container) return;
       container.innerHTML = '';
 
+      const curCore = CORES_DATA.find(c => c.id === (state.activeCoreId || 'quantum')) || CORES_DATA[0];
+      const curUps = state.clickUpgrades || {};
+
       CLICK_UPGRADES_DATA.forEach(upg => {
-        const lvl = state.clickUpgrades[upg.id] || 0;
+        const lvl = curUps[upg.id] || 0;
         const isMax = lvl >= upg.maxLevel;
         const info = getClickUpgradeBuyInfo(upg, clickBuyMultiplier);
         const canAfford = !isMax && state.energy >= info.cost && info.count > 0;
+        const progress = Math.min(100, Math.round((lvl / upg.maxLevel) * 100));
 
         const card = document.createElement('div');
-        card.className = 'upgrade-card' + (canAfford ? '' : ' locked');
+        card.className = 'tech-row-card' + (canAfford ? '' : ' locked');
         card.id = `u_card_${upg.id}`;
         card.onclick = () => buyClickUpgrade(upg.id);
 
         const costDisplay = isMax ? 'MAXIM' : (clickBuyMultiplier === 1 ? `${formatNumber(info.cost)} ⚡` : `+${info.count}x: ${formatNumber(info.cost)} ⚡`);
 
         card.innerHTML = `
-          <div class="upgrade-top">
-            <div class="upgrade-icon">${upg.icon}</div>
-            <div class="upgrade-info">
-              <div class="upgrade-name-row">
-                <span class="upgrade-name">${upg.name}</span>
-                <span class="upgrade-lvl">Niv. ${lvl}/${upg.maxLevel}</span>
+          <div class="tech-icon-box" style="border-color:${curCore.color}55">${upg.icon}</div>
+          <div class="tech-body-box">
+            <div class="tech-title-row">
+              <div class="tech-name-wrap">
+                <span class="tech-name">${upg.name}</span>
+                <span class="tech-core-tag" style="color:${curCore.color}">${curCore.shortName}</span>
               </div>
-              <div class="upgrade-desc">${upg.desc}</div>
-              ${upg.specialBadge ? `<div class="special-mechanic-badge ${upg.badgeColor || ''}">${upg.specialBadge}</div>` : ''}
+              <span class="tech-lvl-badge" id="u_lvl_${upg.id}">Niv. ${lvl}/${upg.maxLevel}</span>
             </div>
-          </div>
-          <div class="upgrade-footer">
-            <span>Cost:</span>
-            <span class="cost-tag" id="u_cost_${upg.id}">${costDisplay}</span>
+            <div class="tech-meta-row">
+              <span class="tech-desc">${upg.desc}</span>
+              <span class="tech-cost-tag" id="u_cost_${upg.id}">${costDisplay}</span>
+            </div>
+            ${upg.specialBadge ? `<div class="special-mechanic-badge ${upg.badgeColor || ''}">${upg.specialBadge}</div>` : ''}
+            <div class="tech-progress-bar" title="Nivel ${lvl}/${upg.maxLevel}">
+              <div class="tech-progress-fill" style="width:${progress}%; background: linear-gradient(90deg, ${curCore.color}, #38bdf8);"></div>
+            </div>
           </div>
         `;
         container.appendChild(card);
       });
+    }
+
+    function renderClickUpgrades() {
+      renderRightClickUpgrades();
+    }
+
+    function renderRightZone() {
+      switchRightZoneTab(activeRightTab);
     }
 
     function renderGenerators() {
@@ -12527,11 +13364,13 @@
       if (!container) return;
       container.innerHTML = '';
 
+      const curCore = CORES_DATA.find(c => c.id === (state.activeCoreId || 'quantum')) || CORES_DATA[0];
+
       GENERATORS_DATA.forEach(gen => {
         const count = state.generators[gen.id] || 0;
         const info = getGeneratorBuyInfo(gen, buyMultiplier);
         const canAfford = state.energy >= info.cost;
-        const unitProd = gen.baseCps * getGeneratorMilestoneMultiplier(count) * getGlobalMultiplier();
+        const unitProd = gen.baseCps * getGeneratorMilestoneMultiplier(count) * getGlobalSharedMultiplier() * (curCore.cpsMult || 1.0);
         const progress = getNextMilestoneProgress(count);
         const tier = getAutomationTier(count);
         const tierMeta = AUTOMATION_TIERS_META[tier] || AUTOMATION_TIERS_META[1];
@@ -12574,6 +13413,169 @@
         `;
         container.appendChild(card);
       });
+    }
+
+    function switchActiveCore(coreId) {
+      const core = CORES_DATA.find(c => c.id === coreId);
+      if (!core) return;
+      if (!isCoreUnlocked(coreId)) {
+        showToast(`🔒 Nucleul ${core.name} se deblochează la Rebirth #${core.reqRebirth}!`);
+        playTone(220, 'sawtooth', 0.15, 0.08);
+        return;
+      }
+
+      state.activeCoreId = coreId;
+      state.equippedCoreSkin = coreId;
+
+      renderCoreButtonSkin(coreId);
+      syncCoreVisualEcosystem(true);
+      renderMultiCoreSelector();
+      renderRightZone();
+      renderMultiCoresTab();
+      updateUI(true);
+
+      if (coreId === 'solar') playTone(580, 'triangle', 0.25, 0.12);
+      else if (coreId === 'tesseract') playTone(720, 'sine', 0.25, 0.12);
+      else if (coreId === 'void') playTone(300, 'sawtooth', 0.3, 0.14);
+      else if (coreId === 'whitehole') playTone(980, 'triangle', 0.3, 0.15);
+      else playTone(440, 'sine', 0.2, 0.1);
+
+      showToast(`⚡ Comutat pe: ${core.name}!`);
+      saveGame();
+    }
+
+    function renderMultiCoreSelector() {
+      const container = document.getElementById('multiCoreSwitcherBar');
+      if (!container) return;
+      container.innerHTML = '';
+
+      const activeId = state.activeCoreId || 'quantum';
+
+      CORES_DATA.forEach(core => {
+        const unlocked = isCoreUnlocked(core.id);
+        const isActive = activeId === core.id;
+        const coreCps = getCoreCPS(core.id);
+
+        const btn = document.createElement('button');
+        btn.className = `core-pill-btn ${isActive ? 'active' : ''} ${unlocked ? 'unlocked' : 'locked'}`;
+        btn.style.setProperty('--core-theme', core.color);
+        btn.title = unlocked 
+          ? `${core.name} (${core.perk})\nProducție proprie: +${formatNumber(coreCps)}/s` 
+          : `Blocat. Necesită Rebirth #${core.reqRebirth}`;
+
+        btn.onclick = () => {
+          if (unlocked) {
+            switchActiveCore(core.id);
+          } else {
+            showToast(`🔒 ${core.name} se deblochează la Rebirth #${core.reqRebirth}!`);
+            playTone(220, 'sawtooth', 0.15, 0.08);
+          }
+        };
+
+        btn.innerHTML = `
+          <span class="pill-icon">${core.icon}</span>
+          <span class="pill-name">${core.shortName}</span>
+          ${!unlocked ? `<span class="pill-lock">🔒 R#${core.reqRebirth}</span>` : (coreCps > 0 ? `<span class="pill-cps">+${formatNumber(coreCps)}/s</span>` : `<span class="pill-ready">Gata</span>`)}
+        `;
+        container.appendChild(btn);
+      });
+
+      const activeCore = CORES_DATA.find(c => c.id === activeId) || CORES_DATA[0];
+      const activeNameEl = document.getElementById('activeCoreNameText');
+      const activeCpsEl = document.getElementById('activeCoreCpsBadge');
+      const activePerkEl = document.getElementById('activeCorePerkText');
+
+      if (activeNameEl) {
+        activeNameEl.innerText = `${activeCore.icon} ${activeCore.name}`;
+        activeNameEl.style.color = activeCore.color;
+      }
+      if (activeCpsEl) {
+        const activeCps = getCoreCPS(activeCore.id);
+        activeCpsEl.innerText = `Producție: +${formatNumber(activeCps)}/s`;
+        activeCpsEl.style.color = activeCore.color;
+        activeCpsEl.style.borderColor = `${activeCore.color}55`;
+      }
+      if (activePerkEl) {
+        activePerkEl.innerText = activeCore.perk;
+      }
+    }
+
+    function renderMultiCoresTab() {
+      const container = document.getElementById('omniverseCoresGrid');
+      if (!container) return;
+      container.innerHTML = '';
+
+      const activeId = state.activeCoreId || 'quantum';
+      const totalCps = getCPS();
+      let unlockedCount = 0;
+
+      CORES_DATA.forEach(core => {
+        const unlocked = isCoreUnlocked(core.id);
+        if (unlocked) unlockedCount++;
+        const isActive = activeId === core.id;
+        const coreCps = getCoreCPS(core.id);
+        const coreData = (state.cores && state.cores[core.id]) || { generators: {}, clickUpgrades: {} };
+        const totalGens = Object.values(coreData.generators || {}).reduce((a, b) => a + (Number(b) || 0), 0);
+        const totalTech = Object.values(coreData.clickUpgrades || {}).reduce((a, b) => a + (Number(b) || 0), 0);
+
+        const card = document.createElement('div');
+        card.className = `omniverse-core-card ${isActive ? 'active' : ''} ${unlocked ? 'unlocked' : 'locked'}`;
+        card.style.setProperty('--card-theme', core.color);
+
+        let actionBtnHtml = '';
+        if (isActive) {
+          actionBtnHtml = `<button class="btn-omni-switch is-active" disabled>✅ Nucleu Activ În Prezent</button>`;
+        } else if (unlocked) {
+          actionBtnHtml = `<button class="btn-omni-switch can-switch" onclick="switchActiveCore('${core.id}')">⚡ Comută pe Acest Nucleu</button>`;
+        } else {
+          actionBtnHtml = `<button class="btn-omni-switch is-locked" disabled>🔒 Deblocat la Rebirth #${core.reqRebirth}</button>`;
+        }
+
+        card.innerHTML = `
+          <div class="omni-card-header">
+            <div class="omni-card-icon" style="color:${core.color}; border-color:${core.color}50">${core.icon}</div>
+            <div class="omni-card-title-box">
+              <div class="omni-card-title" style="color:${core.color}">${core.name}</div>
+              <div class="omni-card-sub">${unlocked ? (isActive ? '🟢 Nucleu Activ' : '⚡ Online în Paralel') : `🔒 Necesită Rebirth #${core.reqRebirth}`}</div>
+            </div>
+          </div>
+          <p style="font-size:11.5px; color:var(--text-muted); line-height:1.35;">${core.desc}</p>
+          <div class="special-mechanic-badge gold" style="font-size:10.5px;">${core.perk}</div>
+          <div class="omni-card-metrics">
+            <div class="omni-metric-row">
+              <span class="omni-metric-label">Producție Pasivă:</span>
+              <span class="omni-metric-val" style="color:var(--accent-emerald);">+${formatNumber(coreCps)}/s</span>
+            </div>
+            <div class="omni-metric-row">
+              <span class="omni-metric-label">Multiplicator Pasiv Nativ:</span>
+              <span class="omni-metric-val">${core.cpsMult}x Producție</span>
+            </div>
+            <div class="omni-metric-row">
+              <span class="omni-metric-label">Generatoare Construite:</span>
+              <span class="omni-metric-val">${totalGens} buc.</span>
+            </div>
+            <div class="omni-metric-row">
+              <span class="omni-metric-label">Tehnologii Cercetate:</span>
+              <span class="omni-metric-val">${totalTech} nivele</span>
+            </div>
+          </div>
+          ${actionBtnHtml}
+        `;
+        container.appendChild(card);
+      });
+
+      const totalCpsEl = document.getElementById('omniTotalCpsVal');
+      if (totalCpsEl) totalCpsEl.innerText = `${formatNumber(totalCps)} ⚡/s`;
+      const coresUnlockedEl = document.getElementById('omniCoresUnlockedVal');
+      if (coresUnlockedEl) coresUnlockedEl.innerText = `${unlockedCount} / ${CORES_DATA.length}`;
+      const activeCoreEl = document.getElementById('omniActiveCoreVal');
+      const curCore = CORES_DATA.find(c => c.id === activeId) || CORES_DATA[0];
+      if (activeCoreEl) {
+        activeCoreEl.innerText = `${curCore.icon} ${curCore.shortName}`;
+        activeCoreEl.style.color = curCore.color;
+      }
+      const badgeEl = document.getElementById('coresUnlockedBadge');
+      if (badgeEl) badgeEl.innerText = `${unlockedCount}/${CORES_DATA.length}`;
     }
 
     // =========================================================================
@@ -13447,46 +14449,65 @@
       const presEl = document.getElementById('prestigeMultMini');
       if (presEl) presEl.innerText = `⭐ +${formatNumber(totalPresBonusPct, 0)}% Bonus`;
 
-      // Actualizare accesibilitate și cost dinamic carduri Upgrade-uri Click
-      CLICK_UPGRADES_DATA.forEach(upg => {
-        const card = document.getElementById(`u_card_${upg.id}`);
-        if (!card) return;
-        const lvl = state.clickUpgrades[upg.id] || 0;
-        const isMax = lvl >= upg.maxLevel;
-        const info = getClickUpgradeBuyInfo(upg, clickBuyMultiplier);
-        if (!isMax && state.energy >= info.cost && info.count > 0) {
-          card.classList.remove('locked');
-        } else {
-          card.classList.add('locked');
-        }
-        const uCostEl = document.getElementById(`u_cost_${upg.id}`);
-        if (uCostEl) {
-          uCostEl.innerText = isMax ? 'MAXIM' : (clickBuyMultiplier === 1 ? `${formatNumber(info.cost)} ⚡` : `+${info.count}x: ${formatNumber(info.cost)} ⚡`);
-        }
-      });
+      const curCore = CORES_DATA.find(c => c.id === (state.activeCoreId || 'quantum')) || CORES_DATA[0];
 
-      // Actualizare dinamică Generatoare (inclusiv modul MAX și descrierea specială)
-      GENERATORS_DATA.forEach(gen => {
-        const card = document.getElementById(`g_card_${gen.id}`);
-        if (!card) return;
-        const count = state.generators[gen.id] || 0;
-        const info = getGeneratorBuyInfo(gen, buyMultiplier);
-        const canAfford = state.energy >= info.cost;
-        if (canAfford) {
-          card.classList.remove('locked');
-        } else {
-          card.classList.add('locked');
-        }
-        const costEl = document.getElementById(`g_cost_${gen.id}`);
-        if (costEl) costEl.innerText = `+${info.count}x: ${formatNumber(info.cost)} ⚡`;
-        const prodEl = document.getElementById(`g_prod_${gen.id}`);
-        const unitProd = gen.baseCps * getGeneratorMilestoneMultiplier(count) * getGlobalMultiplier();
-        if (prodEl) prodEl.innerText = `+${formatNumber(unitProd)}/s bază`;
-        const specEl = document.getElementById(`g_spec_${gen.id}`);
-        if (specEl && gen.specialSummary) {
-          specEl.innerText = count > 0 ? gen.specialSummary(count) : gen.roleBadge;
-        }
-      });
+      // Actualizare dinamică a listei vizibile în panoul din dreapta (Tehnologii sau Generatoare)
+      if (activeRightTab === 'tech') {
+        CLICK_UPGRADES_DATA.forEach(upg => {
+          const card = document.getElementById(`u_card_${upg.id}`);
+          if (!card) return;
+          const lvl = (state.clickUpgrades && state.clickUpgrades[upg.id]) || 0;
+          const isMax = lvl >= upg.maxLevel;
+          const info = getClickUpgradeBuyInfo(upg, clickBuyMultiplier);
+          if (!isMax && state.energy >= info.cost && info.count > 0) {
+            card.classList.remove('locked');
+          } else {
+            card.classList.add('locked');
+          }
+          const uCostEl = document.getElementById(`u_cost_${upg.id}`);
+          if (uCostEl) {
+            uCostEl.innerText = isMax ? 'MAXIM' : (clickBuyMultiplier === 1 ? `${formatNumber(info.cost)} ⚡` : `+${info.count}x: ${formatNumber(info.cost)} ⚡`);
+          }
+          const uLvlEl = document.getElementById(`u_lvl_${upg.id}`);
+          if (uLvlEl) {
+            uLvlEl.innerText = `Niv. ${lvl}/${upg.maxLevel}`;
+          }
+        });
+      } else {
+        GENERATORS_DATA.forEach(gen => {
+          const card = document.getElementById(`g_card_${gen.id}`);
+          if (!card) return;
+          const count = (state.generators && state.generators[gen.id]) || 0;
+          const info = getGeneratorBuyInfo(gen, buyMultiplier);
+          const canAfford = state.energy >= info.cost;
+          if (canAfford) {
+            card.classList.remove('locked');
+          } else {
+            card.classList.add('locked');
+          }
+          const costEl = document.getElementById(`g_cost_${gen.id}`);
+          if (costEl) costEl.innerText = `+${info.count}x: ${formatNumber(info.cost)} ⚡`;
+          const prodEl = document.getElementById(`g_prod_${gen.id}`);
+          const unitProd = gen.baseCps * getGeneratorMilestoneMultiplier(count) * getGlobalSharedMultiplier() * (curCore.cpsMult || 1.0);
+          if (prodEl) prodEl.innerText = `+${formatNumber(unitProd)}/s bază`;
+          const specEl = document.getElementById(`g_spec_${gen.id}`);
+          if (specEl && gen.specialSummary) {
+            specEl.innerText = count > 0 ? gen.specialSummary(count) : gen.roleBadge;
+          }
+        });
+      }
+
+      // Actualizare badge producție nucleu curent în Left Zone
+      const activeCpsBadgeEl = document.getElementById('activeCoreCpsBadge');
+      if (activeCpsBadgeEl) {
+        activeCpsBadgeEl.innerText = `Producție: +${formatNumber(getCoreCPS(curCore.id))}/s`;
+      }
+
+      // Dacă tab-ul Omnivers este activ, actualizăm metricile live
+      const omniTotalEl = document.getElementById('omniTotalCpsVal');
+      if (omniTotalEl) {
+        omniTotalEl.innerText = `${formatNumber(getCPS())} ⚡/s`;
+      }
 
       // Actualizare secțiune Prestigiu Secvențial (Câte un Rebirth pe rând bazat pe soldul curent)
       const nextRebirthNum = (state.prestigeCount || 0) + 1;
@@ -13598,7 +14619,7 @@
       const targetPane = document.getElementById(`tab-${tabName}`);
       if (targetPane) targetPane.classList.add('active');
 
-      if (tabName === 'upgrades') renderClickUpgrades();
+      if (tabName === 'multicores' || tabName === 'upgrades') renderMultiCoresTab();
       if (tabName === 'stats') renderStats();
       if (tabName === 'prestige') renderPrestigeUpgrades();
       if (tabName === 'constellation') {
@@ -13626,14 +14647,15 @@
     }
 
     function renderAll() {
-      renderClickUpgrades();
-      renderGenerators();
+      renderMultiCoreSelector();
+      renderRightZone();
+      renderMultiCoresTab();
       renderPrestigeUpgrades();
       renderAchievements();
       syncCoreVisualEcosystem(true);
-      renderCoreButtonSkin(state.equippedCoreSkin || 'quantum');
+      renderCoreButtonSkin(state.activeCoreId || state.equippedCoreSkin || 'quantum');
       updateDailyBadge();
-      updateUI();
+      updateUI(true);
     }
 
     /********************************************************************
@@ -13675,8 +14697,7 @@
         state = {
           ...def,
           ...parsed,
-          clickUpgrades: { ...def.clickUpgrades, ...(parsed.clickUpgrades || {}) },
-          generators: { ...def.generators, ...(parsed.generators || {}) },
+          cores: parsed.cores ? { ...def.cores, ...parsed.cores } : def.cores,
           prestigeUpgrades: { ...def.prestigeUpgrades, ...(parsed.prestigeUpgrades || {}) },
           dailyLogin: { ...def.dailyLogin, ...(parsed.dailyLogin || {}) },
           dailyQuests: { ...def.dailyQuests, ...(parsed.dailyQuests || {}) },
@@ -13684,6 +14705,7 @@
           skillCooldowns: { ...def.skillCooldowns, ...(parsed.skillCooldowns || {}) },
           activeBuffs: { ...def.activeBuffs, ...(parsed.activeBuffs || {}) }
         };
+        state = ensureStateCoreBindings(state);
         ALL_SKILL_TREE_NODES.forEach(n => {
           if (state.prestigeUpgrades[n.id] === undefined) {
             state.prestigeUpgrades[n.id] = 0;
@@ -13691,7 +14713,7 @@
         });
         skillCooldowns = state.skillCooldowns;
         activeBuffs = state.activeBuffs;
-        state.equippedCoreSkin = state.equippedCoreSkin || 'quantum';
+        state.equippedCoreSkin = state.activeCoreId || state.equippedCoreSkin || 'quantum';
 
         // Curățăm ID-urile vechi de realizări și sincronizăm silențios realizările deja îndeplinite din cele 330
         const validAchIds = new Set(ACHIEVEMENTS_DATA.map(a => a.id));
@@ -13813,7 +14835,7 @@
      *       + AUTO-SYNC SILENȚIOS OFFLINE -> ONLINE + AUTO-UPDATE LIVE
      *       + NAVIGARE MOBIL & INSTALARE PWA (MACBOOK / PC / ANDROID / iOS)
      ********************************************************************/
-    const APP_VERSION = '3.3.2';
+    const APP_VERSION = '3.4.0';
     const APP_BUILD = 332;
     // URL-ul oficial de pe GitHub Pages pentru verificarea automată de Update (și în aplicațiile .exe / .dmg):
     const REMOTE_UPDATE_BASE_URL = 'https://mariusinfo.github.io/quantum-nexus';
