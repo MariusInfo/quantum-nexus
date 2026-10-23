@@ -1,7 +1,7 @@
 {
-  "version": "3.5.1",
-  "build": 351,
+  "version": "3.5.2",
+  "build": 352,
   "releaseDate": "2026-10-23",
-  "changelog": "v3.5.1: Optimizare Extremă Performanță & Eliminare Lag GPU - Cache RAM/VRAM pentru animații, eliminare completă backdrop-filter blurs și 60-144 FPS fluid pe orice PC sau telefon.",
+  "changelog": "v3.5.2: Core Clipping Fix & 140 FPS Full Screen Effects - Eliminare completă a decupajului pătrat (contain: paint) pe nucleul central și inelele orbitale. Efectele cosmice, vortexul și undele de șoc se extind liber și fluid la 140 FPS.",
   "autoApply": true
 }

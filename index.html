@@ -1103,6 +1103,7 @@
       align-items: center;
       justify-content: center;
       user-select: none;
+      overflow: visible;
     }
 
     .orbit-ring-layer {
@@ -1110,6 +1111,7 @@
       inset: 0;
       pointer-events: none;
       z-index: 4;
+      overflow: visible;
     }
 
     .cursor-ring-spin {
@@ -1232,7 +1234,7 @@
        OPTIMIZAT PENTRU 60/120 FPS PE TELEFON & PC (ZERO REFLOW, GPU COMPOSITED)
        ========================================================================= */
 
-    /* Promovare pe straturi GPU dedicate & Caching în memoria RAM/VRAM (Texture Caching) */
+    /* Promovare pe straturi GPU dedicate & Compozitare hardware ultra-rapidă (Fără decupare / Zero Clipping) */
     .core-ecosystem-wrap,
     .orbit-ring-layer,
     .cursor-ring-spin,
@@ -1244,11 +1246,7 @@
       will-change: transform;
       transform: translateZ(0);
       backface-visibility: hidden;
-      contain: paint;
-    }
-
-    .orbit-slot {
-      contain: layout;
+      overflow: visible;
     }
 
     @keyframes cursorPokeApex {
@@ -6962,7 +6960,7 @@
       <!-- Subtitlu & Versiune Sistem -->
       <div class="loading-footer-tip">
         <span class="loading-pulse-dot"></span>
-        <span id="loadingVersionSub">Simulare Multiversală v3.5.1 // Auto-Stabilizare Activă</span>
+        <span id="loadingVersionSub">Simulare Multiversală v3.5.2 // Auto-Stabilizare Activă</span>
       </div>
 
       <!-- Hint discret dacă browserul a reținut temporar autoplay înainte de primul gest -->
@@ -6980,7 +6978,7 @@
         <div class="brand-icon">⚛️</div>
         <div>
           <div class="brand-title">QUANTUM NEXUS</div>
-          <div class="brand-sub" id="versionHeaderSub">v3.5.1</div>
+          <div class="brand-sub" id="versionHeaderSub">v3.5.2</div>
         </div>
         <div class="fps-meter-badge fps-high" id="fpsMeterBadge" onclick="showFpsInfo()" title="Monitorizare Cadre pe Secundă (FPS în timp real) - Click pentru detalii">
           <span class="fps-dot"></span>
@@ -7595,7 +7593,7 @@
           <button class="btn-header install-btn" id="btnInstallApp" onclick="triggerInstallApp()">📲 Instalează</button>
         </div>
         <div style="font-size: 11px; color: var(--text-dim); margin-top: 8px;">
-          Versiune instalată: <strong id="settingsVersionText">v3.5.1</strong> // Auto-Update activ
+          Versiune instalată: <strong id="settingsVersionText">v3.5.2</strong> // Auto-Update activ
         </div>
       </div>
 
@@ -16627,8 +16625,8 @@
      *       + AUTO-SYNC SILENȚIOS OFFLINE -> ONLINE + AUTO-UPDATE LIVE
      *       + NAVIGARE MOBIL & INSTALARE PWA (MACBOOK / PC / ANDROID / iOS)
      ********************************************************************/
-    const APP_VERSION = '3.5.1';
-    const APP_BUILD = 351;
+    const APP_VERSION = '3.5.2';
+    const APP_BUILD = 352;
     // URL-ul oficial de pe GitHub Pages pentru verificarea automată de Update (și în aplicațiile .exe / .dmg):
     const REMOTE_UPDATE_BASE_URL = 'https://mariusinfo.github.io/quantum-nexus';
 
