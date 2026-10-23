@@ -2295,21 +2295,18 @@
     }
 
     .card-activated-flash {
-      animation: cardActivatePulse 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+      animation: cardActivatePulse 0.35s ease-out;
     }
 
     @keyframes cardActivatePulse {
       0% {
-        transform: scale(0.95);
-        box-shadow: 0 0 0 0 rgba(56, 189, 248, 0.8), inset 0 0 25px rgba(56, 189, 248, 0.45);
-        border-color: #ffffff;
-      }
-      50% {
-        transform: scale(1.03);
-        box-shadow: 0 0 28px 6px rgba(56, 189, 248, 0.45), inset 0 0 15px rgba(168, 85, 247, 0.35);
+        border-color: #38bdf8;
+        box-shadow: 0 0 16px rgba(56, 189, 248, 0.6), inset 0 0 12px rgba(56, 189, 248, 0.25);
+        filter: brightness(1.15);
       }
       100% {
-        transform: scale(1);
+        box-shadow: none;
+        filter: brightness(1);
       }
     }
 
@@ -2858,12 +2855,12 @@
     }
 
     .right-header-tabs {
-      padding: 10px 14px;
+      padding: 12px 20px 12px 16px;
       border-bottom: 1px solid var(--border-subtle);
       display: flex;
       justify-content: space-between;
       align-items: center;
-      gap: 8px;
+      gap: 12px;
       background: rgba(14, 19, 31, 0.95);
       flex-shrink: 0;
     }
@@ -2968,11 +2965,13 @@
     .tech-row-card:hover:not(.locked) {
       background: var(--bg-card-hover);
       border-color: var(--accent-cyan);
-      transform: translateX(-2px);
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
     }
 
     .tech-row-card:active:not(.locked) {
-      transform: scale(0.98);
+      border-color: var(--accent-cyan);
+      background: rgba(56, 189, 248, 0.12);
+      filter: brightness(1.1);
     }
 
     .tech-row-card.locked {
@@ -3271,8 +3270,9 @@
       background: var(--bg-base);
       border: 1px solid var(--border-subtle);
       border-radius: 8px;
-      padding: 2px;
-      gap: 2px;
+      padding: 3px;
+      gap: 4px;
+      margin-right: 6px;
     }
 
     .mult-btn {
@@ -3282,7 +3282,7 @@
       font-family: var(--font-mono);
       font-size: 11px;
       font-weight: 700;
-      padding: 5px 9px;
+      padding: 5px 10px;
       border-radius: 6px;
       cursor: pointer;
       transition: all 0.15s ease;
@@ -3311,7 +3311,7 @@
       align-items: center;
       gap: 12px;
       cursor: pointer;
-      transition: all 0.14s ease;
+      transition: background 0.14s ease, border-color 0.14s ease, box-shadow 0.14s ease;
       position: relative;
       flex-shrink: 0;
     }
@@ -3319,11 +3319,13 @@
     .gen-card:hover:not(.locked) {
       background: var(--bg-card-hover);
       border-color: var(--accent-cyan);
-      transform: translateX(-2px);
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
     }
 
     .gen-card:active:not(.locked) {
-      transform: scale(0.98);
+      border-color: var(--accent-cyan);
+      background: rgba(56, 189, 248, 0.12);
+      filter: brightness(1.1);
     }
 
     .gen-card.locked {
@@ -3342,6 +3344,9 @@
       justify-content: center;
       font-size: 24px;
       flex-shrink: 0;
+      overflow: hidden;
+      line-height: 1;
+      user-select: none;
     }
 
     .gen-body {
@@ -6960,7 +6965,7 @@
       <!-- Subtitlu & Versiune Sistem -->
       <div class="loading-footer-tip">
         <span class="loading-pulse-dot"></span>
-        <span id="loadingVersionSub">Simulare Multiversală v3.5.2 // Auto-Stabilizare Activă</span>
+        <span id="loadingVersionSub">Simulare Multiversală v3.5.3 // Auto-Stabilizare Activă</span>
       </div>
 
       <!-- Hint discret dacă browserul a reținut temporar autoplay înainte de primul gest -->
@@ -6978,7 +6983,7 @@
         <div class="brand-icon">⚛️</div>
         <div>
           <div class="brand-title">QUANTUM NEXUS</div>
-          <div class="brand-sub" id="versionHeaderSub">v3.5.2</div>
+          <div class="brand-sub" id="versionHeaderSub">v3.5.3</div>
         </div>
         <div class="fps-meter-badge fps-high" id="fpsMeterBadge" onclick="showFpsInfo()" title="Monitorizare Cadre pe Secundă (FPS în timp real) - Click pentru detalii">
           <span class="fps-dot"></span>
@@ -7593,7 +7598,7 @@
           <button class="btn-header install-btn" id="btnInstallApp" onclick="triggerInstallApp()">📲 Instalează</button>
         </div>
         <div style="font-size: 11px; color: var(--text-dim); margin-top: 8px;">
-          Versiune instalată: <strong id="settingsVersionText">v3.5.2</strong> // Auto-Update activ
+          Versiune instalată: <strong id="settingsVersionText">v3.5.3</strong> // Auto-Update activ
         </div>
       </div>
 
@@ -12050,18 +12055,18 @@
 
     function getGeneratorTierIcon(genId, tier) {
       const tierMap = {
-        'g0': ['🖱️', '🖱️', '⚡🖱️', '🔮🖱️', '👑🖱️'],
-        'g1': ['🤖', '🤖', '🛸', '🚀', '👑🛸'],
-        'g2': ['💻', '💻', '⚡💻', '🧠', '🌐'],
-        'g3': ['🔋', '🔋', '⚡🔋', '💥🔋', '⚛️🔋'],
+        'g0': ['🖱️', '🖱️', '⚡', '🔮', '👑'],
+        'g1': ['🤖', '🤖', '🛸', '🚀', '👑'],
+        'g2': ['💻', '💻', '⚡', '🧠', '🌐'],
+        'g3': ['🔋', '🔋', '⚡', '💥', '💠'],
         'g4': ['🛰️', '🛰️', '🛸', '🌟', '☀️'],
-        'g5': ['⚛️', '⚛️', '⚡⚛️', '🔥⚛️', '👑⚛️'],
-        'g6': ['🕳️', '🕳️', '🌀', '🔮🕳️', '🌌🕳️'],
-        'g7': ['☀️', '☀️', '🪐', '🌟☀️', '👑☀️'],
-        'g8': ['⏳', '⏳', '⚡⏳', '🌀⏳', '👑⏳'],
-        'g9': ['🌌', '🌌', '✨🌌', '🔮🌌', '👑🌌']
+        'g5': ['⚛️', '⚛️', '💠', '🔥', '🌟'],
+        'g6': ['🕳️', '🕳️', '🌀', '🔮', '🌌'],
+        'g7': ['☀️', '☀️', '🪐', '🌟', '👑'],
+        'g8': ['⏳', '⏳', '⏱️', '🌀', '👑'],
+        'g9': ['🌌', '🌌', '✨', '🔮', '👑']
       };
-      const icons = tierMap[genId] || ['⚙️', '⚙️', '⚡⚙️', '🔮⚙️', '👑⚙️'];
+      const icons = tierMap[genId] || ['⚙️', '⚙️', '⚡', '🔮', '👑'];
       return icons[Math.min(tier, 4)] || icons[0];
     }
 
@@ -13916,9 +13921,25 @@
         playTone(540, 'triangle', 0.1, 0.09);
         if (id === 'c_flat1') spawnPhotonMegaBeam();
         syncCoreVisualEcosystem(true);
-        renderClickUpgrades();
-        const newCardEl = document.getElementById(`u_card_${id}`);
-        if (newCardEl) newCardEl.classList.add('card-activated-flash');
+        if (state.clickUpgrades[id] >= upg.maxLevel) {
+          renderClickUpgrades();
+        } else {
+          const lvlEl = document.getElementById(`u_lvl_${id}`);
+          if (lvlEl) lvlEl.textContent = `Niv. ${state.clickUpgrades[id]}/${upg.maxLevel}`;
+          const costEl = document.getElementById(`u_cost_${id}`);
+          const nextInfo = getClickUpgradeBuyInfo(upg, clickBuyMultiplier);
+          const isMax = state.clickUpgrades[id] >= upg.maxLevel;
+          const costDisplay = isMax ? 'MAXIM' : (clickBuyMultiplier === 1 ? `${formatNumber(nextInfo.cost)} ⚡` : `+${nextInfo.count}x: ${formatNumber(nextInfo.cost)} ⚡`);
+          if (costEl) costEl.textContent = costDisplay;
+          const barEl = cardEl ? cardEl.querySelector('.tech-progress-fill') : null;
+          if (barEl) barEl.style.width = `${Math.min(100, Math.round((state.clickUpgrades[id] / upg.maxLevel) * 100))}%`;
+        }
+        const activeCardEl = document.getElementById(`u_card_${id}`);
+        if (activeCardEl) {
+          activeCardEl.classList.remove('card-activated-flash');
+          void activeCardEl.offsetWidth;
+          activeCardEl.classList.add('card-activated-flash');
+        }
         updateUI();
         saveGame();
       }
@@ -13945,6 +13966,21 @@
           spawnFloatingText(window.innerWidth / 2, window.innerHeight / 2 - 50, `👑 ${gen.name.toUpperCase()} TIER ${tierMeta.roman}!`, true);
           spawnCoreShockwave(newTier >= 3 ? 'crit' : 'em-wave');
           spawnParticles(window.innerWidth / 2, window.innerHeight / 2, 28, tierMeta.color);
+          renderGenerators();
+        } else {
+          // Actualizare directă în DOM (Fără distrugere/recreere a cardului: zero salturi vizuale și zero click-uri ratate)
+          const cntEl = document.getElementById(`g_cnt_${id}`);
+          if (cntEl) cntEl.textContent = newCount;
+          const costEl = document.getElementById(`g_cost_${id}`);
+          const nextInfo = getGeneratorBuyInfo(gen, buyMultiplier);
+          if (costEl) costEl.textContent = `+${nextInfo.count}x: ${formatNumber(nextInfo.cost)} ⚡`;
+          const nextThreshold = newCount < 25 ? 25 : (newCount < 50 ? 50 : (newCount < 100 ? 100 : null));
+          const fillEl = cardEl ? cardEl.querySelector('.gen-milestone-fill') : null;
+          if (fillEl) fillEl.style.width = `${getNextMilestoneProgress(newCount)}%`;
+          const nextTierEl = cardEl ? cardEl.querySelector('.gen-next-tier') : null;
+          if (nextTierEl) {
+            nextTierEl.textContent = nextThreshold ? `Tier următor: ${newCount}/${nextThreshold}` : `👑 MAX TIER`;
+          }
         }
 
         updateDailyQuestProgress('buy_generators', info.count);
@@ -13955,9 +13991,12 @@
         if (id === 'g3') setTimeout(() => triggerTachyonCapacitorBurst(), 350);
         if (id === 'g6') setTimeout(() => triggerBlackHoleDevourEvent(), 420);
         if (id === 'g9') setTimeout(() => triggerSyntheticUniverseGenesis(), 420);
-        renderGenerators();
-        const newCardEl = document.getElementById(`g_card_${id}`);
-        if (newCardEl) newCardEl.classList.add('card-activated-flash');
+        const activeCardEl = document.getElementById(`g_card_${id}`);
+        if (activeCardEl) {
+          activeCardEl.classList.remove('card-activated-flash');
+          void activeCardEl.offsetWidth;
+          activeCardEl.classList.add('card-activated-flash');
+        }
         updateUI();
         saveGame();
       }
@@ -16625,8 +16664,8 @@
      *       + AUTO-SYNC SILENȚIOS OFFLINE -> ONLINE + AUTO-UPDATE LIVE
      *       + NAVIGARE MOBIL & INSTALARE PWA (MACBOOK / PC / ANDROID / iOS)
      ********************************************************************/
-    const APP_VERSION = '3.5.2';
-    const APP_BUILD = 352;
+    const APP_VERSION = '3.5.3';
+    const APP_BUILD = 353;
     // URL-ul oficial de pe GitHub Pages pentru verificarea automată de Update (și în aplicațiile .exe / .dmg):
     const REMOTE_UPDATE_BASE_URL = 'https://mariusinfo.github.io/quantum-nexus';
 

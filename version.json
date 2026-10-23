@@ -1,7 +1,7 @@
 {
-  "version": "3.5.2",
-  "build": 352,
+  "version": "3.5.3",
+  "build": 353,
   "releaseDate": "2026-10-23",
-  "changelog": "v3.5.2: Core Clipping Fix & 140 FPS Full Screen Effects - Eliminare completă a decupajului pătrat (contain: paint) pe nucleul central și inelele orbitale. Efectele cosmice, vortexul și undele de șoc se extind liber și fluid la 140 FPS.",
+  "changelog": "v3.5.3: UI Polish & Rock-Solid Click Stability - Eliminat iconițele duble din generatoare (icon curat și unic pe fiecare tier), eliminat orice deplasare/salt pe verticală la spam-click pe carduri și adăugată spațiere generoasă pentru butoanele de multiplicator (1x - MAX).",
   "autoApply": true
 }
