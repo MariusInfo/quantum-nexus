@@ -1,7 +1,7 @@
 {
-  "version": "3.5.3",
-  "build": 353,
+  "version": "3.5.4",
+  "build": 354,
   "releaseDate": "2026-10-23",
-  "changelog": "v3.5.3: UI Polish & Rock-Solid Click Stability - Eliminat iconițele duble din generatoare (icon curat și unic pe fiecare tier), eliminat orice deplasare/salt pe verticală la spam-click pe carduri și adăugată spațiere generoasă pentru butoanele de multiplicator (1x - MAX).",
+  "changelog": "v3.5.4: Responsive Multiplier Group Fix - Ajustat dimensiunile și spațierea pentru grupul de multiplicatori (1x - MAX) și tab-urile Tehnologii/Automatizări pentru a încăpea perfect în întregime, fără a fi trunchiat niciun buton.",
   "autoApply": true
 }

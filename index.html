@@ -709,7 +709,7 @@
 
     @media (max-width: 1200px) {
       .main-grid {
-        grid-template-columns: 330px 1fr 350px;
+        grid-template-columns: 320px 1fr 380px;
       }
     }
 
@@ -2855,14 +2855,15 @@
     }
 
     .right-header-tabs {
-      padding: 12px 20px 12px 16px;
+      padding: 10px 14px;
       border-bottom: 1px solid var(--border-subtle);
       display: flex;
       justify-content: space-between;
       align-items: center;
-      gap: 12px;
+      gap: 8px;
       background: rgba(14, 19, 31, 0.95);
       flex-shrink: 0;
+      min-width: 0;
     }
 
     .right-tab-switcher {
@@ -2872,6 +2873,8 @@
       border-radius: 8px;
       padding: 3px;
       gap: 3px;
+      flex-shrink: 1;
+      min-width: 0;
     }
 
     .right-tab-btn {
@@ -2879,15 +2882,16 @@
       border: none;
       color: var(--text-muted);
       font-family: var(--font-sans);
-      font-size: 12px;
+      font-size: 11.5px;
       font-weight: 700;
-      padding: 6px 12px;
+      padding: 5px 9px;
       border-radius: 6px;
       cursor: pointer;
       display: flex;
       align-items: center;
-      gap: 6px;
+      gap: 5px;
       transition: all 0.15s ease;
+      white-space: nowrap;
     }
 
     .right-tab-btn:hover:not(.active) {
@@ -3270,9 +3274,9 @@
       background: var(--bg-base);
       border: 1px solid var(--border-subtle);
       border-radius: 8px;
-      padding: 3px;
-      gap: 4px;
-      margin-right: 6px;
+      padding: 2px;
+      gap: 2px;
+      flex-shrink: 0;
     }
 
     .mult-btn {
@@ -3282,10 +3286,11 @@
       font-family: var(--font-mono);
       font-size: 11px;
       font-weight: 700;
-      padding: 5px 10px;
+      padding: 4px 7px;
       border-radius: 6px;
       cursor: pointer;
       transition: all 0.15s ease;
+      white-space: nowrap;
     }
 
     .mult-btn.active {
@@ -6965,7 +6970,7 @@
       <!-- Subtitlu & Versiune Sistem -->
       <div class="loading-footer-tip">
         <span class="loading-pulse-dot"></span>
-        <span id="loadingVersionSub">Simulare Multiversală v3.5.3 // Auto-Stabilizare Activă</span>
+        <span id="loadingVersionSub">Simulare Multiversală v3.5.4 // Auto-Stabilizare Activă</span>
       </div>
 
       <!-- Hint discret dacă browserul a reținut temporar autoplay înainte de primul gest -->
@@ -6983,7 +6988,7 @@
         <div class="brand-icon">⚛️</div>
         <div>
           <div class="brand-title">QUANTUM NEXUS</div>
-          <div class="brand-sub" id="versionHeaderSub">v3.5.3</div>
+          <div class="brand-sub" id="versionHeaderSub">v3.5.4</div>
         </div>
         <div class="fps-meter-badge fps-high" id="fpsMeterBadge" onclick="showFpsInfo()" title="Monitorizare Cadre pe Secundă (FPS în timp real) - Click pentru detalii">
           <span class="fps-dot"></span>
@@ -7598,7 +7603,7 @@
           <button class="btn-header install-btn" id="btnInstallApp" onclick="triggerInstallApp()">📲 Instalează</button>
         </div>
         <div style="font-size: 11px; color: var(--text-dim); margin-top: 8px;">
-          Versiune instalată: <strong id="settingsVersionText">v3.5.3</strong> // Auto-Update activ
+          Versiune instalată: <strong id="settingsVersionText">v3.5.4</strong> // Auto-Update activ
         </div>
       </div>
 
@@ -16664,8 +16669,8 @@
      *       + AUTO-SYNC SILENȚIOS OFFLINE -> ONLINE + AUTO-UPDATE LIVE
      *       + NAVIGARE MOBIL & INSTALARE PWA (MACBOOK / PC / ANDROID / iOS)
      ********************************************************************/
-    const APP_VERSION = '3.5.3';
-    const APP_BUILD = 353;
+    const APP_VERSION = '3.5.4';
+    const APP_BUILD = 354;
     // URL-ul oficial de pe GitHub Pages pentru verificarea automată de Update (și în aplicațiile .exe / .dmg):
     const REMOTE_UPDATE_BASE_URL = 'https://mariusinfo.github.io/quantum-nexus';
 
