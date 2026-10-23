@@ -7530,7 +7530,7 @@
     <div class="modal-card">
       <div class="modal-title">🚀 Actualizare Nouă Disponibilă!</div>
       <div class="modal-body">
-        O versiune nouă a jocului (<strong id="updateNewVerText" style="color:var(--accent-cyan)">v2.7.0</strong>) a fost publicată pe server!<br/><br/>
+        O versiune nouă a jocului (<strong id="updateNewVerText" style="color:var(--accent-cyan)">v3.4.1</strong>) a fost publicată pe server!<br/><br/>
         <div id="updateChangelogText" style="background:var(--bg-card); border:1px solid var(--border-subtle); border-radius:10px; padding:10px; font-size:12px; color:var(--text-main);">
           Îmbunătățiri de sistem și conținut nou.
         </div>
@@ -7538,9 +7538,14 @@
           💾 Progresul tău a fost salvat automat local și în Cloud!
         </div>
       </div>
-      <button class="btn-prestige" id="btnApplyUpdateNow" onclick="applyGameUpdateNow()" style="width:100%">
-        ⚡ Actualizează Acum (<span id="updateCountdownText">4s</span>)
-      </button>
+      <div style="display:flex; gap:10px; margin-top:14px;">
+        <button class="btn-prestige" id="btnApplyUpdateNow" onclick="applyGameUpdateNow()" style="flex:1">
+          ⚡ Actualizează Acum (<span id="updateCountdownText">5s</span>)
+        </button>
+        <button class="btn-secondary" onclick="dismissUpdateModal()" style="padding:10px 16px; font-size:13px; cursor:pointer;">
+          Mai târziu
+        </button>
+      </div>
     </div>
   </div>
 
@@ -14749,7 +14754,7 @@
      *       + NAVIGARE MOBIL & INSTALARE PWA (MACBOOK / PC / ANDROID / iOS)
      ********************************************************************/
     const APP_VERSION = '3.4.1';
-    const APP_BUILD = 332;
+    const APP_BUILD = 341;
     // URL-ul oficial de pe GitHub Pages pentru verificarea automată de Update (și în aplicațiile .exe / .dmg):
     const REMOTE_UPDATE_BASE_URL = 'https://mariusinfo.github.io/quantum-nexus';
 
@@ -16112,10 +16117,21 @@
      * 11.8. SISTEM AUTO-UPDATE LIVE (PENTRU TOȚI JUCĂTORII ONLINE)
      ********************************************************************/
     async function checkForGameUpdate(manual = false) {
+      // 1. În varianta locală de pe PC (file:///), nu facem buclă și nu redirecționăm
+      if (location.protocol === 'file:') {
+        if (manual) showToast(`💻 Rulezi versiunea locală pentru PC (v${APP_VERSION} - Build ${APP_BUILD}).`);
+        return;
+      }
+
       if (!navigator.onLine) {
         if (manual) showToast('📴 Ești Offline! Verificarea de update necesită conexiune la internet.');
         return;
       }
+
+      // Verificăm dacă utilizatorul a închis deja notificarea de update în această sesiune
+      try {
+        if (sessionStorage.getItem('qn_dismissed_update') === 'true' && !manual) return;
+      } catch (e) {}
 
       try {
         // Verificăm și Service Worker-ul dacă există
@@ -16139,13 +16155,22 @@
           return;
         }
 
-        const isNewerBuild = (remoteVer.build && Number(remoteVer.build) > APP_BUILD);
-        const isDifferentVer = (remoteVer.version && remoteVer.version !== APP_VERSION && !remoteVer.build);
+        const remoteBuild = Number(remoteVer.build) || 0;
+        const isNewerBuild = remoteBuild > APP_BUILD;
+        const isDifferentVer = Boolean(remoteVer.version && remoteVer.version !== APP_VERSION && !remoteBuild);
 
         if (isNewerBuild || isDifferentVer) {
+          // Prevenim buclele dacă s-a aplicat deja acest update în sesiunea curentă
+          try {
+            const lastApplied = sessionStorage.getItem('qn_last_applied_build');
+            if (lastApplied && Number(lastApplied) === remoteBuild && !manual) {
+              return;
+            }
+          } catch (e) {}
+
           await triggerUpdateFlow(remoteVer);
         } else if (manual) {
-          showToast(`✅ Jocul este la zi! Rulezi ultima versiune (v${APP_VERSION}).`);
+          showToast(`✅ Jocul este la zi! Rulezi ultima versiune (v${APP_VERSION} - Build ${APP_BUILD}).`);
         }
       } catch (e) {
         if (manual) showToast(`✅ Rulezi versiunea v${APP_VERSION}.`);
@@ -16154,7 +16179,7 @@
 
     async function triggerUpdateFlow(remoteVer) {
       const modal = document.getElementById('updateModal');
-      if (modal.classList.contains('open')) return; // Deja afișat
+      if (!modal || modal.classList.contains('open')) return;
 
       // 1. Salvăm garantat tot progresul local și în Cloud înainte de update!
       saveGame();
@@ -16162,12 +16187,14 @@
         await cloudPushSave(false);
       }
 
-      document.getElementById('updateNewVerText').innerText = `v${remoteVer.version || 'Nou'}`;
-      document.getElementById('updateChangelogText').innerText = remoteVer.changelog || 'Actualizare de conținut, optimizări și îmbunătățiri.';
+      const newVerEl = document.getElementById('updateNewVerText');
+      if (newVerEl) newVerEl.innerText = `v${remoteVer.version || 'Nou'}`;
+      const chLogEl = document.getElementById('updateChangelogText');
+      if (chLogEl) chLogEl.innerText = remoteVer.changelog || 'Actualizare de conținut, optimizări și îmbunătățiri.';
       modal.classList.add('open');
       playTone(880, 'triangle', 0.2, 0.12);
 
-      let secondsLeft = 4;
+      let secondsLeft = 5;
       const cdEl = document.getElementById('updateCountdownText');
       if (cdEl) cdEl.innerText = `${secondsLeft}s`;
 
@@ -16177,17 +16204,46 @@
         if (cdEl) cdEl.innerText = `${Math.max(0, secondsLeft)}s`;
         if (secondsLeft <= 0) {
           clearInterval(updateCountdownTimer);
-          applyGameUpdateNow();
+          updateCountdownTimer = null;
+          applyGameUpdateNow(remoteVer ? remoteVer.build : null);
         }
       }, 1000);
     }
 
-    async function applyGameUpdateNow() {
-      if (updateCountdownTimer) clearInterval(updateCountdownTimer);
+    function dismissUpdateModal() {
+      if (updateCountdownTimer) {
+        clearInterval(updateCountdownTimer);
+        updateCountdownTimer = null;
+      }
+      const modal = document.getElementById('updateModal');
+      if (modal) modal.classList.remove('open');
+      try {
+        sessionStorage.setItem('qn_dismissed_update', 'true');
+      } catch (e) {}
+    }
+
+    async function applyGameUpdateNow(targetBuild) {
+      if (updateCountdownTimer) {
+        clearInterval(updateCountdownTimer);
+        updateCountdownTimer = null;
+      }
       saveGame();
       if (cloudSession && cloudSession.access_token && navigator.onLine) {
         await cloudPushSave(false);
       }
+
+      // Dacă suntem pe PC (fișier local file://), nu încercăm să redirectăm către internet
+      if (location.protocol === 'file:') {
+        dismissUpdateModal();
+        showToast('💻 Versiunea locală de PC este salvată.');
+        return;
+      }
+
+      try {
+        if (targetBuild) {
+          sessionStorage.setItem('qn_last_applied_build', String(targetBuild));
+        }
+      } catch (e) {}
 
       try {
         // Păstrăm sesiunea Cloud și salvarea în window.name pentru a nu pierde niciodată login-ul la update
@@ -16210,11 +16266,19 @@
         }
       } catch (e) {}
 
-      if (REMOTE_UPDATE_BASE_URL && location.protocol === 'file:') {
-        window.location.href = `${REMOTE_UPDATE_BASE_URL.replace(/\/+$/, '')}/index.html?mode=desktop&updated=${Date.now()}`;
-      } else {
-        window.location.reload();
-      }
+      // Verificăm dacă nu cumva suntem într-o buclă repetitivă de reload
+      try {
+        const reloadCount = parseInt(sessionStorage.getItem('qn_reload_loop_guard') || '0', 10);
+        if (reloadCount >= 2) {
+          dismissUpdateModal();
+          showToast('✅ Jocul a fost actualizat. Dacă dorești, apasă Ctrl+F5.');
+          sessionStorage.removeItem('qn_reload_loop_guard');
+          return;
+        }
+        sessionStorage.setItem('qn_reload_loop_guard', String(reloadCount + 1));
+      } catch (e) {}
+
+      window.location.reload();
     }
 
     // Navigare Mobil (Bottom Bar)

@@ -2,6 +2,6 @@
   "version": "3.4.1",
   "build": 341,
   "releaseDate": "2026-10-23",
-  "changelog": "v3.4.1: Fix Degradare Producție & Curățare UI Nucleu - Eliminare definitivă a degradării de saturație (producția pasivă este acum 100% constantă și stabilă), eliminare benzi și cipuri aglomerate de pe pagina nucleului pentru vizibilitate maximă și spațiere perfectă a reactorului, comutarea nucleelor rămânând curată și organizată exclusiv în Omnivers.",
+  "changelog": "v3.4.1: Fix Loop Update & Degradare Producție & UI Curățat - Rezolvare definitivă a buclei de actualizare (aliniere build 341, dezactivare auto-redirect pe versiunea de PC/file, protecții anti-loop în sesiune și buton 'Mai târziu'), eliminare completă a degradării de producție (pasive 100% constante) și curățare panou nucleu.",
   "autoApply": true
 }
