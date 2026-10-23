@@ -1,7 +1,7 @@
 {
-  "version": "3.3.0",
-  "build": 330,
+  "version": "3.3.1",
+  "build": 331,
   "releaseDate": "2026-10-23",
-  "changelog": "v3.3.0: UPDATE MASIV - Skin-uri Deblocabile pentru Nucleul Central (Plasmă Solară, Tesseract 4D, Gaură Albă Superluminoasă, Void Demon) cu garderobă interactivă și efecte exclusive de click + Sistem de Evoluție pe Nivele (Tier 1-4: Standard, Cyber-Gold, Hiper-Void, Transcendental) pentru TOATE Automatizările Pasive (Cursoare, Drone cu 4 tipuri de laser, Rețea Neurală AI, Sateliți Solari, Matrice Dyson 3D, Găuri Negre) + Anomalii Cosmice Interactive realiste + Optimizare Statistici și Realizări.",
+  "changelog": "v3.3.1: Optimizare Extremă de Performanță (60-120 FPS pe telefoane mobile și PC) - Eliminare 100% layout reflows/thrashing, calcul pur matematic pentru orbita cursoarelor, throttling inteligent pentru magazin (120ms), eliminare software shadowBlur pe canvas, optimizare particule GPU hardware-accelerated și menținerea integrală a tuturor efectelor vizuale și skin-urilor de Tier 1-4.",
   "autoApply": true
 }

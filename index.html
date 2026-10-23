@@ -858,21 +858,37 @@
 
     /* =========================================================================
        EVOLUȚIE PE NIVELE PENTRU AUTOMATIZĂRI PASIVE (TIER 1 -> 4)
-       Praguri: Tier 1 (<25), Tier 2 (25-49), Tier 3 (50-99), Tier 4 (100+)
+       OPTIMIZAT PENTRU 60/120 FPS PE TELEFON & PC (ZERO REFLOW, GPU COMPOSITED)
        ========================================================================= */
 
-    /* 1. Cursoare Orbitale (g0) */
+    /* Promovare pe straturi GPU dedicate (Hardware Acceleration) */
+    .core-ecosystem-wrap,
+    .orbit-ring-layer,
+    .cursor-ring-spin,
+    .drone-ring-spin,
+    .sat-ring-spin,
+    .neural-ring-spin,
+    .dyson-cage-spin,
+    .core-cosmic-vortex,
+    .core-button,
+    .core-shockwave-ring {
+      will-change: transform;
+      transform: translateZ(0);
+      backface-visibility: hidden;
+    }
+
+    /* 1. Cursoare Orbitale (g0) - 1 singur drop-shadow crisp pentru performanță maximă */
     .orbit-cursor-bob.cursor-tier-1 {
-      filter: drop-shadow(0 0 8px rgba(56, 189, 248, 0.95));
+      filter: drop-shadow(0 0 5px #38bdf8);
     }
     .orbit-cursor-bob.cursor-tier-2 {
-      filter: drop-shadow(0 0 10px rgba(245, 158, 11, 0.95)) drop-shadow(0 0 16px rgba(253, 224, 71, 0.75));
+      filter: drop-shadow(0 0 6px #f59e0b);
     }
     .orbit-cursor-bob.cursor-tier-3 {
-      filter: drop-shadow(0 0 12px rgba(168, 85, 247, 0.95)) drop-shadow(0 0 20px rgba(236, 72, 153, 0.85));
+      filter: drop-shadow(0 0 7px #a855f7);
     }
     .orbit-cursor-bob.cursor-tier-4 {
-      filter: drop-shadow(0 0 14px rgba(255, 255, 255, 1)) drop-shadow(0 0 24px rgba(56, 189, 248, 0.9)) drop-shadow(0 0 32px rgba(245, 158, 11, 0.8));
+      filter: drop-shadow(0 0 8px #ffffff);
     }
 
     .cursor-ring-spin.tier-2 { animation-duration: 18s !important; }
@@ -880,19 +896,19 @@
     .cursor-ring-spin.tier-4 { animation-duration: 10s !important; }
 
     .cursor-tip-spark.spark-tier-1 {
-      box-shadow: 0 0 10px #38bdf8, 0 0 18px #38bdf8;
+      box-shadow: 0 0 6px #38bdf8;
     }
     .cursor-tip-spark.spark-tier-2 {
       background: #fffbeb;
-      box-shadow: 0 0 12px #fde047, 0 0 22px #f59e0b, 0 0 30px #d97706;
+      box-shadow: 0 0 8px #fde047;
     }
     .cursor-tip-spark.spark-tier-3 {
       background: #ffffff;
-      box-shadow: 0 0 14px #f472b6, 0 0 24px #a855f7, 0 0 34px #ec4899;
+      box-shadow: 0 0 9px #ec4899;
     }
     .cursor-tip-spark.spark-tier-4 {
       background: #ffffff;
-      box-shadow: 0 0 16px #ffffff, 0 0 28px #38bdf8, 0 0 38px #fde047, 0 0 48px #ec4899;
+      box-shadow: 0 0 10px #ffffff;
     }
 
     /* 2. Drone de Extracție (g1) */
@@ -901,84 +917,84 @@
     .drone-ring-spin.tier-4 { animation-duration: 7s !important; }
 
     .orbit-drone-bob.tier-2 .drone-unit-icon {
-      filter: drop-shadow(0 0 10px #f59e0b) drop-shadow(0 0 16px #fde047);
+      filter: drop-shadow(0 0 7px #f59e0b);
     }
     .orbit-drone-bob.tier-3 .drone-unit-icon {
-      filter: drop-shadow(0 0 12px #ec4899) drop-shadow(0 0 20px #a855f7);
+      filter: drop-shadow(0 0 8px #ec4899);
     }
     .orbit-drone-bob.tier-4 .drone-unit-icon {
-      filter: drop-shadow(0 0 14px #ffffff) drop-shadow(0 0 24px #38bdf8) drop-shadow(0 0 32px #fde047);
+      filter: drop-shadow(0 0 9px #ffffff);
     }
 
     .drone-shield-ring {
       position: absolute;
-      inset: -4px;
+      inset: -3px;
       border: 1.5px solid rgba(245, 158, 11, 0.7);
       border-radius: 50%;
-      box-shadow: 0 0 8px #f59e0b;
+      box-shadow: 0 0 6px #f59e0b;
       animation: spinCW 4s linear infinite;
       pointer-events: none;
     }
 
     .drone-thruster-trail {
       position: absolute;
-      top: -6px;
+      top: -7px;
       left: 50%;
       transform: translateX(-50%);
       width: 4px;
       height: 8px;
+      transform-origin: bottom center;
       background: linear-gradient(0deg, #ec4899, transparent);
-      box-shadow: 0 0 6px #ec4899;
       border-radius: 2px;
       pointer-events: none;
-      animation: thrusterFlicker 0.2s ease-in-out infinite alternate;
+      animation: thrusterFlicker 0.25s ease-in-out infinite alternate;
     }
 
     @keyframes thrusterFlicker {
-      from { height: 6px; opacity: 0.7; }
-      to { height: 11px; opacity: 1; }
+      from { transform: translateX(-50%) scaleY(0.7); opacity: 0.75; }
+      to { transform: translateX(-50%) scaleY(1.15); opacity: 1; }
     }
 
     .drone-halo-aura {
       position: absolute;
-      inset: -8px;
-      border: 1.5px dashed rgba(255, 255, 255, 0.85);
+      inset: -6px;
+      border: 1px dashed rgba(255, 255, 255, 0.85);
       border-radius: 50%;
-      box-shadow: 0 0 12px #38bdf8, inset 0 0 8px #fde047;
+      box-shadow: 0 0 8px #38bdf8;
       animation: spinCW 3s linear infinite;
       pointer-events: none;
     }
 
-    /* Laser Tiers */
+    /* Laser Tiers - 100% GPU Composited (ScaleX în loc de Width pentru 0 reflows) */
     .drone-laser-beam.laser-tier-1 {
-      width: 2.5px;
+      width: 2px;
       background: linear-gradient(180deg, #ec4899 0%, #38bdf8 65%, transparent 100%);
-      box-shadow: 0 0 10px #ec4899, 0 0 16px #38bdf8;
+      box-shadow: 0 0 6px #ec4899;
     }
 
     .drone-laser-beam.laser-tier-2 {
-      width: 4.5px !important;
+      width: 3.5px !important;
       background: linear-gradient(180deg, #f59e0b 0%, #06b6d4 50%, #fde047 90%, transparent 100%) !important;
-      box-shadow: 0 0 12px #f59e0b, 0 0 20px #06b6d4, 0 0 26px #fde047 !important;
+      box-shadow: 0 0 8px #f59e0b, 0 0 12px #06b6d4 !important;
     }
 
     .drone-laser-beam.laser-tier-3 {
-      width: 6.5px !important;
+      width: 5px !important;
       background: linear-gradient(180deg, #ec4899 0%, #a855f7 40%, #f43f5e 85%, transparent 100%) !important;
-      box-shadow: 0 0 16px #ec4899, 0 0 24px #a855f7, 0 0 32px #f43f5e !important;
+      box-shadow: 0 0 10px #ec4899, 0 0 14px #a855f7 !important;
     }
 
     .drone-laser-beam.laser-tier-4 {
-      width: 9px !important;
+      width: 7px !important;
       background: linear-gradient(180deg, #ffffff 0%, #38bdf8 25%, #ec4899 55%, #fde047 85%, transparent 100%) !important;
-      box-shadow: 0 0 20px #ffffff, 0 0 32px #38bdf8, 0 0 45px #fde047, 0 0 55px #ec4899 !important;
-      animation: laserPulseSweepTier4 0.8s ease-in-out infinite alternate !important;
+      box-shadow: 0 0 10px #ffffff, 0 0 16px #38bdf8 !important;
+      animation: laserPulseSweepTier4 0.9s ease-in-out infinite alternate !important;
     }
 
     @keyframes laserPulseSweepTier4 {
-      0% { opacity: 0.75; width: 7px; transform: translateX(-50%) rotate(-18deg); }
-      50% { opacity: 1; width: 11px; transform: translateX(-50%) rotate(0deg); filter: brightness(1.6); }
-      100% { opacity: 0.8; width: 8px; transform: translateX(-50%) rotate(18deg); }
+      0% { opacity: 0.7; transform: translateX(-50%) rotate(-14deg) scaleX(0.85); }
+      50% { opacity: 1; transform: translateX(-50%) rotate(0deg) scaleX(1.25); }
+      100% { opacity: 0.75; transform: translateX(-50%) rotate(14deg) scaleX(0.9); }
     }
 
     /* 3. Sateliți Solari (g4/g5) */
@@ -987,31 +1003,31 @@
     .sat-ring-spin.tier-4 { animation-duration: 14s !important; }
 
     .orbit-sat-bob.tier-1 {
-      filter: drop-shadow(0 0 10px #f59e0b);
+      filter: drop-shadow(0 0 6px #f59e0b);
     }
     .orbit-sat-bob.tier-2 {
-      filter: drop-shadow(0 0 14px #f59e0b) drop-shadow(0 0 20px #fde047);
+      filter: drop-shadow(0 0 8px #f59e0b);
     }
     .orbit-sat-bob.tier-2::after {
-      width: 3px !important;
-      background: linear-gradient(180deg, rgba(245, 158, 11, 0.95), rgba(253, 224, 71, 0.6), transparent) !important;
-      box-shadow: 0 0 10px #f59e0b;
+      width: 2.5px !important;
+      background: linear-gradient(180deg, rgba(245, 158, 11, 0.95), transparent) !important;
+      box-shadow: 0 0 6px #f59e0b;
     }
     .orbit-sat-bob.tier-3 {
-      filter: drop-shadow(0 0 16px #ec4899) drop-shadow(0 0 24px #f59e0b);
+      filter: drop-shadow(0 0 9px #ec4899);
     }
     .orbit-sat-bob.tier-3::after {
-      width: 5px !important;
-      background: linear-gradient(180deg, #ec4899, #f59e0b, transparent) !important;
-      box-shadow: 0 0 14px #ec4899, 0 0 18px #f59e0b;
+      width: 4px !important;
+      background: linear-gradient(180deg, #ec4899, transparent) !important;
+      box-shadow: 0 0 8px #ec4899;
     }
     .orbit-sat-bob.tier-4 {
-      filter: drop-shadow(0 0 20px #ffffff) drop-shadow(0 0 30px #fde047) drop-shadow(0 0 40px #f59e0b);
+      filter: drop-shadow(0 0 10px #fde047);
     }
     .orbit-sat-bob.tier-4::after {
-      width: 7px !important;
-      background: linear-gradient(180deg, #ffffff, #fde047, #f59e0b, transparent) !important;
-      box-shadow: 0 0 18px #ffffff, 0 0 28px #fde047;
+      width: 5px !important;
+      background: linear-gradient(180deg, #ffffff, #fde047, transparent) !important;
+      box-shadow: 0 0 9px #fde047;
     }
 
     /* 4. Rețea Sinaptică Neural AI (g2) */
@@ -1021,10 +1037,10 @@
     }
     .neural-node {
       position: absolute;
-      left: -7px;
-      top: -7px;
-      width: 14px;
-      height: 14px;
+      left: -6px;
+      top: -6px;
+      width: 12px;
+      height: 12px;
       transform: translateY(-94px);
       display: flex;
       align-items: center;
@@ -1032,93 +1048,93 @@
       pointer-events: none;
     }
     .neural-node.tier-1 {
-      width: 8px;
-      height: 8px;
+      width: 7px;
+      height: 7px;
       background: #38bdf8;
       border-radius: 50%;
-      box-shadow: 0 0 10px #38bdf8;
-      animation: neuralPulse 1.4s ease-in-out infinite alternate;
+      box-shadow: 0 0 6px #38bdf8;
+      animation: neuralPulse 1.6s ease-in-out infinite alternate;
     }
     .neural-node.tier-2 {
-      width: 10px;
-      height: 10px;
+      width: 8px;
+      height: 8px;
       background: #fde047;
       border-radius: 2px;
       transform: translateY(-94px) rotate(45deg);
-      box-shadow: 0 0 12px #f59e0b, 0 0 18px #fde047;
-      animation: neuralPulse 1.1s ease-in-out infinite alternate;
+      box-shadow: 0 0 7px #f59e0b;
+      animation: neuralPulse 1.3s ease-in-out infinite alternate;
     }
     .neural-node.tier-3 {
-      width: 13px;
-      height: 13px;
+      width: 10px;
+      height: 10px;
       background: #c084fc;
       border-radius: 50%;
-      border: 1.5px solid #ec4899;
-      box-shadow: 0 0 14px #a855f7, 0 0 22px #ec4899;
-      animation: neuralPulse 0.8s ease-in-out infinite alternate;
+      border: 1px solid #ec4899;
+      box-shadow: 0 0 8px #a855f7;
+      animation: neuralPulse 1.0s ease-in-out infinite alternate;
     }
     .neural-node.tier-4 {
-      width: 16px;
-      height: 16px;
+      width: 13px;
+      height: 13px;
       background: #ffffff;
       border-radius: 50%;
-      border: 2px solid #38bdf8;
-      box-shadow: 0 0 16px #ffffff, 0 0 26px #38bdf8, 0 0 34px #fde047;
-      font-size: 9px;
+      border: 1.5px solid #38bdf8;
+      box-shadow: 0 0 9px #38bdf8;
+      font-size: 8px;
       font-weight: 900;
       color: #07090e;
-      animation: neuralPulse 0.5s ease-in-out infinite alternate;
+      animation: neuralPulse 0.7s ease-in-out infinite alternate;
     }
 
     @keyframes neuralPulse {
-      from { transform: translateY(-94px) scale(0.85); opacity: 0.6; }
-      to { transform: translateY(-94px) scale(1.25); opacity: 1; }
+      from { transform: translateY(-94px) scale(0.9); opacity: 0.7; }
+      to { transform: translateY(-94px) scale(1.15); opacity: 1; }
     }
 
-    /* 5. Vortex Cosmic Adaptat (g8) */
+    /* 5. Vortex Cosmic Adaptat (g8) - Curat și rapid pe GPU */
     .core-cosmic-vortex.vortex-tier-2 {
       animation-duration: 5s !important;
-      opacity: 0.85 !important;
+      opacity: 0.8 !important;
     }
     .core-cosmic-vortex.vortex-tier-3 {
       animation-duration: 2.8s !important;
-      opacity: 0.95 !important;
-      filter: blur(10px) drop-shadow(0 0 20px rgba(168, 85, 247, 0.5)) !important;
+      opacity: 0.88 !important;
+      filter: blur(8px) !important;
     }
     .core-cosmic-vortex.vortex-tier-4 {
-      animation-duration: 1.3s !important;
-      opacity: 1 !important;
-      filter: blur(8px) drop-shadow(0 0 30px rgba(236, 72, 153, 0.7)) drop-shadow(0 0 45px rgba(56, 189, 248, 0.6)) !important;
+      animation-duration: 1.6s !important;
+      opacity: 0.92 !important;
+      filter: blur(8px) !important;
     }
 
     /* 6. Gaura Neagră (g6) și Portal Big Bang (g9) Tiers */
     .blackhole-singularity-overlay.bh-tier-2 {
       width: 280px;
       height: 280px;
-      box-shadow: 0 0 65px rgba(245, 158, 11, 0.85), inset 0 0 45px #000000;
+      box-shadow: 0 0 40px rgba(245, 158, 11, 0.7), inset 0 0 30px #000000;
     }
     .blackhole-singularity-overlay.bh-tier-3 {
-      width: 320px;
-      height: 320px;
-      box-shadow: 0 0 80px rgba(168, 85, 247, 0.9), inset 0 0 50px #000000;
+      width: 310px;
+      height: 310px;
+      box-shadow: 0 0 50px rgba(168, 85, 247, 0.8), inset 0 0 35px #000000;
     }
     .blackhole-singularity-overlay.bh-tier-4 {
-      width: 360px;
-      height: 360px;
-      box-shadow: 0 0 100px rgba(255, 255, 255, 0.95), 0 0 140px rgba(236, 72, 153, 0.8), inset 0 0 60px #000000;
+      width: 340px;
+      height: 340px;
+      box-shadow: 0 0 60px rgba(236, 72, 153, 0.8), inset 0 0 40px #000000;
     }
 
     .universe-genesis-portal.portal-tier-2 {
-      width: 330px;
-      height: 330px;
+      width: 320px;
+      height: 320px;
     }
     .universe-genesis-portal.portal-tier-3 {
-      width: 390px;
-      height: 390px;
+      width: 360px;
+      height: 360px;
     }
     .universe-genesis-portal.portal-tier-4 {
-      width: 460px;
-      height: 460px;
+      width: 410px;
+      height: 410px;
     }
 
     /* 4. Sferă Geodezică Dyson & Vortex Cosmic */
@@ -2547,9 +2563,9 @@
     }
 
     @keyframes cardPrismShimmer {
-      0% { filter: drop-shadow(0 0 4px rgba(56, 189, 248, 0.4)); }
-      50% { filter: drop-shadow(0 0 8px rgba(236, 72, 153, 0.45)); }
-      100% { filter: drop-shadow(0 0 6px rgba(253, 224, 71, 0.4)); }
+      0% { box-shadow: 0 0 16px rgba(56, 189, 248, 0.28), inset 0 0 12px rgba(253, 224, 71, 0.08); }
+      50% { box-shadow: 0 0 20px rgba(236, 72, 153, 0.32), inset 0 0 14px rgba(168, 85, 247, 0.1); }
+      100% { box-shadow: 0 0 16px rgba(253, 224, 71, 0.28), inset 0 0 12px rgba(56, 189, 248, 0.08); }
     }
 
     .gen-name-wrap {
@@ -9205,7 +9221,8 @@
       cosmicBgInitialized = true;
 
       function resizeCosmic() {
-        cosmicDpr = Math.min(window.devicePixelRatio || 1, 2);
+        const isMobile = window.innerWidth < 768;
+        cosmicDpr = isMobile ? 1 : Math.min(window.devicePixelRatio || 1, 1.5);
         cosmicCanvasW = window.innerWidth;
         cosmicCanvasH = window.innerHeight;
         cosmicCanvas.width = Math.floor(cosmicCanvasW * cosmicDpr);
@@ -9219,8 +9236,9 @@
       window.addEventListener('resize', resizeCosmic, { passive: true });
       resizeCosmic();
 
-      // Generare nor cosmic de particule inteligente cu adâncime 3D
-      const count = Math.min(150, Math.max(65, Math.floor((cosmicCanvasW * cosmicCanvasH) / 12500)));
+      // Generare nor cosmic de particule inteligente cu adâncime 3D (scalată optim pentru mobile & desktop)
+      const isMobile = window.innerWidth < 768;
+      const count = isMobile ? 40 : Math.min(90, Math.max(50, Math.floor((cosmicCanvasW * cosmicCanvasH) / 16000)));
       cosmicParticles = [];
       for (let i = 0; i < count; i++) {
         const depth = 0.45 + Math.random() * 0.75;
@@ -9290,7 +9308,7 @@
           }
         }
 
-        // 1. Randare și propagare Unde de Șoc din nucleu
+        // 1. Randare și propagare Unde de Șoc din nucleu (Zero shadowBlur pe GPU)
         for (let i = cosmicShockwaves.length - 1; i >= 0; i--) {
           const wave = cosmicShockwaves[i];
           wave.radius += wave.speed * (60 * dt);
@@ -9305,12 +9323,12 @@
           cosmicCtx.arc(wave.x, wave.y, wave.radius, 0, Math.PI * 2);
           cosmicCtx.strokeStyle = `rgba(${wave.color}, ${wave.alpha})`;
           cosmicCtx.lineWidth = wave.width;
+          cosmicCtx.stroke();
           if (wave.isCrit) {
-            cosmicCtx.shadowColor = `rgba(${wave.color}, 0.8)`;
-            cosmicCtx.shadowBlur = 14;
-            cosmicCtx.stroke();
-            cosmicCtx.shadowBlur = 0;
-          } else {
+            cosmicCtx.beginPath();
+            cosmicCtx.arc(wave.x, wave.y, wave.radius, 0, Math.PI * 2);
+            cosmicCtx.strokeStyle = `rgba(${wave.color}, ${wave.alpha * 0.4})`;
+            cosmicCtx.lineWidth = wave.width * 2.2;
             cosmicCtx.stroke();
           }
         }
@@ -9386,29 +9404,32 @@
           p.pulseAlphaBonus *= 0.93;
         }
 
-        // 3. Constelații efemere între particule apropiate (< 65px)
-        cosmicCtx.beginPath();
-        cosmicCtx.lineWidth = 0.55;
-        cosmicCtx.strokeStyle = 'rgba(56, 189, 248, 0.12)';
-        let hasConstellations = false;
+        // 3. Constelații efemere între particule apropiate (optimizat: doar pe desktop)
+        const isMobileScreen = cosmicCanvasW < 768;
+        if (!isMobileScreen) {
+          cosmicCtx.beginPath();
+          cosmicCtx.lineWidth = 0.55;
+          cosmicCtx.strokeStyle = 'rgba(56, 189, 248, 0.12)';
+          let hasConstellations = false;
 
-        for (let i = 0; i < pLen; i++) {
-          const p1 = cosmicParticles[i];
-          for (let j = i + 1; j < pLen; j++) {
-            const p2 = cosmicParticles[j];
-            const dx = p1.x - p2.x;
-            const dy = p1.y - p2.y;
-            if (dx > 65 || dx < -65 || dy > 65 || dy < -65) continue;
-            if (dx * dx + dy * dy < 4225) {
-              cosmicCtx.moveTo(p1.x, p1.y);
-              cosmicCtx.lineTo(p2.x, p2.y);
-              hasConstellations = true;
+          for (let i = 0; i < pLen; i++) {
+            const p1 = cosmicParticles[i];
+            for (let j = i + 1; j < pLen; j++) {
+              const p2 = cosmicParticles[j];
+              const dx = p1.x - p2.x;
+              const dy = p1.y - p2.y;
+              if (dx > 55 || dx < -55 || dy > 55 || dy < -55) continue;
+              if (dx * dx + dy * dy < 3025) {
+                cosmicCtx.moveTo(p1.x, p1.y);
+                cosmicCtx.lineTo(p2.x, p2.y);
+                hasConstellations = true;
+              }
             }
           }
+          if (hasConstellations) cosmicCtx.stroke();
         }
-        if (hasConstellations) cosmicCtx.stroke();
 
-        // 4. Randare particule de praf cosmic
+        // 4. Randare particule de praf cosmic (Zero shadowBlur pe GPU)
         for (let i = 0; i < pLen; i++) {
           const p = cosmicParticles[i];
           const r = p.baseRadius * p.pulseScale;
@@ -9418,13 +9439,12 @@
           cosmicCtx.beginPath();
           cosmicCtx.arc(p.x, p.y, r, 0, Math.PI * 2);
           cosmicCtx.fillStyle = `rgba(${p.rgb.r}, ${p.rgb.g}, ${p.rgb.b}, ${a})`;
+          cosmicCtx.fill();
 
-          if (p.pulseScale > 1.25 || p.pulseAlphaBonus > 0.25) {
-            cosmicCtx.shadowColor = `rgba(${p.rgb.r}, ${p.rgb.g}, ${p.rgb.b}, 0.85)`;
-            cosmicCtx.shadowBlur = 8;
-            cosmicCtx.fill();
-            cosmicCtx.shadowBlur = 0;
-          } else {
+          if (p.pulseScale > 1.35) {
+            cosmicCtx.beginPath();
+            cosmicCtx.arc(p.x, p.y, r * 1.8, 0, Math.PI * 2);
+            cosmicCtx.fillStyle = `rgba(${p.rgb.r}, ${p.rgb.g}, ${p.rgb.b}, ${a * 0.3})`;
             cosmicCtx.fill();
           }
         }
@@ -9447,20 +9467,16 @@
 
     function triggerCosmicCorePulse(x, y, isCrit = false, isManual = true) {
       if (!cosmicBgInitialized || (state && state.cosmicBgEnabled === false)) return;
+      if (!isManual && !isCrit) return; // Economisim fillrate GPU pentru auto-click-uri dese
       let ox = x;
       let oy = y;
       if (!ox || !oy) {
-        if (coreBtn) {
-          const rect = coreBtn.getBoundingClientRect();
-          ox = rect.left + rect.width / 2;
-          oy = rect.top + rect.height / 2;
-        } else {
-          ox = cosmicCanvasW * 0.22;
-          oy = cosmicCanvasH * 0.5;
-        }
+        const center = getCoreCenter();
+        ox = center.x;
+        oy = center.y;
       }
 
-      if (cosmicShockwaves.length > 5) {
+      if (cosmicShockwaves.length > 3) {
         cosmicShockwaves.shift();
       }
 
@@ -9469,11 +9485,11 @@
         x: ox,
         y: oy,
         radius: 20,
-        maxRadius: canvasMaxDim * (isCrit ? 1.1 : 0.85),
+        maxRadius: canvasMaxDim * (isCrit ? 1.05 : 0.8),
         speed: isCrit ? 18 : (isManual ? 12 : 7),
-        width: isCrit ? 4.5 : (isManual ? 3.0 : 1.6),
+        width: isCrit ? 4.0 : (isManual ? 2.5 : 1.4),
         color: isCrit ? '253, 224, 71' : (isManual ? '56, 189, 248' : '34, 211, 238'),
-        alpha: isCrit ? 0.95 : (isManual ? 0.75 : 0.40),
+        alpha: isCrit ? 0.90 : (isManual ? 0.65 : 0.35),
         isCrit: isCrit,
         isManual: isManual
       });
@@ -10352,11 +10368,48 @@
       }
     });
 
+    let cachedCoreRect = null;
+    let lastCoreRectTime = 0;
+
+    function getCoreCenter() {
+      const now = performance.now();
+      if (!cachedCoreRect || (now - lastCoreRectTime > 2000)) {
+        if (coreBtn) {
+          cachedCoreRect = coreBtn.getBoundingClientRect();
+          lastCoreRectTime = now;
+        }
+      }
+      if (!cachedCoreRect || cachedCoreRect.width <= 0) {
+        return {
+          x: window.innerWidth * 0.22,
+          y: window.innerHeight * 0.5,
+          width: 220,
+          height: 220,
+          left: window.innerWidth * 0.22 - 110,
+          top: window.innerHeight * 0.5 - 110
+        };
+      }
+      return {
+        x: cachedCoreRect.left + cachedCoreRect.width / 2,
+        y: cachedCoreRect.top + cachedCoreRect.height / 2,
+        width: cachedCoreRect.width,
+        height: cachedCoreRect.height,
+        left: cachedCoreRect.left,
+        top: cachedCoreRect.top
+      };
+    }
+
+    window.addEventListener('resize', () => { cachedCoreRect = null; }, { passive: true });
+    window.addEventListener('scroll', () => { cachedCoreRect = null; }, { passive: true });
+
+    let lastAutoFloatTime = 0;
+    let lastAutoParticleTime = 0;
+
     function handleCoreClick(clientX, clientY, isAutoCursor = false) {
-      const rect = coreBtn.getBoundingClientRect();
       if (!clientX || !clientY) {
-        clientX = rect.left + rect.width / 2;
-        clientY = rect.top + rect.height / 2;
+        const center = getCoreCenter();
+        clientX = center.x;
+        clientY = center.y;
       }
 
       // Crește garantat bara de Supraîncărcare (Combo) și scalează cu numărul de Nano-Cursoare (g0)
@@ -10395,7 +10448,7 @@
             spawnCoreShockwave('crit');
             spawnFloatingText(clientX, clientY - 30, `💥 SUPERNOVĂ +${formatNumber(burstGain)} ⚡!`, true);
             playXboxAchievementChime('mythic');
-            spawnParticles(clientX, clientY, 26, '#fde047');
+            spawnParticles(clientX, clientY, 20, '#fde047');
           }
         }
       } else if (!isAutoCursor) {
@@ -10433,9 +10486,10 @@
         amount += novaBonus;
         spawnCoreShockwave('em-wave');
         spawnCoreShockwave('crit');
-        triggerCosmicCorePulse(rect.left + rect.width / 2, rect.top + rect.height / 2, true, true);
-        for (let k = 0; k < 4; k++) spawnCoreLightningArc(true);
-        spawnFloatingText(rect.left + rect.width / 2, rect.top + 10, `🔥 OVERCLOCK SUPERNOVA! +${formatNumber(novaBonus)}`, true);
+        const center = getCoreCenter();
+        triggerCosmicCorePulse(center.x, center.y, true, true);
+        for (let k = 0; k < 3; k++) spawnCoreLightningArc(true);
+        spawnFloatingText(center.x, center.top + 10, `🔥 OVERCLOCK SUPERNOVA! +${formatNumber(novaBonus)}`, true);
         setTimeout(() => {
           if (comboMeter >= 95) comboMeter = 22;
         }, 350);
@@ -10443,40 +10497,43 @@
 
       addEnergy(amount);
 
-      // Animație buton + Unde de șoc + Efecte Amplificatoare
-      coreBtn.classList.add('clicked');
-      setTimeout(() => coreBtn.classList.remove('clicked'), 80);
+      // Animație buton fizic doar la click-uri manuale (previne compresia layout-ului la 75ms)
+      if (!isAutoCursor) {
+        coreBtn.classList.add('clicked');
+        setTimeout(() => coreBtn.classList.remove('clicked'), 80);
+      }
 
-      spawnCoreShockwave(isCrit ? 'crit' : isPhotonMega ? 'em-wave' : 'normal');
+      if (!isAutoCursor || isCrit) {
+        spawnCoreShockwave(isCrit ? 'crit' : isPhotonMega ? 'em-wave' : 'normal');
+      }
       triggerCosmicCorePulse(clientX, clientY, isCrit, !isAutoCursor);
 
       if (isCrit) {
         spawnCoreLightningArc(true);
-        spawnCoreLightningArc(true);
+        if (!isAutoCursor) spawnCoreLightningArc(true);
         // Efect Calibrare Cuantică (c_critChance): Vizor Lock-On pe locul loviturii critice
         if (((state.clickUpgrades && state.clickUpgrades['c_critChance']) || 0) > 0) {
           spawnCritLockCrosshair(clientX, clientY);
         }
         // Efect Descărcare de Plasmă (c_critMult): Scuturare de plasmă a nucleului
-        if (((state.clickUpgrades && state.clickUpgrades['c_critMult']) || 0) > 0) {
+        if (!isAutoCursor && ((state.clickUpgrades && state.clickUpgrades['c_critMult']) || 0) > 0) {
           const wrap = document.getElementById('coreEcosystemWrap');
           if (wrap) {
             wrap.classList.remove('core-plasma-shake');
-            void wrap.offsetWidth;
-            wrap.classList.add('core-plasma-shake');
+            requestAnimationFrame(() => wrap.classList.add('core-plasma-shake'));
           }
         }
-      } else if (((state.clickUpgrades && state.clickUpgrades['c_synergy']) || 0) > 0 || comboMeter >= 55) {
+      } else if (!isAutoCursor && (((state.clickUpgrades && state.clickUpgrades['c_synergy']) || 0) > 0 || comboMeter >= 55)) {
         spawnCoreLightningArc(false);
       }
 
-      // Text plutitor + particule cu skin & tier adaptiv
+      // Text plutitor + particule cu skin & tier adaptiv (optimizat & limitat)
       const skinId = state.equippedCoreSkin || 'quantum';
       const tierInfo = getClickTierInfo();
-      let pCount = isCrit ? 16 : 8;
-      if (tierInfo.tier === 2) pCount += 6;
-      if (tierInfo.tier === 3) pCount += 12;
-      if (tierInfo.tier === 4) pCount += 22;
+      let pCount = isCrit ? 14 : 7;
+      if (tierInfo.tier === 2) pCount += 4;
+      if (tierInfo.tier === 3) pCount += 7;
+      if (tierInfo.tier === 4) pCount += 10;
 
       let pColor = isCrit ? '#fde047' : isPhotonMega ? '#22d3ee' : '#38bdf8';
       if (skinId === 'solar') pColor = isCrit ? '#fef08a' : isPhotonMega ? '#fde047' : '#f59e0b';
@@ -10485,10 +10542,21 @@
       else if (skinId === 'whitehole') pColor = isCrit ? '#ffffff' : isPhotonMega ? '#fef08a' : '#f8fafc';
 
       const labelPrefix = isPhotonMega ? '🔦 MEGA x3 ' : (isAutoCursor ? '🖱️ ' : '');
-      spawnFloatingText(clientX, clientY, `${labelPrefix}+${formatNumber(amount)}`, isCrit || isPhotonMega);
-      spawnParticles(clientX, clientY, pCount, pColor);
+      const canFloat = !isAutoCursor || isCrit || (performance.now() - lastAutoFloatTime > 380);
+      if (canFloat) {
+        if (isAutoCursor) lastAutoFloatTime = performance.now();
+        spawnFloatingText(clientX, clientY, `${labelPrefix}+${formatNumber(amount)}`, isCrit || isPhotonMega);
+      }
 
-      updateUI();
+      const canParticle = !isAutoCursor || isCrit || (performance.now() - lastAutoParticleTime > 400);
+      if (canParticle) {
+        if (isAutoCursor) lastAutoParticleTime = performance.now();
+        spawnParticles(clientX, clientY, isAutoCursor ? Math.min(3, pCount) : pCount, pColor);
+      }
+
+      if (!isAutoCursor) {
+        updateUI();
+      }
     }
 
     // =========================================================================
@@ -10499,6 +10567,9 @@
     function spawnCoreShockwave(type = 'normal') {
       const fxLayer = document.getElementById('coreFxLayer');
       if (!fxLayer) return;
+      if (fxLayer.children.length >= 3) {
+        fxLayer.firstElementChild.remove();
+      }
       const currentSkin = state.equippedCoreSkin || 'quantum';
       const tierInfo = getClickTierInfo();
 
@@ -10507,9 +10578,9 @@
         (type === 'crit' ? ' crit' : type === 'em-wave' ? ' em-wave' : '');
       fxLayer.appendChild(ring);
 
-      if (tierInfo.tier >= 2) {
+      if (tierInfo.tier >= 2 && fxLayer.children.length < 3) {
         setTimeout(() => {
-          if (!fxLayer.isConnected) return;
+          if (!fxLayer.isConnected || fxLayer.children.length >= 3) return;
           const r2 = document.createElement('div');
           r2.className = `core-shockwave-ring skin-${currentSkin} tier-${tierInfo.tier} echo-ring` +
             (type === 'crit' ? ' crit' : '');
@@ -10518,9 +10589,9 @@
         }, 65);
       }
 
-      if (tierInfo.tier >= 3) {
+      if (tierInfo.tier >= 3 && fxLayer.children.length < 3) {
         setTimeout(() => {
-          if (!fxLayer.isConnected) return;
+          if (!fxLayer.isConnected || fxLayer.children.length >= 3) return;
           const r3 = document.createElement('div');
           r3.className = `core-shockwave-ring skin-${currentSkin} tier-${tierInfo.tier} hyper-ring` +
             (type === 'crit' ? ' crit' : '');
@@ -10535,6 +10606,9 @@
     function spawnCoreLightningArc(isCrit = false) {
       const svg = document.getElementById('coreTeslaSvg');
       if (!svg) return;
+      if (svg.children.length >= 3) {
+        svg.firstElementChild.remove();
+      }
       const cx = 150, cy = 150;
       const angle = Math.random() * Math.PI * 2;
       const outerR = isCrit ? 124 : 98 + Math.random() * 22;
@@ -10599,13 +10673,14 @@
       try {
         if (sourceEl) {
           sourceEl.classList.remove('card-activated-flash');
-          void sourceEl.offsetWidth;
-          sourceEl.classList.add('card-activated-flash');
+          requestAnimationFrame(() => {
+            if (sourceEl) sourceEl.classList.add('card-activated-flash');
+          });
         }
-        const coreRect = coreBtn.getBoundingClientRect();
-        if (coreRect.width === 0) return;
-        const targetX = coreRect.left + coreRect.width / 2;
-        const targetY = coreRect.top + coreRect.height / 2;
+        const center = getCoreCenter();
+        if (center.width === 0) return;
+        const targetX = center.x;
+        const targetY = center.y;
 
         let startX = window.innerWidth / 2;
         let startY = window.innerHeight / 2;
@@ -10617,7 +10692,7 @@
           }
         }
 
-        spawnParticles(startX, startY, 10, color);
+        spawnParticles(startX, startY, 6, color);
 
         const orb = document.createElement('div');
         orb.className = 'flying-energy-orb';
@@ -10627,21 +10702,21 @@
         orb.style.top = `${startY}px`;
         document.body.appendChild(orb);
 
-        const ctrlX = (startX + targetX) / 2 + (Math.random() - 0.5) * 140;
-        const ctrlY = Math.min(startY, targetY) - 60 - Math.random() * 60;
+        const ctrlX = (startX + targetX) / 2 + (Math.random() - 0.5) * 120;
+        const ctrlY = Math.min(startY, targetY) - 50 - Math.random() * 50;
 
         orb.animate([
-          { left: `${startX}px`, top: `${startY}px`, transform: 'translate(-50%, -50%) scale(1.2)', opacity: 1 },
-          { left: `${ctrlX}px`, top: `${ctrlY}px`, transform: 'translate(-50%, -50%) scale(1.5)', opacity: 1, offset: 0.5 },
-          { left: `${targetX}px`, top: `${targetY}px`, transform: 'translate(-50%, -50%) scale(0.4)', opacity: 0.9 }
+          { left: `${startX}px`, top: `${startY}px`, transform: 'translate3d(-50%, -50%, 0) scale(1.2)', opacity: 1 },
+          { left: `${ctrlX}px`, top: `${ctrlY}px`, transform: 'translate3d(-50%, -50%, 0) scale(1.4)', opacity: 1, offset: 0.5 },
+          { left: `${targetX}px`, top: `${targetY}px`, transform: 'translate3d(-50%, -50%, 0) scale(0.4)', opacity: 0.9 }
         ], {
-          duration: 460,
+          duration: 440,
           easing: 'cubic-bezier(0.22, 1, 0.36, 1)'
         }).onfinish = () => {
           orb.remove();
           spawnCoreShockwave('em-wave');
           spawnCoreLightningArc(true);
-          spawnParticles(targetX, targetY, 14, color);
+          spawnParticles(targetX, targetY, 8, color);
         };
       } catch (e) {}
     }
@@ -10926,8 +11001,9 @@
       if (cps <= 0) return;
 
       coreBtn.classList.remove('passive-pulse');
-      void coreBtn.offsetWidth;
-      coreBtn.classList.add('passive-pulse');
+      requestAnimationFrame(() => {
+        if (coreBtn) coreBtn.classList.add('passive-pulse');
+      });
 
       if (((state.generators && state.generators['g2']) || 0) > 0 || ((state.generators && state.generators['g3']) || 0) > 0) {
         spawnCoreLightningArc(false);
@@ -10936,14 +11012,12 @@
       // Dacă panoul stâng este vizibil, arătăm o scânteie pasivă pe marginea nucleului unde apasă cursoarele
       const leftZone = document.getElementById('zone-left');
       if (leftZone && leftZone.offsetParent !== null) {
-        const rect = coreBtn.getBoundingClientRect();
-        if (rect.width > 0) {
-          const angle = Math.random() * Math.PI * 2;
-          const r = rect.width * 0.38;
-          const sx = rect.left + rect.width / 2 + Math.cos(angle) * r;
-          const sy = rect.top + rect.height / 2 + Math.sin(angle) * r;
-          spawnParticles(sx, sy, 4, '#38bdf8');
-        }
+        const center = getCoreCenter();
+        const angle = Math.random() * Math.PI * 2;
+        const r = center.width * 0.38;
+        const sx = center.x + Math.cos(angle) * r;
+        const sy = center.y + Math.sin(angle) * r;
+        spawnParticles(sx, sy, 2, '#38bdf8');
       }
     }
 
@@ -10953,12 +11027,7 @@
     function triggerAutoCursorStrike() {
       const g0 = (state.generators && state.generators['g0']) || 0;
       if (g0 <= 0) return;
-      const rect = coreBtn.getBoundingClientRect();
-      if (rect.width <= 0) {
-        handleCoreClick(null, null, true);
-        return;
-      }
-
+      const center = getCoreCenter();
       const t0 = getAutomationTier(g0);
       const cursorsLayer = document.getElementById('orbitCursorsLayer');
       const bobs = cursorsLayer ? cursorsLayer.querySelectorAll('.orbit-cursor-bob') : null;
@@ -10966,51 +11035,39 @@
       let strikeX, strikeY;
 
       if (bobs && bobs.length > 0) {
-        // Selectăm următorul cursor din caruselul orbital pentru o sincronizare perfectă
         const activeBob = bobs[autoCursorStrikeStep % bobs.length];
         autoCursorStrikeStep = (autoCursorStrikeStep + 1) % bobs.length;
 
-        // Bounding box-ul include transformările CSS în timp real (rotația inelului + poziția acului)
-        const bobRect = activeBob.getBoundingClientRect();
-        const coreCenterX = rect.left + rect.width / 2;
-        const coreCenterY = rect.top + rect.height / 2;
-
-        const bobCenterX = bobRect.left + bobRect.width / 2;
-        const bobCenterY = bobRect.top + bobRect.height / 2;
-
-        // Calculăm poziția exactă a vârfului acului (orientat direct spre centrul nucleului)
-        const dx = coreCenterX - bobCenterX;
-        const dy = coreCenterY - bobCenterY;
-        const dist = Math.hypot(dx, dy) || 1;
-
-        // Vârful cursorului se află la ~13px de centrul bob-ului, direct pe suprafața de contact cu nucleul
-        strikeX = bobCenterX + (dx / dist) * Math.min(15, dist * 0.22);
-        strikeY = bobCenterY + (dy / dist) * Math.min(15, dist * 0.22);
-
-        // Declanșăm flash-ul luminos instantaneu la vârful cursorului activ
+        // Flash luminos instantaneu la vârful cursorului activ (fără forțare de reflow)
         const sparkEl = activeBob.querySelector('.cursor-tip-spark');
         if (sparkEl) {
-          sparkEl.classList.remove('active-strike-flash');
-          void sparkEl.offsetWidth;
-          sparkEl.classList.add('active-strike-flash');
+          sparkEl.animate([
+            { opacity: 1, transform: 'translateX(-50%) scale(1.6)' },
+            { opacity: 0, transform: 'translateX(-50%) scale(0.6)' }
+          ], { duration: 160, easing: 'ease-out' });
         }
 
-        // Animații suplimentare în funcție de Tier-ul Nano-Cursoarelor
-        if (t0 === 2) {
-          spawnParticles(strikeX, strikeY, 3, '#fde047');
-        } else if (t0 === 3) {
-          spawnParticles(strikeX, strikeY, 5, '#ec4899');
-          spawnCoreLightningArc(false);
-        } else if (t0 >= 4) {
-          spawnParticles(strikeX, strikeY, 6, '#ffffff');
-          spawnParticles(strikeX, strikeY, 4, '#38bdf8');
-          spawnCoreShockwave('em-wave');
+        // Poziție calculată direct din centrul nucleului și pasul orbital (zero reflows pe DOM)
+        const angle = (autoCursorStrikeStep / bobs.length) * Math.PI * 2;
+        const r = center.width * 0.38;
+        strikeX = center.x + Math.cos(angle) * r;
+        strikeY = center.y + Math.sin(angle) * r;
+
+        // Efecte Tier Nano-Cursoare (particule optimizate, limitate)
+        if (t0 === 2 && Math.random() < 0.35) {
+          spawnParticles(strikeX, strikeY, 2, '#fde047');
+        } else if (t0 === 3 && Math.random() < 0.45) {
+          spawnParticles(strikeX, strikeY, 3, '#ec4899');
+          if (Math.random() < 0.25) spawnCoreLightningArc(false);
+        } else if (t0 >= 4 && Math.random() < 0.55) {
+          spawnParticles(strikeX, strikeY, 3, '#38bdf8');
+          if (Math.random() < 0.20) spawnCoreShockwave('em-wave');
         }
       } else {
         const angle = Math.random() * Math.PI * 2;
-        const r = rect.width * 0.36;
-        strikeX = rect.left + rect.width / 2 + Math.cos(angle) * r;
-        strikeY = rect.top + rect.height / 2 + Math.sin(angle) * r;
+        const r = center.width * 0.36;
+        strikeX = center.x + Math.cos(angle) * r;
+        strikeY = center.y + Math.sin(angle) * r;
       }
 
       handleCoreClick(strikeX, strikeY, true);
@@ -11022,12 +11079,12 @@
       if (g1 <= 0) return;
       const leftZone = document.getElementById('zone-left');
       if (!leftZone || leftZone.offsetParent === null) return;
-      const rect = coreBtn.getBoundingClientRect();
-      if (rect.width <= 0) return;
+      const center = getCoreCenter();
+      if (center.width <= 0) return;
 
       const t1 = getAutomationTier(g1);
-      const cx = rect.left + rect.width / 2;
-      const cy = rect.top + rect.height / 2;
+      const cx = center.x;
+      const cy = center.y;
 
       if (t1 <= 1) {
         spawnCoreShockwave('normal');
@@ -11035,9 +11092,9 @@
         spawnCoreLightningArc(false);
         for (let i = 0; i < 4; i++) {
           const ang = (Math.PI / 2) * i + Math.random() * 0.5;
-          const px = cx + Math.cos(ang) * (rect.width * 0.36);
-          const py = cy + Math.sin(ang) * (rect.height * 0.36);
-          spawnParticles(px, py, 6, '#ec4899');
+          const px = cx + Math.cos(ang) * (center.width * 0.36);
+          const py = cy + Math.sin(ang) * (center.height * 0.36);
+          spawnParticles(px, py, 4, '#ec4899');
         }
       } else if (t1 === 2) {
         // TIER 2: Salvă Cyber-Gold
@@ -11046,11 +11103,11 @@
         triggerCosmicCorePulse(cx, cy, false, false);
         spawnCoreLightningArc(false);
         playTone(580, 'sawtooth', 0.18, 0.1);
-        for (let i = 0; i < 8; i++) {
-          const ang = (Math.PI / 4) * i + Math.random() * 0.4;
-          const px = cx + Math.cos(ang) * (rect.width * 0.38);
-          const py = cy + Math.sin(ang) * (rect.height * 0.38);
-          spawnParticles(px, py, 8, i % 2 === 0 ? '#f59e0b' : '#38bdf8');
+        for (let i = 0; i < 6; i++) {
+          const ang = (Math.PI / 3) * i + Math.random() * 0.4;
+          const px = cx + Math.cos(ang) * (center.width * 0.38);
+          const py = cy + Math.sin(ang) * (center.height * 0.38);
+          spawnParticles(px, py, 4, i % 2 === 0 ? '#f59e0b' : '#38bdf8');
         }
       } else if (t1 === 3) {
         // TIER 3: Bombardament Void-Plasma
@@ -11059,27 +11116,26 @@
         triggerCosmicCorePulse(cx, cy, true, false);
         for (let k = 0; k < 2; k++) spawnCoreLightningArc(true);
         playTone(320, 'sawtooth', 0.28, 0.12);
-        for (let i = 0; i < 12; i++) {
-          const ang = (Math.PI / 6) * i + Math.random() * 0.3;
-          const px = cx + Math.cos(ang) * (rect.width * 0.4);
-          const py = cy + Math.sin(ang) * (rect.height * 0.4);
-          spawnParticles(px, py, 10, i % 2 === 0 ? '#a855f7' : '#f43f5e');
+        for (let i = 0; i < 8; i++) {
+          const ang = (Math.PI / 4) * i + Math.random() * 0.3;
+          const px = cx + Math.cos(ang) * (center.width * 0.4);
+          const py = cy + Math.sin(ang) * (center.height * 0.4);
+          spawnParticles(px, py, 5, i % 2 === 0 ? '#a855f7' : '#f43f5e');
         }
       } else {
         // TIER 4: Mega-Bombardament Orbital Celest Suprem
         spawnCoreShockwave('crit');
         spawnCoreShockwave('em-wave');
-        spawnCoreShockwave('normal');
         triggerCosmicCorePulse(cx, cy, true, true);
-        for (let k = 0; k < 4; k++) spawnCoreLightningArc(true);
+        for (let k = 0; k < 3; k++) spawnCoreLightningArc(true);
         playTone(220, 'sawtooth', 0.4, 0.14);
         setTimeout(() => playTone(880, 'triangle', 0.3, 0.12), 120);
-        for (let i = 0; i < 18; i++) {
-          const ang = (Math.PI / 9) * i + Math.random() * 0.25;
-          const px = cx + Math.cos(ang) * (rect.width * 0.42);
-          const py = cy + Math.sin(ang) * (rect.height * 0.42);
+        for (let i = 0; i < 10; i++) {
+          const ang = (Math.PI / 5) * i + Math.random() * 0.25;
+          const px = cx + Math.cos(ang) * (center.width * 0.42);
+          const py = cy + Math.sin(ang) * (center.height * 0.42);
           const colors = ['#ffffff', '#38bdf8', '#ec4899', '#fde047'];
-          spawnParticles(px, py, 12, colors[i % colors.length]);
+          spawnParticles(px, py, 6, colors[i % colors.length]);
         }
       }
     }
@@ -11092,49 +11148,47 @@
       const burstAmount = g3 * 420 * getGeneratorMilestoneMultiplier(g3) * getGlobalMultiplier();
       addEnergy(burstAmount);
 
-      const rect = coreBtn.getBoundingClientRect();
-      const cx = rect.width > 0 ? rect.left + rect.width / 2 : window.innerWidth / 2;
-      const cy = rect.width > 0 ? rect.top + rect.height / 2 : window.innerHeight / 2;
+      const center = getCoreCenter();
+      const cx = center.x;
+      const cy = center.y;
 
       if (t3 <= 1) {
         spawnCoreShockwave('em-wave');
         spawnCoreLightningArc(true);
         playTone(720, 'sine', 0.15, 0.1);
         spawnFloatingText(cx, cy - 25, `🔋 ȘOC TAHIONIC +${formatNumber(burstAmount)}`, true);
-        spawnParticles(cx, cy, 12, '#fde047');
+        spawnParticles(cx, cy, 8, '#fde047');
       } else if (t3 === 2) {
         // TIER 2: Șoc Dublu Tahionic Cyber-Gold
         spawnCoreShockwave('normal');
         spawnCoreShockwave('em-wave');
         spawnCoreLightningArc(true);
-        spawnCoreLightningArc(true);
         playTone(540, 'triangle', 0.18, 0.11);
         setTimeout(() => playTone(820, 'sine', 0.2, 0.1), 80);
         spawnFloatingText(cx, cy - 28, `⚡ ȘOC TAHIONIC AURIU +${formatNumber(burstAmount)}`, true);
-        spawnParticles(cx, cy, 22, '#f59e0b');
-        spawnParticles(cx, cy, 14, '#fde047');
+        spawnParticles(cx, cy, 10, '#f59e0b');
+        spawnParticles(cx, cy, 8, '#fde047');
       } else if (t3 === 3) {
         // TIER 3: Furtună Tahionică Triplă Void-Plasma
         spawnCoreShockwave('crit');
         spawnCoreShockwave('em-wave');
-        for (let k = 0; k < 4; k++) spawnCoreLightningArc(true);
+        for (let k = 0; k < 3; k++) spawnCoreLightningArc(true);
         playTone(420, 'sawtooth', 0.22, 0.12);
         setTimeout(() => playTone(960, 'triangle', 0.25, 0.11), 100);
         spawnFloatingText(cx, cy - 32, `🔮 FURTUNĂ TAHIONICĂ VOID +${formatNumber(burstAmount)}`, true);
-        spawnParticles(cx, cy, 32, '#a855f7');
-        spawnParticles(cx, cy, 20, '#ec4899');
+        spawnParticles(cx, cy, 14, '#a855f7');
+        spawnParticles(cx, cy, 10, '#ec4899');
       } else {
         // TIER 4: Super-Detonație Tahionică Transcendentală
         spawnCoreShockwave('crit');
-        spawnCoreShockwave('crit');
         spawnCoreShockwave('em-wave');
-        for (let k = 0; k < 6; k++) spawnCoreLightningArc(true);
+        for (let k = 0; k < 4; k++) spawnCoreLightningArc(true);
         playTone(280, 'sawtooth', 0.35, 0.14);
         setTimeout(() => playTone(680, 'sine', 0.25, 0.12), 100);
         setTimeout(() => playTone(1240, 'triangle', 0.35, 0.12), 200);
         spawnFloatingText(cx, cy - 36, `👑 SUPER-DETONAȚIE TAHIONICĂ +${formatNumber(burstAmount)}`, true);
         const prismColors = ['#ffffff', '#38bdf8', '#fde047', '#a855f7', '#ec4899'];
-        prismColors.forEach(col => spawnParticles(cx, cy, 10, col));
+        prismColors.forEach(col => spawnParticles(cx, cy, 6, col));
       }
     }
 
@@ -11150,49 +11204,49 @@
       isBlackHoleDevouring = true;
       bhOverlay.className = `blackhole-singularity-overlay bh-tier-${t6}`;
       coreBtn.classList.remove('core-devoured-by-bh');
-      void bhOverlay.offsetWidth;
-      bhOverlay.classList.add('devouring');
-      coreBtn.classList.add('core-devoured-by-bh');
+      bhOverlay.classList.remove('devouring');
+      requestAnimationFrame(() => {
+        bhOverlay.classList.add('devouring');
+        coreBtn.classList.add('core-devoured-by-bh');
+      });
 
       const pitch = t6 >= 4 ? 90 : (t6 === 3 ? 115 : (t6 === 2 ? 130 : 145));
       playTone(pitch, 'sawtooth', 0.55, 0.14);
 
-      const rect = coreBtn.getBoundingClientRect();
-      const cx = rect.left + rect.width / 2;
-      const cy = rect.top + rect.height / 2;
+      const center = getCoreCenter();
+      const cx = center.x;
+      const cy = center.y;
 
       const title = t6 >= 4 ? '👑 SINGULARITATE COSMICĂ DE VID' : (t6 === 3 ? '🔮 GAURA NEAGRĂ GARGANTUA' : (t6 === 2 ? '⚡ GAURĂ NEAGRĂ SUPERMASIVĂ' : '🕳️ GAURA NEAGRĂ'));
-      if (rect.width > 0) {
+      if (center.width > 0) {
         spawnFloatingText(cx, cy - 42, `${title} ABSOARBE NUCLEUL!`, true);
-        // Număr de particule aspirate scalat pe Tier
-        const dotCount = t6 >= 4 ? 24 : (t6 === 3 ? 18 : (t6 === 2 ? 14 : 10));
+        const dotCount = t6 >= 4 ? 14 : (t6 === 3 ? 12 : (t6 === 2 ? 10 : 8));
         for (let w = 0; w < 3; w++) {
           setTimeout(() => {
-            const rNow = coreBtn.getBoundingClientRect();
-            if (rNow.width <= 0) return;
-            const centerX = rNow.left + rNow.width / 2;
-            const centerY = rNow.top + rNow.height / 2;
+            const cNow = getCoreCenter();
+            if (cNow.width <= 0) return;
+            const centerX = cNow.x;
+            const centerY = cNow.y;
             for (let i = 0; i < dotCount; i++) {
               const dot = document.createElement('div');
               dot.className = 'particle-dot';
-              const size = t6 >= 4 ? 8 : (t6 === 3 ? 7 : 6);
+              const size = t6 >= 4 ? 6 : 5;
               dot.style.width = `${size}px`;
               dot.style.height = `${size}px`;
               const colors = t6 >= 4 ? ['#ffffff', '#38bdf8', '#fde047', '#a855f7'] : (t6 === 3 ? ['#a855f7', '#ec4899', '#f43f5e'] : ['#a855f7', '#f43f5e']);
               dot.style.background = colors[i % colors.length];
-              dot.style.boxShadow = `0 0 14px ${colors[i % colors.length]}`;
               const ang = (Math.PI * 2 * i) / dotCount + w * 0.4;
-              const dist = 120 + Math.random() * (t6 >= 4 ? 70 : 40);
+              const dist = 110 + Math.random() * (t6 >= 4 ? 50 : 30);
               const sx = centerX + Math.cos(ang) * dist;
               const sy = centerY + Math.sin(ang) * dist;
               dot.style.left = `${sx}px`;
               dot.style.top = `${sy}px`;
               document.body.appendChild(dot);
               dot.animate([
-                { left: `${sx}px`, top: `${sy}px`, transform: 'translate(-50%, -50%) scale(1.4)', opacity: 1 },
-                { left: `${centerX}px`, top: `${centerY}px`, transform: 'translate(-50%, -50%) scale(0.1)', opacity: 0 }
+                { transform: 'translate3d(-50%, -50%, 0) scale(1.3)', opacity: 1 },
+                { transform: `translate3d(${centerX - sx - 50}px, ${centerY - sy - 50}px, 0) scale(0.1)`, opacity: 0 }
               ], {
-                duration: t6 >= 4 ? 650 : 750,
+                duration: t6 >= 4 ? 600 : 700,
                 easing: 'cubic-bezier(0.55, 0.055, 0.675, 0.19)'
               }).onfinish = () => dot.remove();
             }
@@ -11208,17 +11262,15 @@
         spawnCoreShockwave('em-wave');
         if (t6 >= 2) spawnCoreShockwave('crit');
         if (t6 >= 3) spawnCoreShockwave('em-wave');
-        if (t6 >= 4) spawnCoreShockwave('crit');
-        const arcsCount = t6 >= 4 ? 7 : (t6 === 3 ? 5 : (t6 === 2 ? 4 : 3));
+        const arcsCount = t6 >= 4 ? 5 : (t6 === 3 ? 4 : 3);
         for (let k = 0; k < arcsCount; k++) spawnCoreLightningArc(true);
         playTone(t6 >= 4 ? 820 : 620, 'triangle', 0.35, 0.14);
-        const rEnd = coreBtn.getBoundingClientRect();
-        if (rEnd.width > 0) {
+        const cEnd = getCoreCenter();
+        if (cEnd.width > 0) {
           const eruptionTitle = t6 >= 4 ? '👑 SUPER-NOVA HAWKING TRANSCENDENTALĂ' : (t6 === 3 ? '🔮 ERUPȚIE HAWKING HIPER-DENSĂ' : '💥 ERUPȚIE HAWKING');
-          spawnFloatingText(rEnd.left + rEnd.width / 2, rEnd.top + rEnd.height / 2 - 20, `${eruptionTitle} +${formatNumber(hawkingBonus)}`, true);
-          const pCount = t6 >= 4 ? 50 : (t6 === 3 ? 36 : (t6 === 2 ? 28 : 22));
-          spawnParticles(rEnd.left + rEnd.width / 2, rEnd.top + rEnd.height / 2, pCount, t6 >= 3 ? '#ec4899' : '#a855f7');
-          if (t6 >= 4) spawnParticles(rEnd.left + rEnd.width / 2, rEnd.top + rEnd.height / 2, 30, '#ffffff');
+          spawnFloatingText(cEnd.x, cEnd.y - 20, `${eruptionTitle} +${formatNumber(hawkingBonus)}`, true);
+          const pCount = t6 >= 4 ? 28 : (t6 === 3 ? 22 : 16);
+          spawnParticles(cEnd.x, cEnd.y, pCount, t6 >= 3 ? '#ec4899' : '#a855f7');
         }
       }, 2750);
 
@@ -11241,8 +11293,7 @@
       isUniverseGenesisActive = true;
       portalEl.className = `universe-genesis-portal portal-tier-${t9}`;
       portalEl.classList.remove('active-genesis');
-      void portalEl.offsetWidth;
-      portalEl.classList.add('active-genesis');
+      requestAnimationFrame(() => portalEl.classList.add('active-genesis'));
 
       const tierGenesisMult = t9 >= 4 ? 9.0 : (t9 === 3 ? 7.0 : (t9 === 2 ? 5.5 : 4.5));
       const genesisBonus = Math.max(2500, getCPS() * tierGenesisMult);
@@ -11256,22 +11307,19 @@
       spawnCoreShockwave('em-wave');
       setTimeout(() => spawnCoreShockwave('crit'), 250);
       if (t9 >= 3) setTimeout(() => spawnCoreShockwave('em-wave'), 450);
-      if (t9 >= 4) setTimeout(() => spawnCoreShockwave('crit'), 650);
 
-      const arcsCount = t9 >= 4 ? 8 : (t9 === 3 ? 6 : 5);
+      const arcsCount = t9 >= 4 ? 6 : (t9 === 3 ? 5 : 4);
       for (let k = 0; k < arcsCount; k++) spawnCoreLightningArc(true);
 
-      const rect = coreBtn.getBoundingClientRect();
-      if (rect.width > 0) {
-        const cx = rect.left + rect.width / 2;
-        const cy = rect.top + rect.height / 2;
+      const center = getCoreCenter();
+      if (center.width > 0) {
+        const cx = center.x;
+        const cy = center.y;
         const title = t9 >= 4 ? '👑 GENEZĂ OMNIVERSALĂ BIG BANG!' : (t9 === 3 ? '🔮 GENEZĂ MULTIVERS CUANTIC!' : '🌌 GENEZĂ UNIVERS SINTETIC!');
         spawnFloatingText(cx, cy - 48, `${title} +${formatNumber(genesisBonus)}`, true);
-        const pCount = t9 >= 4 ? 40 : (t9 === 3 ? 30 : 20);
+        const pCount = t9 >= 4 ? 22 : (t9 === 3 ? 18 : 14);
         spawnParticles(cx, cy, pCount, '#38bdf8');
         spawnParticles(cx, cy, pCount, '#fde047');
-        if (t9 >= 3) spawnParticles(cx, cy, pCount, '#ec4899');
-        if (t9 >= 4) spawnParticles(cx, cy, pCount, '#ffffff');
       }
 
       setTimeout(() => {
@@ -11281,42 +11329,55 @@
     }
 
     function spawnFloatingText(x, y, text, isCrit = false) {
+      const activeFloats = document.querySelectorAll('.floating-text');
+      if (activeFloats.length > 5) {
+        activeFloats[0].remove();
+      }
       const el = document.createElement('div');
       el.className = 'floating-text' + (isCrit ? ' crit' : '');
       el.innerText = isCrit ? `💥 ${text}!` : text;
-      const offsetX = (Math.random() - 0.5) * 50;
-      const offsetY = (Math.random() - 0.5) * 24;
+      const offsetX = (Math.random() - 0.5) * 40;
+      const offsetY = (Math.random() - 0.5) * 20;
       el.style.left = `${x + offsetX}px`;
       el.style.top = `${y - 15 + offsetY}px`;
       document.body.appendChild(el);
-      setTimeout(() => el.remove(), 950);
+      setTimeout(() => el.remove(), 750);
     }
 
+    let activeParticlesCount = 0;
+    const MAX_PARTICLES_ON_SCREEN = 24;
+
     function spawnParticles(x, y, count, color) {
-      for (let i = 0; i < count; i++) {
+      if (activeParticlesCount >= MAX_PARTICLES_ON_SCREEN) return;
+      const spawnLimit = Math.min(count, MAX_PARTICLES_ON_SCREEN - activeParticlesCount);
+
+      for (let i = 0; i < spawnLimit; i++) {
+        activeParticlesCount++;
         const dot = document.createElement('div');
         dot.className = 'particle-dot';
-        const size = 4 + Math.random() * 5;
+        const size = 3 + Math.random() * 4;
         dot.style.width = `${size}px`;
         dot.style.height = `${size}px`;
         dot.style.background = color;
-        dot.style.boxShadow = `0 0 10px ${color}`;
         dot.style.left = `${x}px`;
         dot.style.top = `${y}px`;
         document.body.appendChild(dot);
 
         const angle = Math.random() * Math.PI * 2;
-        const dist = 35 + Math.random() * 75;
+        const dist = 30 + Math.random() * 55;
         const tx = Math.cos(angle) * dist;
         const ty = Math.sin(angle) * dist;
 
         dot.animate([
-          { transform: 'translate(-50%, -50%) scale(1)', opacity: 1 },
-          { transform: `translate(calc(-50% + ${tx}px), calc(-50% + ${ty}px)) scale(0)`, opacity: 0 }
+          { transform: 'translate3d(-50%, -50%, 0) scale(1)', opacity: 1 },
+          { transform: `translate3d(calc(-50% + ${tx}px), calc(-50% + ${ty}px), 0) scale(0)`, opacity: 0 }
         ], {
-          duration: 450 + Math.random() * 250,
+          duration: 380 + Math.random() * 180,
           easing: 'cubic-bezier(0.16, 1, 0.3, 1)'
-        }).onfinish = () => dot.remove();
+        }).onfinish = () => {
+          activeParticlesCount = Math.max(0, activeParticlesCount - 1);
+          dot.remove();
+        };
       }
     }
 
@@ -11824,11 +11885,11 @@
               const hitVal = Math.max(25, (getCPS() * 2.2 + getClickValue() * 2) * mult);
               addEnergy(hitVal);
               spawnActivationOrbToCore(null, m % 2 === 0 ? '#ec4899' : '#38bdf8');
-              const r = coreBtn.getBoundingClientRect();
-              if (r.width > 0) {
+              const center = getCoreCenter();
+              if (center.width > 0) {
                 spawnFloatingText(
-                  r.left + r.width / 2 + (Math.random() - 0.5) * 70,
-                  r.top + r.height / 2 + (Math.random() - 0.5) * 50,
+                  center.x + (Math.random() - 0.5) * 70,
+                  center.y + (Math.random() - 0.5) * 50,
                   `☄️ +${formatNumber(hitVal)}`,
                   true
                 );
@@ -12209,8 +12270,9 @@
 
           if (mechaRoot) {
             mechaRoot.classList.remove('mecha-recoil');
-            void mechaRoot.offsetWidth; // trigger reflow
-            mechaRoot.classList.add('mecha-recoil');
+            requestAnimationFrame(() => {
+              if (mechaRoot) mechaRoot.classList.add('mecha-recoil');
+            });
           }
 
           playMechanicalClankSound(hitsRemaining);
@@ -13331,11 +13393,59 @@
       }
     }
 
-    function updateUI() {
-      // Contoare principale
-      document.getElementById('energyAmount').innerText = formatNumber(state.energy);
-      document.getElementById('cpsAmount').innerText = formatNumber(getCPS());
-      document.getElementById('vpcAmount').innerText = formatNumber(getClickValue());
+    let lastHeavyUIUpdateTime = 0;
+    let cachedEnergyStr = '';
+    let cachedCpsStr = '';
+    let cachedVpcStr = '';
+    let cachedComboPct = -1;
+
+    function updateUI(forceHeavy = false) {
+      // Contoare principale (optimizat: scriere în DOM doar dacă valoarea s-a schimbat)
+      const curEnergyStr = formatNumber(state.energy);
+      if (curEnergyStr !== cachedEnergyStr) {
+        document.getElementById('energyAmount').innerText = curEnergyStr;
+        cachedEnergyStr = curEnergyStr;
+      }
+      const curCpsStr = formatNumber(getCPS());
+      if (curCpsStr !== cachedCpsStr) {
+        document.getElementById('cpsAmount').innerText = curCpsStr;
+        cachedCpsStr = curCpsStr;
+      }
+      const curVpcStr = formatNumber(getClickValue());
+      if (curVpcStr !== cachedVpcStr) {
+        document.getElementById('vpcAmount').innerText = curVpcStr;
+        cachedVpcStr = curVpcStr;
+      }
+
+      // Combo Bar (Overclock)
+      const roundedCombo = Math.round(comboMeter);
+      if (roundedCombo !== cachedComboPct) {
+        cachedComboPct = roundedCombo;
+        const comboPctEl = document.getElementById('comboPctText');
+        if (comboPctEl) comboPctEl.innerText = `${roundedCombo}%`;
+        document.getElementById('comboBarFill').style.width = `${Math.min(100, Math.max(0, roundedCombo))}%`;
+      }
+      const comboMult = getComboMultiplier();
+      const comboMultEl = document.getElementById('comboMultText');
+      comboMultEl.innerText = `x${comboMult.toFixed(2)}`;
+      const comboBoxCard = document.getElementById('comboBoxCard');
+      if (comboMeter >= 85) {
+        comboMultEl.classList.add('fever-text');
+        coreBtn.classList.add('fever');
+        if (comboBoxCard) comboBoxCard.classList.add('fever-box');
+      } else {
+        comboMultEl.classList.remove('fever-text');
+        coreBtn.classList.remove('fever');
+        if (comboBoxCard) comboBoxCard.classList.remove('fever-box');
+      }
+
+      // Throttling inteligent pentru parcurgerea zecilor de carduri de magazin (120ms = 60+ FPS fluid pe orice telefon)
+      const nowPerf = performance.now();
+      if (!forceHeavy && nowPerf - lastHeavyUIUpdateTime < 120) {
+        return;
+      }
+      lastHeavyUIUpdateTime = nowPerf;
+
       updateCoreSkinButtonPill();
 
       // Actualizare Countdown Resetare Zilnică & Badge Recompense
@@ -13357,24 +13467,6 @@
       if (rbEl) rbEl.innerText = `🌀 Rebirth #${state.prestigeCount || 0}`;
       const presEl = document.getElementById('prestigeMultMini');
       if (presEl) presEl.innerText = `⭐ +${formatNumber(totalPresBonusPct, 0)}% Bonus`;
-
-      // Combo Bar (Overclock)
-      const comboMult = getComboMultiplier();
-      const comboMultEl = document.getElementById('comboMultText');
-      comboMultEl.innerText = `x${comboMult.toFixed(2)}`;
-      const comboPctEl = document.getElementById('comboPctText');
-      if (comboPctEl) comboPctEl.innerText = `${Math.round(comboMeter)}%`;
-      document.getElementById('comboBarFill').style.width = `${Math.min(100, Math.max(0, comboMeter))}%`;
-      const comboBoxCard = document.getElementById('comboBoxCard');
-      if (comboMeter >= 85) {
-        comboMultEl.classList.add('fever-text');
-        coreBtn.classList.add('fever');
-        if (comboBoxCard) comboBoxCard.classList.add('fever-box');
-      } else {
-        comboMultEl.classList.remove('fever-text');
-        coreBtn.classList.remove('fever');
-        if (comboBoxCard) comboBoxCard.classList.remove('fever-box');
-      }
 
       // Actualizare accesibilitate și cost dinamic carduri Upgrade-uri Click
       CLICK_UPGRADES_DATA.forEach(upg => {
@@ -13742,8 +13834,8 @@
      *       + AUTO-SYNC SILENȚIOS OFFLINE -> ONLINE + AUTO-UPDATE LIVE
      *       + NAVIGARE MOBIL & INSTALARE PWA (MACBOOK / PC / ANDROID / iOS)
      ********************************************************************/
-    const APP_VERSION = '3.3.0';
-    const APP_BUILD = 330;
+    const APP_VERSION = '3.3.1';
+    const APP_BUILD = 331;
     // URL-ul oficial de pe GitHub Pages pentru verificarea automată de Update (și în aplicațiile .exe / .dmg):
     const REMOTE_UPDATE_BASE_URL = 'https://mariusinfo.github.io/quantum-nexus';
 
@@ -15396,9 +15488,9 @@
         spectralClickAccumulator += dt * (autoClickLvl * 4);
         while (spectralClickAccumulator >= 1) {
           spectralClickAccumulator -= 1;
-          const rect = coreBtn ? coreBtn.getBoundingClientRect() : { left: window.innerWidth / 2, top: window.innerHeight / 2, width: 0, height: 0 };
-          const cx = rect.left + rect.width / 2 + (Math.random() - 0.5) * 40;
-          const cy = rect.top + rect.height / 2 + (Math.random() - 0.5) * 40;
+          const center = getCoreCenter();
+          const cx = center.x + (Math.random() - 0.5) * 40;
+          const cy = center.y + (Math.random() - 0.5) * 40;
           handleCoreClick(cx, cy, true);
         }
       }
