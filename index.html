@@ -7577,14 +7577,15 @@
       gap: 13px;
       cursor: pointer;
       position: relative;
-      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      transition: border-color 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
       box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
       overflow: hidden;
     }
 
     .ach-trophy-card:hover {
-      transform: translateY(-3px) scale(1.015);
-      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.6);
+      border-color: rgba(253, 224, 71, 0.65);
+      box-shadow: 0 0 20px rgba(253, 224, 71, 0.28);
+      background: linear-gradient(135deg, rgba(20, 30, 56, 0.96) 0%, rgba(12, 18, 36, 0.98) 100%);
     }
 
     .ach-trophy-card.unlocked.rarity-mythic {
@@ -7865,6 +7866,458 @@
     .btn-portal-launch-ach:hover {
       transform: translateY(-2px) scale(1.02);
       box-shadow: 0 0 35px rgba(245, 158, 11, 0.75);
+    }
+
+    /* =========================================================================
+       PRESTIGE FULLSCREEN & VORTEX WARP TRANSITION (V3.9.0)
+       ========================================================================= */
+    .prestige-warp-canvas {
+      position: fixed;
+      inset: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 9999999;
+      pointer-events: none;
+    }
+
+    .prestige-fullscreen {
+      position: fixed;
+      inset: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 999999;
+      background: #020208;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      opacity: 0;
+      transition: opacity 0.4s ease;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
+    .prestige-fullscreen.active {
+      opacity: 1;
+    }
+
+    .pres-fs-bg-canvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    /* Top Galactic Header */
+    .pres-fs-header {
+      position: relative;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 24px;
+      background: linear-gradient(180deg, rgba(2, 4, 14, 0.95) 0%, rgba(2, 4, 14, 0.7) 80%, transparent 100%);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(168, 85, 247, 0.2);
+      flex-shrink: 0;
+    }
+
+    .pres-fs-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-shrink: 0;
+    }
+
+    .pres-crest {
+      position: relative;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 12px;
+      background: radial-gradient(circle, rgba(168, 85, 247, 0.35) 0%, rgba(15, 23, 42, 0.85) 100%);
+      border: 1px solid rgba(168, 85, 247, 0.6);
+      box-shadow: 0 0 18px rgba(168, 85, 247, 0.4);
+      font-size: 22px;
+    }
+
+    .pres-crest-halo {
+      position: absolute;
+      inset: -3px;
+      border-radius: 15px;
+      border: 1px solid rgba(168, 85, 247, 0.5);
+      animation: hudLivePulse 2.2s ease-in-out infinite;
+      pointer-events: none;
+    }
+
+    .pres-fs-titles {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .pres-fs-main-title {
+      font-size: 15.5px;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      background: linear-gradient(135deg, #ffffff 0%, #d8b4fe 40%, #38bdf8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      line-height: 1.2;
+    }
+
+    .pres-fs-sub-title {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 700;
+      color: rgba(216, 180, 254, 0.7);
+      letter-spacing: 0.04em;
+    }
+
+    .pres-fs-stats-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .pres-badge {
+      background: rgba(15, 23, 42, 0.8);
+      border: 1.5px solid rgba(168, 85, 247, 0.55);
+      padding: 5px 14px;
+      border-radius: 999px;
+      box-shadow: 0 0 16px rgba(168, 85, 247, 0.25);
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 800;
+      color: #e9d5ff;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .pres-btn-close {
+      background: linear-gradient(135deg, rgba(168, 85, 247, 0.25), rgba(56, 189, 248, 0.25));
+      border: 1.5px solid rgba(168, 85, 247, 0.6);
+      color: #ffffff;
+      padding: 7px 16px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 800;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 0 16px rgba(168, 85, 247, 0.3);
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .pres-btn-close:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 24px rgba(168, 85, 247, 0.6);
+      border-color: #c084fc;
+      background: linear-gradient(135deg, rgba(168, 85, 247, 0.4), rgba(56, 189, 248, 0.4));
+    }
+
+    /* Main Stage */
+    .pres-fs-body {
+      position: relative;
+      z-index: 2;
+      flex: 1;
+      overflow-y: auto;
+      padding: 24px 20px 40px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+    }
+
+    .pres-fs-stage {
+      max-width: 680px;
+      width: 100%;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .pres-core-hologram {
+      position: relative;
+      width: 130px;
+      height: 130px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .pres-core-orb {
+      width: 86px;
+      height: 86px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 35%, #ffffff 0%, #c084fc 35%, #581c87 75%, #050512 100%);
+      border: 2px solid rgba(255, 255, 255, 0.6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 40px;
+      box-shadow: 0 0 40px rgba(168, 85, 247, 0.8), inset 0 0 20px rgba(255, 255, 255, 0.4);
+      z-index: 2;
+      animation: floatOrbit 4s ease-in-out infinite;
+    }
+
+    .pres-core-rings {
+      position: absolute;
+      inset: -14px;
+      border-radius: 50%;
+      border: 1.5px dashed rgba(168, 85, 247, 0.55);
+      animation: hudLivePulse 2.5s linear infinite;
+      pointer-events: none;
+    }
+
+    .pres-core-rings-outer {
+      position: absolute;
+      inset: -28px;
+      border-radius: 50%;
+      border: 1px solid rgba(56, 189, 248, 0.35);
+      animation: cardPrismShimmer 5s linear infinite alternate;
+      pointer-events: none;
+    }
+
+    .pres-core-title {
+      font-size: 24px;
+      font-weight: 900;
+      color: #ffffff;
+      letter-spacing: 0.04em;
+      margin-bottom: 2px;
+      text-shadow: 0 0 20px rgba(168, 85, 247, 0.6);
+    }
+
+    .pres-core-sub {
+      font-size: 13px;
+      color: var(--text-muted);
+      max-width: 520px;
+      line-height: 1.45;
+    }
+
+    /* Gauge */
+    .pres-gauge-card {
+      background: linear-gradient(135deg, rgba(15, 23, 42, 0.94) 0%, rgba(9, 14, 28, 0.96) 100%);
+      border: 1.5px solid rgba(168, 85, 247, 0.4);
+      border-radius: 16px;
+      padding: 18px 24px;
+      width: 100%;
+      box-sizing: border-box;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+    }
+
+    .pres-gauge-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-family: var(--font-mono);
+      font-size: 12.5px;
+      margin-bottom: 8px;
+    }
+
+    .pres-gauge-track {
+      width: 100%;
+      height: 12px;
+      background: rgba(10, 14, 26, 0.9);
+      border-radius: 999px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      position: relative;
+    }
+
+    .pres-gauge-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #38bdf8 0%, #a855f7 50%, #ec4899 100%);
+      border-radius: 999px;
+      transition: width 0.3s ease;
+      box-shadow: 0 0 14px rgba(168, 85, 247, 0.6);
+    }
+
+    .pres-rewards-row {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    .pres-reward-pill {
+      background: rgba(10, 14, 24, 0.7);
+      border: 1px solid rgba(168, 85, 247, 0.35);
+      border-radius: 12px;
+      padding: 10px 14px;
+      text-align: left;
+    }
+
+    .pres-reward-label {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-bottom: 2px;
+    }
+
+    .pres-reward-val {
+      font-family: var(--font-mono);
+      font-size: 14px;
+      font-weight: 800;
+      color: #d8b4fe;
+    }
+
+    /* Big Action CTA */
+    .pres-cta-btn {
+      background: linear-gradient(135deg, #a855f7 0%, #9333ea 40%, #ec4899 100%);
+      color: #ffffff;
+      border: 1.5px solid rgba(255, 255, 255, 0.35);
+      padding: 16px 36px;
+      border-radius: 14px;
+      font-size: 16px;
+      font-weight: 900;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      box-shadow: 0 0 35px rgba(168, 85, 247, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+      transition: all 0.22s ease;
+      letter-spacing: 0.03em;
+      width: 100%;
+    }
+
+    .pres-cta-btn:hover:not(:disabled) {
+      transform: translateY(-2px) scale(1.02);
+      box-shadow: 0 0 45px rgba(168, 85, 247, 0.85);
+      filter: brightness(1.1);
+    }
+
+    .pres-cta-btn:disabled {
+      background: rgba(15, 23, 42, 0.7);
+      border-color: rgba(255, 255, 255, 0.12);
+      color: #64748b;
+      cursor: not-allowed;
+      box-shadow: none;
+    }
+
+    /* Sub Modules */
+    .pres-modules-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      width: 100%;
+      margin-top: 4px;
+    }
+
+    .pres-module-card {
+      background: rgba(15, 23, 42, 0.8);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      padding: 12px 14px;
+      text-align: left;
+    }
+
+    .pres-module-label {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-bottom: 3px;
+    }
+
+    .pres-module-val {
+      font-family: var(--font-mono);
+      font-size: 13.5px;
+      font-weight: 800;
+      color: #38bdf8;
+    }
+
+    /* Portal Card in Tab-Prestige */
+    .prestige-tab-portal {
+      position: relative;
+      background: radial-gradient(circle at 50% 20%, rgba(168, 85, 247, 0.18) 0%, rgba(15, 23, 42, 0.95) 85%);
+      border: 1.5px solid rgba(168, 85, 247, 0.45);
+      border-radius: 16px;
+      padding: 26px 22px;
+      text-align: center;
+      box-shadow: 0 14px 35px rgba(0, 0, 0, 0.6), 0 0 28px rgba(168, 85, 247, 0.2);
+      overflow: hidden;
+      margin-bottom: 16px;
+    }
+
+    .prestige-portal-glow {
+      position: absolute;
+      top: -60px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 240px;
+      height: 140px;
+      background: radial-gradient(circle, rgba(168, 85, 247, 0.45), transparent 70%);
+      pointer-events: none;
+      filter: blur(30px);
+    }
+
+    .prestige-portal-icon-box {
+      width: 68px;
+      height: 68px;
+      margin: 0 auto 14px;
+      border-radius: 18px;
+      background: radial-gradient(circle, rgba(168, 85, 247, 0.35) 0%, rgba(15, 23, 42, 0.9) 100%);
+      border: 1.5px solid rgba(168, 85, 247, 0.6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 34px;
+      box-shadow: 0 0 24px rgba(168, 85, 247, 0.45);
+      animation: floatOrbit 3.5s ease-in-out infinite;
+    }
+
+    .btn-portal-launch-pres {
+      background: linear-gradient(135deg, #a855f7 0%, #7c3aed 50%, #38bdf8 100%);
+      color: #ffffff;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      padding: 12px 26px;
+      border-radius: 12px;
+      font-size: 13.5px;
+      font-weight: 800;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 0 25px rgba(168, 85, 247, 0.45);
+      transition: all 0.2s ease;
+      letter-spacing: 0.02em;
+    }
+
+    .btn-portal-launch-pres:hover {
+      transform: translateY(-2px) scale(1.02);
+      box-shadow: 0 0 35px rgba(168, 85, 247, 0.75);
+    }
+
+    @media (max-width: 900px) {
+      .pres-fs-header {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
+        padding: 10px 14px;
+      }
+      .pres-fs-brand {
+        justify-content: space-between;
+      }
+      .pres-rewards-row, .pres-modules-grid {
+        grid-template-columns: 1fr;
+      }
+      .pres-cta-btn {
+        font-size: 14px;
+        padding: 14px 20px;
+      }
     }
 
     @media (max-width: 900px) {
@@ -8305,7 +8758,7 @@
       <!-- Subtitlu & Versiune Sistem -->
       <div class="loading-footer-tip">
         <span class="loading-pulse-dot"></span>
-        <span id="loadingVersionSub">Simulare Multiversală v3.8.0 // Auto-Stabilizare Activă</span>
+        <span id="loadingVersionSub">Simulare Multiversală v3.9.0 // Auto-Stabilizare Activă</span>
       </div>
 
       <!-- Hint discret dacă browserul a reținut temporar autoplay înainte de primul gest -->
@@ -8323,7 +8776,7 @@
         <div class="brand-icon">⚛️</div>
         <div>
           <div class="brand-title">QUANTUM NEXUS</div>
-          <div class="brand-sub" id="versionHeaderSub">v3.8.0</div>
+          <div class="brand-sub" id="versionHeaderSub">v3.9.0</div>
         </div>
         <div class="fps-meter-badge fps-high" id="fpsMeterBadge" onclick="showFpsInfo()" title="Monitorizare Cadre pe Secundă (FPS în timp real) - Click pentru detalii">
           <span class="fps-dot"></span>
@@ -8550,33 +9003,37 @@
             <div class="omniverse-cores-grid" id="omniverseCoresGrid"></div>
           </div>
 
-          <!-- TAB 2: Prestige / Rebirth (Step-by-Step) -->
+          <!-- TAB 2: Prestige / Rebirth (Portal Camera Singularitatii) -->
           <div class="tab-pane" id="tab-prestige">
-            <div class="prestige-hero">
-              <div class="prestige-title">🌌 Ascensiune Pas-cu-Pas (Rebirth Secvențial)</div>
-              <div class="prestige-desc">
-                Progresia în Singularitate se face <strong>strict câte un Rebirth pe rând</strong> pe baza <strong>soldului de energie actuală</strong> (banii pe care îi deții în acest moment)! Odată atins pragul cu energia actuală, declanșează Rebirth-ul pentru a avansa.<br/>
-                Fiecare Rebirth îți oferă <strong>+15% producție permanentă</strong> și <strong>🔮 Materie Întunecată</strong> (+10% producție fiecare).
+            <div class="prestige-tab-portal">
+              <div class="prestige-portal-glow"></div>
+              <div class="prestige-portal-icon-box">
+                <span class="prestige-portal-icon">🌀</span>
               </div>
-              <div class="prestige-stats-row">
-                <div class="prestige-stat-card">
-                  <div class="prestige-stat-label">Rebirth-uri / Materie 🔮</div>
-                  <div class="prestige-stat-val" id="dmCurrentVal">0 🌌 | 0 🔮</div>
+              <div class="constellation-portal-title">Camera Singularității Cuantice (Rebirth)</div>
+              <div class="constellation-portal-desc">
+                Accesează colapsul gravitațional al nucleului într-o cameră imersivă ecran complet. Transformă energia acumulată în <strong>Singularități permanente (+15%/Rebirth)</strong> și <strong>🔮 Materie Întunecată (+10%/DM)</strong> pentru arborele de talente.
+              </div>
+
+              <div class="constellation-portal-stats">
+                <div class="c-portal-stat-box">
+                  <span class="c-portal-stat-label">🌌 Rebirth Curent</span>
+                  <span class="c-portal-stat-val" id="portalPresCountVal">#0</span>
                 </div>
-                <div class="prestige-stat-card">
-                  <div class="prestige-stat-label" id="dmPendingLabel">Recompensă Rebirth #1</div>
-                  <div class="prestige-stat-val" id="dmPendingVal">Blocat</div>
+                <div class="c-portal-stat-box">
+                  <span class="c-portal-stat-label">🔮 Materie Totală</span>
+                  <span class="c-portal-stat-val" id="portalPresDmVal">0 🔮</span>
                 </div>
-                <div class="prestige-stat-card">
-                  <div class="prestige-stat-label" id="dmNextReqLabel">Prag Energie Rebirth #1</div>
-                  <div class="prestige-stat-val" id="dmNextReq" style="font-size:16px">10.00M ⚡</div>
+                <div class="c-portal-stat-box">
+                  <span class="c-portal-stat-label">⭐ Multiplicator Global</span>
+                  <span class="c-portal-stat-val" id="portalPresMultVal">+0%</span>
                 </div>
               </div>
 
-              <!-- Bara de progres către următorul Rebirth -->
-              <div style="max-width:460px; margin:0 auto 14px; text-align:left;">
+              <!-- Mini Progress Status -->
+              <div style="max-width:480px; margin:0 auto 16px; text-align:left;">
                 <div style="display:flex; justify-content:space-between; font-size:11.5px; font-family:var(--font-mono); color:var(--text-muted); margin-bottom:5px;">
-                  <span id="rebirthProgressLabel">Sold Energie Actuală / Prag Rebirth:</span>
+                  <span id="rebirthProgressLabel">Sold Energie Actuală / Prag Colaps:</span>
                   <span id="rebirthProgressPct" style="color:var(--accent-cyan); font-weight:800;">0.0%</span>
                 </div>
                 <div class="combo-track" style="height:10px;">
@@ -8585,32 +9042,29 @@
               </div>
 
               <div id="rebirthSaturationBanner" style="display:none; background:rgba(245,158,11,0.16); border:1px solid rgba(245,158,11,0.55); color:#fde047; border-radius:10px; padding:10px 14px; font-size:12px; font-weight:700; max-width:480px; margin:0 auto 14px;">
-                ⚠️ Nucleul a atins Pragul de Saturație pentru acest Rebirth! Recompensa nu se multiplică dacă mai farmezi fără Rebirth — declanșează Singularitatea acum pentru a trece la nivelul următor!
+                ⚠️ Nucleul a atins Pragul de Saturație pentru acest Rebirth! Recompensa nu se multiplică dacă mai farmezi fără Rebirth — declanșează Singularitatea acum!
               </div>
 
-              <button class="btn-prestige" id="btnTriggerPrestige" onclick="triggerPrestige()" disabled>
-                🌌 Declanșează Rebirth #1 (+1 🔮)
-              </button>
-            </div>
-
-            <!-- Scurtătură Directă către Constelația Cuantică -->
-            <div class="prestige-constellation-shortcut" style="background:linear-gradient(135deg, rgba(168,85,247,0.12), rgba(30,27,75,0.4)); border:1px solid rgba(168,85,247,0.35); border-radius:14px; padding:18px 20px; display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap; margin-top:16px;">
-              <div style="display:flex; align-items:center; gap:14px;">
-                <span style="font-size:36px; filter:drop-shadow(0 0 10px rgba(168,85,247,0.6));">🔮</span>
-                <div>
-                  <div style="font-size:14px; font-weight:800; color:#ffffff;">Arborele de Talente & Constelația Cuantică</div>
-                  <div style="font-size:12px; color:var(--text-muted); margin-top:2px;">
-                    Cheltuiește Materia Întunecată obținută din Rebirth în Harta Stelară pe cele 4 căi: Universală, Manuală, Pasivă și Anomalii.
-                  </div>
-                </div>
+              <div style="display:flex; gap:12px; justify-content:center; flex-wrap:wrap;">
+                <button class="btn-portal-launch-pres" onclick="openPrestigeFullscreen()">
+                  <span>🚀 Deschide Camera Singularității (Ecran Complet)</span>
+                  <span class="portal-btn-arrow">➔</span>
+                </button>
+                <button class="btn-prestige" id="btnTriggerPrestige" onclick="triggerPrestige()" disabled style="width:auto; padding:12px 22px;">
+                  🌌 Declanșează Rebirth #1 (+1 🔮)
+                </button>
               </div>
-              <button class="btn-prestige" onclick="switchTab('constellation', document.getElementById('btnTabConstellation'))" style="width:auto; padding:10px 18px; font-size:12.5px;">
-                🌌 Deschide Constelația Cuantică ➔
-              </button>
             </div>
 
-            <!-- Grid ascuns pentru compatibilitate cu cod vechi -->
-            <div id="prestigeUpgradesGrid" style="display:none;"></div>
+            <!-- Fallback elements for backwards JS compatibility -->
+            <div style="display:none;" aria-hidden="true">
+              <span id="dmCurrentVal">0 🌌 | 0 🔮</span>
+              <span id="dmPendingLabel">Recompensă Rebirth #1</span>
+              <span id="dmPendingVal">Blocat</span>
+              <span id="dmNextReq">10.00M ⚡</span>
+              <span id="dmNextReqLabel">Prag Energie Rebirth #1</span>
+              <div id="prestigeUpgradesGrid"></div>
+            </div>
           </div>
 
           <!-- TAB 2.5: Constellation Skill Tree (Portal Harta Stelara) -->
@@ -8642,10 +9096,6 @@
                 <span>🚀 Deschide Constelația Cuantică (Ecran Complet)</span>
                 <span class="portal-btn-arrow">➔</span>
               </button>
-
-              <div style="font-size:11px; color:var(--text-dim); margin-top:14px; font-family:var(--font-mono);">
-                💡 Modul Ecran Complet include tranziție hiperspațială, zoom & rotire liberă, trasee energetice și efecte stelare.
-              </div>
             </div>
 
             <!-- Fallback elements for backwards JS compatibility -->
@@ -8691,10 +9141,6 @@
                 <span>🚀 Deschide Panteonul Realizărilor (Ecran Complet)</span>
                 <span class="portal-btn-arrow">➔</span>
               </button>
-
-              <div style="font-size:11px; color:var(--text-dim); margin-top:14px; font-family:var(--font-mono);">
-                💡 Include tranziție cu viteză hiperspațială aurie, inspecție 3D detaliată, căutare în timp real și filtre pe categorii.
-              </div>
             </div>
 
             <!-- Fallback elements for backwards JS compatibility -->
@@ -9063,6 +9509,116 @@
       </div>
     </div>
   </div>
+
+  <!-- =========================================================================
+       PRESTIGE WARP CANVAS & FULLSCREEN SINGULARITY CHAMBER (V3.9.0)
+       ========================================================================= -->
+  <canvas id="prestigeWarpCanvas" class="prestige-warp-canvas" style="display:none;"></canvas>
+
+  <div id="prestigeFullscreen" class="prestige-fullscreen" style="display:none;">
+    <!-- Accretion Disk, Event Horizon & Gravitational Lensing Canvas -->
+    <canvas id="prestigeBgCanvas" class="pres-fs-bg-canvas"></canvas>
+
+    <!-- Top Galactic Header -->
+    <header class="pres-fs-header">
+      <div class="pres-fs-brand">
+        <div class="pres-crest">
+          <span>🌀</span>
+          <div class="pres-crest-halo"></div>
+        </div>
+        <div class="pres-fs-titles">
+          <div class="pres-fs-main-title">CAMERA SINGULARITĂȚII CUANTICE</div>
+          <div class="pres-fs-sub-title">COLAPS GRAVITAȚIONAL // MATERIE ÎNTUNECATĂ & MULTIPLICATOR PERMANENT</div>
+        </div>
+      </div>
+
+      <div class="pres-fs-stats-row">
+        <div class="pres-badge" id="presFsCountBadge" title="Numărul de Rebirth-uri / Singularități declanșate">
+          <span>🌌</span>
+          <span>Rebirth:</span>
+          <strong id="presFsRebirthCount">#0</strong>
+        </div>
+        <div class="pres-badge" id="presFsDmBadge" title="Materie Întunecată totală deținută">
+          <span>🔮</span>
+          <span>Materie:</span>
+          <strong id="presFsTotalDm">0 🔮</strong>
+        </div>
+        <div class="pres-badge" id="presFsMultBadge" title="Multiplicator global permanent oferit de Rebirth și Materie">
+          <span>⚡</span>
+          <span>Multiplicator:</span>
+          <strong id="presFsTotalMult">1.00x (+0%)</strong>
+        </div>
+      </div>
+
+      <div class="pres-fs-right">
+        <button class="pres-btn-close" onclick="closePrestigeFullscreen()" title="Închide Camera Singularității și revino la joc (Tasta Esc)">
+          <span>✖</span>
+          <span>Înapoi la Nucleu</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Singularity Chamber Stage -->
+    <div class="pres-fs-body" id="presFsBody">
+      <div class="pres-fs-stage">
+        <!-- Central Gravitational Core Hologram -->
+        <div class="pres-core-hologram">
+          <div class="pres-core-rings-outer"></div>
+          <div class="pres-core-rings"></div>
+          <div class="pres-core-orb" id="presCoreOrb">🌀</div>
+        </div>
+
+        <div class="pres-core-title" id="presCoreTitle">SINGULARITATEA CUANTICĂ #1</div>
+        <div class="pres-core-sub">
+          Comprimă întreg universul într-un punct infinitesimal. Resetează energia și generatoarele de bază în schimbul <strong style="color:#d8b4fe;">Materiei Întunecate</strong> cosmice și a unui bonus masiv permanent.
+        </div>
+
+        <!-- Resonance Charge Gauge Card -->
+        <div class="pres-gauge-card">
+          <div class="pres-gauge-header">
+            <span>Stare Rezonanță Cuantică:</span>
+            <strong id="presGaugeStatus" style="color:#38bdf8;">0.0% Încărcare</strong>
+          </div>
+          <div class="pres-gauge-track">
+            <div class="pres-gauge-fill" id="presGaugeFill" style="width:0%;"></div>
+          </div>
+          <div class="pres-rewards-row">
+            <div class="pres-reward-pill">
+              <div class="pres-reward-label">Recompensă Materie Întunecată:</div>
+              <div class="pres-reward-val" id="presRewardDmPending">+1 🔮 DM</div>
+            </div>
+            <div class="pres-reward-pill">
+              <div class="pres-reward-label">Bonus Producție Nouă:</div>
+              <div class="pres-reward-val" id="presRewardMultPending">+25% Producție</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Big Trigger CTA Button -->
+        <button id="btnPrestigeFullscreenCta" class="pres-cta-btn" onclick="triggerPrestigeFromFullscreen()">
+          <span>🌀</span>
+          <span id="presCtaBtnText">DECLANȘEAZĂ SINGULARITATEA CUANTICĂ</span>
+        </button>
+
+        <!-- Sub Modules Grid -->
+        <div class="pres-modules-grid">
+          <div class="pres-module-card">
+            <div class="pres-module-label">Bonus Catalizatori:</div>
+            <div class="pres-module-val" id="presModCatalyst">Inactiv</div>
+          </div>
+          <div class="pres-module-card">
+            <div class="pres-module-label">Bonus Singurătate Vid:</div>
+            <div class="pres-module-val" id="presModVoidStorm">Inactiv</div>
+          </div>
+          <div class="pres-module-card">
+            <div class="pres-module-label">Prag Minim Necesar:</div>
+            <div class="pres-module-val" id="presModReqEnergy">10.00M ⚡</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div class="modal-backdrop" id="coreSkinsModal" onclick="if(event.target===this) closeCoreSkinsModal()">
     <div class="modal-card wide" style="max-width: 680px; text-align: left;">
       <div class="modal-header-row">
@@ -9175,7 +9731,7 @@
           <button class="btn-header install-btn" id="btnInstallApp" onclick="triggerInstallApp()">📲 Instalează</button>
         </div>
         <div style="font-size: 11px; color: var(--text-dim); margin-top: 8px;">
-          Versiune instalată: <strong id="settingsVersionText">v3.8.0</strong> // Auto-Update activ
+          Versiune instalată: <strong id="settingsVersionText">v3.9.0</strong> // Auto-Update activ
         </div>
       </div>
 
@@ -18228,7 +18784,11 @@
       const nextRebirthNum = (state.prestigeCount || 0) + 1;
       const reqEnergy = getRebirthEnergyRequirement();
       const ready = isRebirthReady();
-      const dmReward = getCurrentRebirthDarkMatterReward();
+      const catalystLvl = (state.prestigeUpgrades && state.prestigeUpgrades['p_dm_catalyst']) || 0;
+      const baseDm = getCurrentRebirthDarkMatterReward() + catalystLvl;
+      const isVoid = typeof activeCosmicStorm !== 'undefined' && activeCosmicStorm && activeCosmicStorm.id === 'void_singularity';
+      const voidBonus = isVoid ? Math.max(1, Math.round(baseDm * 0.25)) : 0;
+      const dmReward = baseDm + voidBonus;
       const curEnergy = state.energy || 0;
       const pct = Math.min(100, (curEnergy / reqEnergy) * 100);
 
@@ -18256,6 +18816,504 @@
         btnPres.innerText = ready
           ? `🌌 Declanșează Rebirth #${nextRebirthNum} (+1 🌌 & +${dmReward} 🔮)`
           : `🔒 Rebirth #${nextRebirthNum} Blocat (${pct.toFixed(1)}%)`;
+      }
+
+      // Sync Tab Portal Stat Cards
+      const portalCount = document.getElementById('portalPresCountVal');
+      if (portalCount) portalCount.innerText = `#${state.prestigeCount || 0}`;
+      const portalDm = document.getElementById('portalPresDmVal');
+      if (portalDm) portalDm.innerText = `${formatNumber(state.darkMatter || 0, 0)} 🔮`;
+      const portalMult = document.getElementById('portalPresMultVal');
+      if (portalMult) {
+        const totalMultPct = ((state.prestigeCount || 0) * 15) + ((state.darkMatter || 0) * 10);
+        portalMult.innerText = `+${totalMultPct}%`;
+      }
+
+      if (isPrestigeFullscreenOpen) {
+        updatePrestigeFullscreen();
+      }
+    }
+
+    // =========================================================================
+    // V3.9.0: CAMERA SINGULARITĂȚII CUANTICE (FULLSCREEN PRESTIGE & VORTEX WARP)
+    // =========================================================================
+    let isPrestigeFullscreenOpen = false;
+    let presBgAnimFrame = null;
+    let presBgStars = [];
+    let presInfallingMatter = [];
+    let presWarpAnimFrameId = null;
+    let presFsEventsBound = false;
+
+    function playSingularityWarpSound(direction = 'enter') {
+      if (!state.soundEnabled) return;
+      try {
+        if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        if (audioCtx.state === 'suspended') audioCtx.resume();
+        const now = audioCtx.currentTime;
+
+        if (direction === 'enter') {
+          // 1. Deep sub-bass gravitational collapse sweep (sine 130Hz -> 36Hz)
+          const subOsc = audioCtx.createOscillator();
+          const subGain = audioCtx.createGain();
+          subOsc.type = 'sine';
+          subOsc.frequency.setValueAtTime(130, now);
+          subOsc.frequency.exponentialRampToValueAtTime(36, now + 0.6);
+          subGain.gain.setValueAtTime(0.001, now);
+          subGain.gain.linearRampToValueAtTime(0.28, now + 0.18);
+          subGain.gain.exponentialRampToValueAtTime(0.001, now + 0.75);
+          subOsc.connect(subGain);
+          subGain.connect(audioCtx.destination);
+          subOsc.start(now);
+          subOsc.stop(now + 0.75);
+
+          // 2. Cosmic shimmer / ethereal chords
+          const chords = [196.00, 293.66, 392.00, 493.88, 587.33];
+          chords.forEach((freq, idx) => {
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            const st = now + 0.12 + idx * 0.04;
+            osc.type = 'triangle';
+            osc.frequency.setValueAtTime(freq, st);
+            osc.frequency.exponentialRampToValueAtTime(freq * 1.02, st + 0.45);
+            gain.gain.setValueAtTime(0.001, st);
+            gain.gain.linearRampToValueAtTime(0.06, st + 0.1);
+            gain.gain.exponentialRampToValueAtTime(0.0001, st + 0.6);
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.start(st);
+            osc.stop(st + 0.6);
+          });
+        } else {
+          // Exit warp: ascending release
+          const subOsc = audioCtx.createOscillator();
+          const subGain = audioCtx.createGain();
+          subOsc.type = 'sine';
+          subOsc.frequency.setValueAtTime(45, now);
+          subOsc.frequency.exponentialRampToValueAtTime(120, now + 0.35);
+          subGain.gain.setValueAtTime(0.18, now);
+          subGain.gain.exponentialRampToValueAtTime(0.001, now + 0.4);
+          subOsc.connect(subGain);
+          subGain.connect(audioCtx.destination);
+          subOsc.start(now);
+          subOsc.stop(now + 0.4);
+        }
+      } catch (e) {}
+    }
+
+    function runPrestigeWarpTransition(duration = 750, onComplete) {
+      const canvas = document.getElementById('prestigeWarpCanvas');
+      if (!canvas) {
+        if (onComplete) onComplete();
+        return;
+      }
+      const dpr = window.devicePixelRatio || 1;
+      const w = window.innerWidth;
+      const h = window.innerHeight;
+      canvas.width = Math.floor(w * dpr);
+      canvas.height = Math.floor(h * dpr);
+      const ctx = canvas.getContext('2d');
+
+      canvas.style.display = 'block';
+      canvas.style.opacity = '1';
+
+      const particleCount = 420;
+      const particles = [];
+      for (let i = 0; i < particleCount; i++) {
+        const angle = Math.random() * Math.PI * 2;
+        const dist = Math.random() * Math.max(w, h) * 1.2 + 80;
+        particles.push({
+          angle,
+          dist,
+          speed: Math.random() * 8 + 4,
+          spiralSpeed: (Math.random() - 0.5) * 0.07,
+          size: Math.random() * 2.2 + 1,
+          color: Math.random() < 0.4 ? '#c084fc' : Math.random() < 0.7 ? '#a855f7' : Math.random() < 0.85 ? '#38bdf8' : '#ec4899'
+        });
+      }
+
+      const startTime = performance.now();
+
+      function step(now) {
+        const elapsed = now - startTime;
+        const progress = Math.min(1, elapsed / duration);
+
+        ctx.save();
+        ctx.scale(dpr, dpr);
+        ctx.fillStyle = 'rgba(2, 2, 8, 0.28)';
+        ctx.fillRect(0, 0, w, h);
+
+        const cx = w / 2;
+        const cy = h / 2;
+        const ease = progress < 0.5 ? 4 * progress * progress * progress : 1 - Math.pow(-2 * progress + 2, 3) / 2;
+
+        particles.forEach(p => {
+          p.dist -= p.speed * (1 + ease * 12);
+          p.angle += p.spiralSpeed * (1 + ease * 4);
+          if (p.dist < 5) p.dist = Math.max(w, h) * 0.9;
+
+          const px = cx + Math.cos(p.angle) * p.dist;
+          const py = cy + Math.sin(p.angle) * p.dist;
+          const prevX = cx + Math.cos(p.angle - p.spiralSpeed * 3) * (p.dist + p.speed * 3.5);
+          const prevY = cy + Math.sin(p.angle - p.spiralSpeed * 3) * (p.dist + p.speed * 3.5);
+
+          ctx.beginPath();
+          ctx.moveTo(prevX, prevY);
+          ctx.lineTo(px, py);
+          ctx.strokeStyle = p.color;
+          ctx.lineWidth = p.size;
+          ctx.lineCap = 'round';
+          ctx.stroke();
+        });
+
+        if (progress > 0.35 && progress < 0.75) {
+          const flashAlpha = Math.sin(((progress - 0.35) / 0.4) * Math.PI) * 0.75;
+          const radGrad = ctx.createRadialGradient(cx, cy, 0, cx, cy, Math.max(w, h) * 0.6);
+          radGrad.addColorStop(0, `rgba(216, 180, 254, ${flashAlpha})`);
+          radGrad.addColorStop(0.3, `rgba(168, 85, 247, ${flashAlpha * 0.6})`);
+          radGrad.addColorStop(1, 'rgba(0, 0, 0, 0)');
+          ctx.fillStyle = radGrad;
+          ctx.fillRect(0, 0, w, h);
+        }
+
+        ctx.restore();
+
+        if (progress < 1) {
+          presWarpAnimFrameId = requestAnimationFrame(step);
+        } else {
+          canvas.style.transition = 'opacity 0.25s ease';
+          canvas.style.opacity = '0';
+          setTimeout(() => {
+            canvas.style.display = 'none';
+            canvas.style.transition = '';
+            if (onComplete) onComplete();
+          }, 250);
+        }
+      }
+
+      presWarpAnimFrameId = requestAnimationFrame(step);
+    }
+
+    function openPrestigeFullscreen() {
+      if (isPrestigeFullscreenOpen) return;
+      isPrestigeFullscreenOpen = true;
+
+      playSingularityWarpSound('enter');
+
+      const appShell = document.querySelector('.app-shell');
+      if (appShell) appShell.classList.add('app-shell-warp-out');
+
+      runPrestigeWarpTransition(700, () => {});
+
+      setTimeout(() => {
+        const fsEl = document.getElementById('prestigeFullscreen');
+        if (fsEl) {
+          fsEl.style.display = 'flex';
+          void fsEl.offsetWidth;
+          fsEl.classList.add('active');
+        }
+        initPrestigeFullscreen();
+        updatePrestigeFullscreen();
+      }, 420);
+    }
+
+    function closePrestigeFullscreen() {
+      if (!isPrestigeFullscreenOpen) return;
+      isPrestigeFullscreenOpen = false;
+
+      playSingularityWarpSound('exit');
+
+      const fsEl = document.getElementById('prestigeFullscreen');
+      if (fsEl) {
+        fsEl.classList.remove('active');
+      }
+
+      const appShell = document.querySelector('.app-shell');
+      if (appShell) {
+        appShell.classList.remove('app-shell-warp-out');
+      }
+
+      setTimeout(() => {
+        if (fsEl && !isPrestigeFullscreenOpen) {
+          fsEl.style.display = 'none';
+        }
+        if (presBgAnimFrame) {
+          cancelAnimationFrame(presBgAnimFrame);
+          presBgAnimFrame = null;
+        }
+      }, 380);
+    }
+
+    function initPrestigeFullscreen() {
+      const bgCanvas = document.getElementById('prestigeBgCanvas');
+      if (!bgCanvas) return;
+
+      const dpr = window.devicePixelRatio || 1;
+      const w = window.innerWidth;
+      const h = window.innerHeight;
+      bgCanvas.width = Math.floor(w * dpr);
+      bgCanvas.height = Math.floor(h * dpr);
+
+      if (presBgStars.length === 0) {
+        const starCount = 180;
+        for (let i = 0; i < starCount; i++) {
+          presBgStars.push({
+            x: Math.random() * w,
+            y: Math.random() * h,
+            r: Math.random() * 1.5 + 0.4,
+            baseAlpha: Math.random() * 0.6 + 0.2,
+            twinkleSpeed: Math.random() * 0.003 + 0.001,
+            phase: Math.random() * Math.PI * 2,
+            color: Math.random() < 0.4 ? '#c084fc' : Math.random() < 0.7 ? '#38bdf8' : '#ffffff'
+          });
+        }
+      }
+
+      if (presInfallingMatter.length === 0) {
+        const matterCount = 130;
+        for (let i = 0; i < matterCount; i++) {
+          const angle = Math.random() * Math.PI * 2;
+          const radius = Math.random() * Math.min(w, h) * 0.45 + 50;
+          presInfallingMatter.push({
+            angle,
+            radius,
+            angularSpeed: (0.015 + Math.random() * 0.02) * (radius < 120 ? 1.8 : 1),
+            infallSpeed: 0.18 + Math.random() * 0.35,
+            size: Math.random() * 2.2 + 0.8,
+            color: Math.random() < 0.5 ? '#d8b4fe' : Math.random() < 0.8 ? '#38bdf8' : '#f472b6',
+            alpha: Math.random() * 0.7 + 0.3
+          });
+        }
+      }
+
+      if (!presFsEventsBound) {
+        presFsEventsBound = true;
+        window.addEventListener('resize', () => {
+          if (isPrestigeFullscreenOpen && bgCanvas) {
+            const curDpr = window.devicePixelRatio || 1;
+            bgCanvas.width = Math.floor(window.innerWidth * curDpr);
+            bgCanvas.height = Math.floor(window.innerHeight * curDpr);
+          }
+        });
+      }
+
+      if (!presBgAnimFrame) {
+        presBgAnimFrame = requestAnimationFrame(runPrestigeBgLoop);
+      }
+    }
+
+    function runPrestigeBgLoop(timestamp) {
+      if (!isPrestigeFullscreenOpen) {
+        presBgAnimFrame = null;
+        return;
+      }
+
+      const canvas = document.getElementById('prestigeBgCanvas');
+      if (canvas) {
+        const ctx = canvas.getContext('2d');
+        const w = canvas.width;
+        const h = canvas.height;
+        const dpr = window.devicePixelRatio || 1;
+
+        ctx.fillStyle = '#020208';
+        ctx.fillRect(0, 0, w, h);
+
+        const cx = w / 2;
+        const cy = h / 2;
+        const baseRadius = Math.min(w, h) * 0.12;
+
+        // 1. Ambient Background Stars
+        presBgStars.forEach(s => {
+          const alpha = s.baseAlpha + Math.sin(timestamp * s.twinkleSpeed + s.phase) * 0.25;
+          ctx.beginPath();
+          ctx.arc(s.x * dpr, s.y * dpr, s.r * dpr, 0, Math.PI * 2);
+          ctx.fillStyle = s.color;
+          ctx.globalAlpha = Math.max(0.1, alpha);
+          ctx.fill();
+        });
+        ctx.globalAlpha = 1.0;
+
+        // 2. Relativistic Polar Plasma Jets
+        const jetLength = Math.max(w, h) * 0.75;
+        const jetWidth = 35 * dpr;
+        const pulse = Math.sin(timestamp * 0.004) * 0.15 + 0.85;
+
+        // Top Jet
+        const topGrad = ctx.createLinearGradient(cx, cy, cx, cy - jetLength);
+        topGrad.addColorStop(0, 'rgba(168, 85, 247, 0.7)');
+        topGrad.addColorStop(0.3, 'rgba(56, 189, 248, 0.45)');
+        topGrad.addColorStop(1, 'rgba(168, 85, 247, 0)');
+        ctx.fillStyle = topGrad;
+        ctx.beginPath();
+        ctx.moveTo(cx - jetWidth * pulse, cy - baseRadius * 0.3);
+        ctx.lineTo(cx + jetWidth * pulse, cy - baseRadius * 0.3);
+        ctx.lineTo(cx + jetWidth * 3.5, cy - jetLength);
+        ctx.lineTo(cx - jetWidth * 3.5, cy - jetLength);
+        ctx.closePath();
+        ctx.fill();
+
+        // Bottom Jet
+        const botGrad = ctx.createLinearGradient(cx, cy, cx, cy + jetLength);
+        botGrad.addColorStop(0, 'rgba(168, 85, 247, 0.7)');
+        botGrad.addColorStop(0.3, 'rgba(56, 189, 248, 0.45)');
+        botGrad.addColorStop(1, 'rgba(168, 85, 247, 0)');
+        ctx.fillStyle = botGrad;
+        ctx.beginPath();
+        ctx.moveTo(cx - jetWidth * pulse, cy + baseRadius * 0.3);
+        ctx.lineTo(cx + jetWidth * pulse, cy + baseRadius * 0.3);
+        ctx.lineTo(cx + jetWidth * 3.5, cy + jetLength);
+        ctx.lineTo(cx - jetWidth * 3.5, cy + jetLength);
+        ctx.closePath();
+        ctx.fill();
+
+        // 3. Accretion Disk (Luminous Tilted Ellipses with Doppler Beaming)
+        ctx.save();
+        ctx.translate(cx, cy);
+        ctx.rotate(-0.35); // Disk tilt
+        const diskRx = baseRadius * 2.8;
+        const diskRy = baseRadius * 0.75;
+
+        for (let rMult = 1.1; rMult <= 3.2; rMult += 0.35) {
+          ctx.beginPath();
+          ctx.ellipse(0, 0, diskRx * (rMult / 2.2), diskRy * (rMult / 2.2), 0, 0, Math.PI * 2);
+          const diskAlpha = (0.28 / rMult) * (Math.sin(timestamp * 0.003 + rMult) * 0.15 + 0.85);
+          ctx.strokeStyle = rMult < 1.8 ? `rgba(236, 72, 153, ${diskAlpha})` : `rgba(168, 85, 247, ${diskAlpha})`;
+          ctx.lineWidth = 14 * dpr * (1.8 / rMult);
+          ctx.stroke();
+        }
+        ctx.restore();
+
+        // 4. Infalling Dark Matter Particles
+        presInfallingMatter.forEach(p => {
+          p.angle += p.angularSpeed;
+          p.radius -= p.infallSpeed;
+          if (p.radius < baseRadius * 0.7) {
+            p.radius = Math.min(w, h) * 0.42 + Math.random() * 30;
+            p.angle = Math.random() * Math.PI * 2;
+          }
+
+          // Tilt coordinate to match accretion disk
+          const cosA = Math.cos(p.angle);
+          const sinA = Math.sin(p.angle);
+          const rx = p.radius * cosA * dpr;
+          const ry = (p.radius * sinA * 0.35) * dpr;
+          const tilt = -0.35;
+          const rotX = rx * Math.cos(tilt) - ry * Math.sin(tilt);
+          const rotY = rx * Math.sin(tilt) + ry * Math.cos(tilt);
+
+          const px = cx + rotX;
+          const py = cy + rotY;
+
+          const doppler = rotX < 0 ? 1.4 : 0.65;
+          const finalAlpha = Math.min(1, p.alpha * doppler);
+
+          ctx.beginPath();
+          ctx.arc(px, py, p.size * dpr, 0, Math.PI * 2);
+          ctx.fillStyle = p.color;
+          ctx.globalAlpha = finalAlpha;
+          ctx.fill();
+        });
+        ctx.globalAlpha = 1.0;
+
+        // 5. Gravitational Lensing Photon Ring
+        const ringGrad = ctx.createRadialGradient(cx, cy, baseRadius * 0.82, cx, cy, baseRadius * 1.35);
+        ringGrad.addColorStop(0, 'rgba(255, 255, 255, 0.95)');
+        ringGrad.addColorStop(0.3, 'rgba(192, 132, 252, 0.8)');
+        ringGrad.addColorStop(0.7, 'rgba(56, 189, 248, 0.4)');
+        ringGrad.addColorStop(1, 'rgba(168, 85, 247, 0)');
+        ctx.fillStyle = ringGrad;
+        ctx.beginPath();
+        ctx.arc(cx, cy, baseRadius * 1.35, 0, Math.PI * 2);
+        ctx.fill();
+
+        // 6. Kerr Black Hole Event Horizon Shadow (Singularity)
+        ctx.beginPath();
+        ctx.arc(cx, cy, baseRadius * 0.88, 0, Math.PI * 2);
+        ctx.fillStyle = '#010103';
+        ctx.fill();
+        ctx.lineWidth = 2 * dpr;
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.4)';
+        ctx.stroke();
+      }
+
+      presBgAnimFrame = requestAnimationFrame(runPrestigeBgLoop);
+    }
+
+    function updatePrestigeFullscreen() {
+      const nextRebirthNum = (state.prestigeCount || 0) + 1;
+      const reqEnergy = getRebirthEnergyRequirement();
+      const ready = isRebirthReady();
+      const catalystLvl = (state.prestigeUpgrades && state.prestigeUpgrades['p_dm_catalyst']) || 0;
+      const baseDm = getCurrentRebirthDarkMatterReward() + catalystLvl;
+      const isVoid = typeof activeCosmicStorm !== 'undefined' && activeCosmicStorm && activeCosmicStorm.id === 'void_singularity';
+      const voidBonus = isVoid ? Math.max(1, Math.round(baseDm * 0.25)) : 0;
+      const dmReward = baseDm + voidBonus;
+      const curEnergy = state.energy || 0;
+      const pct = Math.min(100, (curEnergy / reqEnergy) * 100);
+
+      const totalPresMult = 1 + ((state.prestigeCount || 0) * 0.15) + ((state.darkMatter || 0) * 0.10);
+      const totalPresBonusPct = ((state.prestigeCount || 0) * 15) + ((state.darkMatter || 0) * 10);
+
+      // Header Badges
+      const countEl = document.getElementById('presFsRebirthCount');
+      if (countEl) countEl.innerText = `#${state.prestigeCount || 0}`;
+      const dmEl = document.getElementById('presFsTotalDm');
+      if (dmEl) dmEl.innerText = `${formatNumber(state.darkMatter || 0, 0)} 🔮`;
+      const multEl = document.getElementById('presFsTotalMult');
+      if (multEl) multEl.innerText = `${totalPresMult.toFixed(2)}x (+${totalPresBonusPct}%)`;
+
+      // Central Stage Title & Gauge
+      const titleEl = document.getElementById('presCoreTitle');
+      if (titleEl) titleEl.innerText = `SINGULARITATEA CUANTICĂ #${nextRebirthNum}`;
+
+      const statusEl = document.getElementById('presGaugeStatus');
+      if (statusEl) {
+        statusEl.innerText = ready 
+          ? `💥 REZONANȚĂ CRITICĂ ATINSĂ (100%)` 
+          : `⚡ Încărcare Gravitațională: ${pct.toFixed(1)}% (${formatNumber(curEnergy)} / ${formatNumber(reqEnergy)} ⚡)`;
+        statusEl.style.color = ready ? '#4ade80' : '#38bdf8';
+      }
+
+      const gaugeFill = document.getElementById('presGaugeFill');
+      if (gaugeFill) gaugeFill.style.width = `${pct}%`;
+
+      const rewDm = document.getElementById('presRewardDmPending');
+      if (rewDm) rewDm.innerText = `+${dmReward} 🔮 Materie Întunecată` + (ready ? ' (Gata de Recoltat)' : '');
+
+      const rewMult = document.getElementById('presRewardMultPending');
+      if (rewMult) rewMult.innerText = `+${15 + (dmReward * 10)}% Producție Nouă (+15% Singularitate & +${dmReward * 10}% DM)`;
+
+      // Big CTA Button
+      const ctaBtn = document.getElementById('btnPrestigeFullscreenCta');
+      const ctaText = document.getElementById('presCtaBtnText');
+      if (ctaBtn) {
+        ctaBtn.disabled = !ready;
+      }
+      if (ctaText) {
+        ctaText.innerText = ready 
+          ? `DECLANȘEAZĂ SINGULARITATEA #${nextRebirthNum} (+1 🌌 & +${dmReward} 🔮)` 
+          : `SINGULARITATEA #${nextRebirthNum} ÎN FORMARE (${pct.toFixed(1)}%)`;
+      }
+
+      // Sub modules
+      const modCat = document.getElementById('presModCatalyst');
+      if (modCat) {
+        modCat.innerText = catalystLvl > 0 ? `+${catalystLvl} 🔮 DM (Nivel ${catalystLvl})` : 'Inactiv (Arbore Constelații)';
+      }
+      const modVoid = document.getElementById('presModVoidStorm');
+      if (modVoid) {
+        modVoid.innerText = isVoid ? `+${voidBonus} 🔮 (Furtună Singularitate Vid +25%)` : 'Niciun bonus de furtună';
+      }
+      const modReq = document.getElementById('presModReqEnergy');
+      if (modReq) {
+        modReq.innerText = `${formatNumber(reqEnergy)} ⚡`;
+      }
+    }
+
+    function triggerPrestigeFromFullscreen() {
+      if (!isRebirthReady() || isRebirthAnimating) return;
+      triggerPrestige();
+      if (isRebirthAnimating) {
+        closePrestigeFullscreen();
       }
     }
 
@@ -18653,11 +19711,7 @@
       achBgAnimFrame = requestAnimationFrame(runAchievementsBgLoop);
     }
 
-    function renderAchievementsFullscreen() {
-      const grid = document.getElementById('achFsGrid');
-      if (!grid) return;
-      grid.innerHTML = '';
-
+    function updateAchievementsFullscreenHeader() {
       const totalCount = ACHIEVEMENTS_DATA.length;
       let unlockedCount = 0;
       let mythicCount = 0;
@@ -18732,6 +19786,14 @@
       if (elRare) elRare.innerText = `${rareUnlocked}/${rareCount}`;
       const elStd = document.getElementById('achRarityCountStandard');
       if (elStd) elStd.innerText = `${standardUnlocked}/${standardCount}`;
+    }
+
+    function renderAchievementsFullscreen() {
+      updateAchievementsFullscreenHeader();
+
+      const grid = document.getElementById('achFsGrid');
+      if (!grid) return;
+      grid.innerHTML = '';
 
       // Filter for Grid Display
       const filtered = ACHIEVEMENTS_DATA.filter(ach => {
@@ -18957,7 +20019,11 @@
       }
 
       if (isAchievementsFullscreenOpen) {
-        renderAchievementsFullscreen();
+        updateAchievementsFullscreenHeader();
+      }
+
+      if (isPrestigeFullscreenOpen) {
+        updatePrestigeFullscreen();
       }
     }
 
@@ -19279,6 +20345,9 @@
       }
       if (newlyUnlocked) {
         renderAchievements();
+        if (isAchievementsFullscreenOpen) {
+          renderAchievementsFullscreen();
+        }
       }
     }
 
@@ -19489,7 +20558,11 @@
       }
 
       if (isAchievementsFullscreenOpen) {
-        renderAchievementsFullscreen();
+        updateAchievementsFullscreenHeader();
+      }
+
+      if (isPrestigeFullscreenOpen) {
+        updatePrestigeFullscreen();
       }
 
       // Actualizare Cooldown-uri Abilități Active
@@ -19587,16 +20660,8 @@
       if (tabName === 'multicores' || tabName === 'upgrades') renderMultiCoresTab();
       if (tabName === 'stats') renderStats();
       if (tabName === 'prestige') renderPrestigeUpgrades();
-      if (tabName === 'constellation') {
-        renderConstellationSkillTree();
-        openConstellationFullscreen();
-        return;
-      }
-      if (tabName === 'achievements') {
-        renderAchievements();
-        openAchievementsFullscreen();
-        return;
-      }
+      if (tabName === 'constellation') renderConstellationSkillTree();
+      if (tabName === 'achievements') renderAchievements();
       if (tabName === 'leaderboard') renderLeaderboardTab();
     }
 
@@ -19802,8 +20867,8 @@
      *       + AUTO-SYNC SILENȚIOS OFFLINE -> ONLINE + AUTO-UPDATE LIVE
      *       + NAVIGARE MOBIL & INSTALARE PWA (MACBOOK / PC / ANDROID / iOS)
      ********************************************************************/
-    const APP_VERSION = '3.8.0';
-    const APP_BUILD = 380;
+    const APP_VERSION = '3.9.0';
+    const APP_BUILD = 390;
     // URL-ul oficial de pe GitHub Pages pentru verificarea automată de Update (și în aplicațiile .exe / .dmg):
     const REMOTE_UPDATE_BASE_URL = 'https://mariusinfo.github.io/quantum-nexus';
 
@@ -21407,11 +22472,29 @@
 
     window.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') {
+        const achModal = document.getElementById('achInspectModal');
+        if (achModal && achModal.style.display !== 'none') {
+          closeAchInspectModal();
+          return;
+        }
+        if (isPrestigeFullscreenOpen) {
+          closePrestigeFullscreen();
+          return;
+        }
+        if (isAchievementsFullscreenOpen) {
+          closeAchievementsFullscreen();
+          return;
+        }
+        if (isConstellationFullscreenOpen) {
+          closeConstellationFullscreen();
+          return;
+        }
         closeSettingsModal();
         closeCloudModal();
         closeInstallModal();
         closeOfflineModal();
         closeCoreSkinsModal();
+        if (typeof closeFpsModal === 'function') closeFpsModal();
       }
     });
 

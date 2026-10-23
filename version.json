@@ -1,7 +1,7 @@
 {
-  "version": "3.8.0",
-  "build": 380,
+  "version": "3.9.0",
+  "build": 390,
   "releaseDate": "2026-10-23",
-  "changelog": "v3.8.0: Galactic Hall of Fame - Panteonul Realizărilor Ecran Complet cu Tranziție Hiperspațială Aurie, piedestale 3D holografice per categorii, căutare în timp real și inspecție monumentală de trofee.",
+  "changelog": "v3.9.0: Camera Singularității Cuantice Ecran Complet (Prestige Fullscreen cu Găuri Negre Kerr, jeturi de plasmă și vortex de colaps), eliminarea spasmelor/flickering-ului la hover pe realizări și navigare manuală curată prin tab-uri.",
   "autoApply": true
 }
