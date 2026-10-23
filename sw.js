@@ -1,4 +1,4 @@
-const CACHE_NAME = 'quantum-nexus-cache-v3.9.0';
+const CACHE_NAME = 'quantum-nexus-cache-v3.9.1';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',

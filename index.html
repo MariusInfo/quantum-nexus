@@ -3240,6 +3240,159 @@
       cursor: not-allowed;
     }
 
+    /* =========================================================================
+       OMNIVERSE DIMENSIONAL SHIFT & HYPER-WARP TRANSITION
+       ========================================================================= */
+    .omni-shift-canvas {
+      position: fixed;
+      inset: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 9999998;
+    }
+
+    @keyframes coreDimensionalLeap {
+      0% {
+        transform: scale(1) rotate(0deg);
+        filter: brightness(1);
+      }
+      22% {
+        transform: scale(0.78) rotate(-45deg);
+        filter: brightness(2.2) contrast(1.4) drop-shadow(0 0 35px var(--leap-color, #38bdf8));
+      }
+      45% {
+        transform: scale(0.08) rotate(360deg);
+        filter: brightness(6) blur(6px);
+        opacity: 0.15;
+      }
+      52% {
+        transform: scale(0.08) rotate(360deg);
+        filter: brightness(8) blur(8px);
+        opacity: 0.1;
+      }
+      68% {
+        transform: scale(1.38) rotate(720deg);
+        filter: brightness(3.5) drop-shadow(0 0 70px var(--leap-color, #38bdf8));
+        opacity: 1;
+      }
+      84% {
+        transform: scale(0.96) rotate(720deg);
+        filter: brightness(1.4);
+      }
+      100% {
+        transform: scale(1) rotate(720deg);
+        filter: brightness(1);
+      }
+    }
+
+    .core-ecosystem-wrap.dimensional-leap {
+      animation: coreDimensionalLeap 0.78s cubic-bezier(0.2, 0.9, 0.28, 1) forwards !important;
+    }
+
+    @keyframes omniCardPulse {
+      0% { transform: scale(1); box-shadow: 0 0 0 rgba(255,255,255,0); }
+      35% { transform: scale(1.045); box-shadow: 0 0 32px var(--card-theme, #38bdf8); }
+      100% { transform: scale(1); box-shadow: 0 0 16px var(--card-theme, #38bdf8); }
+    }
+
+    .omniverse-core-card.card-switching {
+      animation: omniCardPulse 0.65s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+
+    .omniverse-core-card.active {
+      border-color: var(--card-theme, var(--accent-cyan)) !important;
+      box-shadow: 0 0 24px rgba(56, 189, 248, 0.3), inset 0 0 12px rgba(56, 189, 248, 0.08);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .omniverse-core-card.active::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 50%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.12), transparent);
+      transform: skewX(-25deg);
+      animation: cardPrismShimmer 3.5s infinite;
+      pointer-events: none;
+    }
+
+    .omni-dimension-banner {
+      position: fixed;
+      top: 36px;
+      left: 50%;
+      transform: translateX(-50%) translateY(-40px) scale(0.9);
+      opacity: 0;
+      z-index: 9999999;
+      pointer-events: none;
+      background: linear-gradient(135deg, rgba(15, 23, 42, 0.96) 0%, rgba(2, 4, 15, 0.98) 100%);
+      border: 1.5px solid var(--banner-theme, #38bdf8);
+      box-shadow: 0 14px 45px rgba(0, 0, 0, 0.85), 0 0 40px var(--banner-glow, rgba(56, 189, 248, 0.45));
+      border-radius: 16px;
+      padding: 14px 28px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      transition: all 0.42s cubic-bezier(0.16, 1, 0.3, 1);
+      user-select: none;
+    }
+
+    .omni-dimension-banner.show {
+      transform: translateX(-50%) translateY(0) scale(1);
+      opacity: 1;
+    }
+
+    .omni-banner-icon {
+      font-size: 36px;
+      width: 52px;
+      height: 52px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      filter: drop-shadow(0 0 14px var(--banner-theme, #38bdf8));
+      flex-shrink: 0;
+      animation: floatOrbit 3s ease-in-out infinite;
+    }
+
+    .omni-banner-content {
+      display: flex;
+      flex-direction: column;
+      text-align: left;
+    }
+
+    .omni-banner-tag {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      color: var(--banner-theme, #38bdf8);
+      text-transform: uppercase;
+      line-height: 1.2;
+    }
+
+    .omni-banner-title {
+      font-size: 16px;
+      font-weight: 900;
+      color: #ffffff;
+      letter-spacing: 0.02em;
+      margin: 2px 0 2px 0;
+    }
+
+    .omni-banner-perk {
+      font-size: 12px;
+      color: #cbd5e1;
+      font-weight: 700;
+      font-family: var(--font-mono);
+    }
+
     .right-header {
       padding: 14px 18px;
       border-bottom: 1px solid var(--border-subtle);
@@ -8758,7 +8911,7 @@
       <!-- Subtitlu & Versiune Sistem -->
       <div class="loading-footer-tip">
         <span class="loading-pulse-dot"></span>
-        <span id="loadingVersionSub">Simulare Multiversală v3.9.0 // Auto-Stabilizare Activă</span>
+        <span id="loadingVersionSub">Simulare Multiversală v3.9.1 // Auto-Stabilizare Activă</span>
       </div>
 
       <!-- Hint discret dacă browserul a reținut temporar autoplay înainte de primul gest -->
@@ -8776,7 +8929,7 @@
         <div class="brand-icon">⚛️</div>
         <div>
           <div class="brand-title">QUANTUM NEXUS</div>
-          <div class="brand-sub" id="versionHeaderSub">v3.9.0</div>
+          <div class="brand-sub" id="versionHeaderSub">v3.9.1</div>
         </div>
         <div class="fps-meter-badge fps-high" id="fpsMeterBadge" onclick="showFpsInfo()" title="Monitorizare Cadre pe Secundă (FPS în timp real) - Click pentru detalii">
           <span class="fps-dot"></span>
@@ -8858,8 +9011,8 @@
             </div>
           </div>
 
-          <!-- Bară de Stare Materie Întunecată & Prestigiu (Structură pe 2 rânduri, anti-suprapunere) -->
-          <div class="prestige-hud-bar" id="prestigeMiniBar" title="Materia Întunecată și multiplicatorul total permanent din Rebirth">
+          <!-- Bară de Stare Materie Întunecată & Prestigiu (Vizibilă exclusiv în Camera Singularității conform cerinței) -->
+          <div class="prestige-hud-bar" id="prestigeMiniBar" style="display:none !important;" aria-hidden="true" title="Materia Întunecată și multiplicatorul total permanent din Rebirth">
             <div class="prestige-hud-row-top">
               <div class="prestige-hud-dm">
                 <span class="prestige-hud-icon">🔮</span>
@@ -9012,52 +9165,27 @@
               </div>
               <div class="constellation-portal-title">Camera Singularității Cuantice (Rebirth)</div>
               <div class="constellation-portal-desc">
-                Accesează colapsul gravitațional al nucleului într-o cameră imersivă ecran complet. Transformă energia acumulată în <strong>Singularități permanente (+15%/Rebirth)</strong> și <strong>🔮 Materie Întunecată (+10%/DM)</strong> pentru arborele de talente.
+                Pășește în camera de colaps gravitațional ecran complet pentru a declanșa Singularitatea Cuantică, a recolta Materia Întunecată și a debloca multiplicatori masivi permanenți.
               </div>
 
-              <div class="constellation-portal-stats">
-                <div class="c-portal-stat-box">
-                  <span class="c-portal-stat-label">🌌 Rebirth Curent</span>
-                  <span class="c-portal-stat-val" id="portalPresCountVal">#0</span>
-                </div>
-                <div class="c-portal-stat-box">
-                  <span class="c-portal-stat-label">🔮 Materie Totală</span>
-                  <span class="c-portal-stat-val" id="portalPresDmVal">0 🔮</span>
-                </div>
-                <div class="c-portal-stat-box">
-                  <span class="c-portal-stat-label">⭐ Multiplicator Global</span>
-                  <span class="c-portal-stat-val" id="portalPresMultVal">+0%</span>
-                </div>
-              </div>
-
-              <!-- Mini Progress Status -->
-              <div style="max-width:480px; margin:0 auto 16px; text-align:left;">
-                <div style="display:flex; justify-content:space-between; font-size:11.5px; font-family:var(--font-mono); color:var(--text-muted); margin-bottom:5px;">
-                  <span id="rebirthProgressLabel">Sold Energie Actuală / Prag Colaps:</span>
-                  <span id="rebirthProgressPct" style="color:var(--accent-cyan); font-weight:800;">0.0%</span>
-                </div>
-                <div class="combo-track" style="height:10px;">
-                  <div class="combo-fill" id="rebirthProgressFill" style="width:0%"></div>
-                </div>
-              </div>
-
-              <div id="rebirthSaturationBanner" style="display:none; background:rgba(245,158,11,0.16); border:1px solid rgba(245,158,11,0.55); color:#fde047; border-radius:10px; padding:10px 14px; font-size:12px; font-weight:700; max-width:480px; margin:0 auto 14px;">
-                ⚠️ Nucleul a atins Pragul de Saturație pentru acest Rebirth! Recompensa nu se multiplică dacă mai farmezi fără Rebirth — declanșează Singularitatea acum!
-              </div>
-
-              <div style="display:flex; gap:12px; justify-content:center; flex-wrap:wrap;">
+              <div style="display:flex; justify-content:center; margin-top:20px;">
                 <button class="btn-portal-launch-pres" onclick="openPrestigeFullscreen()">
                   <span>🚀 Deschide Camera Singularității (Ecran Complet)</span>
                   <span class="portal-btn-arrow">➔</span>
-                </button>
-                <button class="btn-prestige" id="btnTriggerPrestige" onclick="triggerPrestige()" disabled style="width:auto; padding:12px 22px;">
-                  🌌 Declanșează Rebirth #1 (+1 🔮)
                 </button>
               </div>
             </div>
 
             <!-- Fallback elements for backwards JS compatibility -->
             <div style="display:none;" aria-hidden="true">
+              <span id="portalPresCountVal">#0</span>
+              <span id="portalPresDmVal">0 🔮</span>
+              <span id="portalPresMultVal">+0%</span>
+              <span id="rebirthProgressLabel"></span>
+              <span id="rebirthProgressPct"></span>
+              <div id="rebirthProgressFill"></div>
+              <div id="rebirthSaturationBanner"></div>
+              <button id="btnTriggerPrestige"></button>
               <span id="dmCurrentVal">0 🌌 | 0 🔮</span>
               <span id="dmPendingLabel">Recompensă Rebirth #1</span>
               <span id="dmPendingVal">Blocat</span>
@@ -9619,6 +9747,20 @@
     </div>
   </div>
 
+  <!-- =========================================================================
+       OMNIVERSE DIMENSIONAL WARP CANVAS & HUD TRANSITION BANNER
+       ========================================================================= -->
+  <canvas id="omniShiftCanvas" class="omni-shift-canvas" style="display:none;"></canvas>
+
+  <div class="omni-dimension-banner" id="omniDimensionBanner">
+    <div class="omni-banner-icon" id="omniBannerIcon">⚛️</div>
+    <div class="omni-banner-content">
+      <div class="omni-banner-tag">DIMENSIONAL LEAP // FAZĂ CUANTICĂ ACTIVATĂ</div>
+      <div class="omni-banner-title" id="omniBannerTitle">Nucleu Cuantic Alfa</div>
+      <div class="omni-banner-perk" id="omniBannerPerk">⚡ Producție Echilibrată Cuantică</div>
+    </div>
+  </div>
+
   <div class="modal-backdrop" id="coreSkinsModal" onclick="if(event.target===this) closeCoreSkinsModal()">
     <div class="modal-card wide" style="max-width: 680px; text-align: left;">
       <div class="modal-header-row">
@@ -9731,7 +9873,7 @@
           <button class="btn-header install-btn" id="btnInstallApp" onclick="triggerInstallApp()">📲 Instalează</button>
         </div>
         <div style="font-size: 11px; color: var(--text-dim); margin-top: 8px;">
-          Versiune instalată: <strong id="settingsVersionText">v3.9.0</strong> // Auto-Update activ
+          Versiune instalată: <strong id="settingsVersionText">v3.9.1</strong> // Auto-Update activ
         </div>
       </div>
 
@@ -17368,7 +17510,230 @@
       });
     }
 
+    let isOmniShiftAnimating = false;
+    let omniBannerTimeout = null;
+
+    function playOmniverseDimensionalSound(core) {
+      if (!state.soundEnabled) return;
+      try {
+        if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        if (audioCtx.state === 'suspended') audioCtx.resume();
+        const now = audioCtx.currentTime;
+
+        // 1. Deep Sub-Bass Dimensional Leap Sweep (160Hz -> 36Hz)
+        const subOsc = audioCtx.createOscillator();
+        const subGain = audioCtx.createGain();
+        subOsc.type = 'sine';
+        subOsc.frequency.setValueAtTime(160, now);
+        subOsc.frequency.exponentialRampToValueAtTime(36, now + 0.58);
+        subGain.gain.setValueAtTime(0.001, now);
+        subGain.gain.linearRampToValueAtTime(0.3, now + 0.12);
+        subGain.gain.exponentialRampToValueAtTime(0.001, now + 0.72);
+        subOsc.connect(subGain);
+        subGain.connect(audioCtx.destination);
+        subOsc.start(now);
+        subOsc.stop(now + 0.72);
+
+        // 2. Harmonic chords per Core Type
+        let freqs = [392, 523.25, 659.25, 783.99]; // Quantum default
+        let waveType = 'sine';
+        if (core.id === 'solar') {
+          freqs = [220, 277.18, 329.63, 440, 554.37];
+          waveType = 'triangle';
+        } else if (core.id === 'tesseract') {
+          freqs = [293.66, 440, 587.33, 880, 1174.66];
+          waveType = 'sawtooth';
+        } else if (core.id === 'void') {
+          freqs = [110, 130.81, 164.81, 196, 261.63];
+          waveType = 'sawtooth';
+        } else if (core.id === 'whitehole') {
+          freqs = [523.25, 659.25, 783.99, 1046.5, 1318.51, 1567.98];
+          waveType = 'triangle';
+        }
+
+        freqs.forEach((f, idx) => {
+          const osc = audioCtx.createOscillator();
+          const gain = audioCtx.createGain();
+          const st = now + 0.1 + idx * 0.04;
+          osc.type = waveType;
+          osc.frequency.setValueAtTime(f, st);
+          osc.frequency.exponentialRampToValueAtTime(f * 1.025, st + 0.45);
+          gain.gain.setValueAtTime(0.001, st);
+          gain.gain.linearRampToValueAtTime(0.07, st + 0.08);
+          gain.gain.exponentialRampToValueAtTime(0.0001, st + 0.55);
+          osc.connect(gain);
+          gain.connect(audioCtx.destination);
+          osc.start(st);
+          osc.stop(st + 0.55);
+        });
+      } catch (e) {}
+    }
+
+    function runOmniverseDimensionalWarp(core, onMidpoint, onComplete) {
+      const canvas = document.getElementById('omniShiftCanvas');
+      if (!canvas) {
+        if (onMidpoint) onMidpoint();
+        if (onComplete) onComplete();
+        return;
+      }
+
+      const dpr = window.devicePixelRatio || 1;
+      const w = window.innerWidth;
+      const h = window.innerHeight;
+      canvas.width = Math.floor(w * dpr);
+      canvas.height = Math.floor(h * dpr);
+      const ctx = canvas.getContext('2d');
+
+      canvas.style.display = 'block';
+      canvas.style.opacity = '1';
+
+      let cx = w / 2;
+      let cy = h / 2;
+      const coreBtn = document.getElementById('coreBtn');
+      if (coreBtn) {
+        const rect = coreBtn.getBoundingClientRect();
+        if (rect.width > 0 && rect.top > -200 && rect.top < h + 200) {
+          cx = rect.left + rect.width / 2;
+          cy = rect.top + rect.height / 2;
+        }
+      }
+
+      const particleCount = 260;
+      const particles = [];
+      for (let i = 0; i < particleCount; i++) {
+        const angle = Math.random() * Math.PI * 2;
+        const dist = Math.random() * Math.max(w, h) * 0.8 + 60;
+        particles.push({
+          angle,
+          dist,
+          initialDist: dist,
+          speed: Math.random() * 9 + 4,
+          size: Math.random() * 2.8 + 1,
+          color: Math.random() < 0.65 ? core.color : (Math.random() < 0.85 ? '#ffffff' : core.glowColor || '#38bdf8')
+        });
+      }
+
+      const duration = 720;
+      const midpointTime = 300;
+      let midpointFired = false;
+      const startTime = performance.now();
+
+      function step(now) {
+        const elapsed = now - startTime;
+        const progress = Math.min(1, elapsed / duration);
+
+        if (elapsed >= midpointTime && !midpointFired) {
+          midpointFired = true;
+          if (onMidpoint) onMidpoint();
+        }
+
+        ctx.save();
+        ctx.scale(dpr, dpr);
+        ctx.clearRect(0, 0, w, h);
+
+        const phase = progress < 0.42 ? 'implode' : 'explode';
+
+        if (phase === 'implode') {
+          const impP = progress / 0.42;
+          const gridR = Math.max(w, h) * 0.7 * (1 - impP * 0.75);
+
+          ctx.strokeStyle = core.color;
+          ctx.globalAlpha = (1 - impP) * 0.35;
+          ctx.lineWidth = 1.5;
+          for (let a = 0; a < Math.PI * 2; a += Math.PI / 8) {
+            ctx.beginPath();
+            ctx.moveTo(cx, cy);
+            ctx.lineTo(cx + Math.cos(a) * gridR, cy + Math.sin(a) * gridR);
+            ctx.stroke();
+          }
+
+          particles.forEach(p => {
+            const currentDist = p.initialDist * (1 - impP * 0.95);
+            const curAngle = p.angle + impP * 4;
+            const px = cx + Math.cos(curAngle) * currentDist;
+            const py = cy + Math.sin(curAngle) * currentDist;
+            ctx.beginPath();
+            ctx.arc(px, py, p.size * (1 - impP * 0.4), 0, Math.PI * 2);
+            ctx.fillStyle = p.color;
+            ctx.globalAlpha = Math.max(0.2, (1 - impP * 0.5));
+            ctx.fill();
+          });
+        } else {
+          const expP = (progress - 0.42) / 0.58;
+          const easeExp = Math.sin(expP * Math.PI * 0.5);
+
+          for (let ring = 1; ring <= 3; ring++) {
+            const rRadius = easeExp * Math.max(w, h) * (0.4 + ring * 0.25);
+            const rAlpha = Math.max(0, (1 - expP) * (0.6 / ring));
+            ctx.beginPath();
+            ctx.arc(cx, cy, rRadius, 0, Math.PI * 2);
+            ctx.strokeStyle = ring === 1 ? '#ffffff' : core.color;
+            ctx.lineWidth = (16 - ring * 4) * (1 - expP * 0.7);
+            ctx.globalAlpha = rAlpha;
+            ctx.stroke();
+          }
+
+          particles.forEach(p => {
+            const currentDist = 30 + easeExp * Math.max(w, h) * 0.95;
+            const curAngle = p.angle + easeExp * 0.8;
+            const px = cx + Math.cos(curAngle) * currentDist;
+            const py = cy + Math.sin(curAngle) * currentDist;
+
+            ctx.beginPath();
+            ctx.arc(px, py, p.size * (1 + easeExp * 0.5), 0, Math.PI * 2);
+            ctx.fillStyle = p.color;
+            ctx.globalAlpha = Math.max(0, (1 - expP));
+            ctx.fill();
+          });
+
+          if (expP < 0.35) {
+            const flashAlpha = (1 - expP / 0.35) * 0.65;
+            const grad = ctx.createRadialGradient(cx, cy, 0, cx, cy, Math.max(w, h) * 0.45);
+            grad.addColorStop(0, `rgba(255, 255, 255, ${flashAlpha})`);
+            grad.addColorStop(0.3, `${core.color}${Math.floor(flashAlpha * 255).toString(16).padStart(2, '0')}`);
+            grad.addColorStop(1, 'rgba(0,0,0,0)');
+            ctx.fillStyle = grad;
+            ctx.globalAlpha = 1.0;
+            ctx.fillRect(0, 0, w, h);
+          }
+        }
+
+        ctx.restore();
+
+        if (progress < 1) {
+          requestAnimationFrame(step);
+        } else {
+          canvas.style.display = 'none';
+          if (onComplete) onComplete();
+        }
+      }
+
+      requestAnimationFrame(step);
+    }
+
+    function showOmniDimensionBanner(core) {
+      const banner = document.getElementById('omniDimensionBanner');
+      if (!banner) return;
+
+      banner.style.setProperty('--banner-theme', core.color);
+      banner.style.setProperty('--banner-glow', `${core.color}66`);
+
+      const iconEl = document.getElementById('omniBannerIcon');
+      if (iconEl) iconEl.innerText = core.icon;
+      const titleEl = document.getElementById('omniBannerTitle');
+      if (titleEl) titleEl.innerText = core.name;
+      const perkEl = document.getElementById('omniBannerPerk');
+      if (perkEl) perkEl.innerText = core.perk;
+
+      banner.classList.add('show');
+      if (omniBannerTimeout) clearTimeout(omniBannerTimeout);
+      omniBannerTimeout = setTimeout(() => {
+        banner.classList.remove('show');
+      }, 2500);
+    }
+
     function switchActiveCore(coreId) {
+      if (isOmniShiftAnimating) return;
       const core = CORES_DATA.find(c => c.id === coreId);
       if (!core) return;
       if (!isCoreUnlocked(coreId)) {
@@ -17377,24 +17742,67 @@
         return;
       }
 
-      state.activeCoreId = coreId;
-      state.equippedCoreSkin = coreId;
+      if (state.activeCoreId === coreId) {
+        showToast(`⚡ Nucleul ${core.name} este deja activ!`);
+        return;
+      }
 
-      renderCoreButtonSkin(coreId);
-      syncCoreVisualEcosystem(true);
-      renderMultiCoreSelector();
-      renderRightZone();
-      renderMultiCoresTab();
-      updateUI(true);
+      isOmniShiftAnimating = true;
 
-      if (coreId === 'solar') playTone(580, 'triangle', 0.25, 0.12);
-      else if (coreId === 'tesseract') playTone(720, 'sine', 0.25, 0.12);
-      else if (coreId === 'void') playTone(300, 'sawtooth', 0.3, 0.14);
-      else if (coreId === 'whitehole') playTone(980, 'triangle', 0.3, 0.15);
-      else playTone(440, 'sine', 0.2, 0.1);
+      // 1. Play Dimensional Sound
+      playOmniverseDimensionalSound(core);
 
-      showToast(`⚡ Comutat pe: ${core.name}!`);
-      saveGame();
+      // 2. Animate clicked card in Omniverse Tab
+      const cards = document.querySelectorAll('.omniverse-core-card');
+      cards.forEach(card => card.classList.remove('card-switching'));
+      const activeCard = Array.from(cards).find(c => c.querySelector(`button[onclick*="${coreId}"]`));
+      if (activeCard) activeCard.classList.add('card-switching');
+
+      // 3. Trigger core reactor dimensional leap animation
+      const ecoWrap = document.getElementById('coreEcosystemWrap');
+      if (ecoWrap) {
+        ecoWrap.style.setProperty('--leap-color', core.color);
+        ecoWrap.classList.remove('dimensional-leap');
+        void ecoWrap.offsetWidth;
+        ecoWrap.classList.add('dimensional-leap');
+      }
+
+      // 4. Run Canvas Dimensional Warp
+      runOmniverseDimensionalWarp(core, () => {
+        // Midpoint: switch active core data & update skins
+        state.activeCoreId = coreId;
+        state.equippedCoreSkin = coreId;
+
+        renderCoreButtonSkin(coreId);
+        syncCoreVisualEcosystem(true);
+        renderMultiCoreSelector();
+        renderRightZone();
+        renderMultiCoresTab();
+        updateUI(true);
+
+        // Core shockwaves & sparks
+        const coreBtn = document.getElementById('coreBtn');
+        if (coreBtn) {
+          const rect = coreBtn.getBoundingClientRect();
+          const cx = rect.left + rect.width / 2;
+          const cy = rect.top + rect.height / 2;
+          spawnCoreShockwave('em-wave');
+          spawnCoreShockwave('crit');
+          for (let k = 0; k < 8; k++) spawnCoreLightningArc(true);
+          spawnParticles(cx, cy, 35, core.color);
+          spawnParticles(cx, cy, 25, '#ffffff');
+        }
+
+        // Show Holographic HUD banner
+        showOmniDimensionBanner(core);
+        showToast(`🌀 Omnivers: Conectat cu succes la ${core.name}!`);
+        saveGame();
+      }, () => {
+        // Completion
+        if (ecoWrap) ecoWrap.classList.remove('dimensional-leap');
+        if (activeCard) activeCard.classList.remove('card-switching');
+        isOmniShiftAnimating = false;
+      });
     }
 
     function renderMultiCoreSelector() {
@@ -20867,8 +21275,8 @@
      *       + AUTO-SYNC SILENȚIOS OFFLINE -> ONLINE + AUTO-UPDATE LIVE
      *       + NAVIGARE MOBIL & INSTALARE PWA (MACBOOK / PC / ANDROID / iOS)
      ********************************************************************/
-    const APP_VERSION = '3.9.0';
-    const APP_BUILD = 390;
+    const APP_VERSION = '3.9.1';
+    const APP_BUILD = 391;
     // URL-ul oficial de pe GitHub Pages pentru verificarea automată de Update (și în aplicațiile .exe / .dmg):
     const REMOTE_UPDATE_BASE_URL = 'https://mariusinfo.github.io/quantum-nexus';
 
