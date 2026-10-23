@@ -1,7 +1,7 @@
 {
-  "version": "3.4.1",
-  "build": 341,
+  "version": "3.5.1",
+  "build": 351,
   "releaseDate": "2026-10-23",
-  "changelog": "v3.4.1: Fix Loop Update & Degradare Producție & UI Curățat - Rezolvare definitivă a buclei de actualizare (aliniere build 341, dezactivare auto-redirect pe versiunea de PC/file, protecții anti-loop în sesiune și buton 'Mai târziu'), eliminare completă a degradării de producție (pasive 100% constante) și curățare panou nucleu.",
+  "changelog": "v3.5.1: Optimizare Extremă Performanță & Eliminare Lag GPU - Cache RAM/VRAM pentru animații, eliminare completă backdrop-filter blurs și 60-144 FPS fluid pe orice PC sau telefon.",
   "autoApply": true
 }
