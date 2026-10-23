@@ -7186,6 +7186,709 @@
       }
     }
 
+    /* =========================================================================
+       GOLDEN WARP TRANSITION & FULLSCREEN ACHIEVEMENTS PANTEON (V3.8.0)
+       ========================================================================= */
+    .achievements-warp-canvas {
+      position: fixed;
+      inset: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 9999999;
+      pointer-events: none;
+    }
+
+    .achievements-fullscreen {
+      position: fixed;
+      inset: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 999999;
+      background: #020409;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      opacity: 0;
+      transition: opacity 0.4s ease;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
+    .achievements-fullscreen.active {
+      opacity: 1;
+    }
+
+    .ach-fs-bg-canvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    /* Top Galactic Header */
+    .ach-fs-header {
+      position: relative;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 24px;
+      background: linear-gradient(180deg, rgba(2, 6, 18, 0.95) 0%, rgba(2, 6, 18, 0.7) 80%, transparent 100%);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(253, 224, 71, 0.16);
+      flex-shrink: 0;
+    }
+
+    .ach-fs-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-shrink: 0;
+    }
+
+    .ach-header-crest {
+      position: relative;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 12px;
+      background: radial-gradient(circle, rgba(245, 158, 11, 0.35) 0%, rgba(15, 23, 42, 0.85) 100%);
+      border: 1px solid rgba(253, 224, 71, 0.6);
+      box-shadow: 0 0 18px rgba(253, 224, 71, 0.4);
+      font-size: 22px;
+    }
+
+    .ach-crest-halo {
+      position: absolute;
+      inset: -3px;
+      border-radius: 15px;
+      border: 1px solid rgba(253, 224, 71, 0.45);
+      animation: hudLivePulse 2.4s ease-in-out infinite;
+      pointer-events: none;
+    }
+
+    .ach-fs-titles {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .ach-fs-main-title {
+      font-size: 15.5px;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      background: linear-gradient(135deg, #ffffff 0%, #fef08a 40%, #f59e0b 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      line-height: 1.2;
+    }
+
+    .ach-fs-sub-title {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 700;
+      color: rgba(253, 224, 71, 0.7);
+      letter-spacing: 0.04em;
+    }
+
+    .ach-fs-center {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      flex: 1;
+      max-width: 520px;
+      margin: 0 16px;
+    }
+
+    .ach-fs-stats-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .ach-prog-badge {
+      background: linear-gradient(135deg, rgba(245, 158, 11, 0.22), rgba(217, 119, 6, 0.38));
+      border: 1.5px solid rgba(253, 224, 71, 0.6);
+      padding: 5px 14px;
+      border-radius: 999px;
+      box-shadow: 0 0 16px rgba(253, 224, 71, 0.3), inset 0 0 8px rgba(253, 224, 71, 0.2);
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 800;
+      color: #fef08a;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .ach-bonus-badge {
+      background: rgba(15, 23, 42, 0.75);
+      border: 1px solid rgba(56, 189, 248, 0.45);
+      padding: 5px 13px;
+      border-radius: 999px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 800;
+      color: #38bdf8;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 0 12px rgba(56, 189, 248, 0.2);
+    }
+
+    .ach-fs-progress-bar-wrap {
+      width: 100%;
+      height: 6px;
+      background: rgba(15, 23, 42, 0.85);
+      border-radius: 999px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      position: relative;
+    }
+
+    .ach-fs-progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #f59e0b, #fde047, #38bdf8);
+      border-radius: 999px;
+      transition: width 0.3s ease;
+      box-shadow: 0 0 10px rgba(253, 224, 71, 0.5);
+    }
+
+    .ach-fs-right {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+
+    .ach-btn-close {
+      background: linear-gradient(135deg, rgba(245, 158, 11, 0.22), rgba(56, 189, 248, 0.22));
+      border: 1.5px solid rgba(253, 224, 71, 0.6);
+      color: #ffffff;
+      padding: 7px 16px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 800;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 0 16px rgba(253, 224, 71, 0.3);
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .ach-btn-close:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 24px rgba(253, 224, 71, 0.6);
+      border-color: #fde047;
+      background: linear-gradient(135deg, rgba(245, 158, 11, 0.35), rgba(56, 189, 248, 0.35));
+    }
+
+    /* Controls: Search & Category Tabs */
+    .ach-fs-controls {
+      position: relative;
+      z-index: 10;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      padding: 10px 24px 12px 24px;
+      background: rgba(8, 12, 22, 0.88);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      flex-shrink: 0;
+    }
+
+    .ach-controls-top-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .ach-search-wrap {
+      position: relative;
+      flex: 1;
+      min-width: 240px;
+      max-width: 420px;
+    }
+
+    .ach-search-icon {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 13px;
+      pointer-events: none;
+      opacity: 0.6;
+    }
+
+    .ach-search-input {
+      width: 100%;
+      background: rgba(15, 23, 42, 0.85);
+      border: 1px solid rgba(253, 224, 71, 0.35);
+      border-radius: 10px;
+      padding: 8px 14px 8px 34px;
+      font-size: 12px;
+      color: #ffffff;
+      outline: none;
+      transition: all 0.2s ease;
+      box-sizing: border-box;
+    }
+
+    .ach-search-input:focus {
+      border-color: #fde047;
+      box-shadow: 0 0 14px rgba(253, 224, 71, 0.35);
+      background: rgba(15, 23, 42, 0.98);
+    }
+
+    .ach-quick-rarities {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .ach-quick-btn {
+      background: rgba(15, 23, 42, 0.75);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: #94a3b8;
+      padding: 5px 11px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.18s ease;
+      white-space: nowrap;
+    }
+
+    .ach-quick-btn:hover {
+      color: #ffffff;
+      background: rgba(255, 255, 255, 0.08);
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .ach-quick-btn.active {
+      color: #ffffff;
+      background: rgba(245, 158, 11, 0.25);
+      border-color: #fde047;
+      box-shadow: 0 0 12px rgba(253, 224, 71, 0.35);
+    }
+
+    .ach-categories-row {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      overflow-x: auto;
+      padding-bottom: 2px;
+      scrollbar-width: none;
+    }
+
+    .ach-categories-row::-webkit-scrollbar {
+      display: none;
+    }
+
+    .ach-cat-pill {
+      background: rgba(15, 23, 42, 0.75);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: #cbd5e1;
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-size: 11.5px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      white-space: nowrap;
+      transition: all 0.18s ease;
+      flex-shrink: 0;
+    }
+
+    .ach-cat-pill:hover {
+      color: #ffffff;
+      border-color: rgba(253, 224, 71, 0.4);
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .ach-cat-pill.active {
+      background: linear-gradient(135deg, rgba(245, 158, 11, 0.25), rgba(217, 119, 6, 0.35));
+      border-color: #fde047;
+      color: #fef08a;
+      box-shadow: 0 0 14px rgba(253, 224, 71, 0.35);
+    }
+
+    .ach-cat-counter {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      padding: 1px 6px;
+      border-radius: 999px;
+      background: rgba(0, 0, 0, 0.4);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    /* Main Scrollable Trophy Hall */
+    .ach-fs-body {
+      position: relative;
+      z-index: 2;
+      flex: 1;
+      overflow-y: auto;
+      padding: 20px 24px 40px 24px;
+      scroll-behavior: smooth;
+    }
+
+    .ach-fs-body::-webkit-scrollbar {
+      width: 7px;
+    }
+    .ach-fs-body::-webkit-scrollbar-track {
+      background: rgba(10, 14, 26, 0.6);
+    }
+    .ach-fs-body::-webkit-scrollbar-thumb {
+      background: rgba(253, 224, 71, 0.35);
+      border-radius: 999px;
+    }
+    .ach-fs-body::-webkit-scrollbar-thumb:hover {
+      background: #fde047;
+    }
+
+    .ach-fs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 12px;
+    }
+
+    /* Holographic Trophy Pedestal Card */
+    .ach-trophy-card {
+      background: linear-gradient(135deg, rgba(14, 21, 38, 0.92) 0%, rgba(8, 12, 24, 0.95) 100%);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 14px;
+      padding: 12px 14px;
+      display: flex;
+      align-items: center;
+      gap: 13px;
+      cursor: pointer;
+      position: relative;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+      overflow: hidden;
+    }
+
+    .ach-trophy-card:hover {
+      transform: translateY(-3px) scale(1.015);
+      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.6);
+    }
+
+    .ach-trophy-card.unlocked.rarity-mythic {
+      border-color: rgba(245, 158, 11, 0.7);
+      background: linear-gradient(135deg, rgba(245, 158, 11, 0.12) 0%, rgba(15, 23, 42, 0.95) 100%);
+      box-shadow: 0 0 20px rgba(245, 158, 11, 0.25), inset 0 0 14px rgba(245, 158, 11, 0.08);
+    }
+
+    .ach-trophy-card.unlocked.rarity-rare {
+      border-color: rgba(56, 189, 248, 0.55);
+      background: linear-gradient(135deg, rgba(56, 189, 248, 0.08) 0%, rgba(15, 23, 42, 0.95) 100%);
+      box-shadow: 0 0 16px rgba(56, 189, 248, 0.18);
+    }
+
+    .ach-trophy-card.unlocked.rarity-standard {
+      border-color: rgba(52, 211, 153, 0.45);
+      background: linear-gradient(135deg, rgba(52, 211, 153, 0.06) 0%, rgba(15, 23, 42, 0.95) 100%);
+      box-shadow: 0 0 14px rgba(52, 211, 153, 0.12);
+    }
+
+    .ach-trophy-card.locked {
+      opacity: 0.52;
+      border-color: rgba(255, 255, 255, 0.06);
+      background: rgba(10, 14, 26, 0.65);
+    }
+
+    .ach-trophy-card.locked:hover {
+      opacity: 0.85;
+      border-color: rgba(255, 255, 255, 0.16);
+    }
+
+    .ach-pedestal-avatar {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      flex-shrink: 0;
+      position: relative;
+      background: rgba(15, 23, 42, 0.8);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+    }
+
+    .ach-trophy-card.unlocked.rarity-mythic .ach-pedestal-avatar {
+      background: radial-gradient(circle, rgba(245, 158, 11, 0.35) 0%, rgba(15, 23, 42, 0.9) 100%);
+      border-color: rgba(253, 224, 71, 0.7);
+      box-shadow: 0 0 16px rgba(253, 224, 71, 0.4);
+    }
+
+    .ach-trophy-card.unlocked.rarity-rare .ach-pedestal-avatar {
+      background: radial-gradient(circle, rgba(56, 189, 248, 0.3) 0%, rgba(15, 23, 42, 0.9) 100%);
+      border-color: rgba(56, 189, 248, 0.6);
+      box-shadow: 0 0 14px rgba(56, 189, 248, 0.35);
+    }
+
+    .ach-trophy-card.unlocked.rarity-standard .ach-pedestal-avatar {
+      background: radial-gradient(circle, rgba(52, 211, 153, 0.25) 0%, rgba(15, 23, 42, 0.9) 100%);
+      border-color: rgba(52, 211, 153, 0.5);
+      box-shadow: 0 0 12px rgba(52, 211, 153, 0.3);
+    }
+
+    .ach-trophy-card.locked .ach-pedestal-avatar {
+      filter: grayscale(0.6);
+      opacity: 0.65;
+    }
+
+    .ach-pedestal-content {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .ach-pedestal-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 6px;
+      margin-bottom: 2px;
+    }
+
+    .ach-pedestal-title {
+      font-size: 13px;
+      font-weight: 800;
+      color: #ffffff;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .ach-trophy-card.locked .ach-pedestal-title {
+      color: #94a3b8;
+    }
+
+    .ach-pedestal-desc {
+      font-size: 11px;
+      color: var(--text-muted);
+      line-height: 1.35;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .ach-pedestal-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 6px;
+      margin-top: 5px;
+      font-size: 10px;
+      font-family: var(--font-mono);
+    }
+
+    .ach-status-pill {
+      font-weight: 800;
+      padding: 1.5px 6.5px;
+      border-radius: 999px;
+    }
+
+    .ach-status-pill.unlocked {
+      background: rgba(52, 211, 153, 0.15);
+      color: #34d399;
+      border: 1px solid rgba(52, 211, 153, 0.3);
+    }
+
+    .ach-status-pill.locked {
+      background: rgba(255, 255, 255, 0.05);
+      color: #64748b;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    /* Holographic Trophy Inspection Modal */
+    .ach-inspect-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(2, 4, 10, 0.85);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      z-index: 1000000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      animation: fadeIn 0.2s ease;
+    }
+
+    .ach-inspect-card {
+      background: linear-gradient(135deg, rgba(15, 23, 42, 0.98) 0%, rgba(9, 14, 28, 0.98) 100%);
+      border: 1.5px solid rgba(253, 224, 71, 0.5);
+      border-radius: 20px;
+      padding: 24px;
+      max-width: 480px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.9), 0 0 30px rgba(253, 224, 71, 0.25);
+      position: relative;
+      animation: scaleUp 0.22s ease;
+    }
+
+    .ach-inspect-orb {
+      width: 72px;
+      height: 72px;
+      margin: 0 auto 16px;
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 38px;
+      background: radial-gradient(circle, rgba(253, 224, 71, 0.3) 0%, rgba(15, 23, 42, 0.95) 100%);
+      border: 1.5px solid rgba(253, 224, 71, 0.7);
+      box-shadow: 0 0 24px rgba(253, 224, 71, 0.45);
+      animation: floatOrbit 4s ease-in-out infinite;
+    }
+
+    .ach-inspect-title {
+      font-size: 19px;
+      font-weight: 900;
+      color: #ffffff;
+      margin-bottom: 6px;
+    }
+
+    .ach-inspect-tags {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+
+    .ach-inspect-desc {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.5;
+      margin-bottom: 18px;
+      background: rgba(10, 14, 26, 0.7);
+      padding: 12px 14px;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .ach-inspect-reward {
+      font-family: var(--font-mono);
+      font-size: 12.5px;
+      font-weight: 800;
+      color: #38bdf8;
+      background: rgba(56, 189, 248, 0.12);
+      border: 1px solid rgba(56, 189, 248, 0.35);
+      padding: 8px 14px;
+      border-radius: 10px;
+      margin-bottom: 18px;
+    }
+
+    .ach-inspect-actions {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+    }
+
+    /* Portal Card in Tab-Achievements */
+    .achievements-tab-portal {
+      position: relative;
+      background: radial-gradient(circle at 50% 20%, rgba(245, 158, 11, 0.16) 0%, rgba(15, 23, 42, 0.95) 85%);
+      border: 1.5px solid rgba(253, 224, 71, 0.45);
+      border-radius: 16px;
+      padding: 28px 24px;
+      text-align: center;
+      box-shadow: 0 14px 35px rgba(0, 0, 0, 0.6), 0 0 28px rgba(253, 224, 71, 0.18);
+      overflow: hidden;
+      margin-bottom: 16px;
+    }
+
+    .ach-portal-glow {
+      position: absolute;
+      top: -60px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 240px;
+      height: 140px;
+      background: radial-gradient(circle, rgba(253, 224, 71, 0.45), transparent 70%);
+      pointer-events: none;
+      filter: blur(30px);
+    }
+
+    .ach-portal-icon-box {
+      width: 68px;
+      height: 68px;
+      margin: 0 auto 14px;
+      border-radius: 18px;
+      background: radial-gradient(circle, rgba(245, 158, 11, 0.3) 0%, rgba(15, 23, 42, 0.9) 100%);
+      border: 1.5px solid rgba(253, 224, 71, 0.6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 34px;
+      box-shadow: 0 0 24px rgba(253, 224, 71, 0.4);
+      animation: floatOrbit 3.5s ease-in-out infinite;
+    }
+
+    .btn-portal-launch-ach {
+      background: linear-gradient(135deg, #f59e0b 0%, #eab308 50%, #38bdf8 100%);
+      color: #ffffff;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      padding: 13px 28px;
+      border-radius: 12px;
+      font-size: 14px;
+      font-weight: 800;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 0 25px rgba(245, 158, 11, 0.45);
+      transition: all 0.2s ease;
+      letter-spacing: 0.02em;
+    }
+
+    .btn-portal-launch-ach:hover {
+      transform: translateY(-2px) scale(1.02);
+      box-shadow: 0 0 35px rgba(245, 158, 11, 0.75);
+    }
+
+    @media (max-width: 900px) {
+      .ach-fs-header {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
+        padding: 10px 14px;
+      }
+      .ach-fs-center {
+        margin: 0;
+        max-width: none;
+      }
+      .ach-fs-controls {
+        padding: 10px 14px;
+      }
+      .ach-fs-body {
+        padding: 14px;
+      }
+      .ach-fs-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
     /* Branch Columns View */
     .skill-tree-columns {
       display: grid;
@@ -7602,7 +8305,7 @@
       <!-- Subtitlu & Versiune Sistem -->
       <div class="loading-footer-tip">
         <span class="loading-pulse-dot"></span>
-        <span id="loadingVersionSub">Simulare Multiversală v3.7.0 // Auto-Stabilizare Activă</span>
+        <span id="loadingVersionSub">Simulare Multiversală v3.8.0 // Auto-Stabilizare Activă</span>
       </div>
 
       <!-- Hint discret dacă browserul a reținut temporar autoplay înainte de primul gest -->
@@ -7620,7 +8323,7 @@
         <div class="brand-icon">⚛️</div>
         <div>
           <div class="brand-title">QUANTUM NEXUS</div>
-          <div class="brand-sub" id="versionHeaderSub">v3.7.0</div>
+          <div class="brand-sub" id="versionHeaderSub">v3.8.0</div>
         </div>
         <div class="fps-meter-badge fps-high" id="fpsMeterBadge" onclick="showFpsInfo()" title="Monitorizare Cadre pe Secundă (FPS în timp real) - Click pentru detalii">
           <span class="fps-dot"></span>
@@ -7959,29 +8662,47 @@
             </div>
           </div>
 
-          <!-- TAB 3: Achievements (330 Realizări) -->
+          <!-- TAB 3: Achievements (Portal Panteonul Realizarilor) -->
           <div class="tab-pane" id="tab-achievements">
-            <div class="section-header" style="flex-wrap:wrap; gap:8px;">
-              <div>
-                <div class="section-title">🏆 Enciclopedia Realizărilor (<span id="achHeaderProgress">0 / 330</span>)</div>
-                <div class="section-subtitle">Fiecare realizare oferă <strong>+1% Multiplicator Global Permanent</strong>! (Bonus actual: <strong id="achBonusText" style="color:var(--accent-gold)">+0%</strong>)</div>
+            <div class="achievements-tab-portal">
+              <div class="ach-portal-glow"></div>
+              <div class="ach-portal-icon-box">
+                <span>🏆</span>
               </div>
-              <div class="lb-cat-bar" style="margin-bottom:0;">
-                <button class="lb-cat-btn active" onclick="setAchievementFilter('all', this)">📋 Toate</button>
-                <button class="lb-cat-btn" onclick="setAchievementFilter('unlocked', this)">✅ Deblocate</button>
-                <button class="lb-cat-btn" onclick="setAchievementFilter('locked', this)">🔒 Blocate</button>
-                <button class="lb-cat-btn" onclick="setAchievementFilter('rarity_standard', this)">🥉 Standard</button>
-                <button class="lb-cat-btn" onclick="setAchievementFilter('rarity_rare', this)">💎 Rare</button>
-                <button class="lb-cat-btn" onclick="setAchievementFilter('rarity_mythic', this)">👑 Mitice</button>
-                <button class="lb-cat-btn" onclick="setAchievementFilter('click', this)">👆 Click & Crit</button>
-                <button class="lb-cat-btn" onclick="setAchievementFilter('energy', this)">⚡ Energie & CPS</button>
-                <button class="lb-cat-btn" onclick="setAchievementFilter('fleet', this)">🤖 Flotă & Roboți</button>
-                <button class="lb-cat-btn" onclick="setAchievementFilter('prestige', this)">🌌 Rebirth & Materie</button>
-                <button class="lb-cat-btn" onclick="setAchievementFilter('tech', this)">🔬 Tehnologii & Abilități</button>
-                <button class="lb-cat-btn" onclick="setAchievementFilter('secret', this)">👑 Secrete & Timp</button>
+              <div class="constellation-portal-title">Panteonul Realizărilor Cuantice</div>
+              <div class="constellation-portal-desc">Pășește în galeria monumentală ecran complet. Explorează cele 330 de trofee organizate pe categorii și rarități (Standard, Rare și Mitice) pentru a acumula multiplicatori permanenți pe cont.</div>
+
+              <div class="constellation-portal-stats">
+                <div class="c-portal-stat-box">
+                  <span class="c-portal-stat-label">🏆 Trofee Deblocate</span>
+                  <span class="c-portal-stat-val" id="portalAchCountVal">0 / 330</span>
+                </div>
+                <div class="c-portal-stat-box">
+                  <span class="c-portal-stat-label">⭐ Multiplicator Global</span>
+                  <span class="c-portal-stat-val" id="portalAchBonusVal">+0%</span>
+                </div>
+                <div class="c-portal-stat-box">
+                  <span class="c-portal-stat-label">👑 Trofee Mitice</span>
+                  <span class="c-portal-stat-val" id="portalAchMythicVal">0 / 40</span>
+                </div>
+              </div>
+
+              <button class="btn-portal-launch-ach" onclick="openAchievementsFullscreen()">
+                <span>🚀 Deschide Panteonul Realizărilor (Ecran Complet)</span>
+                <span class="portal-btn-arrow">➔</span>
+              </button>
+
+              <div style="font-size:11px; color:var(--text-dim); margin-top:14px; font-family:var(--font-mono);">
+                💡 Include tranziție cu viteză hiperspațială aurie, inspecție 3D detaliată, căutare în timp real și filtre pe categorii.
               </div>
             </div>
-            <div class="ach-grid" id="achievementsGrid"></div>
+
+            <!-- Fallback elements for backwards JS compatibility -->
+            <div style="display:none;" aria-hidden="true">
+              <span id="achHeaderProgress">0 / 330</span>
+              <strong id="achBonusText">+0%</strong>
+              <div id="achievementsGrid"></div>
+            </div>
           </div>
 
           <!-- TAB 3.5: Global Leaderboard (Doar pentru Cont Conectat) -->
@@ -8211,7 +8932,137 @@
     </div>
   </div>
 
-  <!-- Core Skins & Click Evolution Modal -->
+  <!-- =========================================================================
+       GOLDEN WARP CANVAS & FULLSCREEN ACHIEVEMENTS PANTEON (V3.8.0)
+       ========================================================================= -->
+  <canvas id="achievementsWarpCanvas" class="achievements-warp-canvas" style="display:none;"></canvas>
+
+  <div id="achievementsFullscreen" class="achievements-fullscreen" style="display:none;">
+    <!-- Cosmic Golden Nebula & Ambient Starfield Canvas -->
+    <canvas id="achievementsBgCanvas" class="ach-fs-bg-canvas"></canvas>
+
+    <!-- Top Galactic Header -->
+    <header class="ach-fs-header">
+      <div class="ach-fs-brand">
+        <div class="ach-header-crest">
+          <span>🏆</span>
+          <div class="ach-crest-halo"></div>
+        </div>
+        <div class="ach-fs-titles">
+          <div class="ach-fs-main-title">PANTEONUL REALIZĂRILOR CUANTICE</div>
+          <div class="ach-fs-sub-title">GALACTIC HALL OF FAME // MONUMENTE ȘI MULTIPLICATOR PERMANENT</div>
+        </div>
+      </div>
+
+      <div class="ach-fs-center">
+        <div class="ach-fs-stats-row">
+          <div class="ach-prog-badge" id="achFsProgressBadge" title="Total realizări deblocate în galaxie">
+            <span>🏆</span>
+            <strong id="achFsUnlockedCount">0</strong>
+            <span>/</span>
+            <span>330 Trofee</span>
+            <span style="opacity:0.75" id="achFsPctText">(0.0%)</span>
+          </div>
+          <div class="ach-bonus-badge" id="achFsBonusBadge" title="Multiplicator global permanent oferit de realizări">
+            <span>⭐</span>
+            <span style="color:#ffffff">Bonus:</span>
+            <strong id="achFsBonusVal">+0%</strong>
+          </div>
+        </div>
+        <div class="ach-fs-progress-bar-wrap" title="Progres către deblocarea completă a tuturor celor 330 de realizări">
+          <div class="ach-fs-progress-fill" id="achFsProgressFill" style="width:0%"></div>
+        </div>
+      </div>
+
+      <div class="ach-fs-right">
+        <button class="ach-btn-close" onclick="closeAchievementsFullscreen()" title="Închide Panteonul și revino la joc (Tasta Esc)">
+          <span>✖</span>
+          <span>Înapoi la Nucleu</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Controls: Search & Category Navigation Tabs -->
+    <div class="ach-fs-controls">
+      <div class="ach-controls-top-row">
+        <div class="ach-search-wrap">
+          <span class="ach-search-icon">🔍</span>
+          <input type="text" id="achSearchInput" class="ach-search-input" placeholder="Caută un trofeu după nume, cerință sau descriere..." oninput="onAchievementSearchInput(this.value)" />
+        </div>
+
+        <div class="ach-quick-rarities" id="achRarityFilterGroup">
+          <button class="ach-quick-btn active" data-filter="all" onclick="setAchFsPresetFilter('all', this)">📋 Toate (330)</button>
+          <button class="ach-quick-btn" data-filter="unlocked" onclick="setAchFsPresetFilter('unlocked', this)">✅ Deblocate (<span id="achRarityCountUnlocked">0</span>)</button>
+          <button class="ach-quick-btn" data-filter="locked" onclick="setAchFsPresetFilter('locked', this)">🔒 Blocate (<span id="achRarityCountLocked">330</span>)</button>
+          <button class="ach-quick-btn" data-filter="rarity_mythic" onclick="setAchFsPresetFilter('rarity_mythic', this)" style="color:#fde047">👑 Mitice (<span id="achRarityCountMythic">0/40</span>)</button>
+          <button class="ach-quick-btn" data-filter="rarity_rare" onclick="setAchFsPresetFilter('rarity_rare', this)" style="color:#38bdf8">💎 Rare (<span id="achRarityCountRare">0/85</span>)</button>
+          <button class="ach-quick-btn" data-filter="rarity_standard" onclick="setAchFsPresetFilter('rarity_standard', this)" style="color:#34d399">🥉 Standard (<span id="achRarityCountStandard">0/205</span>)</button>
+        </div>
+      </div>
+
+      <div class="ach-categories-row" id="achCategoryRow">
+        <button class="ach-cat-pill active" data-cat="all" onclick="setAchFsCategory('all', this)">
+          <span>🌌 Toate Categoriile</span>
+          <span class="ach-cat-counter" id="achCatCntAll">330</span>
+        </button>
+        <button class="ach-cat-pill" data-cat="click" onclick="setAchFsCategory('click', this)">
+          <span>👆 Click & Crit</span>
+          <span class="ach-cat-counter" id="achCatCntClick">0/60</span>
+        </button>
+        <button class="ach-cat-pill" data-cat="energy" onclick="setAchFsCategory('energy', this)">
+          <span>⚡ Energie & CPS</span>
+          <span class="ach-cat-counter" id="achCatCntEnergy">0/50</span>
+        </button>
+        <button class="ach-cat-pill" data-cat="fleet" onclick="setAchFsCategory('fleet', this)">
+          <span>🤖 Flotă & Roboți</span>
+          <span class="ach-cat-counter" id="achCatCntFleet">0/70</span>
+        </button>
+        <button class="ach-cat-pill" data-cat="prestige" onclick="setAchFsCategory('prestige', this)">
+          <span>🌀 Prestigiu & Materie</span>
+          <span class="ach-cat-counter" id="achCatCntPrestige">0/55</span>
+        </button>
+        <button class="ach-cat-pill" data-cat="tech" onclick="setAchFsCategory('tech', this)">
+          <span>🔬 Tehnologie & Abilități</span>
+          <span class="ach-cat-counter" id="achCatCntTech">0/50</span>
+        </button>
+        <button class="ach-cat-pill" data-cat="anom" onclick="setAchFsCategory('anom', this)">
+          <span>☄️ Anomalii & Astral</span>
+          <span class="ach-cat-counter" id="achCatCntAnom">0/25</span>
+        </button>
+        <button class="ach-cat-pill" data-cat="secret" onclick="setAchFsCategory('secret', this)">
+          <span>⌚ Timp & Secrete</span>
+          <span class="ach-cat-counter" id="achCatCntSecret">0/20</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Main Scrollable Trophy Hall -->
+    <div class="ach-fs-body" id="achFsBody">
+      <div class="ach-fs-grid" id="achFsGrid"></div>
+    </div>
+  </div>
+
+  <!-- Holographic Trophy Inspection Modal -->
+  <div class="ach-inspect-backdrop" id="achInspectModal" style="display:none;" onclick="if(event.target===this) closeAchInspectModal()">
+    <div class="ach-inspect-card">
+      <div class="ach-inspect-orb" id="achInspectOrb">🏆</div>
+      <h3 class="ach-inspect-title" id="achInspectTitle">Titlu Realizare</h3>
+      <div class="ach-inspect-tags">
+        <span class="ach-rarity-pill" id="achInspectRarityPill">👑 Mitică</span>
+        <span class="social-online-pill" id="achInspectCatPill" style="background:rgba(253,224,71,0.15); border-color:#fde047; color:#fef08a;">Categorie</span>
+      </div>
+      <div class="ach-inspect-desc" id="achInspectDesc">Descrierea exactă a cerinței cosmice.</div>
+      <div class="ach-inspect-reward" id="achInspectReward">⭐ Recompensă: +1% Multiplicator Global Permanent (Activ)</div>
+      <div class="ach-inspect-actions">
+        <button class="btn-header" onclick="replayInspectAchievementSound()" style="padding:8px 16px; font-size:12px;">
+          🔊 Ascultă Sunetul Realizării
+        </button>
+        <button class="btn-portal-launch-ach" onclick="closeAchInspectModal()" style="padding:8px 20px; font-size:12px;">
+          Închide Inspecția
+        </button>
+      </div>
+    </div>
+  </div>
   <div class="modal-backdrop" id="coreSkinsModal" onclick="if(event.target===this) closeCoreSkinsModal()">
     <div class="modal-card wide" style="max-width: 680px; text-align: left;">
       <div class="modal-header-row">
@@ -8324,7 +9175,7 @@
           <button class="btn-header install-btn" id="btnInstallApp" onclick="triggerInstallApp()">📲 Instalează</button>
         </div>
         <div style="font-size: 11px; color: var(--text-dim); margin-top: 8px;">
-          Versiune instalată: <strong id="settingsVersionText">v3.7.0</strong> // Auto-Update activ
+          Versiune instalată: <strong id="settingsVersionText">v3.8.0</strong> // Auto-Update activ
         </div>
       </div>
 
@@ -17408,6 +18259,624 @@
       }
     }
 
+    // =========================================================================
+    // V3.8.0: PANTEONUL REALIZĂRILOR CUANTICE (FULLSCREEN & GOLDEN WARP)
+    // =========================================================================
+    let isAchievementsFullscreenOpen = false;
+    let achFsSearchQuery = '';
+    let achFsPresetFilter = 'all';
+    let achFsCategoryFilter = 'all';
+    let inspectedAchId = null;
+    let achBgAnimFrame = null;
+    let achBgStars = [];
+    let achWarpAnimFrameId = null;
+
+    function playAchievementsWarpSound(direction = 'enter') {
+      if (!state.soundEnabled) return;
+      try {
+        if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        if (audioCtx.state === 'suspended') audioCtx.resume();
+        const now = audioCtx.currentTime;
+
+        if (direction === 'enter') {
+          // 1. Sub-bass swell
+          const subOsc = audioCtx.createOscillator();
+          const subGain = audioCtx.createGain();
+          subOsc.type = 'sine';
+          subOsc.frequency.setValueAtTime(55, now);
+          subOsc.frequency.exponentialRampToValueAtTime(175, now + 0.48);
+          subGain.gain.setValueAtTime(0.001, now);
+          subGain.gain.linearRampToValueAtTime(0.22, now + 0.15);
+          subGain.gain.exponentialRampToValueAtTime(0.001, now + 0.65);
+          subOsc.connect(subGain);
+          subGain.connect(audioCtx.destination);
+          subOsc.start(now);
+          subOsc.stop(now + 0.65);
+
+          // 2. Triumphant Golden Fanfare Chord (D4, F#4, A4, D5, F#5, A5)
+          const freqs = [293.66, 369.99, 440.00, 587.33, 739.99, 880.00];
+          freqs.forEach((f, idx) => {
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            const st = now + 0.10 + idx * 0.05;
+            osc.type = 'triangle';
+            osc.frequency.setValueAtTime(f, st);
+            osc.frequency.exponentialRampToValueAtTime(f * 1.015, st + 0.4);
+            gain.gain.setValueAtTime(0.001, st);
+            gain.gain.linearRampToValueAtTime(0.08, st + 0.1);
+            gain.gain.exponentialRampToValueAtTime(0.0001, st + 0.55);
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.start(st);
+            osc.stop(st + 0.55);
+          });
+        } else {
+          // Exit warp: descending soft sub-bass + gentle chime
+          const subOsc = audioCtx.createOscillator();
+          const subGain = audioCtx.createGain();
+          subOsc.type = 'sine';
+          subOsc.frequency.setValueAtTime(160, now);
+          subOsc.frequency.exponentialRampToValueAtTime(50, now + 0.35);
+          subGain.gain.setValueAtTime(0.14, now);
+          subGain.gain.exponentialRampToValueAtTime(0.001, now + 0.38);
+          subOsc.connect(subGain);
+          subGain.connect(audioCtx.destination);
+          subOsc.start(now);
+          subOsc.stop(now + 0.38);
+
+          const chimeOsc = audioCtx.createOscillator();
+          const chimeGain = audioCtx.createGain();
+          chimeOsc.type = 'sine';
+          chimeOsc.frequency.setValueAtTime(587.33, now);
+          chimeGain.gain.setValueAtTime(0.08, now);
+          chimeGain.gain.exponentialRampToValueAtTime(0.001, now + 0.3);
+          chimeOsc.connect(chimeGain);
+          chimeGain.connect(audioCtx.destination);
+          chimeOsc.start(now);
+          chimeOsc.stop(now + 0.3);
+        }
+      } catch (e) {}
+    }
+
+    function replayInspectAchievementSound() {
+      if (!state.soundEnabled) return;
+      try {
+        if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        if (audioCtx.state === 'suspended') audioCtx.resume();
+        const now = audioCtx.currentTime;
+        playSyntheticChimeTone(660, now, 0.14, 0.18, 'sine');
+        playSyntheticChimeTone(880, now + 0.16, 0.22, 0.22, 'sine');
+      } catch (e) {}
+    }
+
+    function runAchievementsWarpTransition(duration = 750, onComplete) {
+      const canvas = document.getElementById('achievementsWarpCanvas');
+      if (!canvas) {
+        if (onComplete) onComplete();
+        return;
+      }
+
+      const dpr = window.devicePixelRatio || 1;
+      const w = window.innerWidth;
+      const h = window.innerHeight;
+      canvas.width = Math.floor(w * dpr);
+      canvas.height = Math.floor(h * dpr);
+      const ctx = canvas.getContext('2d');
+
+      const starCount = 420;
+      const stars = [];
+      for (let i = 0; i < starCount; i++) {
+        stars.push({
+          x: (Math.random() - 0.5) * w * 2.2,
+          y: (Math.random() - 0.5) * h * 2.2,
+          z: Math.random() * 1600 + 100,
+          pz: 1700,
+          color: Math.random() < 0.35 ? '#fde047' : Math.random() < 0.6 ? '#f59e0b' : Math.random() < 0.8 ? '#38bdf8' : '#ffffff',
+          size: Math.random() * 1.8 + 0.8
+        });
+      }
+
+      const startTime = performance.now();
+
+      function stepWarp(now) {
+        const elapsed = now - startTime;
+        const progress = Math.min(1, elapsed / duration);
+
+        ctx.fillStyle = 'rgba(2, 4, 10, 0.28)';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        let speed = 25;
+        if (progress < 0.45) {
+          speed = 25 + Math.sin(progress / 0.45 * Math.PI * 0.5) * 120;
+        } else {
+          speed = 145 * (1 - (progress - 0.45) / 0.55);
+        }
+        speed = Math.max(10, speed);
+
+        const fov = 340 * dpr;
+        const cx = canvas.width / 2;
+        const cy = canvas.height / 2;
+
+        for (let i = 0; i < starCount; i++) {
+          const s = stars[i];
+          s.pz = s.z;
+          s.z -= speed;
+
+          if (s.z <= 20) {
+            s.z = 1600;
+            s.pz = 1600;
+            s.x = (Math.random() - 0.5) * w * 2.2;
+            s.y = (Math.random() - 0.5) * h * 2.2;
+          }
+
+          const sx = (s.x / s.z) * fov + cx;
+          const sy = (s.y / s.z) * fov + cy;
+          const px = (s.x / s.pz) * fov + cx;
+          const py = (s.y / s.pz) * fov + cy;
+
+          if (sx >= 0 && sx <= canvas.width && sy >= 0 && sy <= canvas.height) {
+            ctx.beginPath();
+            ctx.moveTo(px, py);
+            ctx.lineTo(sx, sy);
+            ctx.strokeStyle = s.color;
+            ctx.lineWidth = Math.min(4.5 * dpr, (1 - s.z / 1600) * 3.8 * dpr + 0.5);
+            ctx.shadowColor = s.color;
+            ctx.shadowBlur = 8 * dpr;
+            ctx.stroke();
+            ctx.shadowBlur = 0;
+          }
+        }
+
+        // Golden Trophy Portal Ring Expanding
+        if (progress > 0.15) {
+          const ringNorm = (progress - 0.15) / 0.85;
+          const maxR = Math.hypot(canvas.width, canvas.height) * 0.65;
+          const curR = ringNorm * maxR;
+
+          ctx.save();
+          ctx.beginPath();
+          ctx.arc(cx, cy, curR, 0, Math.PI * 2);
+          ctx.strokeStyle = `rgba(253, 224, 71, ${Math.max(0, 1 - ringNorm)})`;
+          ctx.lineWidth = (1 - ringNorm) * 10 * dpr + 1;
+          ctx.shadowColor = '#f59e0b';
+          ctx.shadowBlur = 22 * dpr;
+          ctx.stroke();
+          ctx.restore();
+        }
+
+        if (progress < 1) {
+          achWarpAnimFrameId = requestAnimationFrame(stepWarp);
+        } else {
+          cancelAnimationFrame(achWarpAnimFrameId);
+          achWarpAnimFrameId = null;
+          if (onComplete) onComplete();
+        }
+      }
+
+      achWarpAnimFrameId = requestAnimationFrame(stepWarp);
+    }
+
+    function openAchievementsFullscreen() {
+      if (isAchievementsFullscreenOpen) return;
+      isAchievementsFullscreenOpen = true;
+
+      // 1. Audio
+      playAchievementsWarpSound('enter');
+
+      // 2. Hide & blur app shell
+      const appShell = document.querySelector('.app-shell');
+      if (appShell) appShell.classList.add('app-shell-warp-out');
+
+      // 3. Launch Golden Warp
+      const warpCanvas = document.getElementById('achievementsWarpCanvas');
+      if (warpCanvas) {
+        warpCanvas.style.display = 'block';
+        warpCanvas.style.opacity = '1';
+        runAchievementsWarpTransition(750, () => {
+          if (warpCanvas) {
+            warpCanvas.style.transition = 'opacity 0.25s ease';
+            warpCanvas.style.opacity = '0';
+            setTimeout(() => {
+              warpCanvas.style.display = 'none';
+              warpCanvas.style.transition = '';
+            }, 250);
+          }
+        });
+      }
+
+      // 4. Reveal Fullscreen Vault at Midpoint
+      setTimeout(() => {
+        const fsEl = document.getElementById('achievementsFullscreen');
+        if (fsEl) {
+          fsEl.style.display = 'flex';
+          void fsEl.offsetWidth;
+          fsEl.classList.add('active');
+        }
+        initAchievementsFullscreen();
+        renderAchievementsFullscreen();
+      }, 420);
+    }
+
+    function closeAchievementsFullscreen() {
+      if (!isAchievementsFullscreenOpen) return;
+      isAchievementsFullscreenOpen = false;
+
+      playAchievementsWarpSound('exit');
+
+      const fsEl = document.getElementById('achievementsFullscreen');
+      if (fsEl) {
+        fsEl.classList.remove('active');
+      }
+
+      const appShell = document.querySelector('.app-shell');
+      if (appShell) {
+        appShell.classList.remove('app-shell-warp-out');
+      }
+
+      setTimeout(() => {
+        if (fsEl) fsEl.style.display = 'none';
+        if (achBgAnimFrame) {
+          cancelAnimationFrame(achBgAnimFrame);
+          achBgAnimFrame = null;
+        }
+        updateUI();
+      }, 380);
+    }
+
+    function setAchFsPresetFilter(preset = 'all', btnEl = null) {
+      achFsPresetFilter = preset;
+      document.querySelectorAll('#achRarityFilterGroup .ach-quick-btn').forEach(b => b.classList.remove('active'));
+      if (btnEl) {
+        btnEl.classList.add('active');
+      } else {
+        const el = document.querySelector(`#achRarityFilterGroup .ach-quick-btn[data-filter="${preset}"]`);
+        if (el) el.classList.add('active');
+      }
+      playTone(720, 'sine', 0.04, 0.04);
+      renderAchievementsFullscreen();
+    }
+
+    function setAchFsCategory(cat = 'all', btnEl = null) {
+      achFsCategoryFilter = cat;
+      document.querySelectorAll('#achCategoryRow .ach-cat-pill').forEach(b => b.classList.remove('active'));
+      if (btnEl) {
+        btnEl.classList.add('active');
+      } else {
+        const el = document.querySelector(`#achCategoryRow .ach-cat-pill[data-cat="${cat}"]`);
+        if (el) el.classList.add('active');
+      }
+      playTone(660, 'sine', 0.04, 0.04);
+      renderAchievementsFullscreen();
+    }
+
+    function onAchievementSearchInput(val) {
+      achFsSearchQuery = (val || '').trim().toLowerCase();
+      renderAchievementsFullscreen();
+    }
+
+    let achFsEventsBound = false;
+
+    function initAchievementsFullscreen() {
+      const bgCanvas = document.getElementById('achievementsBgCanvas');
+      if (!bgCanvas) return;
+
+      const dpr = window.devicePixelRatio || 1;
+      const w = window.innerWidth;
+      const h = window.innerHeight;
+      bgCanvas.width = Math.floor(w * dpr);
+      bgCanvas.height = Math.floor(h * dpr);
+
+      // Generate Background Stars if empty
+      if (achBgStars.length === 0) {
+        for (let i = 0; i < 200; i++) {
+          achBgStars.push({
+            x: Math.random(),
+            y: Math.random(),
+            r: Math.random() * 1.5 + 0.5,
+            phase: Math.random() * Math.PI * 2,
+            speed: Math.random() * 0.002 + 0.001,
+            color: Math.random() < 0.35 ? '#fde047' : Math.random() < 0.6 ? '#f59e0b' : Math.random() < 0.8 ? '#38bdf8' : '#ffffff'
+          });
+        }
+      }
+
+      if (!achFsEventsBound) {
+        achFsEventsBound = true;
+
+        window.addEventListener('resize', () => {
+          if (isAchievementsFullscreenOpen) {
+            const dpr = window.devicePixelRatio || 1;
+            const w = window.innerWidth;
+            const h = window.innerHeight;
+            bgCanvas.width = Math.floor(w * dpr);
+            bgCanvas.height = Math.floor(h * dpr);
+          }
+        });
+
+        window.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape') {
+            const modal = document.getElementById('achInspectModal');
+            if (modal && modal.style.display !== 'none') {
+              closeAchInspectModal();
+              return;
+            }
+            if (isAchievementsFullscreenOpen) {
+              closeAchievementsFullscreen();
+            }
+          }
+        });
+      }
+
+      if (!achBgAnimFrame) {
+        achBgAnimFrame = requestAnimationFrame(runAchievementsBgLoop);
+      }
+    }
+
+    function runAchievementsBgLoop(timestamp) {
+      if (!isAchievementsFullscreenOpen) {
+        achBgAnimFrame = null;
+        return;
+      }
+
+      const canvas = document.getElementById('achievementsBgCanvas');
+      if (canvas) {
+        const ctx = canvas.getContext('2d');
+        const w = canvas.width;
+        const h = canvas.height;
+        const dpr = window.devicePixelRatio || 1;
+        const now = timestamp || performance.now();
+
+        ctx.fillStyle = '#020409';
+        ctx.fillRect(0, 0, w, h);
+
+        // Ambient Golden & Violet Nebula Clouds
+        drawNebula(ctx, w * 0.5, h * 0.3, Math.min(w, h) * 0.5, 'rgba(245, 158, 11, 0.12)', now * 0.0003);
+        drawNebula(ctx, w * 0.25, h * 0.7, Math.min(w, h) * 0.45, 'rgba(168, 85, 247, 0.11)', now * 0.00025 + 1);
+        drawNebula(ctx, w * 0.8, h * 0.65, Math.min(w, h) * 0.45, 'rgba(56, 189, 248, 0.11)', now * 0.00025 + 2);
+
+        // Twinkling Starlight
+        for (let i = 0; i < achBgStars.length; i++) {
+          const s = achBgStars[i];
+          const sx = s.x * w;
+          const sy = s.y * h;
+          const alpha = 0.3 + 0.6 * Math.sin(now * s.speed + s.phase);
+
+          ctx.beginPath();
+          ctx.arc(sx, sy, s.r * dpr, 0, Math.PI * 2);
+          ctx.fillStyle = s.color;
+          ctx.globalAlpha = Math.max(0.1, alpha);
+          ctx.fill();
+        }
+        ctx.globalAlpha = 1.0;
+      }
+
+      achBgAnimFrame = requestAnimationFrame(runAchievementsBgLoop);
+    }
+
+    function renderAchievementsFullscreen() {
+      const grid = document.getElementById('achFsGrid');
+      if (!grid) return;
+      grid.innerHTML = '';
+
+      const totalCount = ACHIEVEMENTS_DATA.length;
+      let unlockedCount = 0;
+      let mythicCount = 0;
+      let mythicUnlocked = 0;
+      let rareCount = 0;
+      let rareUnlocked = 0;
+      let standardCount = 0;
+      let standardUnlocked = 0;
+
+      const catCounts = {
+        click: { total: 0, unl: 0 },
+        energy: { total: 0, unl: 0 },
+        fleet: { total: 0, unl: 0 },
+        prestige: { total: 0, unl: 0 },
+        tech: { total: 0, unl: 0 },
+        anom: { total: 0, unl: 0 },
+        secret: { total: 0, unl: 0 }
+      };
+
+      // Compute Stats across all achievements
+      ACHIEVEMENTS_DATA.forEach(ach => {
+        const isUnl = state.unlockedAchievements.includes(ach.id);
+        if (isUnl) unlockedCount++;
+
+        if (ach.rarity === 'mythic') {
+          mythicCount++;
+          if (isUnl) mythicUnlocked++;
+        } else if (ach.rarity === 'rare') {
+          rareCount++;
+          if (isUnl) rareUnlocked++;
+        } else {
+          standardCount++;
+          if (isUnl) standardUnlocked++;
+        }
+
+        if (catCounts[ach.cat]) {
+          catCounts[ach.cat].total++;
+          if (isUnl) catCounts[ach.cat].unl++;
+        }
+      });
+
+      // Update Header Badges
+      const countEl = document.getElementById('achFsUnlockedCount');
+      if (countEl) countEl.innerText = unlockedCount;
+      const pct = totalCount > 0 ? ((unlockedCount / totalCount) * 100).toFixed(1) : '0.0';
+      const pctEl = document.getElementById('achFsPctText');
+      if (pctEl) pctEl.innerText = `(${pct}%)`;
+      const bonusEl = document.getElementById('achFsBonusVal');
+      if (bonusEl) bonusEl.innerText = `+${unlockedCount}%`;
+      const fillEl = document.getElementById('achFsProgressFill');
+      if (fillEl) fillEl.style.width = `${pct}%`;
+
+      // Update Category Pill Counters
+      const catKeys = ['click', 'energy', 'fleet', 'prestige', 'tech', 'anom', 'secret'];
+      catKeys.forEach(k => {
+        const pillEl = document.getElementById(`achCatCnt${k.charAt(0).toUpperCase() + k.slice(1)}`);
+        if (pillEl && catCounts[k]) {
+          pillEl.innerText = `${catCounts[k].unl}/${catCounts[k].total}`;
+        }
+      });
+      const allPill = document.getElementById('achCatCntAll');
+      if (allPill) allPill.innerText = `${unlockedCount}/${totalCount}`;
+
+      // Update Quick Rarity Preset Counters
+      const elUnl = document.getElementById('achRarityCountUnlocked');
+      if (elUnl) elUnl.innerText = unlockedCount;
+      const elLck = document.getElementById('achRarityCountLocked');
+      if (elLck) elLck.innerText = totalCount - unlockedCount;
+      const elMyth = document.getElementById('achRarityCountMythic');
+      if (elMyth) elMyth.innerText = `${mythicUnlocked}/${mythicCount}`;
+      const elRare = document.getElementById('achRarityCountRare');
+      if (elRare) elRare.innerText = `${rareUnlocked}/${rareCount}`;
+      const elStd = document.getElementById('achRarityCountStandard');
+      if (elStd) elStd.innerText = `${standardUnlocked}/${standardCount}`;
+
+      // Filter for Grid Display
+      const filtered = ACHIEVEMENTS_DATA.filter(ach => {
+        const isUnl = state.unlockedAchievements.includes(ach.id);
+
+        // Search Query
+        if (achFsSearchQuery) {
+          const matchName = ach.name.toLowerCase().includes(achFsSearchQuery);
+          const matchDesc = ach.desc.toLowerCase().includes(achFsSearchQuery);
+          if (!matchName && !matchDesc) return false;
+        }
+
+        // Preset Status / Rarity Filter
+        if (achFsPresetFilter === 'unlocked' && !isUnl) return false;
+        if (achFsPresetFilter === 'locked' && isUnl) return false;
+        if (achFsPresetFilter === 'rarity_mythic' && ach.rarity !== 'mythic') return false;
+        if (achFsPresetFilter === 'rarity_rare' && ach.rarity !== 'rare') return false;
+        if (achFsPresetFilter === 'rarity_standard' && ach.rarity !== 'standard') return false;
+
+        // Category Filter
+        if (achFsCategoryFilter !== 'all' && ach.cat !== achFsCategoryFilter) return false;
+
+        return true;
+      });
+
+      if (filtered.length === 0) {
+        grid.innerHTML = `
+          <div style="grid-column:1/-1; text-align:center; padding:50px 20px; color:var(--text-muted);">
+            <div style="font-size:36px; margin-bottom:10px;">🔍</div>
+            <div style="font-size:15px; font-weight:800; color:#ffffff; margin-bottom:4px;">Niciun trofeu găsit</div>
+            <div style="font-size:12px;">Modifică termenul de căutare sau alege o altă categorie din bara de sus.</div>
+          </div>
+        `;
+        return;
+      }
+
+      // Render Cards
+      filtered.forEach(ach => {
+        const unlocked = state.unlockedAchievements.includes(ach.id);
+        const rarity = ach.rarity || 'standard';
+
+        let pillClass = 'pill-standard';
+        let pillLabel = `🥉 Standard (${ach.rarityPct || '80%'})`;
+        if (rarity === 'rare') {
+          pillClass = 'pill-rare';
+          pillLabel = `💎 Rară (${ach.rarityPct || '12%'})`;
+        } else if (rarity === 'mythic') {
+          pillClass = 'pill-mythic';
+          pillLabel = `👑 Mitică (${ach.rarityPct || '0.5%'})`;
+        }
+
+        const card = document.createElement('div');
+        card.className = `ach-trophy-card rarity-${rarity}` + (unlocked ? ' unlocked' : ' locked');
+        card.onclick = () => openAchInspectModal(ach.id);
+
+        card.innerHTML = `
+          <div class="ach-pedestal-avatar">
+            <span>${unlocked ? ach.icon : '🔒'}</span>
+          </div>
+          <div class="ach-pedestal-content">
+            <div class="ach-pedestal-top">
+              <span class="ach-pedestal-title" title="${ach.name}">${ach.name}</span>
+              <span class="ach-rarity-pill ${pillClass}">${pillLabel}</span>
+            </div>
+            <div class="ach-pedestal-desc">${ach.desc}</div>
+            <div class="ach-pedestal-footer">
+              <span style="color:var(--text-dim)">+1% Global Permanent</span>
+              <span class="ach-status-pill ${unlocked ? 'unlocked' : 'locked'}">
+                ${unlocked ? '✅ DEBLOCAT' : '🔒 BLOCAT'}
+              </span>
+            </div>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    function openAchInspectModal(achId) {
+      const ach = ACHIEVEMENTS_DATA.find(a => a.id === achId);
+      if (!ach) return;
+      inspectedAchId = achId;
+
+      const isUnl = state.unlockedAchievements.includes(ach.id);
+      const rarity = ach.rarity || 'standard';
+
+      const orb = document.getElementById('achInspectOrb');
+      const title = document.getElementById('achInspectTitle');
+      const rPill = document.getElementById('achInspectRarityPill');
+      const cPill = document.getElementById('achInspectCatPill');
+      const desc = document.getElementById('achInspectDesc');
+      const reward = document.getElementById('achInspectReward');
+      const modal = document.getElementById('achInspectModal');
+
+      if (orb) orb.innerText = isUnl ? ach.icon : '🔒';
+      if (title) title.innerText = ach.name;
+
+      let pillClass = 'pill-standard';
+      let pillLabel = `🥉 Standard (${ach.rarityPct || '80%'})`;
+      if (rarity === 'rare') {
+        pillClass = 'pill-rare';
+        pillLabel = `💎 Rară (${ach.rarityPct || '12%'})`;
+      } else if (rarity === 'mythic') {
+        pillClass = 'pill-mythic';
+        pillLabel = `👑 Mitică (${ach.rarityPct || '0.5%'})`;
+      }
+
+      if (rPill) {
+        rPill.className = `ach-rarity-pill ${pillClass}`;
+        rPill.innerText = pillLabel;
+      }
+
+      const catNames = {
+        click: '👆 Click & Crit',
+        energy: '⚡ Energie & CPS',
+        fleet: '🤖 Flotă & Roboți',
+        prestige: '🌀 Prestigiu & Materie',
+        tech: '🔬 Tehnologie & Abilități',
+        anom: '☄️ Anomalii & Astral',
+        secret: '⌚ Timp & Secrete'
+      };
+
+      if (cPill) {
+        cPill.innerText = catNames[ach.cat] || 'Cosmic';
+      }
+
+      if (desc) desc.innerText = ach.desc;
+      if (reward) {
+        reward.innerText = isUnl 
+          ? `⭐ Recompensă: +1% Multiplicator Global Permanent (Activ pe cont)` 
+          : `🔒 Cerință încă neîndeplinită. Când o finalizezi, primești garantat +1% Multiplicator permanent!`;
+        reward.style.color = isUnl ? '#38bdf8' : '#94a3b8';
+      }
+
+      if (modal) {
+        modal.style.display = 'flex';
+        playTone(720, 'triangle', 0.08, 0.08);
+      }
+    }
+
+    function closeAchInspectModal() {
+      const modal = document.getElementById('achInspectModal');
+      if (modal) modal.style.display = 'none';
+      inspectedAchId = null;
+    }
+
     function setAchievementFilter(filterMode, btnEl) {
       currentAchFilter = filterMode;
       if (btnEl && btnEl.parentElement) {
@@ -17419,50 +18888,51 @@
 
     function renderAchievements() {
       const container = document.getElementById('achievementsGrid');
-      container.innerHTML = '';
-
-      const filtered = ACHIEVEMENTS_DATA.filter(ach => {
-        const isUnl = state.unlockedAchievements.includes(ach.id);
-        if (currentAchFilter === 'unlocked') return isUnl;
-        if (currentAchFilter === 'locked') return !isUnl;
-        if (currentAchFilter === 'rarity_standard') return ach.rarity === 'standard';
-        if (currentAchFilter === 'rarity_rare') return ach.rarity === 'rare';
-        if (currentAchFilter === 'rarity_mythic') return ach.rarity === 'mythic';
-        if (currentAchFilter !== 'all') return ach.cat === currentAchFilter;
-        return true;
-      });
-
-      if (filtered.length === 0) {
-        container.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding:24px; color:var(--text-muted); font-size:13px;">Nicio realizare în acest filtru momentan.</div>`;
-      } else {
-        filtered.forEach(ach => {
-          const unlocked = state.unlockedAchievements.includes(ach.id);
-          const rarity = ach.rarity || 'standard';
-          const card = document.createElement('div');
-          card.className = `ach-card rarity-${rarity}` + (unlocked ? ' unlocked' : '');
-
-          let pillClass = 'pill-standard';
-          let pillLabel = `🥉 Standard (${ach.rarityPct || '80%'})`;
-          if (rarity === 'rare') {
-            pillClass = 'pill-rare';
-            pillLabel = `💎 Rară (${ach.rarityPct || '12%'})`;
-          } else if (rarity === 'mythic') {
-            pillClass = 'pill-mythic';
-            pillLabel = `👑 Mitică (${ach.rarityPct || '0.5%'})`;
-          }
-
-          card.innerHTML = `
-            <div class="ach-icon">${unlocked ? ach.icon : '🔒'}</div>
-            <div class="ach-info">
-              <div class="ach-top-row">
-                <span class="ach-title">${ach.name}</span>
-                <span class="ach-rarity-pill ${pillClass}">${pillLabel}</span>
-              </div>
-              <div class="ach-desc">${ach.desc}</div>
-            </div>
-          `;
-          container.appendChild(card);
+      if (container) {
+        container.innerHTML = '';
+        const filtered = ACHIEVEMENTS_DATA.filter(ach => {
+          const isUnl = state.unlockedAchievements.includes(ach.id);
+          if (currentAchFilter === 'unlocked') return isUnl;
+          if (currentAchFilter === 'locked') return !isUnl;
+          if (currentAchFilter === 'rarity_standard') return ach.rarity === 'standard';
+          if (currentAchFilter === 'rarity_rare') return ach.rarity === 'rare';
+          if (currentAchFilter === 'rarity_mythic') return ach.rarity === 'mythic';
+          if (currentAchFilter !== 'all') return ach.cat === currentAchFilter;
+          return true;
         });
+
+        if (filtered.length === 0) {
+          container.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding:24px; color:var(--text-muted); font-size:13px;">Nicio realizare în acest filtru momentan.</div>`;
+        } else {
+          filtered.forEach(ach => {
+            const unlocked = state.unlockedAchievements.includes(ach.id);
+            const rarity = ach.rarity || 'standard';
+            const card = document.createElement('div');
+            card.className = `ach-card rarity-${rarity}` + (unlocked ? ' unlocked' : '');
+
+            let pillClass = 'pill-standard';
+            let pillLabel = `🥉 Standard (${ach.rarityPct || '80%'})`;
+            if (rarity === 'rare') {
+              pillClass = 'pill-rare';
+              pillLabel = `💎 Rară (${ach.rarityPct || '12%'})`;
+            } else if (rarity === 'mythic') {
+              pillClass = 'pill-mythic';
+              pillLabel = `👑 Mitică (${ach.rarityPct || '0.5%'})`;
+            }
+
+            card.innerHTML = `
+              <div class="ach-icon">${unlocked ? ach.icon : '🔒'}</div>
+              <div class="ach-info">
+                <div class="ach-top-row">
+                  <span class="ach-title">${ach.name}</span>
+                  <span class="ach-rarity-pill ${pillClass}">${pillLabel}</span>
+                </div>
+                <div class="ach-desc">${ach.desc}</div>
+              </div>
+            `;
+            container.appendChild(card);
+          });
+        }
       }
 
       const unlockedCount = state.unlockedAchievements.length;
@@ -17471,7 +18941,24 @@
       if (achBadge) achBadge.innerText = `${unlockedCount}/${totalCount}`;
       const headerProg = document.getElementById('achHeaderProgress');
       if (headerProg) headerProg.innerText = `${unlockedCount} / ${totalCount}`;
-      document.getElementById('achBonusText').innerText = `+${unlockedCount}%`;
+      const bonusText = document.getElementById('achBonusText');
+      if (bonusText) bonusText.innerText = `+${unlockedCount}%`;
+
+      // Sync Tab Portal Stats
+      const portalAchCount = document.getElementById('portalAchCountVal');
+      if (portalAchCount) portalAchCount.innerText = `${unlockedCount} / ${totalCount}`;
+      const portalAchBonus = document.getElementById('portalAchBonusVal');
+      if (portalAchBonus) portalAchBonus.innerText = `+${unlockedCount}%`;
+      const portalAchMythic = document.getElementById('portalAchMythicVal');
+      if (portalAchMythic) {
+        const mythicUnlocked = ACHIEVEMENTS_DATA.filter(a => a.rarity === 'mythic' && state.unlockedAchievements.includes(a.id)).length;
+        const mythicTotal = ACHIEVEMENTS_DATA.filter(a => a.rarity === 'mythic').length;
+        portalAchMythic.innerText = `${mythicUnlocked} / ${mythicTotal}`;
+      }
+
+      if (isAchievementsFullscreenOpen) {
+        renderAchievementsFullscreen();
+      }
     }
 
     function renderStats() {
@@ -18001,6 +19488,10 @@
         if (selectedConstellationNodeId) selectInspectorNode(selectedConstellationNodeId);
       }
 
+      if (isAchievementsFullscreenOpen) {
+        renderAchievementsFullscreen();
+      }
+
       // Actualizare Cooldown-uri Abilități Active
       const now = Date.now();
       for (let i = 1; i <= 3; i++) {
@@ -18101,7 +19592,11 @@
         openConstellationFullscreen();
         return;
       }
-      if (tabName === 'achievements') renderAchievements();
+      if (tabName === 'achievements') {
+        renderAchievements();
+        openAchievementsFullscreen();
+        return;
+      }
       if (tabName === 'leaderboard') renderLeaderboardTab();
     }
 
@@ -18307,8 +19802,8 @@
      *       + AUTO-SYNC SILENȚIOS OFFLINE -> ONLINE + AUTO-UPDATE LIVE
      *       + NAVIGARE MOBIL & INSTALARE PWA (MACBOOK / PC / ANDROID / iOS)
      ********************************************************************/
-    const APP_VERSION = '3.7.0';
-    const APP_BUILD = 370;
+    const APP_VERSION = '3.8.0';
+    const APP_BUILD = 380;
     // URL-ul oficial de pe GitHub Pages pentru verificarea automată de Update (și în aplicațiile .exe / .dmg):
     const REMOTE_UPDATE_BASE_URL = 'https://mariusinfo.github.io/quantum-nexus';
 
