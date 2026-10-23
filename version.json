@@ -1,7 +1,7 @@
 {
-  "version": "3.3.1",
-  "build": 331,
+  "version": "3.3.2",
+  "build": 332,
   "releaseDate": "2026-10-23",
-  "changelog": "v3.3.1: Optimizare Extremă de Performanță (60-120 FPS pe telefoane mobile și PC) - Eliminare 100% layout reflows/thrashing, calcul pur matematic pentru orbita cursoarelor, throttling inteligent pentru magazin (120ms), eliminare software shadowBlur pe canvas, optimizare particule GPU hardware-accelerated și menținerea integrală a tuturor efectelor vizuale și skin-urilor de Tier 1-4.",
+  "changelog": "v3.3.2: Optimizare Extremă pentru telefoane Samsung (S21/S22/S23 120Hz) - Eliminare completă backdrop-filter blur, eliminare drop-shadow per-frame pe SVG nucleu, oprire canvas invizibil pe mobil, sincronizare impact mecanic cursoare fără idle loop, menținând toate skin-urile și nivelurile vizuale la 120 FPS fluid.",
   "autoApply": true
 }
