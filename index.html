@@ -8986,6 +8986,721 @@
       box-shadow: 0 0 35px rgba(56, 189, 248, 0.75);
     }
 
+    /* =========================================================================
+       LEADERBOARD FULLSCREEN & INTERSTELLAR PANTHEON (V3.9.4)
+       ========================================================================= */
+    .lb-warp-canvas {
+      position: fixed;
+      inset: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 9999999;
+      pointer-events: none;
+    }
+
+    .leaderboard-fullscreen {
+      position: fixed;
+      inset: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 999999;
+      background: #02020a;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      opacity: 0;
+      transition: opacity 0.4s ease;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
+    .leaderboard-fullscreen.active {
+      opacity: 1;
+    }
+
+    .lb-fs-bg-canvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .lb-fs-header {
+      position: relative;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 24px;
+      background: linear-gradient(180deg, rgba(3, 7, 18, 0.96) 0%, rgba(3, 7, 18, 0.8) 80%, transparent 100%);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(245, 158, 11, 0.3);
+      flex-shrink: 0;
+    }
+
+    .lb-fs-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-shrink: 0;
+    }
+
+    .lb-fs-crest {
+      position: relative;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 12px;
+      background: radial-gradient(circle, rgba(245, 158, 11, 0.35) 0%, rgba(15, 23, 42, 0.9) 100%);
+      border: 1px solid rgba(245, 158, 11, 0.7);
+      box-shadow: 0 0 20px rgba(245, 158, 11, 0.45);
+      font-size: 22px;
+    }
+
+    .lb-crest-halo {
+      position: absolute;
+      inset: -3px;
+      border-radius: 15px;
+      border: 1px solid rgba(245, 158, 11, 0.5);
+      animation: hudLivePulse 2.2s ease-in-out infinite;
+      pointer-events: none;
+    }
+
+    .lb-fs-titles {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .lb-fs-main-title {
+      font-size: 15px;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      background: linear-gradient(135deg, #ffffff 0%, #fde047 45%, #f59e0b 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      line-height: 1.2;
+    }
+
+    .lb-fs-sub-title {
+      font-family: var(--font-mono);
+      font-size: 9.5px;
+      font-weight: 700;
+      color: rgba(245, 158, 11, 0.75);
+      letter-spacing: 0.04em;
+    }
+
+    .lb-fs-stats-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .lb-fs-badge {
+      background: rgba(15, 23, 42, 0.88);
+      border: 1.5px solid rgba(245, 158, 11, 0.45);
+      padding: 5px 14px;
+      border-radius: 999px;
+      box-shadow: 0 0 16px rgba(245, 158, 11, 0.2);
+      font-family: var(--font-mono);
+      font-size: 11.5px;
+      font-weight: 800;
+      color: #e2e8f0;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .lb-btn-mini-profile {
+      background: rgba(245, 158, 11, 0.2);
+      border: 1px solid rgba(245, 158, 11, 0.5);
+      color: #fde047;
+      border-radius: 6px;
+      padding: 1px 6px;
+      font-size: 11px;
+      cursor: pointer;
+      margin-left: 4px;
+      transition: all 0.2s ease;
+    }
+
+    .lb-btn-mini-profile:hover {
+      background: rgba(245, 158, 11, 0.4);
+      transform: scale(1.1);
+    }
+
+    .lb-fs-right {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+
+    .lb-btn-refresh {
+      background: linear-gradient(135deg, rgba(245, 158, 11, 0.25), rgba(56, 189, 248, 0.25));
+      border: 1.5px solid rgba(245, 158, 11, 0.6);
+      color: #ffffff;
+      padding: 7px 14px;
+      border-radius: 999px;
+      font-size: 11.5px;
+      font-weight: 800;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 0 16px rgba(245, 158, 11, 0.25);
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .lb-btn-refresh:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 22px rgba(245, 158, 11, 0.55);
+      border-color: #fde047;
+    }
+
+    .lb-btn-refresh.refreshing .lb-refresh-icon {
+      animation: spinRefresh 0.8s linear infinite;
+    }
+
+    .lb-btn-close {
+      background: linear-gradient(135deg, rgba(245, 158, 11, 0.2), rgba(239, 68, 68, 0.2));
+      border: 1.5px solid rgba(245, 158, 11, 0.6);
+      color: #ffffff;
+      padding: 7px 16px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 800;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 0 16px rgba(245, 158, 11, 0.3);
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .lb-btn-close:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 24px rgba(245, 158, 11, 0.6);
+      border-color: #fde047;
+      background: linear-gradient(135deg, rgba(245, 158, 11, 0.35), rgba(239, 68, 68, 0.35));
+    }
+
+    /* Main Fullscreen Body */
+    .lb-fs-body {
+      position: relative;
+      z-index: 2;
+      flex: 1;
+      overflow-y: auto;
+      overflow-x: hidden;
+      scrollbar-gutter: stable;
+      scrollbar-width: thin;
+      padding: 14px 24px 30px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+      box-sizing: border-box;
+      max-width: 1140px;
+      width: 100%;
+      margin: 0 auto;
+    }
+
+    /* 1. Category Navigation */
+    .lb-fs-cat-nav {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      width: 100%;
+    }
+
+    .lb-fs-cat-btn {
+      background: rgba(15, 23, 42, 0.85);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: var(--text-muted);
+      padding: 7px 14px;
+      border-radius: 999px;
+      font-size: 11.5px;
+      font-weight: 800;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+      position: relative;
+      transform: translateZ(0);
+      will-change: transform, box-shadow;
+      white-space: nowrap;
+    }
+
+    .lb-fs-cat-btn * {
+      pointer-events: none;
+    }
+
+    .lb-fs-cat-btn::after {
+      content: '';
+      position: absolute;
+      inset: -4px;
+      z-index: 1;
+      pointer-events: auto;
+    }
+
+    .lb-fs-cat-btn:hover {
+      transform: translateY(-2px);
+      color: #ffffff;
+      border-color: rgba(245, 158, 11, 0.6);
+      box-shadow: 0 4px 14px rgba(245, 158, 11, 0.25);
+    }
+
+    .lb-fs-cat-btn.active {
+      background: linear-gradient(135deg, rgba(245, 158, 11, 0.35) 0%, rgba(217, 119, 6, 0.25) 100%);
+      border-color: #fde047;
+      color: #ffffff;
+      box-shadow: 0 0 20px rgba(245, 158, 11, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    }
+
+    /* 2. Personal Commander Status HUD */
+    .lb-fs-my-status-card {
+      width: 100%;
+      background: radial-gradient(circle at 50% 0%, rgba(245, 158, 11, 0.12) 0%, rgba(15, 23, 42, 0.95) 100%);
+      border: 1.5px solid rgba(245, 158, 11, 0.35);
+      border-radius: 14px;
+      padding: 12px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5), 0 0 20px rgba(245, 158, 11, 0.12);
+      backdrop-filter: blur(12px);
+      box-sizing: border-box;
+      flex-wrap: wrap;
+    }
+
+    .lb-my-hud-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 220px;
+    }
+
+    .lb-my-hud-avatar {
+      font-size: 26px;
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: rgba(245, 158, 11, 0.2);
+      border: 1px solid rgba(245, 158, 11, 0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 15px rgba(245, 158, 11, 0.3);
+    }
+
+    .lb-my-hud-tag {
+      font-family: var(--font-mono);
+      font-size: 9.5px;
+      font-weight: 800;
+      color: rgba(245, 158, 11, 0.8);
+      letter-spacing: 0.05em;
+    }
+
+    .lb-my-hud-title {
+      font-size: 14.5px;
+      font-weight: 900;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .lb-you-badge {
+      background: linear-gradient(135deg, #0284c7, #38bdf8);
+      color: #ffffff;
+      font-size: 9px;
+      font-weight: 900;
+      padding: 1px 6px;
+      border-radius: 4px;
+      letter-spacing: 0.04em;
+    }
+
+    .lb-my-hud-center {
+      text-align: center;
+    }
+
+    .lb-my-hud-rank-label {
+      font-size: 10px;
+      color: var(--text-muted);
+      margin-bottom: 2px;
+    }
+
+    .lb-my-hud-rank-val {
+      font-family: var(--font-mono);
+      font-size: 17px;
+      font-weight: 900;
+      color: #fde047;
+      text-shadow: 0 0 12px rgba(245, 158, 11, 0.5);
+    }
+
+    .lb-my-hud-right {
+      text-align: right;
+    }
+
+    .lb-my-hud-score-label {
+      font-size: 10px;
+      color: var(--text-muted);
+      margin-bottom: 2px;
+    }
+
+    .lb-my-hud-score-val {
+      font-family: var(--font-mono);
+      font-size: 17px;
+      font-weight: 900;
+      color: #38bdf8;
+      text-shadow: 0 0 12px rgba(56, 189, 248, 0.5);
+    }
+
+    .btn-lb-connect-cloud {
+      background: linear-gradient(135deg, #f59e0b 0%, #ea580c 100%);
+      color: #ffffff;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      padding: 9px 18px;
+      border-radius: 10px;
+      font-size: 12.5px;
+      font-weight: 800;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 0 20px rgba(245, 158, 11, 0.4);
+      transition: all 0.2s ease;
+    }
+
+    .btn-lb-connect-cloud:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 30px rgba(245, 158, 11, 0.7);
+    }
+
+    /* 3. The 3D Champions Podium */
+    .lb-fs-podium-wrap {
+      display: grid;
+      grid-template-columns: 1fr 1.15fr 1fr;
+      gap: 16px;
+      width: 100%;
+      align-items: flex-end;
+      margin: 4px 0 8px;
+    }
+
+    .lb-podium-card {
+      position: relative;
+      background: radial-gradient(circle at 50% 10%, rgba(15, 23, 42, 0.9) 0%, rgba(5, 7, 16, 0.98) 100%);
+      border-radius: 16px;
+      padding: 16px 14px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 8px;
+      box-shadow: 0 16px 35px rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(14px);
+      transition: all 0.25s ease;
+      box-sizing: border-box;
+      transform: translateZ(0);
+    }
+
+    .lb-podium-card:hover {
+      transform: translateY(-3px);
+    }
+
+    /* Rank 1: Gold Champion */
+    .lb-podium-card.podium-rank-1 {
+      border: 2px solid rgba(245, 158, 11, 0.75);
+      background: radial-gradient(circle at 50% 10%, rgba(245, 158, 11, 0.22) 0%, rgba(8, 12, 28, 0.98) 100%);
+      box-shadow: 0 20px 45px rgba(0, 0, 0, 0.8), 0 0 35px rgba(245, 158, 11, 0.35);
+      padding: 22px 16px;
+      z-index: 3;
+    }
+
+    /* Rank 2: Silver Titan */
+    .lb-podium-card.podium-rank-2 {
+      border: 1.5px solid rgba(203, 213, 225, 0.6);
+      background: radial-gradient(circle at 50% 10%, rgba(203, 213, 225, 0.15) 0%, rgba(6, 9, 22, 0.98) 100%);
+      box-shadow: 0 14px 30px rgba(0, 0, 0, 0.7), 0 0 25px rgba(148, 163, 184, 0.25);
+      z-index: 2;
+    }
+
+    /* Rank 3: Bronze Pioneer */
+    .lb-podium-card.podium-rank-3 {
+      border: 1.5px solid rgba(217, 119, 6, 0.6);
+      background: radial-gradient(circle at 50% 10%, rgba(217, 119, 6, 0.15) 0%, rgba(6, 9, 22, 0.98) 100%);
+      box-shadow: 0 14px 30px rgba(0, 0, 0, 0.7), 0 0 25px rgba(217, 119, 6, 0.25);
+      z-index: 2;
+    }
+
+    .lb-podium-crown {
+      position: absolute;
+      top: -18px;
+      font-size: 26px;
+      animation: floatOrbit 3.5s ease-in-out infinite;
+      filter: drop-shadow(0 0 12px rgba(245, 158, 11, 0.8));
+      pointer-events: none;
+    }
+
+    .lb-podium-avatar {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 26px;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      position: relative;
+    }
+
+    .podium-rank-1 .lb-podium-avatar {
+      width: 64px;
+      height: 64px;
+      font-size: 32px;
+      border-color: #fde047;
+      box-shadow: 0 0 25px rgba(245, 158, 11, 0.6);
+      background: radial-gradient(circle, rgba(245, 158, 11, 0.4), #0f172a);
+    }
+
+    .podium-rank-2 .lb-podium-avatar {
+      border-color: #cbd5e1;
+      box-shadow: 0 0 20px rgba(148, 163, 184, 0.5);
+      background: radial-gradient(circle, rgba(203, 213, 225, 0.3), #0f172a);
+    }
+
+    .podium-rank-3 .lb-podium-avatar {
+      border-color: #d97706;
+      box-shadow: 0 0 20px rgba(217, 119, 6, 0.5);
+      background: radial-gradient(circle, rgba(217, 119, 6, 0.3), #0f172a);
+    }
+
+    .lb-podium-rank-badge {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 900;
+      padding: 2px 10px;
+      border-radius: 999px;
+      letter-spacing: 0.04em;
+    }
+
+    .podium-rank-1 .lb-podium-rank-badge {
+      background: linear-gradient(135deg, #f59e0b, #d97706);
+      color: #ffffff;
+      box-shadow: 0 0 15px rgba(245, 158, 11, 0.5);
+    }
+
+    .podium-rank-2 .lb-podium-rank-badge {
+      background: linear-gradient(135deg, #94a3b8, #64748b);
+      color: #ffffff;
+      box-shadow: 0 0 15px rgba(148, 163, 184, 0.4);
+    }
+
+    .podium-rank-3 .lb-podium-rank-badge {
+      background: linear-gradient(135deg, #d97706, #78350f);
+      color: #ffffff;
+      box-shadow: 0 0 15px rgba(217, 119, 6, 0.4);
+    }
+
+    .lb-podium-name {
+      font-size: 14px;
+      font-weight: 800;
+      color: #ffffff;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 100%;
+    }
+
+    .podium-rank-1 .lb-podium-name {
+      font-size: 16px;
+      font-weight: 900;
+      color: #fde047;
+      text-shadow: 0 0 14px rgba(245, 158, 11, 0.5);
+    }
+
+    .lb-podium-score {
+      font-family: var(--font-mono);
+      font-size: 15px;
+      font-weight: 900;
+      color: #38bdf8;
+    }
+
+    .podium-rank-1 .lb-podium-score {
+      font-size: 17.5px;
+      color: #fde047;
+    }
+
+    /* 4. Roster Table: Ranks #4 to #50 */
+    .lb-fs-roster-container {
+      width: 100%;
+      background: rgba(10, 14, 26, 0.85);
+      border: 1.5px solid rgba(255, 255, 255, 0.1);
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 12px 35px rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(12px);
+      box-sizing: border-box;
+    }
+
+    .lb-fs-roster-header {
+      display: grid;
+      grid-template-columns: 70px 1fr 140px 160px;
+      padding: 10px 16px;
+      background: rgba(15, 23, 42, 0.95);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 800;
+      color: var(--text-muted);
+      letter-spacing: 0.05em;
+    }
+
+    .lb-fs-roster-list {
+      max-height: 380px;
+      overflow-y: auto;
+      scrollbar-gutter: stable;
+      scrollbar-width: thin;
+    }
+
+    .lb-roster-row {
+      display: grid;
+      grid-template-columns: 70px 1fr 140px 160px;
+      align-items: center;
+      padding: 10px 16px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      transition: background 0.18s ease;
+    }
+
+    .lb-roster-row:hover {
+      background: rgba(255, 255, 255, 0.04);
+    }
+
+    .lb-roster-row.is-me {
+      background: rgba(56, 189, 248, 0.12) !important;
+      border-color: rgba(56, 189, 248, 0.35);
+    }
+
+    .lb-col-rank {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 800;
+      color: #94a3b8;
+    }
+
+    .lb-col-player {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      font-weight: 700;
+      color: #ffffff;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .lb-col-bar {
+      display: flex;
+      align-items: center;
+    }
+
+    .lb-roster-bar-track {
+      width: 100%;
+      height: 6px;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .lb-roster-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #38bdf8, #f59e0b);
+      border-radius: 999px;
+      transition: width 0.3s ease;
+    }
+
+    .lb-col-score {
+      text-align: right;
+      font-family: var(--font-mono);
+      font-size: 13px;
+      font-weight: 800;
+      color: #38bdf8;
+    }
+
+    /* Tab Portal in Normal View */
+    .leaderboard-tab-portal {
+      position: relative;
+      background: radial-gradient(circle at 50% 20%, rgba(245, 158, 11, 0.18) 0%, rgba(15, 23, 42, 0.95) 85%);
+      border: 1.5px solid rgba(245, 158, 11, 0.45);
+      border-radius: 16px;
+      padding: 26px 22px;
+      text-align: center;
+      box-shadow: 0 14px 35px rgba(0, 0, 0, 0.6), 0 0 28px rgba(245, 158, 11, 0.2);
+      overflow: hidden;
+      margin-bottom: 16px;
+    }
+
+    .leaderboard-portal-glow {
+      position: absolute;
+      top: -60px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 240px;
+      height: 140px;
+      background: radial-gradient(circle, rgba(245, 158, 11, 0.45), transparent 70%);
+      pointer-events: none;
+      filter: blur(30px);
+    }
+
+    .leaderboard-portal-icon-box {
+      width: 68px;
+      height: 68px;
+      margin: 0 auto 14px;
+      border-radius: 18px;
+      background: radial-gradient(circle, rgba(245, 158, 11, 0.35) 0%, rgba(15, 23, 42, 0.9) 100%);
+      border: 1.5px solid rgba(245, 158, 11, 0.6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 34px;
+      box-shadow: 0 0 24px rgba(245, 158, 11, 0.45);
+      animation: floatOrbit 3.5s ease-in-out infinite;
+    }
+
+    .btn-portal-launch-lb {
+      background: linear-gradient(135deg, #d97706 0%, #f59e0b 50%, #38bdf8 100%);
+      color: #ffffff;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      padding: 12px 26px;
+      border-radius: 12px;
+      font-size: 13.5px;
+      font-weight: 800;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 0 25px rgba(245, 158, 11, 0.45);
+      transition: all 0.2s ease;
+      letter-spacing: 0.02em;
+    }
+
+    .btn-portal-launch-lb:hover {
+      transform: translateY(-2px) scale(1.02);
+      box-shadow: 0 0 35px rgba(245, 158, 11, 0.75);
+    }
+
     @media (max-width: 900px) {
       .pres-fs-header {
         flex-direction: column;
@@ -9443,7 +10158,7 @@
       <!-- Subtitlu & Versiune Sistem -->
       <div class="loading-footer-tip">
         <span class="loading-pulse-dot"></span>
-        <span id="loadingVersionSub">Simulare Multiversală v3.9.3 // Auto-Stabilizare Activă</span>
+        <span id="loadingVersionSub">Simulare Multiversală v3.9.4 // Auto-Stabilizare Activă</span>
       </div>
 
       <!-- Hint discret dacă browserul a reținut temporar autoplay înainte de primul gest -->
@@ -9461,7 +10176,7 @@
         <div class="brand-icon">⚛️</div>
         <div>
           <div class="brand-title">QUANTUM NEXUS</div>
-          <div class="brand-sub" id="versionHeaderSub">v3.9.3</div>
+          <div class="brand-sub" id="versionHeaderSub">v3.9.4</div>
         </div>
         <div class="fps-meter-badge fps-high" id="fpsMeterBadge" onclick="showFpsInfo()" title="Monitorizare Cadre pe Secundă (FPS în timp real) - Click pentru detalii">
           <span class="fps-dot"></span>
@@ -9815,63 +10530,52 @@
             </div>
           </div>
 
-          <!-- TAB 3.5: Global Leaderboard (Doar pentru Cont Conectat) -->
+          <!-- TAB 3.5: Global Leaderboard (Portal Clasament Global Interstelar Fullscreen) -->
           <div class="tab-pane" id="tab-leaderboard">
-            <div class="section-header">
-              <div class="section-title">🏅 Clasament Global Interstelar (Top 50)</div>
-              <div class="section-subtitle">Exclusiv pentru Comandanții autentificați în Quantum Cloud</div>
+            <div class="leaderboard-tab-portal">
+              <div class="leaderboard-portal-glow"></div>
+              <div class="leaderboard-portal-icon-box">
+                <span class="leaderboard-portal-icon">🏅</span>
+              </div>
+              <div class="constellation-portal-title">Panteonul Interstelar // Clasament Global (Top 50)</div>
+              <div class="constellation-portal-desc">
+                Pășește în Panteonul Interstelar pe ecran complet! Concurează cu comandanții din întreaga galaxie în toate cele 7 categorii cosmice, urcă pe podiumul campionilor și urmărește recordurile în timp real.
+              </div>
+
+              <div class="constellation-portal-stats">
+                <div class="c-portal-stat-box">
+                  <span class="c-portal-stat-label">👨‍🚀 Nume Comandant</span>
+                  <span class="c-portal-stat-val" id="portalLbNameVal">Comandant</span>
+                </div>
+                <div class="c-portal-stat-box">
+                  <span class="c-portal-stat-label">☁️ Status Cloud</span>
+                  <span class="c-portal-stat-val" id="portalLbCloudVal" style="color:var(--accent-emerald);">Activ</span>
+                </div>
+                <div class="c-portal-stat-box">
+                  <span class="c-portal-stat-label">🏆 Categorii de Top</span>
+                  <span class="c-portal-stat-val" id="portalLbCatVal">7 Categorii</span>
+                </div>
+              </div>
+
+              <div style="display:flex; justify-content:center; margin-top:20px;">
+                <button class="btn-portal-launch-lb" onclick="openLeaderboardFullscreen()">
+                  <span>🚀 Deschide Panteonul Interstelar (Ecran Complet)</span>
+                  <span class="portal-btn-arrow">➔</span>
+                </button>
+              </div>
             </div>
 
-            <!-- Ecran blocat pentru cei fără cont conectat -->
-            <div id="lbLockedState" class="lb-locked-box">
-              <div style="font-size:42px; margin-bottom:10px;">🔒</div>
-              <div style="font-size:18px; font-weight:800; color:#fff; margin-bottom:8px;">
-                Clasamentul Global este rezervat Comandanților cu Cont Conectat!
-              </div>
-              <div style="font-size:13px; color:var(--text-muted); max-width:460px; margin:0 auto 18px; line-height:1.5;">
-                Pentru a preveni scorurile false și a-ți salva automat recordurile în toate cele <strong>7 categorii globale</strong> (Energie, Materie Întunecată, Singularități, CPS, Click-uri, Anomalii și Realizări), conectează-te gratuit la contul tău Cloud.
-              </div>
-              <button class="btn-prestige" onclick="openCloudModal()">
-                ☁️ Conectează-te / Creează Cont Cloud
-              </button>
-            </div>
-
-            <!-- Ecran activ pentru cei cu cont conectat -->
-            <div id="lbUnlockedState" style="display:none;">
-              <div class="lb-profile-bar">
-                <div style="display:flex; align-items:center; gap:10px; flex:1; min-width:220px; flex-wrap:wrap;">
-                  <span style="font-size:12px; font-weight:700; color:var(--text-muted);">👨‍🚀 Comandant în Top:</span>
-                  <strong id="lbCommanderNameDisplay" style="color:#ffffff; font-size:13.5px; font-family:var(--font-mono);">Comandant</strong>
-                  <button class="btn-header" onclick="openSocialModal(); switchSocialSubnav('profile');" style="padding:4px 9px; font-size:11px;" title="Modifică numele și titlul în Profilul Social">
-                    ✏️ Modifică în Profil Social
-                  </button>
-                </div>
-                <div style="display:flex; align-items:center; gap:8px;">
-                  <button class="btn-header" onclick="refreshLeaderboard(true)">🔄 Actualizează Topul</button>
-                </div>
-              </div>
-
-              <!-- Cele 7 Categorii de Clasament -->
-              <div class="lb-cat-bar" id="lbCategoryButtons">
-                <button class="lb-cat-btn active" onclick="selectLeaderboardCategory('lifetime_energy', this)">⚡ Energie Totală</button>
-                <button class="lb-cat-btn" onclick="selectLeaderboardCategory('dark_matter', this)">🔮 Materie Întunecată</button>
-                <button class="lb-cat-btn" onclick="selectLeaderboardCategory('prestige_count', this)">🌌 Singularități (Rebirth)</button>
-                <button class="lb-cat-btn" onclick="selectLeaderboardCategory('max_cps', this)">🚀 Record CPS (/sec)</button>
-                <button class="lb-cat-btn" onclick="selectLeaderboardCategory('total_clicks', this)">👆 Click-uri Manuale</button>
-                <button class="lb-cat-btn" onclick="selectLeaderboardCategory('anomalies_caught', this)">☄️ Anomalii Aurii</button>
-                <button class="lb-cat-btn" onclick="selectLeaderboardCategory('achievements_count', this)">🏆 Realizări</button>
-              </div>
-
-              <div id="lbMyRankBanner" style="background:rgba(56,189,248,0.1); border:1px solid rgba(56,189,248,0.3); border-radius:10px; padding:10px 14px; margin-bottom:12px; font-size:12.5px; display:flex; justify-content:space-between; align-items:center;">
-                <span id="lbMyRankText">Poziția ta în această categorie: <strong>Se încarcă...</strong></span>
-                <span id="lbMyScoreText" style="font-family:var(--font-mono); font-weight:800; color:var(--accent-cyan);"></span>
-              </div>
-
-              <div class="lb-list" id="leaderboardListContainer">
-                <div style="text-align:center; padding:24px; color:var(--text-muted); font-size:13px;">
-                  ⏳ Se încarcă clasamentul din satelit...
-                </div>
-              </div>
+            <!-- Fallback elements for backwards JS compatibility -->
+            <div style="display:none;" aria-hidden="true">
+              <div id="lbLockedState"></div>
+              <div id="lbUnlockedState"></div>
+              <div id="lbCommanderNameDisplay"></div>
+              <div id="lbCommanderAvatarDisplay"></div>
+              <div id="lbCategoryButtons"></div>
+              <div id="lbMyRankBanner"></div>
+              <div id="lbMyRankText"></div>
+              <div id="lbMyScoreText"></div>
+              <div id="leaderboardListContainer"></div>
             </div>
           </div>
 
@@ -10393,6 +11097,90 @@
     </div>
   </div>
 
+  <!-- =========================================================================
+       LEADERBOARD WARP CANVAS & FULLSCREEN INTERSTELLAR PANTHEON (V3.9.4)
+       ========================================================================= -->
+  <canvas id="leaderboardWarpCanvas" class="lb-warp-canvas" style="display:none;"></canvas>
+
+  <div id="leaderboardFullscreen" class="leaderboard-fullscreen" style="display:none;">
+    <!-- Deep Spatial Nebula & Coordinate Grid Canvas -->
+    <canvas id="leaderboardBgCanvas" class="lb-fs-bg-canvas"></canvas>
+
+    <!-- Top Galactic Header -->
+    <header class="lb-fs-header">
+      <div class="lb-fs-brand">
+        <div class="lb-fs-crest">
+          <span>🏅</span>
+          <div class="lb-crest-halo"></div>
+        </div>
+        <div class="lb-fs-titles">
+          <div class="lb-fs-main-title">PANTEONUL INTERSTELAR // CLASAMENT GLOBAL</div>
+          <div class="lb-fs-sub-title">TOP 50 COMANDANȚI COSMICI // 7 CATEGORII COMPETITIVE // SIMULARE MULTIVERSALĂ</div>
+        </div>
+      </div>
+
+      <div class="lb-fs-stats-row">
+        <div class="lb-fs-badge" id="lbFsActiveCategoryBadge" title="Categoria activă în clasament">
+          <span>⚡</span>
+          <span>Categorie:</span>
+          <strong id="lbFsCurCategoryName" style="color:#fde047;">Energie Totală</strong>
+        </div>
+        <div class="lb-fs-badge" id="lbFsCommanderBadge" title="Statusul tău de Comandant în rețeaua Quantum Cloud">
+          <span id="lbFsCommanderAvatar">👨‍🚀</span>
+          <strong id="lbFsCommanderName">Comandant</strong>
+          <button class="lb-btn-mini-profile" onclick="openSocialModal(); switchSocialSubnav('profile');" title="Editează Numele & Avatarul în Profil">✏️</button>
+        </div>
+        <div class="lb-fs-badge" title="Comandanți înregistrați în baza de date cosmică">
+          <span>🌌</span>
+          <span>Jucători:</span>
+          <strong id="lbFsTotalPlayersCount" style="color:#38bdf8;">Top 50</strong>
+        </div>
+      </div>
+
+      <div class="lb-fs-right">
+        <button class="lb-btn-refresh" id="btnLbFsRefresh" onclick="refreshLeaderboard(true)" title="Actualizează clasamentul din serverul Cloud">
+          <span class="lb-refresh-icon">🔄</span>
+          <span>Actualizează</span>
+        </button>
+        <button class="lb-btn-close" onclick="closeLeaderboardFullscreen()" title="Închide Clasamentul și revino la joc (Tasta Esc)">
+          <span>✖</span>
+          <span>Înapoi la Nucleu</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Fullscreen Body -->
+    <div class="lb-fs-body" id="lbFsBody">
+      <!-- 1. The 7 Competitive Categories Selector Bar -->
+      <div class="lb-fs-cat-nav" id="lbFsCategoryNav">
+        <!-- Rendered dynamically -->
+      </div>
+
+      <!-- 2. Personal Commander Rank Banner (Shows user's rank & score) -->
+      <div class="lb-fs-my-status-card" id="lbFsMyStatusCard">
+        <!-- Rendered dynamically -->
+      </div>
+
+      <!-- 3. Spatial 3D Podium for Top 3 Champions -->
+      <div class="lb-fs-podium-wrap" id="lbFsPodiumWrap">
+        <!-- Rendered dynamically: #2 (Left), #1 (Center, Elevated), #3 (Right) -->
+      </div>
+
+      <!-- 4. Roster Table: Ranks #4 to #50 -->
+      <div class="lb-fs-roster-container">
+        <div class="lb-fs-roster-header">
+          <span class="lb-col-rank">RANG</span>
+          <span class="lb-col-player">COMANDANT INTERSTELAR</span>
+          <span class="lb-col-bar">PROPORȚIE TOP</span>
+          <span class="lb-col-score">SCOR ÎNREGISTRAT</span>
+        </div>
+        <div class="lb-fs-roster-list" id="lbFsRosterList">
+          <!-- Roster rows generated dynamically -->
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div class="modal-backdrop" id="coreSkinsModal" onclick="if(event.target===this) closeCoreSkinsModal()">
     <div class="modal-card wide" style="max-width: 680px; text-align: left;">
       <div class="modal-header-row">
@@ -10505,7 +11293,7 @@
           <button class="btn-header install-btn" id="btnInstallApp" onclick="triggerInstallApp()">📲 Instalează</button>
         </div>
         <div style="font-size: 11px; color: var(--text-dim); margin-top: 8px;">
-          Versiune instalată: <strong id="settingsVersionText">v3.9.3</strong> // Auto-Update activ
+          Versiune instalată: <strong id="settingsVersionText">v3.9.4</strong> // Auto-Update activ
         </div>
       </div>
 
@@ -21650,6 +22438,21 @@
         portalAchMythic.innerText = `${mythicUnlocked} / ${mythicTotal}`;
       }
 
+      // Sync Leaderboard Tab Portal Stats
+      const portalLbName = document.getElementById('portalLbNameVal');
+      if (portalLbName) portalLbName.innerText = getCommanderDisplayName();
+      const portalLbCloud = document.getElementById('portalLbCloudVal');
+      if (portalLbCloud) {
+        const isCloudLog = Boolean(isFirebaseConfigured() && cloudSession && (cloudSession.access_token || cloudSession.refresh_token) && cloudSession.user);
+        if (isCloudLog) {
+          portalLbCloud.innerText = 'Conectat';
+          portalLbCloud.style.color = 'var(--accent-emerald)';
+        } else {
+          portalLbCloud.innerText = 'Cont Local';
+          portalLbCloud.style.color = '#fde047';
+        }
+      }
+
       if (isAchievementsFullscreenOpen) {
         updateAchievementsFullscreenHeader();
       }
@@ -22507,8 +23310,8 @@
      *       + AUTO-SYNC SILENȚIOS OFFLINE -> ONLINE + AUTO-UPDATE LIVE
      *       + NAVIGARE MOBIL & INSTALARE PWA (MACBOOK / PC / ANDROID / iOS)
      ********************************************************************/
-    const APP_VERSION = '3.9.3';
-    const APP_BUILD = 393;
+    const APP_VERSION = '3.9.4';
+    const APP_BUILD = 394;
     // URL-ul oficial de pe GitHub Pages pentru verificarea automată de Update (și în aplicațiile .exe / .dmg):
     const REMOTE_UPDATE_BASE_URL = 'https://mariusinfo.github.io/quantum-nexus';
 
@@ -23620,30 +24423,31 @@
 
     let currentLbCategory = 'lifetime_energy';
 
+    // =========================================================================
+    // V3.9.4: PANTEONUL INTERSTELAR (FULLSCREEN LEADERBOARD & COSMIC WARP)
+    // =========================================================================
+    let isLeaderboardFullscreenOpen = false;
+    let lbBgAnimFrame = null;
+    let lbWarpAnimFrameId = null;
+    const lbBgStars = [];
+    let cachedLeaderboardRows = null;
+    let lbEventsBound = false;
+
     function renderLeaderboardTab() {
+      const nameEl = document.getElementById('portalLbNameVal');
+      if (nameEl) nameEl.innerText = getCommanderDisplayName();
+
+      const cloudEl = document.getElementById('portalLbCloudVal');
       const loggedIn = Boolean(isFirebaseConfigured() && cloudSession && (cloudSession.access_token || cloudSession.refresh_token) && cloudSession.user);
-      const lockedBox = document.getElementById('lbLockedState');
-      const unlockedBox = document.getElementById('lbUnlockedState');
-
-      if (!loggedIn) {
-        lockedBox.style.display = 'block';
-        unlockedBox.style.display = 'none';
-        return;
+      if (cloudEl) {
+        if (loggedIn) {
+          cloudEl.innerText = 'Conectat';
+          cloudEl.style.color = 'var(--accent-emerald)';
+        } else {
+          cloudEl.innerText = 'Cont Local';
+          cloudEl.style.color = '#fde047';
+        }
       }
-
-      lockedBox.style.display = 'none';
-      unlockedBox.style.display = 'block';
-
-      const nameDisplay = document.getElementById('lbCommanderNameDisplay');
-      if (nameDisplay) {
-        nameDisplay.innerText = getCommanderDisplayName();
-      }
-      const avatarDisplay = document.getElementById('lbCommanderAvatarDisplay');
-      if (avatarDisplay) {
-        avatarDisplay.innerText = (state.social && state.social.avatar) || '👨‍🚀';
-      }
-
-      refreshLeaderboard(false);
     }
 
     function openSocialProfileEditor() {
@@ -23651,11 +24455,503 @@
       switchSocialSubnav('profile');
     }
 
+    function playLeaderboardWarpSound(direction = 'enter') {
+      if (!state.soundEnabled) return;
+      try {
+        if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        if (audioCtx.state === 'suspended') audioCtx.resume();
+        const now = audioCtx.currentTime;
+
+        if (direction === 'enter') {
+          // Glorious interstellar swell & chord (F3, A3, C4, E4)
+          const freqs = [174.61, 220.00, 261.63, 329.63, 523.25];
+          freqs.forEach((f, idx) => {
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.type = idx === 0 ? 'sine' : 'triangle';
+            const st = now + idx * 0.04;
+            osc.frequency.setValueAtTime(f * 0.8, st);
+            osc.frequency.exponentialRampToValueAtTime(f, st + 0.35);
+            gain.gain.setValueAtTime(0.001, st);
+            gain.gain.linearRampToValueAtTime(0.08 / freqs.length, st + 0.12);
+            gain.gain.exponentialRampToValueAtTime(0.001, st + 0.6);
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.start(st);
+            osc.stop(st + 0.6);
+          });
+        } else {
+          // Exit whoosh
+          const osc = audioCtx.createOscillator();
+          const gain = audioCtx.createGain();
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(280, now);
+          osc.frequency.exponentialRampToValueAtTime(60, now + 0.32);
+          gain.gain.setValueAtTime(0.12, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.34);
+          osc.connect(gain);
+          gain.connect(audioCtx.destination);
+          osc.start(now);
+          osc.stop(now + 0.34);
+        }
+      } catch (e) {}
+    }
+
+    function playLeaderboardCategorySound() {
+      if (!state.soundEnabled) return;
+      try {
+        if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        if (audioCtx.state === 'suspended') audioCtx.resume();
+        const now = audioCtx.currentTime;
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(523.25, now);
+        osc.frequency.exponentialRampToValueAtTime(783.99, now + 0.18);
+        gain.gain.setValueAtTime(0.1, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.2);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start(now);
+        osc.stop(now + 0.2);
+      } catch (e) {}
+    }
+
+    function runLeaderboardFullscreenWarp(duration = 700, onComplete) {
+      const canvas = document.getElementById('leaderboardWarpCanvas');
+      if (!canvas) {
+        if (onComplete) onComplete();
+        return;
+      }
+      const dpr = window.devicePixelRatio || 1;
+      const w = window.innerWidth;
+      const h = window.innerHeight;
+      canvas.width = Math.floor(w * dpr);
+      canvas.height = Math.floor(h * dpr);
+      const ctx = canvas.getContext('2d');
+
+      canvas.style.display = 'block';
+      canvas.style.opacity = '1';
+
+      const particleCount = 360;
+      const particles = [];
+      const colors = ['#f59e0b', '#fde047', '#38bdf8', '#ffffff', '#e0f2fe', '#d97706'];
+      for (let i = 0; i < particleCount; i++) {
+        particles.push({
+          x: (Math.random() - 0.5) * w * 2.2,
+          y: (Math.random() - 0.5) * h * 2.2,
+          z: Math.random() * 1500 + 100,
+          pz: 1600,
+          color: colors[i % colors.length],
+          size: Math.random() * 2.4 + 0.8
+        });
+      }
+
+      const startTime = performance.now();
+
+      function stepWarp(now) {
+        const elapsed = now - startTime;
+        const progress = Math.min(1, elapsed / duration);
+
+        ctx.save();
+        ctx.scale(dpr, dpr);
+        ctx.fillStyle = 'rgba(2, 2, 10, 0.28)';
+        ctx.fillRect(0, 0, w, h);
+
+        const cx = w / 2;
+        const cy = h / 2;
+        const speed = 25 + progress * 55;
+
+        particles.forEach(p => {
+          p.pz = p.z;
+          p.z -= speed;
+          if (p.z <= 0) {
+            p.z = 1500;
+            p.pz = 1500;
+            p.x = (Math.random() - 0.5) * w * 2.2;
+            p.y = (Math.random() - 0.5) * h * 2.2;
+          }
+
+          const k = 400 / p.z;
+          const px = p.x * k + cx;
+          const py = p.y * k + cy;
+
+          const pk = 400 / p.pz;
+          const ppx = p.x * pk + cx;
+          const ppy = p.y * pk + cy;
+
+          ctx.beginPath();
+          ctx.moveTo(ppx, ppy);
+          ctx.lineTo(px, py);
+          ctx.strokeStyle = p.color;
+          ctx.lineWidth = Math.min(4, p.size * k * 0.8);
+          ctx.lineCap = 'round';
+          ctx.stroke();
+        });
+
+        // Peak Flash
+        if (progress > 0.35 && progress < 0.7) {
+          const flashAlpha = Math.sin(((progress - 0.35) / 0.35) * Math.PI) * 0.7;
+          ctx.fillStyle = '#f59e0b';
+          ctx.globalAlpha = flashAlpha * 0.4;
+          ctx.fillRect(0, 0, w, h);
+          ctx.globalAlpha = 1.0;
+        }
+
+        ctx.restore();
+
+        if (progress < 1) {
+          lbWarpAnimFrameId = requestAnimationFrame(stepWarp);
+        } else {
+          canvas.style.transition = 'opacity 0.25s ease';
+          canvas.style.opacity = '0';
+          setTimeout(() => {
+            canvas.style.display = 'none';
+            canvas.style.transition = '';
+            if (onComplete) onComplete();
+          }, 250);
+        }
+      }
+
+      lbWarpAnimFrameId = requestAnimationFrame(stepWarp);
+    }
+
+    function openLeaderboardFullscreen() {
+      if (isLeaderboardFullscreenOpen) return;
+      isLeaderboardFullscreenOpen = true;
+
+      playLeaderboardWarpSound('enter');
+
+      const appShell = document.querySelector('.app-shell');
+      if (appShell) appShell.classList.add('app-shell-warp-out');
+
+      runLeaderboardFullscreenWarp(700, () => {});
+
+      setTimeout(() => {
+        const fsEl = document.getElementById('leaderboardFullscreen');
+        if (fsEl) {
+          fsEl.style.display = 'flex';
+          void fsEl.offsetWidth;
+          fsEl.classList.add('active');
+        }
+        initLeaderboardFullscreen();
+        refreshLeaderboard(false);
+      }, 420);
+    }
+
+    function closeLeaderboardFullscreen() {
+      if (!isLeaderboardFullscreenOpen) return;
+      isLeaderboardFullscreenOpen = false;
+
+      playLeaderboardWarpSound('exit');
+
+      const fsEl = document.getElementById('leaderboardFullscreen');
+      if (fsEl) {
+        fsEl.classList.remove('active');
+      }
+
+      const appShell = document.querySelector('.app-shell');
+      if (appShell) {
+        appShell.classList.remove('app-shell-warp-out');
+      }
+
+      setTimeout(() => {
+        if (fsEl && !isLeaderboardFullscreenOpen) {
+          fsEl.style.display = 'none';
+        }
+        if (lbBgAnimFrame) {
+          cancelAnimationFrame(lbBgAnimFrame);
+          lbBgAnimFrame = null;
+        }
+      }, 380);
+    }
+
+    function initLeaderboardFullscreen() {
+      const bgCanvas = document.getElementById('leaderboardBgCanvas');
+      if (!bgCanvas) return;
+
+      const dpr = window.devicePixelRatio || 1;
+      const w = window.innerWidth;
+      const h = window.innerHeight;
+      bgCanvas.width = Math.floor(w * dpr);
+      bgCanvas.height = Math.floor(h * dpr);
+
+      if (lbBgStars.length === 0) {
+        const count = 160;
+        const colors = ['#f59e0b', '#fde047', '#38bdf8', '#ffffff', '#e0f2fe', '#cbd5e1'];
+        for (let i = 0; i < count; i++) {
+          lbBgStars.push({
+            x: Math.random() * w,
+            y: Math.random() * h,
+            r: Math.random() * 1.8 + 0.4,
+            baseAlpha: Math.random() * 0.6 + 0.2,
+            twinkleSpeed: Math.random() * 0.003 + 0.001,
+            phase: Math.random() * Math.PI * 2,
+            color: colors[i % colors.length]
+          });
+        }
+      }
+
+      if (!lbEventsBound) {
+        lbEventsBound = true;
+        window.addEventListener('resize', () => {
+          if (isLeaderboardFullscreenOpen && bgCanvas) {
+            const curDpr = window.devicePixelRatio || 1;
+            bgCanvas.width = Math.floor(window.innerWidth * curDpr);
+            bgCanvas.height = Math.floor(window.innerHeight * curDpr);
+          }
+        });
+      }
+
+      if (!lbBgAnimFrame) {
+        lbBgAnimFrame = requestAnimationFrame(runLeaderboardBgLoop);
+      }
+    }
+
+    function runLeaderboardBgLoop(timestamp) {
+      if (!isLeaderboardFullscreenOpen) {
+        lbBgAnimFrame = null;
+        return;
+      }
+
+      const canvas = document.getElementById('leaderboardBgCanvas');
+      if (canvas) {
+        const ctx = canvas.getContext('2d');
+        const w = canvas.width;
+        const h = canvas.height;
+        const dpr = window.devicePixelRatio || 1;
+
+        ctx.fillStyle = '#02020a';
+        ctx.fillRect(0, 0, w, h);
+
+        const cx = w / 2;
+        const cy = h / 2;
+
+        // 1. Ambient Golden-Cyan Cosmic Nebula
+        const grad = ctx.createRadialGradient(cx, cy * 0.4, 0, cx, cy * 0.4, Math.max(w, h) * 0.6);
+        grad.addColorStop(0, 'rgba(245, 158, 11, 0.08)');
+        grad.addColorStop(0.5, 'rgba(56, 189, 248, 0.04)');
+        grad.addColorStop(1, 'rgba(2, 2, 10, 0)');
+        ctx.fillStyle = grad;
+        ctx.fillRect(0, 0, w, h);
+
+        // 2. Stars
+        lbBgStars.forEach(s => {
+          const alpha = s.baseAlpha + Math.sin(timestamp * s.twinkleSpeed + s.phase) * 0.25;
+          ctx.beginPath();
+          ctx.arc(s.x * dpr, s.y * dpr, s.r * dpr, 0, Math.PI * 2);
+          ctx.fillStyle = s.color;
+          ctx.globalAlpha = Math.max(0.1, alpha);
+          ctx.fill();
+        });
+        ctx.globalAlpha = 1.0;
+      }
+
+      lbBgAnimFrame = requestAnimationFrame(runLeaderboardBgLoop);
+    }
+
+    function renderLeaderboardFullscreen(allRows = null) {
+      if (!isLeaderboardFullscreenOpen) return;
+
+      const loggedIn = Boolean(isFirebaseConfigured() && cloudSession && (cloudSession.access_token || cloudSession.refresh_token) && cloudSession.user);
+      const cat = LEADERBOARD_CATEGORIES[currentLbCategory] || LEADERBOARD_CATEGORIES.lifetime_energy;
+
+      // 1. Update Header Badges
+      const catBadge = document.getElementById('lbFsCurCategoryName');
+      if (catBadge) catBadge.innerText = cat.label;
+
+      const cmdName = document.getElementById('lbFsCommanderName');
+      if (cmdName) cmdName.innerText = getCommanderDisplayName();
+
+      const cmdAvatar = document.getElementById('lbFsCommanderAvatar');
+      if (cmdAvatar) cmdAvatar.innerText = (state.social && state.social.avatar) || '👨‍🚀';
+
+      const totalCountEl = document.getElementById('lbFsTotalPlayersCount');
+      if (totalCountEl) totalCountEl.innerText = allRows ? `${allRows.length} Comandanți` : 'Top 50';
+
+      // 2. Render Categories Navigation Bar
+      const catNav = document.getElementById('lbFsCategoryNav');
+      if (catNav) {
+        catNav.innerHTML = Object.entries(LEADERBOARD_CATEGORIES).map(([k, c]) => {
+          const isActive = k === currentLbCategory;
+          return `
+            <button class="lb-fs-cat-btn ${isActive ? 'active' : ''}" onclick="selectLeaderboardCategory('${k}')">
+              <span>${c.label}</span>
+            </button>
+          `;
+        }).join('');
+      }
+
+      // 3. Render Personal Commander Status Card
+      const myCard = document.getElementById('lbFsMyStatusCard');
+      if (myCard) {
+        const myUid = loggedIn ? cloudSession.user.id : null;
+        let myRank = null;
+        let myScoreFormatted = cat.format(cat.localVal());
+
+        if (loggedIn && allRows) {
+          const myFullIndex = allRows.findIndex(r => r.user_id === myUid);
+          myRank = myFullIndex >= 0 ? myFullIndex + 1 : null;
+          if (myRank) {
+            const rowScore = Number(allRows[myFullIndex][currentLbCategory] || 0);
+            myScoreFormatted = cat.format(rowScore);
+          }
+        }
+
+        if (loggedIn) {
+          myCard.innerHTML = `
+            <div class="lb-my-hud-left">
+              <div class="lb-my-hud-avatar">${(state.social && state.social.avatar) || '👨‍🚀'}</div>
+              <div>
+                <div class="lb-my-hud-tag">STATUS COMANDANT CONECTAT // QUANTUM CLOUD</div>
+                <div class="lb-my-hud-title">${getCommanderDisplayName()} <span class="lb-you-badge">TU</span></div>
+              </div>
+            </div>
+            <div class="lb-my-hud-center">
+              <div class="lb-my-hud-rank-label">POZIȚIA TA ÎN GALAXIE</div>
+              <div class="lb-my-hud-rank-val">${myRank ? 'Locul #' + myRank : 'În afara Top 50'}</div>
+            </div>
+            <div class="lb-my-hud-right">
+              <div class="lb-my-hud-score-label">SCORUL TĂU ÎNREGISTRAT</div>
+              <div class="lb-my-hud-score-val">${myScoreFormatted}</div>
+            </div>
+          `;
+        } else {
+          myCard.innerHTML = `
+            <div class="lb-my-hud-left">
+              <div class="lb-my-hud-avatar">🔒</div>
+              <div>
+                <div class="lb-my-hud-title" style="color:#fde047;">Mod Vizitator Local (Scorurile tale nu sunt în Top)</div>
+                <div style="font-size:11.5px; color:var(--text-muted); line-height:1.4; margin-top:2px;">
+                  Conectează-te gratuit la Quantum Cloud pentru a-ți publica recordurile în Panteonul Interstelar și a concura cu toți comandanții!
+                </div>
+              </div>
+            </div>
+            <div class="lb-my-hud-right">
+              <button class="btn-lb-connect-cloud" onclick="openCloudModal()">
+                <span>☁️ Conectează-te Gratuit</span>
+              </button>
+            </div>
+          `;
+        }
+      }
+
+      // If no data rows yet
+      const podiumWrap = document.getElementById('lbFsPodiumWrap');
+      const rosterList = document.getElementById('lbFsRosterList');
+
+      if (!allRows || allRows.length === 0) {
+        if (podiumWrap) {
+          podiumWrap.innerHTML = `
+            <div style="grid-column: 1 / -1; text-align:center; padding:30px; color:var(--text-muted); font-size:13px;">
+              ⏳ Se sincronizează datele din satelit pentru categoria <strong>${cat.label}</strong>...
+            </div>
+          `;
+        }
+        if (rosterList) {
+          rosterList.innerHTML = `
+            <div style="text-align:center; padding:24px; color:var(--text-muted); font-size:12.5px;">
+              Așteaptă un moment...
+            </div>
+          `;
+        }
+        return;
+      }
+
+      // 4. Render 3D Champions Podium (#2 Left, #1 Center Elevated, #3 Right)
+      if (podiumWrap) {
+        const top1 = allRows[0] || null;
+        const top2 = allRows[1] || null;
+        const top3 = allRows[2] || null;
+        const myUid = loggedIn ? cloudSession.user.id : null;
+
+        function renderPodiumCard(row, rank, rankClass, title, defaultIcon) {
+          if (!row) {
+            return `
+              <div class="lb-podium-card ${rankClass}">
+                <div class="lb-podium-avatar" style="opacity:0.4;">${defaultIcon}</div>
+                <div class="lb-podium-rank-badge">#${rank}</div>
+                <div class="lb-podium-name" style="color:var(--text-muted);">Loc Vacant</div>
+                <div class="lb-podium-score" style="color:var(--text-dim);">-</div>
+              </div>
+            `;
+          }
+
+          const isMe = myUid && row.user_id === myUid;
+          const safeName = (row.commander_name || 'Comandant').replace(/[<>&"']/g, '');
+          const scoreVal = Number(row[currentLbCategory] || 0);
+          const avatar = (row.social && row.social.avatar) || (rank === 1 ? '👑' : (rank === 2 ? '🥈' : '🥉'));
+
+          return `
+            <div class="lb-podium-card ${rankClass} ${isMe ? 'is-me' : ''}">
+              ${rank === 1 ? '<div class="lb-podium-crown">👑</div>' : ''}
+              <div class="lb-podium-avatar">${avatar}</div>
+              <div class="lb-podium-rank-badge">#${rank} ${title}</div>
+              <div class="lb-podium-name">${safeName} ${isMe ? '<span class="lb-you-badge">TU</span>' : ''}</div>
+              <div class="lb-podium-score">${cat.format(scoreVal)}</div>
+            </div>
+          `;
+        }
+
+        podiumWrap.innerHTML = `
+          ${renderPodiumCard(top2, 2, 'podium-rank-2', 'TITAN STELAR', '🥈')}
+          ${renderPodiumCard(top1, 1, 'podium-rank-1', 'CAMPION SUPREM', '👑')}
+          ${renderPodiumCard(top3, 3, 'podium-rank-3', 'PIONIER CUANTIC', '🥉')}
+        `;
+      }
+
+      // 5. Render Roster Table (#4 to #50)
+      if (rosterList) {
+        const rosterRows = allRows.slice(3, 50);
+        const myUid = loggedIn ? cloudSession.user.id : null;
+        const top1Score = Number(allRows[0][currentLbCategory] || 1);
+
+        if (rosterRows.length === 0) {
+          rosterList.innerHTML = `
+            <div style="text-align:center; padding:24px; color:var(--text-muted); font-size:12.5px;">
+              Toți comandanții din această categorie sunt afișați pe podiumul de onoare!
+            </div>
+          `;
+        } else {
+          rosterList.innerHTML = rosterRows.map((row, idx) => {
+            const rank = idx + 4;
+            const isMe = myUid && row.user_id === myUid;
+            const safeName = (row.commander_name || 'Comandant').replace(/[<>&"']/g, '');
+            const scoreVal = Number(row[currentLbCategory] || 0);
+            const avatar = (row.social && row.social.avatar) || '👨‍🚀';
+            const barPct = top1Score > 0 ? Math.min(100, Math.max(3, (scoreVal / top1Score) * 100)) : 10;
+
+            return `
+              <div class="lb-roster-row ${isMe ? 'is-me' : ''}">
+                <div class="lb-col-rank">#${rank}</div>
+                <div class="lb-col-player">
+                  <span style="font-size:16px;">${avatar}</span>
+                  <span>${safeName}</span>
+                  ${isMe ? '<span class="lb-you-badge">TU</span>' : ''}
+                </div>
+                <div class="lb-col-bar">
+                  <div class="lb-roster-bar-track">
+                    <div class="lb-roster-bar-fill" style="width:${barPct.toFixed(1)}%;"></div>
+                  </div>
+                </div>
+                <div class="lb-col-score">${cat.format(scoreVal)}</div>
+              </div>
+            `;
+          }).join('');
+        }
+      }
+    }
+
     function selectLeaderboardCategory(catKey, btnEl) {
       if (!LEADERBOARD_CATEGORIES[catKey]) return;
       currentLbCategory = catKey;
-      document.querySelectorAll('#lbCategoryButtons .lb-cat-btn').forEach(b => b.classList.remove('active'));
-      if (btnEl) btnEl.classList.add('active');
+      playLeaderboardCategorySound();
+
+      if (cachedLeaderboardRows && cachedLeaderboardRows.length > 0) {
+        cachedLeaderboardRows.sort((a, b) => Number(b[currentLbCategory] || 0) - Number(a[currentLbCategory] || 0));
+        renderLeaderboardFullscreen(cachedLeaderboardRows);
+      }
+
       refreshLeaderboard(false);
     }
 
@@ -23679,23 +24975,30 @@
 
     async function refreshLeaderboard(manualToast = false) {
       const loggedIn = Boolean(isFirebaseConfigured() && cloudSession && (cloudSession.access_token || cloudSession.refresh_token) && cloudSession.user);
+      const cat = LEADERBOARD_CATEGORIES[currentLbCategory] || LEADERBOARD_CATEGORIES.lifetime_energy;
+
+      const refreshBtn = document.getElementById('btnLbFsRefresh');
+      if (refreshBtn) refreshBtn.classList.add('refreshing');
+
       if (!loggedIn) {
         renderLeaderboardTab();
+        renderLeaderboardFullscreen(null);
+        if (refreshBtn) refreshBtn.classList.remove('refreshing');
         return;
       }
 
       const listEl = document.getElementById('leaderboardListContainer');
       const myRankEl = document.getElementById('lbMyRankText');
       const myScoreEl = document.getElementById('lbMyScoreText');
-      const cat = LEADERBOARD_CATEGORIES[currentLbCategory];
 
       if (!navigator.onLine) {
-        listEl.innerHTML = `<div style="text-align:center; padding:24px; color:var(--accent-gold); font-size:13px;">📴 Ești în Mod Offline. Clasamentul se va încărca automat imediat ce pornești internetul!</div>`;
+        if (listEl) listEl.innerHTML = `<div style="text-align:center; padding:24px; color:var(--accent-gold); font-size:13px;">📴 Ești în Mod Offline. Clasamentul se va încărca automat imediat ce pornești internetul!</div>`;
+        if (refreshBtn) refreshBtn.classList.remove('refreshing');
+        renderLeaderboardFullscreen(null);
         return;
       }
 
       try {
-        // Sincronizăm mai întâi scorul actual al jucătorului conectat
         await cloudPushSave(false);
 
         let res = await fetch(`${firebaseConfig.databaseURL}/leaderboard.json?auth=${encodeURIComponent(cloudSession.access_token)}`);
@@ -23713,42 +25016,39 @@
         const rawObj = await res.json();
         const allRows = rawObj ? Object.values(rawObj).filter(r => r && typeof r === 'object') : [];
 
-        if (allRows.length === 0) {
-          listEl.innerHTML = `<div style="text-align:center; padding:24px; color:var(--text-muted); font-size:13px;">Niciun scor înregistrat încă în această categorie. Ești primul Comandant!</div>`;
-          return;
-        }
-
-        // Sortăm descrescător după categoria selectată
+        // Sort descrescător după categoria selectată
         allRows.sort((a, b) => Number(b[currentLbCategory] || 0) - Number(a[currentLbCategory] || 0));
+        cachedLeaderboardRows = allRows;
 
         const myUid = cloudSession.user.id;
         const myFullIndex = allRows.findIndex(r => r.user_id === myUid);
         const myRank = myFullIndex >= 0 ? myFullIndex + 1 : null;
         const topRows = allRows.slice(0, 50);
 
-        listEl.innerHTML = topRows.map((row, idx) => {
-          const rank = idx + 1;
-          const isMe = row.user_id === myUid;
+        if (listEl) {
+          listEl.innerHTML = topRows.map((row, idx) => {
+            const rank = idx + 1;
+            const isMe = row.user_id === myUid;
+            const topClass = rank === 1 ? ' top-1' : rank === 2 ? ' top-2' : rank === 3 ? ' top-3' : '';
+            const meClass = isMe ? ' me' : '';
+            const medal = rank === 1 ? '🥇' : rank === 2 ? '🥈' : rank === 3 ? '🥉' : `#${rank}`;
+            const safeName = (row.commander_name || 'Comandant').replace(/[<>&"']/g, '');
+            const scoreVal = Number(row[currentLbCategory] || 0);
 
-          const topClass = rank === 1 ? ' top-1' : rank === 2 ? ' top-2' : rank === 3 ? ' top-3' : '';
-          const meClass = isMe ? ' me' : '';
-          const medal = rank === 1 ? '🥇' : rank === 2 ? '🥈' : rank === 3 ? '🥉' : `#${rank}`;
-          const safeName = (row.commander_name || 'Comandant').replace(/[<>&"']/g, '');
-          const scoreVal = Number(row[currentLbCategory] || 0);
-
-          return `
-            <div class="lb-row${topClass}${meClass}">
-              <div class="lb-left">
-                <div class="lb-rank">${medal}</div>
-                <div class="lb-name">
-                  ${safeName}
-                  ${isMe ? '<span class="lb-you-tag">TU</span>' : ''}
+            return `
+              <div class="lb-row${topClass}${meClass}">
+                <div class="lb-left">
+                  <div class="lb-rank">${medal}</div>
+                  <div class="lb-name">
+                    ${safeName}
+                    ${isMe ? '<span class="lb-you-tag">TU</span>' : ''}
+                  </div>
                 </div>
+                <div class="lb-score">${cat.format(scoreVal)}</div>
               </div>
-              <div class="lb-score">${cat.format(scoreVal)}</div>
-            </div>
-          `;
-        }).join('');
+            `;
+          }).join('');
+        }
 
         if (myRankEl) {
           myRankEl.innerHTML = myRank
@@ -23759,11 +25059,16 @@
           myScoreEl.innerText = cat.format(cat.localVal());
         }
 
+        // Render in Fullscreen Pantheon
+        renderLeaderboardFullscreen(allRows);
+
         if (manualToast) {
           showToast(`🏅 Clasamentul (${cat.label}) a fost actualizat!`);
         }
       } catch (err) {
-        listEl.innerHTML = `<div style="text-align:center; padding:20px; color:#fcd34d; font-size:12.5px;">⚠️ ${err.message}</div>`;
+        if (listEl) listEl.innerHTML = `<div style="text-align:center; padding:20px; color:#fcd34d; font-size:12.5px;">⚠️ ${err.message}</div>`;
+      } finally {
+        if (refreshBtn) refreshBtn.classList.remove('refreshing');
       }
     }
 
@@ -24115,6 +25420,10 @@
         const achModal = document.getElementById('achInspectModal');
         if (achModal && achModal.style.display !== 'none') {
           closeAchInspectModal();
+          return;
+        }
+        if (isLeaderboardFullscreenOpen) {
+          closeLeaderboardFullscreen();
           return;
         }
         if (isOmniverseFullscreenOpen) {

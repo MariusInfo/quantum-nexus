@@ -1,7 +1,7 @@
 {
-  "version": "3.9.3",
-  "build": 393,
+  "version": "3.9.4",
+  "build": 394,
   "releaseDate": "2026-10-23",
-  "changelog": "v3.9.3: Curățare completă a nucleelor din pagina principală (administrare exclusiv în Omnivers Fullscreen), salt dimensional cinematografic cu teleportare în reactorul principal și explozie nova la comutare + calibrare anti-jitter/fără spasme pe ecranul dedicat.",
+  "changelog": "v3.9.4: Panteonul Interstelar - Clasament Global dedicat pe Ecran Complet (Fullscreen Leaderboard) cu warp hiperspațial, podium 3D pentru Top 3 campioni, navigație rapidă pe cele 7 categorii cosmice, HUD de status personal pentru comandant și listă fluidă Top 50 fără spasme.",
   "autoApply": true
 }
