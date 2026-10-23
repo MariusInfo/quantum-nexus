@@ -6070,7 +6070,7 @@
       <!-- Subtitlu & Versiune Sistem -->
       <div class="loading-footer-tip">
         <span class="loading-pulse-dot"></span>
-        <span>Simulare Multiversală v3.2.0 // Auto-Stabilizare Activă</span>
+        <span id="loadingVersionSub">Simulare Multiversală v3.3.1 // Auto-Stabilizare Activă</span>
       </div>
 
       <!-- Hint discret dacă browserul a reținut temporar autoplay înainte de primul gest -->
@@ -6088,7 +6088,7 @@
         <div class="brand-icon">⚛️</div>
         <div>
           <div class="brand-title">QUANTUM NEXUS</div>
-          <div class="brand-sub" id="versionHeaderSub">v3.2.0</div>
+          <div class="brand-sub" id="versionHeaderSub">v3.3.1</div>
         </div>
       </div>
 
@@ -6694,7 +6694,7 @@
           <button class="btn-header install-btn" id="btnInstallApp" onclick="triggerInstallApp()">📲 Instalează</button>
         </div>
         <div style="font-size: 11px; color: var(--text-dim); margin-top: 8px;">
-          Versiune instalată: <strong id="settingsVersionText">v3.2.0</strong> // Auto-Update activ
+          Versiune instalată: <strong id="settingsVersionText">v3.3.1</strong> // Auto-Update activ
         </div>
       </div>
 
@@ -13188,7 +13188,7 @@
             { label: 'Seria Zilelor Consecutice', val: `${state.dailyStreak || 1} zile` },
             { label: 'Ultima Salvare Locală', val: state.lastSaved ? new Date(state.lastSaved).toLocaleTimeString('ro-RO') : 'Niciodată' },
             { label: 'Sincronizare Cloud Firebase', val: (cloudSession && (cloudSession.access_token || cloudSession.refresh_token)) ? '🟢 Conectat & Sincronizat' : '⚪ Nelogat (Doar Salvare Locală)' },
-            { label: 'Versiune Simulare Cuantică', val: 'v3.2.0 (Build 320)' }
+            { label: 'Versiune Simulare Cuantică', val: `v${APP_VERSION} (Build ${APP_BUILD})` }
           ]
         }
       ];
@@ -13974,6 +13974,8 @@
       if (document.getElementById('btnSound')) {
         document.getElementById('btnSound').innerText = state.soundEnabled ? '🔊 Sunet: ON' : '🔇 Sunet: OFF';
       }
+      const setVer = document.getElementById('settingsVersionText');
+      if (setVer) setVer.innerText = `v${APP_VERSION}`;
       updateCloudUI();
       const modal = document.getElementById('settingsModal');
       if (modal) modal.classList.add('open');
@@ -15537,6 +15539,9 @@
           : 'Bun venit în Singularitate, Comandant!';
       }
 
+      const loadVer = document.getElementById('loadingVersionSub');
+      if (loadVer) loadVer.innerText = `Simulare Multiversală v${APP_VERSION} // Auto-Stabilizare Activă`;
+
       // Inițializare particule/stele cosmice pe fundal
       const canvas = document.getElementById('loadingStarsCanvas');
       let animFrameId = null;
@@ -15689,6 +15694,10 @@
 
       const verSub = document.getElementById('versionHeaderSub');
       if (verSub) verSub.innerText = `v${APP_VERSION}`;
+      const setVer = document.getElementById('settingsVersionText');
+      if (setVer) setVer.innerText = `v${APP_VERSION}`;
+      const loadVerInit = document.getElementById('loadingVersionSub');
+      if (loadVerInit) loadVerInit.innerText = `Simulare Multiversală v${APP_VERSION} // Auto-Stabilizare Activă`;
 
       // Înregistrare Service Worker pentru rulare 100% Offline + Auto-Update
       if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost' || location.hostname === '127.0.0.1')) {
