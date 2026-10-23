@@ -1,7 +1,7 @@
 {
-  "version": "3.9.4",
-  "build": 394,
-  "releaseDate": "2026-10-23",
-  "changelog": "v3.9.4: Panteonul Interstelar - Clasament Global dedicat pe Ecran Complet (Fullscreen Leaderboard) cu warp hiperspațial, podium 3D pentru Top 3 campioni, navigație rapidă pe cele 7 categorii cosmice, HUD de status personal pentru comandant și listă fluidă Top 50 fără spasme.",
+  "version": "3.9.5",
+  "build": 395,
+  "releaseDate": "2026-10-24",
+  "changelog": "v3.9.5: Telemetrie & Observator Cuantic dedicat pe Ecran Complet (Fullscreen Statistics & Telemetry Observatory) cu warp hiperspațial, osciloscop cuantic audio-vizual în timp real, 8 panouri telemetrice HUD, raport clipboard instant, eliminare globală a etichetei redundante [Ecran Complet] și rezolvare bug reîncărcare automată furtuni radar pe refresh.",
   "autoApply": true
 }

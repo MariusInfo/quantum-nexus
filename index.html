@@ -10097,7 +10097,544 @@
       box-shadow: 0 0 12px rgba(253, 224, 71, 0.6);
       transform: scale(1.1);
     }
-  </style>
+
+    /* =========================================================================
+       STATISTICS FULLSCREEN & QUANTUM TELEMETRY OBSERVATORY (V3.9.5)
+       ========================================================================= */
+    .stats-warp-canvas {
+      position: fixed;
+      inset: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 9999999;
+      pointer-events: none;
+    }
+
+    .stats-fullscreen {
+      position: fixed;
+      inset: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 999999;
+      background: #020617;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      opacity: 0;
+      transition: opacity 0.4s ease;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
+    .stats-fullscreen.active {
+      opacity: 1;
+    }
+
+    .stats-fs-bg-canvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .stats-fs-header {
+      position: relative;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 24px;
+      background: linear-gradient(180deg, rgba(2, 6, 23, 0.96) 0%, rgba(2, 6, 23, 0.85) 80%, transparent 100%);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(14, 165, 233, 0.35);
+      flex-shrink: 0;
+    }
+
+    .stats-fs-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-shrink: 0;
+    }
+
+    .stats-fs-crest {
+      position: relative;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 12px;
+      background: radial-gradient(circle, rgba(14, 165, 233, 0.35) 0%, rgba(15, 23, 42, 0.9) 100%);
+      border: 1px solid rgba(14, 165, 233, 0.7);
+      box-shadow: 0 0 20px rgba(14, 165, 233, 0.45);
+      font-size: 22px;
+    }
+
+    .stats-crest-halo {
+      position: absolute;
+      inset: -3px;
+      border-radius: 15px;
+      border: 1px solid rgba(16, 185, 129, 0.5);
+      animation: hudLivePulse 2.2s ease-in-out infinite;
+      pointer-events: none;
+    }
+
+    .stats-fs-titles {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .stats-fs-main-title {
+      font-size: 15px;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      background: linear-gradient(135deg, #ffffff 0%, #38bdf8 45%, #10b981 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      line-height: 1.2;
+    }
+
+    .stats-fs-sub-title {
+      font-family: var(--font-mono);
+      font-size: 9.5px;
+      font-weight: 700;
+      color: rgba(56, 189, 248, 0.85);
+      letter-spacing: 0.04em;
+    }
+
+    .stats-fs-stats-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .stats-fs-badge {
+      background: rgba(15, 23, 42, 0.88);
+      border: 1.5px solid rgba(56, 189, 248, 0.45);
+      padding: 5px 14px;
+      border-radius: 999px;
+      box-shadow: 0 0 16px rgba(56, 189, 248, 0.2);
+      font-family: var(--font-mono);
+      font-size: 11.5px;
+      font-weight: 800;
+      color: #e2e8f0;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .stats-fs-right {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+
+    .stats-btn-action {
+      background: linear-gradient(135deg, rgba(14, 165, 233, 0.25), rgba(16, 185, 129, 0.25));
+      border: 1.5px solid rgba(56, 189, 248, 0.6);
+      color: #ffffff;
+      padding: 7px 14px;
+      border-radius: 999px;
+      font-size: 11.5px;
+      font-weight: 800;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+      letter-spacing: 0.02em;
+    }
+
+    .stats-btn-action:hover {
+      background: linear-gradient(135deg, rgba(14, 165, 233, 0.45), rgba(16, 185, 129, 0.45));
+      border-color: #38bdf8;
+      box-shadow: 0 0 18px rgba(56, 189, 248, 0.5);
+    }
+
+    .stats-btn-close {
+      background: rgba(239, 68, 68, 0.15);
+      border: 1.5px solid rgba(239, 68, 68, 0.65);
+      color: #fca5a5;
+      padding: 7px 15px;
+      border-radius: 999px;
+      font-size: 11.5px;
+      font-weight: 800;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+      box-shadow: 0 0 16px rgba(239, 68, 68, 0.25);
+    }
+
+    .stats-btn-close:hover {
+      background: rgba(239, 68, 68, 0.35);
+      color: #ffffff;
+      border-color: #ef4444;
+      box-shadow: 0 0 25px rgba(239, 68, 68, 0.6);
+    }
+
+    .stats-fs-body {
+      position: relative;
+      z-index: 10;
+      flex: 1;
+      overflow-y: auto;
+      overflow-x: hidden;
+      padding: 18px 24px 60px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      scrollbar-gutter: stable;
+    }
+
+    .stats-fs-body::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    .stats-fs-body::-webkit-scrollbar-track {
+      background: rgba(3, 7, 18, 0.7);
+    }
+
+    .stats-fs-body::-webkit-scrollbar-thumb {
+      background: rgba(56, 189, 248, 0.4);
+      border-radius: 999px;
+    }
+
+    .stats-fs-body::-webkit-scrollbar-thumb:hover {
+      background: rgba(56, 189, 248, 0.7);
+    }
+
+    .stats-fs-hero-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 12px;
+      width: 100%;
+    }
+
+    .stats-hero-card {
+      background: rgba(15, 23, 42, 0.78);
+      border: 1px solid rgba(56, 189, 248, 0.35);
+      border-radius: 14px;
+      padding: 14px 18px;
+      position: relative;
+      overflow: hidden;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .stats-hero-card:hover {
+      border-color: rgba(56, 189, 248, 0.65);
+      box-shadow: 0 6px 24px rgba(56, 189, 248, 0.25);
+    }
+
+    .stats-hero-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, #0ea5e9, #10b981, #38bdf8);
+    }
+
+    .stats-hero-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 11px;
+      font-weight: 700;
+      color: rgba(148, 163, 184, 0.9);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .stats-hero-val {
+      font-size: 20px;
+      font-weight: 900;
+      color: #38bdf8;
+      font-family: var(--font-mono);
+      text-shadow: 0 0 12px rgba(56, 189, 248, 0.4);
+      line-height: 1.2;
+    }
+
+    .stats-hero-sub {
+      font-size: 11px;
+      color: #94a3b8;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .stats-fs-cat-nav {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      overflow-x: auto;
+      padding-bottom: 4px;
+      flex-shrink: 0;
+      scrollbar-width: none;
+    }
+
+    .stats-fs-cat-nav::-webkit-scrollbar {
+      display: none;
+    }
+
+    .stats-cat-tab-btn {
+      background: rgba(15, 23, 42, 0.8);
+      border: 1px solid rgba(56, 189, 248, 0.25);
+      color: #94a3b8;
+      padding: 7px 15px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 800;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      white-space: nowrap;
+      transition: all 0.2s ease;
+    }
+
+    .stats-cat-tab-btn span {
+      pointer-events: none;
+    }
+
+    .stats-cat-tab-btn:hover {
+      color: #ffffff;
+      border-color: rgba(56, 189, 248, 0.6);
+      background: rgba(15, 23, 42, 0.95);
+    }
+
+    .stats-cat-tab-btn.active {
+      background: linear-gradient(135deg, rgba(14, 165, 233, 0.3), rgba(16, 185, 129, 0.3));
+      border-color: #38bdf8;
+      color: #ffffff;
+      box-shadow: 0 0 16px rgba(56, 189, 248, 0.35);
+    }
+
+    .stats-fs-panels-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(420px, 1fr));
+      gap: 16px;
+      width: 100%;
+    }
+
+    .stats-telemetry-panel {
+      background: rgba(15, 23, 42, 0.82);
+      border: 1.5px solid rgba(56, 189, 248, 0.25);
+      border-radius: 14px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .stats-telemetry-panel:hover {
+      border-color: rgba(56, 189, 248, 0.55);
+      box-shadow: 0 8px 30px rgba(56, 189, 248, 0.18);
+    }
+
+    .stats-panel-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid rgba(56, 189, 248, 0.2);
+      padding-bottom: 10px;
+    }
+
+    .stats-panel-title-wrap {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .stats-panel-icon {
+      font-size: 18px;
+    }
+
+    .stats-panel-title {
+      font-size: 13.5px;
+      font-weight: 800;
+      color: #f1f5f9;
+      letter-spacing: 0.02em;
+    }
+
+    .stats-panel-badge {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 700;
+      color: #38bdf8;
+      background: rgba(56, 189, 248, 0.12);
+      border: 1px solid rgba(56, 189, 248, 0.35);
+      padding: 2px 8px;
+      border-radius: 999px;
+    }
+
+    .stats-panel-rows {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .stats-telemetry-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 10px;
+      background: rgba(3, 7, 18, 0.55);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 8px;
+      gap: 12px;
+      transition: background 0.15s ease, border-color 0.15s ease;
+    }
+
+    .stats-telemetry-row:hover {
+      background: rgba(30, 41, 59, 0.7);
+      border-color: rgba(56, 189, 248, 0.3);
+    }
+
+    .stats-row-label {
+      font-size: 12px;
+      color: #94a3b8;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      pointer-events: none;
+    }
+
+    .stats-row-label::before {
+      content: '▪';
+      color: #0ea5e9;
+      font-size: 10px;
+    }
+
+    .stats-row-val {
+      font-family: var(--font-mono);
+      font-size: 12.5px;
+      font-weight: 800;
+      color: #e2e8f0;
+      text-align: right;
+      white-space: nowrap;
+      pointer-events: none;
+    }
+
+    .stats-row-val.highlight-cyan {
+      color: #38bdf8;
+      text-shadow: 0 0 10px rgba(56, 189, 248, 0.4);
+    }
+
+    .stats-row-val.highlight-gold {
+      color: #fde047;
+      text-shadow: 0 0 10px rgba(253, 224, 71, 0.4);
+    }
+
+    .stats-row-val.highlight-green {
+      color: #4ade80;
+      text-shadow: 0 0 10px rgba(74, 222, 128, 0.4);
+    }
+
+    .stats-row-val.highlight-purple {
+      color: #c084fc;
+      text-shadow: 0 0 10px rgba(192, 132, 252, 0.4);
+    }
+
+    /* Portal Tab Card in Tab 4 */
+    .stats-tab-portal {
+      position: relative;
+      background: radial-gradient(circle at 50% 20%, rgba(14, 165, 233, 0.18) 0%, rgba(15, 23, 42, 0.95) 85%);
+      border: 1.5px solid rgba(14, 165, 233, 0.45);
+      border-radius: 16px;
+      padding: 26px 22px;
+      text-align: center;
+      box-shadow: 0 14px 35px rgba(0, 0, 0, 0.6), 0 0 28px rgba(14, 165, 233, 0.2);
+      overflow: hidden;
+      margin-bottom: 16px;
+    }
+
+    .stats-portal-glow {
+      position: absolute;
+      top: -60px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 240px;
+      height: 140px;
+      background: radial-gradient(circle, rgba(14, 165, 233, 0.45), transparent 70%);
+      pointer-events: none;
+      filter: blur(30px);
+    }
+
+    .stats-portal-icon-box {
+      width: 68px;
+      height: 68px;
+      margin: 0 auto 14px;
+      border-radius: 18px;
+      background: radial-gradient(circle, rgba(14, 165, 233, 0.35) 0%, rgba(15, 23, 42, 0.9) 100%);
+      border: 1.5px solid rgba(14, 165, 233, 0.6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 34px;
+      box-shadow: 0 0 24px rgba(14, 165, 233, 0.45);
+      animation: floatOrbit 3.5s ease-in-out infinite;
+    }
+
+    .btn-portal-launch-stats {
+      background: linear-gradient(135deg, #0284c7 0%, #0ea5e9 50%, #10b981 100%);
+      color: #ffffff;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      padding: 12px 26px;
+      border-radius: 12px;
+      font-size: 13.5px;
+      font-weight: 800;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 0 25px rgba(14, 165, 233, 0.45);
+      transition: all 0.2s ease;
+      letter-spacing: 0.02em;
+    }
+
+    .btn-portal-launch-stats:hover {
+      transform: translateY(-2px) scale(1.02);
+      box-shadow: 0 0 35px rgba(14, 165, 233, 0.75);
+    }
+
+    @media (max-width: 900px) {
+      .stats-fs-header {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
+        padding: 10px 14px;
+      }
+      .stats-fs-brand {
+        justify-content: center;
+      }
+      .stats-fs-right {
+        justify-content: center;
+      }
+      .stats-fs-panels-grid {
+        grid-template-columns: 1fr;
+      }
+      .stats-fs-body {
+        padding: 12px 12px 60px;
+      }
+    }
 </head>
 <body>
   <!-- ====================================================================
@@ -10387,12 +10924,12 @@
               </div>
               <div class="constellation-portal-title">Omniversul Cuantic & Rețeaua Multi-Nuclee</div>
               <div class="constellation-portal-desc">
-                Pășește în Omniversul Cuantic ecran complet pentru a explora toate cele 5 dimensiuni paralele, a comuta instantaneu nucleele cu salt dimensional și a administra generatoarele independente.
+                Pășește în Omniversul Cuantic pentru a explora toate cele 5 dimensiuni paralele, a comuta instantaneu nucleele cu salt dimensional și a administra generatoarele independente.
               </div>
 
               <div style="display:flex; justify-content:center; margin:16px 0 20px;">
                 <button class="btn-portal-launch-omni" onclick="openOmniverseFullscreen()">
-                  <span>🚀 Deschide Omniversul Cuantic (Ecran Complet)</span>
+                  <span>🚀 Deschide Omniversul Cuantic</span>
                   <span class="portal-btn-arrow">➔</span>
                 </button>
               </div>
@@ -10416,12 +10953,12 @@
               </div>
               <div class="constellation-portal-title">Camera Singularității Cuantice (Rebirth)</div>
               <div class="constellation-portal-desc">
-                Pășește în camera de colaps gravitațional ecran complet pentru a declanșa Singularitatea Cuantică, a recolta Materia Întunecată și a debloca multiplicatori masivi permanenți.
+                Pășește în camera de colaps gravitațional pentru a declanșa Singularitatea Cuantică, a recolta Materia Întunecată și a debloca multiplicatori masivi permanenți.
               </div>
 
               <div style="display:flex; justify-content:center; margin-top:20px;">
                 <button class="btn-portal-launch-pres" onclick="openPrestigeFullscreen()">
-                  <span>🚀 Deschide Camera Singularității (Ecran Complet)</span>
+                  <span>🚀 Deschide Camera Singularității</span>
                   <span class="portal-btn-arrow">➔</span>
                 </button>
               </div>
@@ -10454,7 +10991,7 @@
                 <span class="constellation-portal-icon">🌌</span>
               </div>
               <div class="constellation-portal-title">Arborele de Talente & Constelația Cuantică</div>
-              <div class="constellation-portal-desc">Pășește dincolo de reactor într-o călătorie cosmică hiperspațială ecran complet. Conectează stelele cosmice pentru a debloca multiplicatori permanenți și abilități unice în cele 4 căi astrale.</div>
+              <div class="constellation-portal-desc">Pășește dincolo de reactor într-o călătorie cosmică hiperspațială. Conectează stelele cosmice pentru a debloca multiplicatori permanenți și abilități unice în cele 4 căi astrale.</div>
               
               <div class="constellation-portal-stats">
                 <div class="c-portal-stat-box">
@@ -10472,7 +11009,7 @@
               </div>
 
               <button class="btn-portal-launch" onclick="openConstellationFullscreen()">
-                <span>🚀 Deschide Constelația Cuantică (Ecran Complet)</span>
+                <span>🚀 Deschide Constelația Cuantică</span>
                 <span class="portal-btn-arrow">➔</span>
               </button>
             </div>
@@ -10499,7 +11036,7 @@
                 <span>🏆</span>
               </div>
               <div class="constellation-portal-title">Panteonul Realizărilor Cuantice</div>
-              <div class="constellation-portal-desc">Pășește în galeria monumentală ecran complet. Explorează cele 330 de trofee organizate pe categorii și rarități (Standard, Rare și Mitice) pentru a acumula multiplicatori permanenți pe cont.</div>
+              <div class="constellation-portal-desc">Pășește în galeria monumentală a realizărilor. Explorează cele 330 de trofee organizate pe categorii și rarități (Standard, Rare și Mitice) pentru a acumula multiplicatori permanenți pe cont.</div>
 
               <div class="constellation-portal-stats">
                 <div class="c-portal-stat-box">
@@ -10517,7 +11054,7 @@
               </div>
 
               <button class="btn-portal-launch-ach" onclick="openAchievementsFullscreen()">
-                <span>🚀 Deschide Panteonul Realizărilor (Ecran Complet)</span>
+                <span>🚀 Deschide Panteonul Realizărilor</span>
                 <span class="portal-btn-arrow">➔</span>
               </button>
             </div>
@@ -10539,7 +11076,7 @@
               </div>
               <div class="constellation-portal-title">Panteonul Interstelar // Clasament Global (Top 50)</div>
               <div class="constellation-portal-desc">
-                Pășește în Panteonul Interstelar pe ecran complet! Concurează cu comandanții din întreaga galaxie în toate cele 7 categorii cosmice, urcă pe podiumul campionilor și urmărește recordurile în timp real.
+                Pășește în Panteonul Interstelar! Concurează cu comandanții din întreaga galaxie în toate cele 7 categorii cosmice, urcă pe podiumul campionilor și urmărește recordurile în timp real.
               </div>
 
               <div class="constellation-portal-stats">
@@ -10559,7 +11096,7 @@
 
               <div style="display:flex; justify-content:center; margin-top:20px;">
                 <button class="btn-portal-launch-lb" onclick="openLeaderboardFullscreen()">
-                  <span>🚀 Deschide Panteonul Interstelar (Ecran Complet)</span>
+                  <span>🚀 Deschide Panteonul Interstelar</span>
                   <span class="portal-btn-arrow">➔</span>
                 </button>
               </div>
@@ -10579,18 +11116,46 @@
             </div>
           </div>
 
-          <!-- TAB 4: Statistics (100% Pure Stats) -->
+          <!-- TAB 4: Statistics (Portal Telemetrie Cuantică) -->
           <div class="tab-pane" id="tab-stats">
-            <div class="section-header" style="margin-bottom:14px;">
-              <div>
-                <div class="section-title">📊 Telemetrie & Statistici Globale</div>
-                <div class="section-subtitle">Toate metricele și datele simulării cuantice agregate în timp real</div>
+            <div class="stats-tab-portal">
+              <div class="stats-portal-glow"></div>
+              <div class="stats-portal-icon-box">
+                <span class="stats-portal-icon">📊</span>
+              </div>
+              <div class="constellation-portal-title">Telemetrie & Observator Cuantic</div>
+              <div class="constellation-portal-desc">
+                Pășește în centrul de comandă al telemetriei cuantice! Monitorizează în timp real dinamica energetică, rata criticelor, flota generatoarelor pasive, vânătoarea de anomalii, anomaliile de vid și starea rețelei neurale multiversale.
+              </div>
+
+              <div class="constellation-portal-stats">
+                <div class="c-portal-stat-box">
+                  <span class="c-portal-stat-label">⚡ Producție Totală</span>
+                  <span class="c-portal-stat-val" id="portalStatsCpsVal">0 ⚡/s</span>
+                </div>
+                <div class="c-portal-stat-box">
+                  <span class="c-portal-stat-label">🎯 Click-uri Totale</span>
+                  <span class="c-portal-stat-val" id="portalStatsClicksVal">0</span>
+                </div>
+                <div class="c-portal-stat-box">
+                  <span class="c-portal-stat-label">⏱️ Timp Simulare</span>
+                  <span class="c-portal-stat-val" id="portalStatsTimeVal">0s</span>
+                </div>
+              </div>
+
+              <div style="display:flex; justify-content:center; margin-top:20px;">
+                <button class="btn-portal-launch-stats" onclick="openStatsFullscreen()">
+                  <span>🚀 Deschide Telemetria Cuantică</span>
+                  <span class="portal-btn-arrow">➔</span>
+                </button>
               </div>
             </div>
-            <div id="statsSectionsContainer">
-              <!-- Randat dinamic de renderStats() în 7 categorii distincte -->
+
+            <!-- Fallback elements for backwards JS compatibility -->
+            <div style="display:none;" aria-hidden="true">
+              <div id="statsSectionsContainer"></div>
+              <div class="stats-grid" id="statsGrid"></div>
             </div>
-            <div class="stats-grid" id="statsGrid" style="display:none;"></div>
           </div>
         </div>
       </section>
@@ -11176,6 +11741,418 @@
         </div>
         <div class="lb-fs-roster-list" id="lbFsRosterList">
           <!-- Roster rows generated dynamically -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       STATISTICS WARP CANVAS & FULLSCREEN QUANTUM TELEMETRY (V3.9.5)
+       ========================================================================= -->
+  <canvas id="statsWarpCanvas" class="stats-warp-canvas" style="display:none;"></canvas>
+
+  <div id="statsFullscreen" class="stats-fullscreen" style="display:none;">
+    <!-- Deep Spatial Oscilloscope & Coordinate Grid Canvas -->
+    <canvas id="statsBgCanvas" class="stats-fs-bg-canvas"></canvas>
+
+    <!-- Top Galactic Telemetry Header -->
+    <header class="stats-fs-header">
+      <div class="stats-fs-brand">
+        <div class="stats-fs-crest">
+          <span>📊</span>
+          <div class="stats-crest-halo"></div>
+        </div>
+        <div class="stats-fs-titles">
+          <div class="stats-fs-main-title">TELEMETRIE CUANTICĂ // CENTRUL DE COMANDĂ</div>
+          <div class="stats-fs-sub-title">DIAGNOSTIC MULTIVERSAL ÎN TIMP REAL // FLUX CONTINUU DE DATE</div>
+        </div>
+      </div>
+
+      <div class="stats-fs-stats-row">
+        <div class="stats-fs-badge" title="Rata curentă de energie generată pe secundă">
+          <span>⚡</span>
+          <span>CPS:</span>
+          <strong id="statFsH_cps" style="color:#38bdf8;">0 ⚡/s</strong>
+        </div>
+        <div class="stats-fs-badge" title="Puterea energetică per click manual">
+          <span>🎯</span>
+          <span>Click:</span>
+          <strong id="statFsH_click" style="color:#fde047;">1 ⚡</strong>
+        </div>
+        <div class="stats-fs-badge" title="Materie Întunecată recoltată">
+          <span>🔮</span>
+          <span>Materie:</span>
+          <strong id="statFsH_dm" style="color:#c084fc;">0 🔮</strong>
+        </div>
+        <div class="stats-fs-badge" title="Timp total scurs în această sesiune de simulare">
+          <span>⏱️</span>
+          <span>Timp:</span>
+          <strong id="statFsH_time" style="color:#4ade80;">0s</strong>
+        </div>
+      </div>
+
+      <div class="stats-fs-right">
+        <button class="stats-btn-action" onclick="copyTelemetryReport()" title="Copiază întregul raport telemetric în clipboard">
+          <span>📋</span>
+          <span>Copiază Raport</span>
+        </button>
+        <button class="stats-btn-action" onclick="manualSave();" title="Salvează progresul simulatorului">
+          <span>💾</span>
+          <span>Salvează</span>
+        </button>
+        <button class="stats-btn-close" onclick="closeStatsFullscreen()" title="Închide Telemetria și revino la joc (Tasta Esc)">
+          <span>✖</span>
+          <span>Înapoi la Nucleu</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Fullscreen Body -->
+    <div class="stats-fs-body" id="statsFsBody">
+      <!-- 1. Hero Summary Top Metric Cards -->
+      <div class="stats-fs-hero-grid">
+        <div class="stats-hero-card">
+          <div class="stats-hero-header">
+            <span>⚡ Energie & CPS</span>
+            <span style="color:#38bdf8;">LIVE</span>
+          </div>
+          <div class="stats-hero-val" id="statFsHero_cps">0 ⚡/s</div>
+          <div class="stats-hero-sub">
+            <span id="statFsHero_energy">Sold: 0 ⚡</span>
+          </div>
+        </div>
+
+        <div class="stats-hero-card">
+          <div class="stats-hero-header">
+            <span>🔮 Singularitate & Vid</span>
+            <span style="color:#c084fc;">REBIRTH</span>
+          </div>
+          <div class="stats-hero-val" id="statFsHero_dm" style="color:#c084fc; text-shadow:0 0 12px rgba(192,132,252,0.4);">0 🔮</div>
+          <div class="stats-hero-sub">
+            <span id="statFsHero_presCount">#0 Rebirth-uri (+0%)</span>
+          </div>
+        </div>
+
+        <div class="stats-hero-card">
+          <div class="stats-hero-header">
+            <span>🎯 Luptă Manuală</span>
+            <span style="color:#fde047;">CRIT</span>
+          </div>
+          <div class="stats-hero-val" id="statFsHero_critRate" style="color:#fde047; text-shadow:0 0 12px rgba(253,224,71,0.4);">0.0% Crit</div>
+          <div class="stats-hero-sub">
+            <span id="statFsHero_clicks">0 Click-uri</span>
+          </div>
+        </div>
+
+        <div class="stats-hero-card">
+          <div class="stats-hero-header">
+            <span>🏆 Realizări & Panteon</span>
+            <span style="color:#4ade80;">PROGRES</span>
+          </div>
+          <div class="stats-hero-val" id="statFsHero_achPct" style="color:#4ade80; text-shadow:0 0 12px rgba(74,222,128,0.4);">0.0%</div>
+          <div class="stats-hero-sub">
+            <span id="statFsHero_achCount">0 / 330 Trofee</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. Category Filter Switcher -->
+      <div class="stats-fs-cat-nav" id="statsFsCatNav">
+        <button class="stats-cat-tab-btn active" onclick="switchStatsFsFilter('all', this)"><span>🌐 Toate Sistemele (8)</span></button>
+        <button class="stats-cat-tab-btn" onclick="switchStatsFsFilter('energy', this)"><span>⚡ Producție</span></button>
+        <button class="stats-cat-tab-btn" onclick="switchStatsFsFilter('combat', this)"><span>🎯 Luptă & Crit</span></button>
+        <button class="stats-cat-tab-btn" onclick="switchStatsFsFilter('fleet', this)"><span>🤖 Flotă & Generatoare</span></button>
+        <button class="stats-cat-tab-btn" onclick="switchStatsFsFilter('anomalies', this)"><span>🌌 Anomalii</span></button>
+        <button class="stats-cat-tab-btn" onclick="switchStatsFsFilter('prestige', this)"><span>🔮 Singularitate</span></button>
+        <button class="stats-cat-tab-btn" onclick="switchStatsFsFilter('ach', this)"><span>🏆 Realizări</span></button>
+        <button class="stats-cat-tab-btn" onclick="switchStatsFsFilter('weather', this)"><span>🌪️ Vreme Cosmică</span></button>
+        <button class="stats-cat-tab-btn" onclick="switchStatsFsFilter('system', this)"><span>⏱️ Sistem & Cloud</span></button>
+      </div>
+
+      <!-- 3. Telemetry 8 Category Panels Grid -->
+      <div class="stats-fs-panels-grid" id="statsFsPanelsGrid">
+        <!-- Panel 1: Energie & Producție -->
+        <div class="stats-telemetry-panel" data-cat="energy">
+          <div class="stats-panel-header">
+            <div class="stats-panel-title-wrap">
+              <span class="stats-panel-icon">⚡</span>
+              <span class="stats-panel-title">1. Energie & Producție Cuantică</span>
+            </div>
+            <span class="stats-panel-badge">6 METRICE</span>
+          </div>
+          <div class="stats-panel-rows">
+            <div class="stats-telemetry-row">
+              <span class="stats-row-label">Energie Actuală în Sold</span>
+              <span class="stats-row-val highlight-cyan" id="statFsVal_curEnergy">0 ⚡</span>
+            </div>
+            <div class="stats-telemetry-row">
+              <span class="stats-row-label">Producție Pasivă (CPS)</span>
+              <span class="stats-row-val highlight-cyan" id="statFsVal_cps">0 ⚡/s</span>
+            </div>
+            <div class="stats-telemetry-row">
+              <span class="stats-row-label">Putere Click Manual</span>
+              <span class="stats-row-val highlight-gold" id="statFsVal_clickVal">1 ⚡/click</span>
+            </div>
+            <div class="stats-telemetry-row">
+              <span class="stats-row-label">Multiplicator Global Efectiv</span>
+              <span class="stats-row-val highlight-green" id="statFsVal_globalMult">x1.00</span>
+            </div>
+            <div class="stats-telemetry-row">
+              <span class="stats-row-label">Energie Totală (Toate Timpurile)</span>
+              <span class="stats-row-val" id="statFsVal_lifetimeEnergy">0 ⚡</span>
+            </div>
+            <div class="stats-telemetry-row">
+              <span class="stats-row-label">Energie Produsă în Rularea Curentă</span>
+              <span class="stats-row-val" id="statFsVal_currentRunEnergy">0 ⚡</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Panel 2: Luptă Manuală & Dinamică Critică -->
+        <div class="stats-telemetry-panel" data-cat="combat">
+          <div class="stats-panel-header">
+            <div class="stats-panel-title-wrap">
+              <span class="stats-panel-icon">🎯</span>
+              <span class="stats-panel-title">2. Luptă Manuală & Dinamică Critică</span>
+            </div>
+            <span class="stats-panel-badge">6 METRICE</span>
+          </div>
+          <div class="stats-panel-rows">
+            <div class="stats-telemetry-row">
+              <span class="stats-row-label">Click-uri Manuale Totale</span>
+              <span class="stats-row-val highlight-gold" id="statFsVal_totalClicks">0</span>
+            </div>
+            <div class="stats-telemetry-row">
+              <span class="stats-row-label">Lovituri Critice Reușite</span>
+              <span class="stats-row-val highlight-gold" id="statFsVal_totalCrits">0</span>
+            </div>
+            <div class="stats-telemetry-row">
+              <span class="stats-row-label">Rată Reală a Criticelor</span>
+              <span class="stats-row-val highlight-green" id="statFsVal_critRate">0.0%</span>
+            </div>
+            <div class="stats-telemetry-row">
+              <span class="stats-row-label">Șansă Critică de Bază</span>
+              <span class="stats-row-val" id="statFsVal_baseCrit">5%</span>
+            </div>
+            <div class="stats-telemetry-row">
+              <span class="stats-row-label">Multiplicator Critic Efectiv</span>
+              <span class="stats-row-val highlight-cyan" id="statFsVal_critMult">x2.00</span>
+            </div>
+            <div class="stats-telemetry-row">
+              <span class="stats-row-label">Stivă Combo Curent</span>
+              <span class="stats-row-val" id="statFsVal_combo">0 lovituri (x1.00)</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Panel 3: Flotă Spațială & Eficiență Generatoare -->
+        <div class="stats-telemetry-panel" data-cat="fleet">
+          <div class="stats-panel-header">
+            <div class="stats-panel-title-wrap">
+              <span class="stats-panel-icon">🤖</span>
+              <span class="stats-panel-title">3. Flotă Spațială & Eficiență Generatoare</span>
+            </div>
+            <span class="stats-panel-badge">6 METRICE</span>
+          </div>
+          <div class="stats-panel-rows">
+            <div class="stats-telemetry-row">
+              <span class="stats-row-label">Total Generatoare Active</span>
+              <span class="stats-row-val highlight-cyan" id="statFsVal_totalGens">0</span>
+            </div>
+            <div class="stats-telemetry-row">
+              <span class="stats-row-label">Tipuri Generatoare Deblocate</span>
+              <span class="stats-row-val" id="statFsVal_genTypes">0 / 12</span>
+            </div>
+            <div class="stats-telemetry-row">
+              <span class="stats-row-label">Cel Mai Avansat Generator</span>
+              <span class="stats-row-val highlight-gold" id="statFsVal_highestGen">Niciunul</span>
+            </div>
+            <div class="stats-telemetry-row">
+              <span class="stats-row-label">Reducere Cost Flotă</span>
+              <span class="stats-row-val highlight-green" id="statFsVal_genDiscount">0.0%</span>
+            </div>
+            <div class="stats-telemetry-row">
+              <span class="stats-row-label">Eficiență Producție Offline</span>
+              <span class="stats-row-val highlight-cyan" id="statFsVal_offlineEff">40%</span>
+            </div>
+            <div class="stats-telemetry-row">
+              <span class="stats-row-label">Bonusuri Prag Generator Atinse</span>
+              <span class="stats-row-val" id="statFsVal_genMilestones">0 praguri</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Panel 4: Vânătoare de Anomalii Cuantice -->
+        <div class="stats-telemetry-panel" data-cat="anomalies">
+          <div class="stats-panel-header">
+            <div class="stats-panel-title-wrap">
+              <span class="stats-panel-icon">🌌</span>
+              <span class="stats-panel-title">4. Vânătoare de Anomalii Cuantice</span>
+            </div>
+            <span class="stats-panel-badge">6 METRICE</span>
+          </div>
+          <div class="stats-panel-rows">
+            <div class="stats-telemetry-row">
+              <span class="stats-row-label">Sfere Cuantice Capturate</span>
+              <span class="stats-row-val highlight-green" id="statFsVal_anomaliesCaught">0</span>
+            </div>
+            <div class="stats-telemetry-row">
+              <span class="stats-row-label">Sfere Pierdute în Hiperspațiu</span>
+              <span class="stats-row-val" id="statFsVal_anomaliesMissed">0</span>
+            </div>
+            <div class="stats-telemetry-row">
+              <span class="stats-row-label">Acuratețe Vânătoare Astrală</span>
+              <span class="stats-row-val highlight-gold" id="statFsVal_anomalyAccuracy">100.0%</span>
+            </div>
+            <div class="stats-telemetry-row">
+              <span class="stats-row-label">Magnet Ceresc de Salvare</span>
+              <span class="stats-row-val" id="statFsVal_celestialMagnet">Nedeblocat (0%)</span>
+            </div>
+            <div class="stats-telemetry-row">
+              <span class="stats-row-label">Șansă Apariție Anomalie Dublă</span>
+              <span class="stats-row-val highlight-cyan" id="statFsVal_twinAnomaly">0%</span>
+            </div>
+            <div class="stats-telemetry-row">
+              <span class="stats-row-label">Frecvență Rătăcire Anomalii</span>
+              <span class="stats-row-val" id="statFsVal_anomalyFreq">Standard</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Panel 5: Singularitate, Rebirth & Arbore Constelație -->
+        <div class="stats-telemetry-panel" data-cat="prestige">
+          <div class="stats-panel-header">
+            <div class="stats-panel-title-wrap">
+              <span class="stats-panel-icon">🔮</span>
+              <span class="stats-panel-title">5. Singularitate, Rebirth & Constelație</span>
+            </div>
+            <span class="stats-panel-badge">6 METRICE</span>
+          </div>
+          <div class="stats-panel-rows">
+            <div class="stats-telemetry-row">
+              <span class="stats-row-label">Singularități (Rebirth-uri)</span>
+              <span class="stats-row-val highlight-purple" id="statFsVal_prestigeCount">0</span>
+            </div>
+            <div class="stats-telemetry-row">
+              <span class="stats-row-label">Materie Întunecată Deținută</span>
+              <span class="stats-row-val highlight-purple" id="statFsVal_darkMatter">0 🔮</span>
+            </div>
+            <div class="stats-telemetry-row">
+              <span class="stats-row-label">Materie Întunecată Istorică Totală</span>
+              <span class="stats-row-val" id="statFsVal_lifetimeDm">0 🔮</span>
+            </div>
+            <div class="stats-telemetry-row">
+              <span class="stats-row-label">Noduri Deblocate în Constelație</span>
+              <span class="stats-row-val highlight-cyan" id="statFsVal_constellationNodes">0 / 26</span>
+            </div>
+            <div class="stats-telemetry-row">
+              <span class="stats-row-label">Niveluri Totale Investite</span>
+              <span class="stats-row-val" id="statFsVal_constellationLevels">0 nivele</span>
+            </div>
+            <div class="stats-telemetry-row">
+              <span class="stats-row-label">Bonus Singularitate Producție</span>
+              <span class="stats-row-val highlight-green" id="statFsVal_prestigeBonus">+0%</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Panel 6: Realizări & Trofee Galactice -->
+        <div class="stats-telemetry-panel" data-cat="ach">
+          <div class="stats-panel-header">
+            <div class="stats-panel-title-wrap">
+              <span class="stats-panel-icon">🏆</span>
+              <span class="stats-panel-title">6. Realizări & Trofee Galactice</span>
+            </div>
+            <span class="stats-panel-badge">4 METRICE</span>
+          </div>
+          <div class="stats-panel-rows">
+            <div class="stats-telemetry-row">
+              <span class="stats-row-label">Realizări Deblocate</span>
+              <span class="stats-row-val highlight-gold" id="statFsVal_achUnlocked">0 / 330 (0.0%)</span>
+            </div>
+            <div class="stats-telemetry-row">
+              <span class="stats-row-label">Trofee Mitice Galactice</span>
+              <span class="stats-row-val highlight-purple" id="statFsVal_mythicAch">0 / 40</span>
+            </div>
+            <div class="stats-telemetry-row">
+              <span class="stats-row-label">Trofee Rare de Diamant</span>
+              <span class="stats-row-val highlight-cyan" id="statFsVal_rareAch">0 / 80</span>
+            </div>
+            <div class="stats-telemetry-row">
+              <span class="stats-row-label">Bonus Producție Realizări</span>
+              <span class="stats-row-val highlight-green" id="statFsVal_achBonus">+0%</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Panel 7: Vreme Cosmică & Evenimente Dinamice -->
+        <div class="stats-telemetry-panel" data-cat="weather">
+          <div class="stats-panel-header">
+            <div class="stats-panel-title-wrap">
+              <span class="stats-panel-icon">🌪️</span>
+              <span class="stats-panel-title">7. Vreme Cosmică & Evenimente Dinamice</span>
+            </div>
+            <span class="stats-panel-badge">5 METRICE</span>
+          </div>
+          <div class="stats-panel-rows">
+            <div class="stats-telemetry-row">
+              <span class="stats-row-label">Furtuni Stelare Înfruntate</span>
+              <span class="stats-row-val highlight-cyan" id="statFsVal_stormsExperienced">0</span>
+            </div>
+            <div class="stats-telemetry-row">
+              <span class="stats-row-label">Meteoriți Cuantici Pulverizați</span>
+              <span class="stats-row-val highlight-gold" id="statFsVal_meteorsCaught">0</span>
+            </div>
+            <div class="stats-telemetry-row">
+              <span class="stats-row-label">Stare Atmosferă Curentă</span>
+              <span class="stats-row-val highlight-purple" id="statFsVal_weatherState">🌌 Calm Relativ</span>
+            </div>
+            <div class="stats-telemetry-row">
+              <span class="stats-row-label">Numărătoare Inversă Radar</span>
+              <span class="stats-row-val highlight-green" id="statFsVal_weatherCountdown">--:--</span>
+            </div>
+            <div class="stats-telemetry-row">
+              <span class="stats-row-label">Calitate Grafică Efecte</span>
+              <span class="stats-row-val" id="statFsVal_stormQuality">AUTO</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Panel 8: Timp Simulare & Telemetrie Sistem -->
+        <div class="stats-telemetry-panel" data-cat="system">
+          <div class="stats-panel-header">
+            <div class="stats-panel-title-wrap">
+              <span class="stats-panel-icon">⏱️</span>
+              <span class="stats-panel-title">8. Timp Simulare & Telemetrie Sistem</span>
+            </div>
+            <span class="stats-panel-badge">6 METRICE</span>
+          </div>
+          <div class="stats-panel-rows">
+            <div class="stats-telemetry-row">
+              <span class="stats-row-label">Timp Total Simulare Activă</span>
+              <span class="stats-row-val highlight-green" id="statFsVal_playTime">0s</span>
+            </div>
+            <div class="stats-telemetry-row">
+              <span class="stats-row-label">Timp Scurs în Rularea Curentă</span>
+              <span class="stats-row-val" id="statFsVal_currentRunTime">0s</span>
+            </div>
+            <div class="stats-telemetry-row">
+              <span class="stats-row-label">Seria Zilelor Consecutive</span>
+              <span class="stats-row-val highlight-gold" id="statFsVal_dailyStreak">1 zile</span>
+            </div>
+            <div class="stats-telemetry-row">
+              <span class="stats-row-label">Ultima Salvare Locală</span>
+              <span class="stats-row-val" id="statFsVal_lastSaved">Niciodată</span>
+            </div>
+            <div class="stats-telemetry-row">
+              <span class="stats-row-label">Sincronizare Cloud Firebase</span>
+              <span class="stats-row-val highlight-cyan" id="statFsVal_cloudSync">⚪ Nelogat</span>
+            </div>
+            <div class="stats-telemetry-row">
+              <span class="stats-row-label">Versiune Simulare Cuantică</span>
+              <span class="stats-row-val highlight-gold" id="statFsVal_appVersion">v3.9.5</span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -13170,6 +14147,7 @@
         totalStormsExperienced: 0,
         meteorsCaught: 0,
         playTimeSeconds: 0,
+        nextStormTimestamp: null,
         lastSaved: Date.now()
       };
 
@@ -14521,7 +15499,7 @@
     ];
 
     let activeCosmicStorm = null;
-    let nextStormTimestamp = Date.now() + 55000; // Prima furtună se declanșează după 55s
+    let nextStormTimestamp = Date.now() + (8 * 60 * 1000 + Math.random() * (5 * 60 * 1000)); // Programat natural 8-13 minute
     let stormWarningData = null; // { storm: obj, endWarningAt: timestamp }
     let stormCanvas = null;
     let stormCtx = null;
@@ -14813,6 +15791,9 @@
         const minMs = 8 * 60 * 1000;
         const randMs = Math.random() * (5 * 60 * 1000);
         nextStormTimestamp = Date.now() + minMs + randMs;
+      }
+      if (typeof state !== 'undefined' && state) {
+        state.nextStormTimestamp = nextStormTimestamp;
       }
     }
 
@@ -22467,6 +23448,13 @@
     }
 
     function renderStats() {
+      const pCps = document.getElementById('portalStatsCpsVal');
+      if (pCps) pCps.textContent = formatNumber(getCPS()) + ' ⚡/s';
+      const pClicks = document.getElementById('portalStatsClicksVal');
+      if (pClicks) pClicks.textContent = (state.totalClicks || 0).toLocaleString('ro-RO');
+      const pTime = document.getElementById('portalStatsTimeVal');
+      if (pTime) pTime.textContent = formatTime(state.playTimeSeconds || 0);
+
       const container = document.getElementById('statsSectionsContainer');
       if (!container) return;
 
@@ -23140,6 +24128,7 @@
       state.lastSaved = Date.now();
       state.skillCooldowns = skillCooldowns;
       state.activeBuffs = activeBuffs;
+      state.nextStormTimestamp = nextStormTimestamp;
       try {
         localStorage.setItem(SAVE_KEY, JSON.stringify(state));
         if (!navigator.onLine && cloudSession && cloudSession.access_token) {
@@ -23189,6 +24178,12 @@
         skillCooldowns = state.skillCooldowns;
         activeBuffs = state.activeBuffs;
         state.equippedCoreSkin = state.activeCoreId || state.equippedCoreSkin || 'quantum';
+
+        if (typeof state.nextStormTimestamp === 'number' && state.nextStormTimestamp > Date.now() + 15000) {
+          nextStormTimestamp = state.nextStormTimestamp;
+        } else {
+          scheduleNextStorm();
+        }
 
         // Curățăm ID-urile vechi de realizări și sincronizăm silențios realizările deja îndeplinite din cele 330
         const validAchIds = new Set(ACHIEVEMENTS_DATA.map(a => a.id));
@@ -23310,8 +24305,8 @@
      *       + AUTO-SYNC SILENȚIOS OFFLINE -> ONLINE + AUTO-UPDATE LIVE
      *       + NAVIGARE MOBIL & INSTALARE PWA (MACBOOK / PC / ANDROID / iOS)
      ********************************************************************/
-    const APP_VERSION = '3.9.4';
-    const APP_BUILD = 394;
+    const APP_VERSION = '3.9.5';
+    const APP_BUILD = 395;
     // URL-ul oficial de pe GitHub Pages pentru verificarea automată de Update (și în aplicațiile .exe / .dmg):
     const REMOTE_UPDATE_BASE_URL = 'https://mariusinfo.github.io/quantum-nexus';
 
@@ -25072,6 +26067,568 @@
       }
     }
 
+    // =========================================================================
+    // V3.9.5: TELEMETRIE & OBSERVATOR CUANTIC (FULLSCREEN STATISTICS & WARP)
+    // =========================================================================
+    let isStatsFullscreenOpen = false;
+    let statsBgAnimFrame = null;
+    let statsWarpAnimFrameId = null;
+    const statsBgStars = [];
+    let statsEventsBound = false;
+
+    function playStatsWarpSound(direction = 'enter') {
+      if (!state.soundEnabled) return;
+      try {
+        if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        if (audioCtx.state === 'suspended') audioCtx.resume();
+        const now = audioCtx.currentTime;
+
+        if (direction === 'enter') {
+          // Futuristic telemetry electronic harmonic sweep
+          const freqs = [220.00, 277.18, 329.63, 415.30, 659.25];
+          freqs.forEach((f, idx) => {
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.type = idx === 0 ? 'sine' : 'triangle';
+            const st = now + idx * 0.035;
+            osc.frequency.setValueAtTime(f * 0.85, st);
+            osc.frequency.exponentialRampToValueAtTime(f * 1.05, st + 0.35);
+            gain.gain.setValueAtTime(0.001, st);
+            gain.gain.linearRampToValueAtTime(0.08 / freqs.length, st + 0.12);
+            gain.gain.exponentialRampToValueAtTime(0.001, st + 0.55);
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.start(st);
+            osc.stop(st + 0.55);
+          });
+        } else {
+          // Exit telemetry frequency drop
+          const osc = audioCtx.createOscillator();
+          const gain = audioCtx.createGain();
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(340, now);
+          osc.frequency.exponentialRampToValueAtTime(80, now + 0.3);
+          gain.gain.setValueAtTime(0.12, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.32);
+          osc.connect(gain);
+          gain.connect(audioCtx.destination);
+          osc.start(now);
+          osc.stop(now + 0.32);
+        }
+      } catch (e) {}
+    }
+
+    function runStatsFullscreenWarp(duration = 700, onComplete) {
+      const canvas = document.getElementById('statsWarpCanvas');
+      if (!canvas) {
+        if (onComplete) onComplete();
+        return;
+      }
+      const dpr = window.devicePixelRatio || 1;
+      const w = window.innerWidth;
+      const h = window.innerHeight;
+      canvas.width = Math.floor(w * dpr);
+      canvas.height = Math.floor(h * dpr);
+      const ctx = canvas.getContext('2d');
+
+      canvas.style.display = 'block';
+      canvas.style.opacity = '1';
+
+      const particleCount = 360;
+      const particles = [];
+      const colors = ['#06b6d4', '#10b981', '#38bdf8', '#ffffff', '#a7f3d0', '#0ea5e9'];
+      for (let i = 0; i < particleCount; i++) {
+        particles.push({
+          x: (Math.random() - 0.5) * w * 2.2,
+          y: (Math.random() - 0.5) * h * 2.2,
+          z: Math.random() * 1500 + 100,
+          pz: 1600,
+          color: colors[i % colors.length],
+          size: Math.random() * 2.4 + 0.8
+        });
+      }
+
+      const startTime = performance.now();
+
+      function stepWarp(now) {
+        const elapsed = now - startTime;
+        const progress = Math.min(1, elapsed / duration);
+
+        ctx.save();
+        ctx.scale(dpr, dpr);
+        ctx.fillStyle = 'rgba(2, 6, 23, 0.28)';
+        ctx.fillRect(0, 0, w, h);
+
+        const cx = w / 2;
+        const cy = h / 2;
+        const speed = 25 + progress * 55;
+
+        particles.forEach(p => {
+          p.pz = p.z;
+          p.z -= speed;
+          if (p.z <= 0) {
+            p.z = 1500;
+            p.pz = 1500;
+            p.x = (Math.random() - 0.5) * w * 2.2;
+            p.y = (Math.random() - 0.5) * h * 2.2;
+          }
+
+          const k = 400 / p.z;
+          const px = p.x * k + cx;
+          const py = p.y * k + cy;
+
+          const pk = 400 / p.pz;
+          const ppx = p.x * pk + cx;
+          const ppy = p.y * pk + cy;
+
+          ctx.beginPath();
+          ctx.moveTo(ppx, ppy);
+          ctx.lineTo(px, py);
+          ctx.strokeStyle = p.color;
+          ctx.lineWidth = Math.min(4, p.size * k * 0.8);
+          ctx.lineCap = 'round';
+          ctx.stroke();
+        });
+
+        // Peak Flash
+        if (progress > 0.35 && progress < 0.7) {
+          const flashAlpha = Math.sin(((progress - 0.35) / 0.35) * Math.PI) * 0.7;
+          ctx.fillStyle = '#06b6d4';
+          ctx.globalAlpha = flashAlpha * 0.4;
+          ctx.fillRect(0, 0, w, h);
+          ctx.globalAlpha = 1.0;
+        }
+
+        ctx.restore();
+
+        if (progress < 1) {
+          statsWarpAnimFrameId = requestAnimationFrame(stepWarp);
+        } else {
+          canvas.style.transition = 'opacity 0.25s ease';
+          canvas.style.opacity = '0';
+          setTimeout(() => {
+            canvas.style.display = 'none';
+            canvas.style.transition = '';
+            if (onComplete) onComplete();
+          }, 250);
+        }
+      }
+
+      statsWarpAnimFrameId = requestAnimationFrame(stepWarp);
+    }
+
+    function openStatsFullscreen() {
+      if (isStatsFullscreenOpen) return;
+      isStatsFullscreenOpen = true;
+
+      playStatsWarpSound('enter');
+
+      const appShell = document.querySelector('.app-shell');
+      if (appShell) appShell.classList.add('app-shell-warp-out');
+
+      runStatsFullscreenWarp(700, () => {});
+
+      setTimeout(() => {
+        const fsEl = document.getElementById('statsFullscreen');
+        if (fsEl) {
+          fsEl.style.display = 'flex';
+          void fsEl.offsetWidth;
+          fsEl.classList.add('active');
+        }
+        initStatsFullscreen();
+        renderStatsFullscreen();
+      }, 420);
+    }
+
+    function closeStatsFullscreen() {
+      if (!isStatsFullscreenOpen) return;
+      isStatsFullscreenOpen = false;
+
+      playStatsWarpSound('exit');
+
+      const fsEl = document.getElementById('statsFullscreen');
+      if (fsEl) {
+        fsEl.classList.remove('active');
+      }
+
+      const appShell = document.querySelector('.app-shell');
+      if (appShell) {
+        appShell.classList.remove('app-shell-warp-out');
+        appShell.classList.add('app-shell-warp-in');
+        setTimeout(() => appShell.classList.remove('app-shell-warp-in'), 600);
+      }
+
+      setTimeout(() => {
+        if (fsEl && !isStatsFullscreenOpen) {
+          fsEl.style.display = 'none';
+        }
+        if (statsBgAnimFrame) {
+          cancelAnimationFrame(statsBgAnimFrame);
+          statsBgAnimFrame = null;
+        }
+      }, 400);
+    }
+
+    function initStatsFullscreen() {
+      const bgCanvas = document.getElementById('statsBgCanvas');
+      if (!bgCanvas) return;
+
+      const dpr = window.devicePixelRatio || 1;
+      const w = window.innerWidth;
+      const h = window.innerHeight;
+      bgCanvas.width = Math.floor(w * dpr);
+      bgCanvas.height = Math.floor(h * dpr);
+
+      if (statsBgStars.length === 0) {
+        const count = 150;
+        const colors = ['#06b6d4', '#10b981', '#38bdf8', '#ffffff', '#a7f3d0', '#67e8f9'];
+        for (let i = 0; i < count; i++) {
+          statsBgStars.push({
+            x: Math.random() * w,
+            y: Math.random() * h,
+            r: Math.random() * 1.6 + 0.4,
+            baseAlpha: Math.random() * 0.6 + 0.2,
+            twinkleSpeed: Math.random() * 0.003 + 0.001,
+            phase: Math.random() * Math.PI * 2,
+            color: colors[i % colors.length]
+          });
+        }
+      }
+
+      if (!statsEventsBound) {
+        statsEventsBound = true;
+        window.addEventListener('resize', () => {
+          if (isStatsFullscreenOpen && bgCanvas) {
+            const curDpr = window.devicePixelRatio || 1;
+            bgCanvas.width = Math.floor(window.innerWidth * curDpr);
+            bgCanvas.height = Math.floor(window.innerHeight * curDpr);
+          }
+        });
+      }
+
+      if (!statsBgAnimFrame) {
+        statsBgAnimFrame = requestAnimationFrame(runStatsBgLoop);
+      }
+    }
+
+    function runStatsBgLoop(timestamp) {
+      if (!isStatsFullscreenOpen) {
+        statsBgAnimFrame = null;
+        return;
+      }
+
+      const canvas = document.getElementById('statsBgCanvas');
+      if (canvas) {
+        const ctx = canvas.getContext('2d');
+        const w = canvas.width;
+        const h = canvas.height;
+        const dpr = window.devicePixelRatio || 1;
+
+        ctx.fillStyle = '#020617';
+        ctx.fillRect(0, 0, w, h);
+
+        const cx = w / 2;
+        const cy = h / 2;
+
+        // 1. Ambient High-Tech Cyan-Emerald Nebula
+        const grad = ctx.createRadialGradient(cx, cy * 0.35, 0, cx, cy * 0.35, Math.max(w, h) * 0.65);
+        grad.addColorStop(0, 'rgba(14, 165, 233, 0.08)');
+        grad.addColorStop(0.5, 'rgba(16, 185, 129, 0.04)');
+        grad.addColorStop(1, 'rgba(2, 6, 23, 0)');
+        ctx.fillStyle = grad;
+        ctx.fillRect(0, 0, w, h);
+
+        // 2. Telemetric Grid
+        ctx.strokeStyle = 'rgba(56, 189, 248, 0.035)';
+        ctx.lineWidth = 1 * dpr;
+        const step = 64 * dpr;
+        ctx.beginPath();
+        for (let x = 0; x < w; x += step) {
+          ctx.moveTo(x, 0);
+          ctx.lineTo(x, h);
+        }
+        for (let y = 0; y < h; y += step) {
+          ctx.moveTo(0, y);
+          ctx.lineTo(w, y);
+        }
+        ctx.stroke();
+
+        // 3. Oscilloscope Waveform at lower screen
+        const waveY = h - 65 * dpr;
+        ctx.beginPath();
+        for (let x = 0; x < w; x += 4 * dpr) {
+          const normX = x / w;
+          const s1 = Math.sin(normX * 16 + timestamp * 0.0022);
+          const s2 = Math.sin(normX * 32 - timestamp * 0.0031) * 0.45;
+          const y = waveY + (s1 + s2) * 12 * dpr;
+          if (x === 0) ctx.moveTo(x, y);
+          else ctx.lineTo(x, y);
+        }
+        ctx.strokeStyle = 'rgba(16, 185, 129, 0.32)';
+        ctx.lineWidth = 1.5 * dpr;
+        ctx.stroke();
+
+        // 4. Data Starfield
+        statsBgStars.forEach(s => {
+          const alpha = s.baseAlpha + Math.sin(timestamp * s.twinkleSpeed + s.phase) * 0.25;
+          ctx.beginPath();
+          ctx.arc(s.x * dpr, s.y * dpr, s.r * dpr, 0, Math.PI * 2);
+          ctx.fillStyle = s.color;
+          ctx.globalAlpha = Math.max(0.1, alpha);
+          ctx.fill();
+        });
+        ctx.globalAlpha = 1.0;
+      }
+
+      statsBgAnimFrame = requestAnimationFrame(runStatsBgLoop);
+    }
+
+    function switchStatsFsFilter(catId, btnEl) {
+      document.querySelectorAll('.stats-cat-tab-btn').forEach(b => b.classList.remove('active'));
+      if (btnEl) btnEl.classList.add('active');
+      const panels = document.querySelectorAll('.stats-telemetry-panel');
+      panels.forEach(p => {
+        if (catId === 'all' || p.dataset.cat === catId) {
+          p.style.display = 'flex';
+        } else {
+          p.style.display = 'none';
+        }
+      });
+    }
+
+    function copyTelemetryReport() {
+      const cps = formatNumber(getCPS());
+      const energy = formatNumber(state.energy);
+      const clicks = (state.totalClicks || 0).toLocaleString('ro-RO');
+      const crits = (state.totalCrits || 0).toLocaleString('ro-RO');
+      const critRate = state.totalClicks > 0 ? ((state.totalCrits / state.totalClicks) * 100).toFixed(1) + '%' : '0.0%';
+      const dm = (state.darkMatter || 0).toLocaleString('ro-RO');
+      const prestige = state.prestigeCount || 0;
+      const ach = (state.unlockedAchievements || []).length;
+      const time = formatTime(state.playTimeSeconds || 0);
+      const cloud = (cloudSession && (cloudSession.access_token || cloudSession.refresh_token)) ? 'Conectat' : 'Local';
+
+      const report = [
+        `=== QUANTUM NEXUS // RAPORT TELEMETRIE CUANTICĂ ===`,
+        `Versiune: v${APP_VERSION} (Build ${APP_BUILD})`,
+        `Timp Simulare: ${time} | Status Cloud: ${cloud}`,
+        `--------------------------------------------------`,
+        `⚡ Sold Curent: ${energy} ⚡ | CPS: ${cps} ⚡/s`,
+        `🎯 Click-uri Totale: ${clicks} | Critice: ${crits} (${critRate})`,
+        `🔮 Singularități: #${prestige} | Materie Întunecată: ${dm} 🔮`,
+        `🏆 Realizări Deblocate: ${ach} / 330`,
+        `==================================================`
+      ].join('\n');
+
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(report).then(() => {
+          showToast('📋 Raportul telemetric a fost copiat în clipboard!');
+        }).catch(() => {
+          showToast('📋 Raport telemetric generat!');
+        });
+      } else {
+        showToast('📋 Raport telemetric generat!');
+      }
+    }
+
+    function renderStatsFullscreen() {
+      if (!isStatsFullscreenOpen) return;
+
+      const totalGenCount = typeof getTotalGenerators === 'function' ? getTotalGenerators() : 0;
+      const activeGenTypes = GENERATORS_DATA.filter(g => (state.generators && state.generators[g.id]) > 0).length;
+      const highestGen = GENERATORS_DATA.slice().reverse().find(g => (state.generators && state.generators[g.id]) > 0)?.name || 'Niciunul';
+      const totalClicks = state.totalClicks || 0;
+      const totalCrits = state.totalCrits || 0;
+      const critRate = totalClicks > 0 ? ((totalCrits / totalClicks) * 100).toFixed(1) + '%' : '0.0%';
+      const anomaliesCaught = state.anomaliesCaught || 0;
+      const anomaliesMissed = state.anomaliesMissed || 0;
+      const anomalyAccuracy = (anomaliesCaught + anomaliesMissed) > 0 ? ((anomaliesCaught / (anomaliesCaught + anomaliesMissed)) * 100).toFixed(1) + '%' : '100.0%';
+      const constellationNodesUnlocked = Object.values(state.prestigeUpgrades || {}).filter(lvl => lvl > 0).length;
+      const constellationTotalLevels = Object.values(state.prestigeUpgrades || {}).reduce((a, b) => a + (typeof b === 'number' ? b : 0), 0);
+      const mythicAchCount = (state.unlockedAchievements || []).filter(id => ACHIEVEMENTS_DATA.find(a => a.id === id)?.rarity === 'mythic').length;
+      const totalMythicAch = ACHIEVEMENTS_DATA.filter(a => a.rarity === 'mythic').length;
+      const rareAchCount = (state.unlockedAchievements || []).filter(id => ACHIEVEMENTS_DATA.find(a => a.id === id)?.rarity === 'rare').length;
+      const totalRareAch = ACHIEVEMENTS_DATA.filter(a => a.rarity === 'rare').length;
+      const achPct = (((state.unlockedAchievements || []).length / ACHIEVEMENTS_DATA.length) * 100).toFixed(1);
+
+      const offlineLvl = (state.prestigeUpgrades && state.prestigeUpgrades['p_offline']) || 0;
+      const offlineEffPct = Math.round(Math.min(0.80, 0.40 + offlineLvl * 0.08) * 100);
+      const twinAnomPct = ((state.prestigeUpgrades && state.prestigeUpgrades['p_twin_anomaly']) || 0) * 18;
+      const anomFreqPct = ((state.prestigeUpgrades && state.prestigeUpgrades['p_anom_frequency']) || 0) * 25;
+      const magnetPct = ((state.prestigeUpgrades && state.prestigeUpgrades['p_celestial_magnet']) || 0) * 25;
+
+      const cpsStr = formatNumber(getCPS()) + ' ⚡/s';
+      const curEnergyStr = formatNumber(state.energy) + ' ⚡';
+      const clickValStr = formatNumber(getClickValue()) + ' ⚡/click';
+      const globalMultStr = 'x' + formatNumber(getGlobalMultiplier());
+      const lifetimeEnergyStr = formatNumber(state.lifetimeEnergy) + ' ⚡';
+      const currentRunEnergyStr = formatNumber(state.totalEnergyEarned || state.energy) + ' ⚡';
+
+      const dmStr = `${(state.darkMatter || 0).toLocaleString('ro-RO')} 🔮`;
+      const lifetimeDmStr = `${(state.totalDarkMatterEarned || 0).toLocaleString('ro-RO')} 🔮`;
+      const presCountStr = (state.prestigeCount || 0).toString();
+      const presBonusStr = `+${(state.prestigeCount || 0) * 10}%`;
+
+      const playTimeStr = formatTime(state.playTimeSeconds || 0);
+      const currentRunTimeStr = formatTime(state.currentRunTimeSeconds || 0);
+      const dailyStreakStr = `${state.dailyStreak || 1} zile`;
+      const lastSavedStr = state.lastSaved ? new Date(state.lastSaved).toLocaleTimeString('ro-RO') : 'Niciodată';
+      const cloudSyncStr = (cloudSession && (cloudSession.access_token || cloudSession.refresh_token)) ? '🟢 Conectat & Sincronizat' : '⚪ Nelogat (Doar Salvare Locală)';
+
+      // Radar time calculation
+      let radarTimeStr = '--:--';
+      const now = Date.now();
+      if (activeCosmicStorm) {
+        const secLeft = Math.max(0, Math.ceil((activeCosmicStorm.endAt - now) / 1000));
+        radarTimeStr = `${secLeft}s (ACTIVA)`;
+      } else if (stormWarningData && stormWarningData.storm) {
+        const secLeft = Math.max(0, Math.ceil((stormWarningData.endWarningAt - now) / 1000));
+        radarTimeStr = `${secLeft}s (ALERTĂ)`;
+      } else {
+        const diffMs = Math.max(0, nextStormTimestamp - now);
+        const mins = Math.floor(diffMs / 60000);
+        const secs = Math.floor((diffMs % 60000) / 1000);
+        radarTimeStr = `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+      }
+
+      // 1. Header Badges
+      const hCps = document.getElementById('statFsH_cps');
+      if (hCps) hCps.textContent = cpsStr;
+      const hClick = document.getElementById('statFsH_click');
+      if (hClick) hClick.textContent = formatNumber(getClickValue()) + ' ⚡';
+      const hDm = document.getElementById('statFsH_dm');
+      if (hDm) hDm.textContent = dmStr;
+      const hTime = document.getElementById('statFsH_time');
+      if (hTime) hTime.textContent = playTimeStr;
+
+      // 2. Hero Cards
+      const heroCps = document.getElementById('statFsHero_cps');
+      if (heroCps) heroCps.textContent = cpsStr;
+      const heroEnergy = document.getElementById('statFsHero_energy');
+      if (heroEnergy) heroEnergy.textContent = `Sold: ${curEnergyStr}`;
+
+      const heroDm = document.getElementById('statFsHero_dm');
+      if (heroDm) heroDm.textContent = dmStr;
+      const heroPresCount = document.getElementById('statFsHero_presCount');
+      if (heroPresCount) heroPresCount.textContent = `#${presCountStr} Rebirth-uri (${presBonusStr})`;
+
+      const heroCrit = document.getElementById('statFsHero_critRate');
+      if (heroCrit) heroCrit.textContent = `${critRate} Crit`;
+      const heroClicks = document.getElementById('statFsHero_clicks');
+      if (heroClicks) heroClicks.textContent = `${totalClicks.toLocaleString('ro-RO')} Click-uri`;
+
+      const heroAchPct = document.getElementById('statFsHero_achPct');
+      if (heroAchPct) heroAchPct.textContent = `${achPct}%`;
+      const heroAchCount = document.getElementById('statFsHero_achCount');
+      if (heroAchCount) heroAchCount.textContent = `${(state.unlockedAchievements || []).length} / ${ACHIEVEMENTS_DATA.length} Trofee`;
+
+      // 3. Panel 1: Energie
+      const valCurEnergy = document.getElementById('statFsVal_curEnergy');
+      if (valCurEnergy) valCurEnergy.textContent = curEnergyStr;
+      const valCps = document.getElementById('statFsVal_cps');
+      if (valCps) valCps.textContent = cpsStr;
+      const valClickVal = document.getElementById('statFsVal_clickVal');
+      if (valClickVal) valClickVal.textContent = clickValStr;
+      const valGlobalMult = document.getElementById('statFsVal_globalMult');
+      if (valGlobalMult) valGlobalMult.textContent = globalMultStr;
+      const valLifetimeEnergy = document.getElementById('statFsVal_lifetimeEnergy');
+      if (valLifetimeEnergy) valLifetimeEnergy.textContent = lifetimeEnergyStr;
+      const valCurrentRunEnergy = document.getElementById('statFsVal_currentRunEnergy');
+      if (valCurrentRunEnergy) valCurrentRunEnergy.textContent = currentRunEnergyStr;
+
+      // Panel 2: Combat
+      const valTotalClicks = document.getElementById('statFsVal_totalClicks');
+      if (valTotalClicks) valTotalClicks.textContent = totalClicks.toLocaleString('ro-RO');
+      const valTotalCrits = document.getElementById('statFsVal_totalCrits');
+      if (valTotalCrits) valTotalCrits.textContent = totalCrits.toLocaleString('ro-RO');
+      const valCritRate = document.getElementById('statFsVal_critRate');
+      if (valCritRate) valCritRate.textContent = critRate;
+      const valBaseCrit = document.getElementById('statFsVal_baseCrit');
+      if (valBaseCrit) valBaseCrit.textContent = Math.round(getCritChance() * 100) + '%';
+      const valCritMult = document.getElementById('statFsVal_critMult');
+      if (valCritMult) valCritMult.textContent = 'x' + getCritMultiplier().toFixed(2);
+      const valCombo = document.getElementById('statFsVal_combo');
+      if (valCombo) valCombo.textContent = `${state.comboCount || 0} lovituri (x${(1 + (state.comboCount || 0) * 0.05).toFixed(2)})`;
+
+      // Panel 3: Flotă
+      const valTotalGens = document.getElementById('statFsVal_totalGens');
+      if (valTotalGens) valTotalGens.textContent = totalGenCount.toLocaleString('ro-RO');
+      const valGenTypes = document.getElementById('statFsVal_genTypes');
+      if (valGenTypes) valGenTypes.textContent = `${activeGenTypes} / ${GENERATORS_DATA.length}`;
+      const valHighestGen = document.getElementById('statFsVal_highestGen');
+      if (valHighestGen) valHighestGen.textContent = highestGen;
+      const valGenDiscount = document.getElementById('statFsVal_genDiscount');
+      if (valGenDiscount) valGenDiscount.textContent = `${((1 - getGeneratorDiscount()) * 100).toFixed(1)}%`;
+      const valOfflineEff = document.getElementById('statFsVal_offlineEff');
+      if (valOfflineEff) valOfflineEff.textContent = `${offlineEffPct}%`;
+      const valGenMilestones = document.getElementById('statFsVal_genMilestones');
+      if (valGenMilestones) valGenMilestones.textContent = `${Math.floor(totalGenCount / 25)} praguri`;
+
+      // Panel 4: Anomalii
+      const valAnomCaught = document.getElementById('statFsVal_anomaliesCaught');
+      if (valAnomCaught) valAnomCaught.textContent = anomaliesCaught.toLocaleString('ro-RO');
+      const valAnomMissed = document.getElementById('statFsVal_anomaliesMissed');
+      if (valAnomMissed) valAnomMissed.textContent = anomaliesMissed.toLocaleString('ro-RO');
+      const valAnomAcc = document.getElementById('statFsVal_anomalyAccuracy');
+      if (valAnomAcc) valAnomAcc.textContent = anomalyAccuracy;
+      const valMagnet = document.getElementById('statFsVal_celestialMagnet');
+      if (valMagnet) valMagnet.textContent = magnetPct > 0 ? `${magnetPct}% șansă prindere automată` : 'Nedeblocat (0%)';
+      const valTwin = document.getElementById('statFsVal_twinAnomaly');
+      if (valTwin) valTwin.textContent = `${twinAnomPct}%`;
+      const valAnomFreq = document.getElementById('statFsVal_anomalyFreq');
+      if (valAnomFreq) valAnomFreq.textContent = anomFreqPct > 0 ? `+${anomFreqPct}% mai des` : 'Standard';
+
+      // Panel 5: Singularitate
+      const valPresCount = document.getElementById('statFsVal_prestigeCount');
+      if (valPresCount) valPresCount.textContent = presCountStr;
+      const valDm = document.getElementById('statFsVal_darkMatter');
+      if (valDm) valDm.textContent = dmStr;
+      const valLifetimeDm = document.getElementById('statFsVal_lifetimeDm');
+      if (valLifetimeDm) valLifetimeDm.textContent = lifetimeDmStr;
+      const valConstNodes = document.getElementById('statFsVal_constellationNodes');
+      if (valConstNodes) valConstNodes.textContent = `${constellationNodesUnlocked} / ${ALL_SKILL_TREE_NODES.length}`;
+      const valConstLvls = document.getElementById('statFsVal_constellationLevels');
+      if (valConstLvls) valConstLvls.textContent = `${constellationTotalLevels} nivele`;
+      const valPresBonus = document.getElementById('statFsVal_prestigeBonus');
+      if (valPresBonus) valPresBonus.textContent = presBonusStr;
+
+      // Panel 6: Realizări
+      const valAchUnlocked = document.getElementById('statFsVal_achUnlocked');
+      if (valAchUnlocked) valAchUnlocked.textContent = `${(state.unlockedAchievements || []).length} / ${ACHIEVEMENTS_DATA.length} (${achPct}%)`;
+      const valMythicAch = document.getElementById('statFsVal_mythicAch');
+      if (valMythicAch) valMythicAch.textContent = `${mythicAchCount} / ${totalMythicAch}`;
+      const valRareAch = document.getElementById('statFsVal_rareAch');
+      if (valRareAch) valRareAch.textContent = `${rareAchCount} / ${totalRareAch}`;
+      const valAchBonus = document.getElementById('statFsVal_achBonus');
+      if (valAchBonus) valAchBonus.textContent = `+${(state.unlockedAchievements || []).length}%`;
+
+      // Panel 7: Vreme Cosmică
+      const valStorms = document.getElementById('statFsVal_stormsExperienced');
+      if (valStorms) valStorms.textContent = (state.totalStormsExperienced || 0).toLocaleString('ro-RO');
+      const valMeteors = document.getElementById('statFsVal_meteorsCaught');
+      if (valMeteors) valMeteors.textContent = (state.meteorsCaught || 0).toLocaleString('ro-RO');
+      const valWeatherState = document.getElementById('statFsVal_weatherState');
+      if (valWeatherState) valWeatherState.textContent = activeCosmicStorm ? `${activeCosmicStorm.icon} ${activeCosmicStorm.name}` : '🌌 Calm Relativ';
+      const valWeatherCountdown = document.getElementById('statFsVal_weatherCountdown');
+      if (valWeatherCountdown) valWeatherCountdown.textContent = radarTimeStr;
+      const valStormQual = document.getElementById('statFsVal_stormQuality');
+      if (valStormQual) valStormQual.textContent = (state.stormQuality || 'auto').toUpperCase();
+
+      // Panel 8: Sistem
+      const valPlayTime = document.getElementById('statFsVal_playTime');
+      if (valPlayTime) valPlayTime.textContent = playTimeStr;
+      const valRunTime = document.getElementById('statFsVal_currentRunTime');
+      if (valRunTime) valRunTime.textContent = currentRunTimeStr;
+      const valStreak = document.getElementById('statFsVal_dailyStreak');
+      if (valStreak) valStreak.textContent = dailyStreakStr;
+      const valLastSaved = document.getElementById('statFsVal_lastSaved');
+      if (valLastSaved) valLastSaved.textContent = lastSavedStr;
+      const valCloud = document.getElementById('statFsVal_cloudSync');
+      if (valCloud) valCloud.textContent = cloudSyncStr;
+      const valVer = document.getElementById('statFsVal_appVersion');
+      if (valVer) valVer.textContent = `v${APP_VERSION} (Build ${APP_BUILD})`;
+    }
+
     // Funcție apelată automat și 100% silențios când omul trece din Offline -> Online
     async function syncOfflineProgressToServer() {
       if (!navigator.onLine || !isFirebaseConfigured() || !cloudSession) return;
@@ -25422,6 +26979,10 @@
           closeAchInspectModal();
           return;
         }
+        if (isStatsFullscreenOpen) {
+          closeStatsFullscreen();
+          return;
+        }
         if (isLeaderboardFullscreenOpen) {
           closeLeaderboardFullscreen();
           return;
@@ -25609,6 +27170,9 @@
         checkAchievements();
         if (document.getElementById('tab-stats').classList.contains('active')) {
           renderStats();
+        }
+        if (isStatsFullscreenOpen) {
+          renderStatsFullscreen();
         }
       }
 
