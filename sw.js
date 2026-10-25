@@ -1,10 +1,32 @@
-const CACHE_NAME = 'quantum-nexus-cache-v3.9.5';
+const CACHE_NAME = 'quantum-nexus-cache-v3.9.6';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
   './manifest.json',
   './icon.svg',
-  './background.mp3'
+  './background.mp3',
+  './css/variables.css',
+  './css/layout.css',
+  './css/reactor.css',
+  './css/panels.css',
+  './css/omniverse.css',
+  './css/pantheon.css',
+  './css/telemetry.css',
+  './js/constants.js',
+  './js/state.js',
+  './js/audio.js',
+  './js/canvas.js',
+  './js/math.js',
+  './js/reactor.js',
+  './js/generators.js',
+  './js/anomalies.js',
+  './js/prestige.js',
+  './js/save.js',
+  './js/cloud.js',
+  './js/pantheon.js',
+  './js/telemetry.js',
+  './js/ui.js',
+  './js/main.js'
 ];
 
 // Instalare Service Worker și pre-cache pentru rulare 100% Offline
@@ -49,7 +71,7 @@ self.addEventListener('message', (event) => {
 });
 
 // Interceptare cereri:
-// 1. Nu punem în cache apelurile către serverele Cloud Save (Supabase / API externe)
+// 1. Nu punem în cache apelurile către serverele Cloud Save (Firebase / API externe)
 // 2. Nu punem în cache version.json (ca verificarea de update să fie mereu în timp real)
 // 3. Pentru fișierele jocului folosim Network-First cu cache: 'no-cache' când e online + fallback instant la Cache când e Offline
 self.addEventListener('fetch', (event) => {

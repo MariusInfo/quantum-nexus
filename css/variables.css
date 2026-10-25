@@ -1,0 +1,442 @@
+    :root {
+      --bg-base: #07090e;
+      --bg-panel: #0e131f;
+      --bg-card: #151c2e;
+      --bg-card-hover: #1c263d;
+      --border-subtle: rgba(99, 179, 237, 0.14);
+      --border-glow: rgba(56, 189, 248, 0.45);
+      --accent-cyan: #38bdf8;
+      --accent-blue: #3b82f6;
+      --accent-purple: #a855f7;
+      --accent-pink: #ec4899;
+      --accent-gold: #f59e0b;
+      --accent-emerald: #10b981;
+      --accent-red: #ef4444;
+      --text-main: #f1f5f9;
+      --text-muted: #94a3b8;
+      --text-dim: #64748b;
+      --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      --font-mono: "SF Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background-color: var(--bg-base);
+      background-image:
+        radial-gradient(circle at 20% 35%, rgba(56, 189, 248, 0.08) 0%, transparent 45%),
+        radial-gradient(circle at 80% 70%, rgba(168, 85, 247, 0.08) 0%, transparent 45%),
+        linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+      background-size: 100% 100%, 100% 100%, 32px 32px, 32px 32px;
+      color: var(--text-main);
+      font-family: var(--font-sans);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Scrollbar styling */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: rgba(15, 23, 42, 0.4);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: rgba(148, 163, 184, 0.25);
+      border-radius: 999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgba(56, 189, 248, 0.5);
+    }
+
+    /* Fundal Dinamic Interactiv (Cosmic Interactive Canvas) */
+    .cosmic-bg-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ====================================================================
+       CANVAS & STILURI PENTRU FURTUNI STELARE & METEO COSMIC (60 FPS MOBILE)
+       ==================================================================== */
+    .cosmic-storm-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 220; /* Sub anomalii (250) și modale (300) */
+    }
+
+    /* Alertă Holografică Deep Space (Banner Countdown) */
+    .cosmic-weather-alert {
+      position: fixed;
+      top: 68px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 260;
+      background: rgba(15, 23, 42, 0.94);
+      border: 1px solid var(--storm-color, #38bdf8);
+      box-shadow: 0 0 24px var(--storm-glow, rgba(56, 189, 248, 0.45)), inset 0 0 12px rgba(255,255,255,0.06);
+      border-radius: 14px;
+      padding: 10px 18px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      cursor: pointer;
+      background: rgba(15, 23, 42, 0.98);
+      animation: alertSlideDown 0.45s cubic-bezier(0.16, 1, 0.3, 1), alertBorderPulse 2s infinite ease-in-out;
+      user-select: none;
+      max-width: 92vw;
+    }
+
+    @keyframes alertSlideDown {
+      0% { transform: translate(-50%, -30px); opacity: 0; }
+      100% { transform: translate(-50%, 0); opacity: 1; }
+    }
+
+    @keyframes alertBorderPulse {
+      0%, 100% { box-shadow: 0 0 18px var(--storm-glow, rgba(56, 189, 248, 0.35)); }
+      50% { box-shadow: 0 0 32px var(--storm-glow, rgba(56, 189, 248, 0.75)); }
+    }
+
+    .weather-alert-content {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .weather-alert-icon {
+      font-size: 26px;
+      animation: alertIconShake 1.2s infinite ease-in-out;
+    }
+
+    @keyframes alertIconShake {
+      0%, 100% { transform: scale(1) rotate(0deg); }
+      25% { transform: scale(1.15) rotate(-6deg); }
+      75% { transform: scale(1.15) rotate(6deg); }
+    }
+
+    .weather-alert-body {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .weather-alert-badge {
+      font-family: var(--font-mono);
+      font-size: 10.5px;
+      font-weight: 800;
+      color: var(--storm-color, #38bdf8);
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+    }
+
+    .weather-alert-title {
+      font-size: 13.5px;
+      font-weight: 700;
+      color: #ffffff;
+      line-height: 1.25;
+    }
+
+    .weather-alert-timer {
+      font-family: var(--font-mono);
+      font-size: 18px;
+      font-weight: 900;
+      color: #ffffff;
+      background: var(--storm-glow, rgba(56, 189, 248, 0.25));
+      border: 1px solid var(--storm-color, #38bdf8);
+      border-radius: 8px;
+      padding: 4px 10px;
+      min-width: 44px;
+      text-align: center;
+    }
+
+    /* Buton Radar Meteo în Header */
+    .btn-header.weather-btn {
+      position: relative;
+      background: rgba(30, 41, 59, 0.6);
+      border: 1px solid rgba(148, 163, 184, 0.25);
+      transition: all 0.25s ease;
+    }
+
+    .btn-header.weather-btn:hover {
+      background: rgba(51, 65, 85, 0.8);
+      border-color: rgba(56, 189, 248, 0.5);
+    }
+
+    .btn-header.weather-btn.storm-active {
+      background: rgba(245, 158, 11, 0.18);
+      border-color: var(--storm-color, #f59e0b);
+      box-shadow: 0 0 14px var(--storm-glow, rgba(245, 158, 11, 0.45));
+      animation: weatherBtnGlow 1.8s infinite ease-in-out;
+    }
+
+    @keyframes weatherBtnGlow {
+      0%, 100% { border-color: var(--storm-color, #f59e0b); box-shadow: 0 0 10px var(--storm-glow, rgba(245, 158, 11, 0.35)); }
+      50% { border-color: #ffffff; box-shadow: 0 0 20px var(--storm-glow, rgba(245, 158, 11, 0.75)); }
+    }
+
+    .weather-active-dot {
+      display: inline-block;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #f43f5e;
+      box-shadow: 0 0 8px #f43f5e;
+      animation: blinkDot 1s infinite;
+      margin-left: 3px;
+    }
+
+    @keyframes blinkDot {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.3; transform: scale(0.7); }
+    }
+
+    /* Modal Radar Meteo Cosmic */
+    .weather-radar-hero {
+      background: linear-gradient(135deg, rgba(15, 23, 42, 0.95), rgba(30, 41, 59, 0.85));
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      border-radius: 14px;
+      padding: 16px 20px;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .weather-status-box {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .weather-status-tag {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 800;
+      color: var(--accent-cyan);
+      letter-spacing: 1.2px;
+    }
+
+    .weather-status-val {
+      font-size: 17px;
+      font-weight: 800;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .weather-storms-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+      max-height: 52vh;
+      overflow-y: auto;
+      padding-right: 4px;
+    }
+
+    .weather-storm-card {
+      background: rgba(15, 23, 42, 0.7);
+      border: 1px solid rgba(148, 163, 184, 0.18);
+      border-radius: 12px;
+      padding: 14px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      transition: all 0.2s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .weather-storm-card:hover {
+      border-color: rgba(56, 189, 248, 0.4);
+      background: rgba(30, 41, 59, 0.75);
+    }
+
+    .weather-storm-card.active-storm {
+      border-color: var(--card-storm-color, #f59e0b);
+      background: rgba(245, 158, 11, 0.08);
+      box-shadow: inset 0 0 16px rgba(245, 158, 11, 0.12);
+    }
+
+    .weather-storm-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .weather-storm-title-wrap {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .weather-storm-icon {
+      font-size: 26px;
+      width: 38px;
+      height: 38px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.06);
+    }
+
+    .weather-storm-name {
+      font-size: 14px;
+      font-weight: 800;
+      color: #ffffff;
+    }
+
+    .weather-storm-badge {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--text-muted);
+    }
+
+    .weather-storm-desc {
+      font-size: 12px;
+      color: #cbd5e1;
+      line-height: 1.45;
+    }
+
+    .weather-storm-buff-tag {
+      font-family: var(--font-mono);
+      font-size: 11.5px;
+      font-weight: 700;
+      color: var(--card-storm-color, #38bdf8);
+      background: rgba(56, 189, 248, 0.1);
+      border: 1px solid rgba(56, 189, 248, 0.25);
+      border-radius: 6px;
+      padding: 4px 10px;
+      display: inline-block;
+    }
+
+    .weather-storm-actions {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-top: 6px;
+      flex-wrap: wrap;
+    }
+
+    .weather-sensor-telemetry {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-muted);
+      background: rgba(15, 23, 42, 0.6);
+      padding: 4px 10px;
+      border-radius: 6px;
+      border: 1px solid rgba(148, 163, 184, 0.15);
+    }
+
+    .radar-pulse-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #4ade80;
+      box-shadow: 0 0 6px #4ade80;
+      display: inline-block;
+      flex-shrink: 0;
+    }
+
+    .radar-pulse-dot.active {
+      background: #ef4444;
+      box-shadow: 0 0 8px #ef4444;
+      animation: radarDotBlink 0.9s infinite ease-in-out;
+    }
+
+    .radar-pulse-dot.warning {
+      background: #f59e0b;
+      box-shadow: 0 0 8px #f59e0b;
+      animation: radarDotBlink 0.6s infinite ease-in-out;
+    }
+
+    @keyframes radarDotBlink {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.3; transform: scale(0.85); }
+    }
+
+    .weather-telemetry-badge {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .weather-telemetry-badge.active {
+      background: rgba(239, 68, 68, 0.18);
+      color: #f87171;
+      border: 1px solid rgba(239, 68, 68, 0.45);
+    }
+
+    .weather-telemetry-badge.warning {
+      background: rgba(245, 158, 11, 0.18);
+      color: #fbbf24;
+      border: 1px solid rgba(245, 158, 11, 0.45);
+    }
+
+    .weather-telemetry-badge.standby {
+      background: rgba(56, 189, 248, 0.1);
+      color: #38bdf8;
+      border: 1px solid rgba(56, 189, 248, 0.25);
+    }
+
+    .weather-quality-switch {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(15, 23, 42, 0.6);
+      padding: 4px;
+      border-radius: 8px;
+      border: 1px solid var(--border-subtle);
+    }
+
+    .weather-quality-btn {
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 6px;
+      border: none;
+      background: transparent;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .weather-quality-btn.active {
+      background: var(--accent-cyan);
+      color: #0b0f19;
+    }
+

@@ -1,7 +1,7 @@
 {
-  "version": "3.9.5",
-  "build": 395,
-  "releaseDate": "2026-10-24",
-  "changelog": "v3.9.5: Telemetrie & Observator Cuantic dedicat pe Ecran Complet (Fullscreen Statistics & Telemetry Observatory) cu warp hiperspațial, osciloscop cuantic audio-vizual în timp real, 8 panouri telemetrice HUD, raport clipboard instant, eliminare globală a etichetei redundante [Ecran Complet] și rezolvare bug reîncărcare automată furtuni radar pe refresh.",
+  "version": "3.9.6",
+  "build": 396,
+  "releaseDate": "2026-10-25",
+  "changelog": "v3.9.6: Arhitectură Modulară pe Fișiere (Single-Page App) - Împărțirea jocului din fișierul gigantic de 27.500 linii în module curate de CSS și JavaScript (css/ și js/), încărcare ultra-rapidă fără pagini multiple sau ecrane de loading, compatibilitate 100% PWA offline și sincronizare Cloud Firebase.",
   "autoApply": true
 }
